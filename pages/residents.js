@@ -1,8 +1,10 @@
 import { useRouter } from "next/router";
+import Layout from '../components/layout';
 
 export default function residents() {
   const router = useRouter();
   return (
+    <Layout>
     <div>
       <a href="#" onClick={() => router.back()}>
         Back
@@ -66,5 +68,6 @@ export default function residents() {
         </button>
       </form>
     </div>
+    </Layout>
   );
 }

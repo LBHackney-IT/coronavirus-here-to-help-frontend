@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React from 'react';
+import Layout from '../components/layout';
 
 export default function residents() {
     const router = useRouter();
@@ -7,6 +8,7 @@ export default function residents() {
 
     console.log(supportType.hr)
     return (
+        <Layout>
         <div>
             <a href="#" onClick={() => router.back()}>Back</a>
             <h1>Callback list</h1>
@@ -60,6 +62,7 @@ export default function residents() {
         </table>
             
         </div>
+        </Layout>
     )
 }
 
