@@ -168,10 +168,62 @@
   margin-right: 15px;
   margin-left: 15px;
 }
+@supports (margin: max(calc(0px))) {
+  .lbhContainer {
+    margin-right: max(15px, calc(15px + env(safe-area-inset-right)));
+    margin-left: max(15px, calc(15px + env(safe-area-inset-left)));
+  }
+}
+@media (min-width: 40.0625em) {
+  .lbhContainer {
+    margin-right: 30px;
+    margin-left: 30px;
+  }
+  @supports (margin: max(calc(0px))) {
+    .lbhContainer {
+      margin-right: max(30px, calc(15px + env(safe-area-inset-right)));
+      margin-left: max(30px, calc(15px + env(safe-area-inset-left)));
+    }
+  }
+}
+@media (min-width: 1020px) {
+  .lbhContainer {
+    margin-right: auto;
+    margin-left: auto;
+  }
+  @supports (margin: max(calc(0px))) {
+    .lbhContainer {
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+}
+
+.lbhMainWrapper {
+  display: block;
+  margin-top: 0;
+  padding-top: 36px;
+  padding-top: 2.25rem;
+  padding-bottom: 24px;
+  padding-bottom: 1.5rem;
+}
+@media (min-width: 40.0625em) {
+  .lbhMainWrapper {
+    padding-top: 60px;
+    padding-top: 3.75rem;
+    padding-bottom: 60px;
+    padding-bottom: 3.75rem;
+  }
+}
 
 .lbhHeaderWrapper {
   display: flex;
   justify-content: space-between;
+}
+@media (max-width: 40.0525em) {
+  .lbhHeaderWrapper--stacked {
+    display: block;
+  }
 }
 
 .lbhHeaderTitle {

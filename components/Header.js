@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <header className={styles.lbhHeader}>
       <div className={styles.lbhHeaderMain}>
-        <div className={(styles.lbhContainer, styles.lbhHeaderWrapper)}>
+        <div className={`${styles.lbhContainer} ${styles.lbhHeaderWrapper}`}>
           <div className={styles.lbhHeaderTitle}>
             <a href="/" className={styles.lbhHeaderTitleLink}>
               <svg
