@@ -162,6 +162,12 @@
   color: #ffffff;
   background: #0b0c0c;
 }
+@media (min-width: 40.0625em) {
+  .lbhHeaderMain {
+    padding: 20px 0px 12px;
+    padding: 1.25rem 0rem 0.75rem;
+  }
+}
 
 .lbhContainer {
   max-width: 960px;
@@ -233,7 +239,6 @@
   margin-right: 1.5rem;
   margin-bottom: 0;
 }
-
 .lbhHeaderTitleLink {
   font-family: "Open Sans";
   -webkit-font-smoothing: antialiased;
@@ -244,7 +249,6 @@
   border-bottom: 1px solid transparent;
   text-decoration: none;
 }
-
 .lbhHeaderTitleLink:focus,
 .lbhHeaderTitleLink.\:focus {
   outline: 3px solid transparent;
@@ -253,19 +257,34 @@
   box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c;
   text-decoration: none;
 }
-
 .lbhHeaderTitleLink:hover,
 .lbhHeaderTitleLink.\:hover {
   border-bottom-color: #ffffff;
 }
+@media (min-width: 48.0625em) {
+  .lbhHeaderTitleLink {
+    display: flex;
+    align-items: flex-start;
+  }
+}
 
-.lbh-header__logo {
+.lbhHeaderLogo {
   display: block;
   width: 152px;
   width: 9.5rem;
   height: 28px;
   height: 1.75rem;
   color: #ffffff;
+}
+@media (min-width: 48.0625em) {
+  .lbhHeaderLogo {
+    width: 206px;
+    width: 12.875rem;
+    height: 37px;
+    height: 2.3125rem;
+    margin-right: 8px;
+    margin-right: 0.5rem;
+  }
 }
 
 .lbhHeaderLogoText {
