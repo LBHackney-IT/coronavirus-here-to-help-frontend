@@ -121,7 +121,6 @@
   }
 }
 
-
 .lbhHeader {
   position: relative;
   z-index: 4;
@@ -129,24 +128,50 @@
   padding-bottom: 21px;
   padding-bottom: 1.3125rem;
   border-bottom: 2px solid #84bd00;
-  background: #ffffff; 
+  background: #ffffff;
+}
+
+.lbhHeader:before {
+  bottom: 3px;
+  border-bottom: 3px solid #00b341;
+}
+.lbhHeader:before,
+.lbhHeader:after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 0;
+  left: 0;
+}
+.lbhHeader:after {
+  bottom: 9px;
+  border-bottom: 4px solid #00664f;
+}
+.lbhHeader:before,
+.lbhHeader:after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 0;
+  left: 0;
 }
 
 .lbhHeaderMain {
   padding: 16px 0px 12px;
   padding: 1rem 0rem 0.75rem;
   color: #ffffff;
-  background: #0b0c0c; 
+  background: #0b0c0c;
 }
 
 .lbhContainer {
   max-width: 960px;
   margin-right: 15px;
-  margin-left: 15px; }
+  margin-left: 15px;
+}
 
 .lbhHeaderWrapper {
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
 }
 
 .lbhHeaderTitle {
@@ -154,7 +179,7 @@
   margin-top: 0;
   margin-right: 24px;
   margin-right: 1.5rem;
-  margin-bottom: 0; 
+  margin-bottom: 0;
 }
 
 .lbhHeaderTitleLink {
@@ -165,7 +190,7 @@
   padding: 4px 0px;
   padding: 0.25rem 0rem;
   border-bottom: 1px solid transparent;
-  text-decoration: none; 
+  text-decoration: none;
 }
 
 .lbhHeaderTitleLink:focus,
@@ -174,12 +199,12 @@
   color: #0b0c0c;
   background-color: #ffdd00;
   box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c;
-  text-decoration: none; 
+  text-decoration: none;
 }
 
 .lbhHeaderTitleLink:hover,
 .lbhHeaderTitleLink.\:hover {
-  border-bottom-color: #ffffff; 
+  border-bottom-color: #ffffff;
 }
 
 .lbh-header__logo {
@@ -188,5 +213,19 @@
   width: 9.5rem;
   height: 28px;
   height: 1.75rem;
-  color: #ffffff; 
+  color: #ffffff;
+}
+
+.lbhHeaderLogoText {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  border: 0 !important;
+  white-space: nowrap !important;
 }
