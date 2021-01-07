@@ -1,42 +1,45 @@
 import Head from 'next/head'
+import Layout from '../components/layout'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout>
+      <div className={styles.container}>
+        <Head>
+          <title>Create Next App</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Here to help
-        </h1>
+        <main className={styles.main}>
+          <h1 className={styles.title}>
+            Here to help
+          </h1>
 
-        <p className={styles.description}>
-          Search for residents
-          <a>GO</a>
-        </p>
+          <p className={styles.description}>
+            Search for residents
+            <a>GO</a>
+          </p>
 
-        <hr />
+          <hr />
 
-        <p className={styles.description}>
-          View callback list
-          <a>GO</a>
-        </p>
+          <p className={styles.description}>
+            View callback list
+            <a>GO</a>
+          </p>
 
-        <hr />
+          <hr />
 
-        <p className={styles.description}>
-          Assign calls
-          <a>GO</a>
-        </p>
-      </main>
+          <p className={styles.description}>
+            Assign calls
+            <a>GO</a>
+          </p>
+        </main>
 
-      <footer className={styles.footer}>
+        <footer className={styles.footer}>
 
-      </footer>
-    </div>
-  )
+        </footer>
+      </div>
+    </Layout>
+  );
 }

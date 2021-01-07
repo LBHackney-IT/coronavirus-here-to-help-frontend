@@ -120,3 +120,73 @@
     flex-direction: column;
   }
 }
+
+
+.lbhHeader {
+  position: relative;
+  z-index: 4;
+  margin-top: 0;
+  padding-bottom: 21px;
+  padding-bottom: 1.3125rem;
+  border-bottom: 2px solid #84bd00;
+  background: #ffffff; 
+}
+
+.lbhHeaderMain {
+  padding: 16px 0px 12px;
+  padding: 1rem 0rem 0.75rem;
+  color: #ffffff;
+  background: #0b0c0c; 
+}
+
+.lbhContainer {
+  max-width: 960px;
+  margin-right: 15px;
+  margin-left: 15px; }
+
+.lbhHeaderWrapper {
+  display: flex;
+  justify-content: space-between; 
+}
+
+.lbhHeaderTitle {
+  display: inline-block;
+  margin-top: 0;
+  margin-right: 24px;
+  margin-right: 1.5rem;
+  margin-bottom: 0; 
+}
+
+.lbhHeaderTitleLink {
+  font-family: "Open Sans";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: block;
+  padding: 4px 0px;
+  padding: 0.25rem 0rem;
+  border-bottom: 1px solid transparent;
+  text-decoration: none; 
+}
+
+.lbhHeaderTitleLink:focus,
+.lbhHeaderTitleLink.\:focus {
+  outline: 3px solid transparent;
+  color: #0b0c0c;
+  background-color: #ffdd00;
+  box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c;
+  text-decoration: none; 
+}
+
+.lbhHeaderTitleLink:hover,
+.lbhHeaderTitleLink.\:hover {
+  border-bottom-color: #ffffff; 
+}
+
+.lbh-header__logo {
+  display: block;
+  width: 152px;
+  width: 9.5rem;
+  height: 28px;
+  height: 1.75rem;
+  color: #ffffff; 
+}
