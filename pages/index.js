@@ -18,21 +18,21 @@ export default function Home() {
 
           <p className={styles.description}>
             Search for residents
-            <a>GO</a>
+            <a href="/residents"> GO</a>
           </p>
 
           <hr />
 
           <p className={styles.description}>
             View callback list
-            <a>GO</a>
+            <a href="/callback-list"> GO</a>
           </p>
 
           <hr />
 
           <p className={styles.description}>
             Assign calls
-            <a>GO</a>
+            <a href="/assign-calls"> GO</a>
           </p>
         </main>
 
