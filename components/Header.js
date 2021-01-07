@@ -4,12 +4,12 @@ import styles from '../styles/Home.module.css'
 const Header = () => {
   return (
     <header className={styles.lbhHeader}>
-      <div class={styles.lbhHeaderMain}>
-        <div class={styles.lbhContainer} {...styles.lbhHeaderWrapper}>
-          <div class={styles.lbhHeaderTitle}>
-            <a href="/" class={styles.lbhHeaderTitleLink}>
+      <div className={styles.lbhHeaderMain}>
+        <div className={styles.lbhContainer, styles.lbhHeaderWrapper}>
+          <div className={styles.lbhHeaderTitle}>
+            <a href="/" className={styles.lbhHeaderTitleLink}>
               <svg
-                class={styles.lbhHeaderLogo}
+                className={styles.lbhHeaderLogo}
                 role="presentation"
                 focusable="false"
                 width="208px"
@@ -39,8 +39,8 @@ const Header = () => {
                   height="37"
                 />
               </svg>
-              <span class={styles.lbhHeaderLogoText}>Hackney</span>
-              <span class={styles.lbhHeaderServiceName}>
+              <span className={styles.lbhHeaderLogoText}>Hackney</span>
+              <span className={styles.lbhHeaderServiceName}>
                 Support for Hackney residents
               </span>
             </a>
