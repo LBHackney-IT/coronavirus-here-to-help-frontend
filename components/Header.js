@@ -1,14 +1,15 @@
 import React from "react";
+import styles from '../styles/Home.module.css'
 
 const Header = () => {
   return (
-    <header class="lbh-header  ">
-      <div class="lbh-header__main">
-        <div class="lbh-container lbh-header__wrapper ">
-          <div class="lbh-header__title">
-            <a href="/" class="lbh-header__title-link">
+    <header className={styles.lbhHeader}>
+      <div class={styles.lbhHeaderMain}>
+        <div class={styles.lbhContainer} {...styles.lbhHeaderWrapper}>
+          <div class={styles.lbhHeaderTitle}>
+            <a href="/" class={styles.lbhHeaderTitleLink}>
               <svg
-                class="lbh-header__logo"
+                class={styles.lbhHeaderLogo}
                 role="presentation"
                 focusable="false"
                 width="208px"
@@ -38,8 +39,8 @@ const Header = () => {
                   height="37"
                 />
               </svg>
-              <span class="lbh-header__logo-text">Hackney</span>
-              <span class="lbh-header__service-name ">
+              <span class={styles.lbhHeaderLogoText}>Hackney</span>
+              <span class={styles.lbhHeaderServiceName}>
                 Support for Hackney residents
               </span>
             </a>
