@@ -4,9 +4,8 @@ import Layout from '../components/layout';
 
 export default function residents() {
     const router = useRouter();
-    const supportType = [{hr:"Help Request", cev:"CEV", welfare:"Welfare", shield:"Shielding", ct:"Contact tracing"}];
+    // const supportType = [{hr:"Help Request", cev:"CEV", welfare:"Welfare", shield:"Shielding", ct:"Contact tracing"}];
 
-    console.log(supportType.hr)
     return (
         <Layout>
         <div>
@@ -15,10 +14,11 @@ export default function residents() {
             <br />
             <h3 class="lbh-heading-h3">Filter by Help Type:</h3>
             <select>
-            { supportType.map((key, value) => (
-                <option key={key} value={value}>Call type</option>
-            ))}
-                
+                <option value="">All</option>
+                <option>Help Request</option>
+                <option>CEV</option>
+                <option>Welfare</option>
+                <option>Shielding</option>
             </select>
 
             <br />
@@ -48,14 +48,14 @@ export default function residents() {
                         <td class="govuk-table__cell">
                             test
                         </td>
-                        <td class="govuk-table__cell">13:23</td>
-                        <td class="govuk-table__cell"><span title="<?=HereToHelp\Helper::$support_type[$support_type]?>">ct</span></td>
+                        <td class="govuk-table__cell">13 Jan 2021</td>
+                        <td class="govuk-table__cell"><span title="Contact Tracing">ct</span></td>
                         <td class="govuk-table__cell ">name</td>
                         <td class="govuk-table__cell">name</td>
-                        <td class="govuk-table__cell"><a href="/singleassign" title="<?=HereToHelp\Helper::$fake_users[$initial]?>">jh✎</a></td>
-                        <td class="govuk-table__cell">name</td>
+                        <td class="govuk-table__cell"><a href="/singleassign" title="John Harries">jh✎</a></td>
+                        <td class="govuk-table__cell">15:34</td>
                         <td class="govuk-table__cell">
-                            <a data-testid="view-button" href="/oneresident?id=18" class="js-cta-btn" id="view-resident-18">View</a>
+                            <a href="/resident-profile" >View</a>
                         </td>
                     </tr>
             </tbody>
