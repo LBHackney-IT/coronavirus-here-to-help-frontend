@@ -1,6 +1,6 @@
-import Head from 'next/head'
-import Layout from '../components/layout'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Layout from "../components/layout";
+import styles from "../styles/Home.module.css";
 
 export default function Home() {
   return (
@@ -12,9 +12,7 @@ export default function Home() {
         </Head>
 
         <main className={styles.main}>
-          <h1 className={styles.title}>
-            Here to help
-          </h1>
+          <h1 className={styles.title}>Here to help</h1>
 
           <p className={styles.description}>
             Search for residents
@@ -36,9 +34,7 @@ export default function Home() {
           </p>
         </main>
 
-        <footer className={styles.footer}>
-
-        </footer>
+        <footer className={styles.footer}></footer>
       </div>
     </Layout>
   );
