@@ -9,10 +9,6 @@ export default function Layout({ children }) {
       <main className={styles.lbhMainWrapper} id="main-content" role="main">
         <div className={styles.lbhContainer}>{children}</div>
       </main>
-
-      <footer>
-        <p>Should there be a footer here?</p>
-      </footer>
     </>
   );
 }
