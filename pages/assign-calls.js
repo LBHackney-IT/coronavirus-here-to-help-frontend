@@ -28,30 +28,6 @@ export default function residents() {
             </div>
           </div>
 
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-third">
-              <label class="govuk-label" for="ContactTelephoneNumber">
-                Add new member of staff
-                <br />
-              </label>
-              <div class="govuk-form-group lbh-form-group">
-                <input
-                  class="govuk-input  lbh-input"
-                  id="FirstNameLastName"
-                  name="FirstNameLastName"
-                  type="tel"
-                  placeholder="Firstname Lastname"
-                />
-              </div>
-            </div>
-            <button
-              class="govuk-button lbh-button js-cta-btn"
-              data-module="govuk-button"
-            >
-              Add
-            </button>
-          </div>
-
           <div class="govuk-grid-row" id="btn-bottom-panel">
             <div class="govuk-grid-column-one-half">
               <a
