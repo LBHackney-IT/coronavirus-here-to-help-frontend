@@ -9,26 +9,40 @@ export default function residents() {
   return (
     <Layout>
       <div>
-        <a href="#" onClick={() => router.back()}>
+        <a href="#" onClick={() => router.back()} class="govuk-back-link">
           Back
         </a>
-        <h1>Callback list</h1>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2 govuk-!-margin-top-7">
+          Callback list
+        </h1>
         <br />
-        <h3 class="lbh-heading-h3">Filter by Help Type:</h3>
-        <select>
-          <option value="">All</option>
-          <option>Help Request</option>
-          <option>CEV</option>
-          <option>Welfare</option>
-          <option>Shielding</option>
-        </select>
+        <h3 class="govuk-heading-m">Filter by Help Type:</h3>
 
-        <br />
+        <div class="govuk-!-margin-bottom-5">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-third">
+              <select class="govuk-select">
+                <option value="all">All</option>
+                <option value="help-request">Help Request</option>
+                <option value="cev">CEV</option>
+                <option value="welfare">Welfare</option>
+                <option value="shielding">Shielding</option>
+              </select>
+            </div>
+            <div class="govuk-grid-column-one-third">
+              <select class="govuk-select">
+                <option value="">Assigned to</option>
+                <option value="bd">Ben Dalton</option>
+                <option value="lt">Liudvikas T</option>
+                <option value="mw">Marten Wetterberg</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
-        <p class="lbh-body-m">Displaying 2 record(s)</p>
+        <p class="govuk-body govuk-!-margin-bottom-1">Displaying 2 record(s)</p>
 
-        <span hidden="true"></span>
-        <table class="govuk-table  lbh-table">
+        <table class="govuk-table">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
               <th scope="col" class="govuk-table__header">
