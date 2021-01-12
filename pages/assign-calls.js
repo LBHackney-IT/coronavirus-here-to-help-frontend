@@ -24,6 +24,16 @@ export default function residents() {
                 <option value="welfare">Welfare</option>
                 <option value="shielding">Shielding</option>
               </select>
+              <h3>Select call help type</h3>
+            </div>
+            <div class="govuk-grid-column-one-third">
+              <label class="govuk-label">Call handlers</label>
+              <select class="govuk-select">
+                <option value="">Select</option>
+                <option value="bd">Ben Dalton</option>
+                <option value="lt">Liudvikas T</option>
+                <option value="mw">Marten Wetterberg</option>
+              </select>
               <h3>Select who is able to make calls today</h3>
             </div>
           </div>
