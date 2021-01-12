@@ -12,9 +12,7 @@ export default function residents() {
         <a href="#" onClick={() => router.back()} class="govuk-back-link">
           Back
         </a>
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2 govuk-!-margin-top-7">
-          Callback list
-        </h1>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Callback list</h1>
         <br />
         <h3 class="govuk-heading-m">Filter by Help Type:</h3>
 
