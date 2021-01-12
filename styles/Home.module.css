@@ -356,3 +356,16 @@
 .lbhHeaderTitleLink.\:focus .lbhHeaderServiceName {
   color: #0b0c0c;
 }
+
+.govuk-heading-h1 {
+    font-family: "Open Sans";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: block;
+    color: #0b0c0c;
+    font-weight: 600 !important;
+    font-size: 320px !important;
+    font-size: 2rem;
+    line-height: 38px;
+    line-height: 2.375rem;
+}

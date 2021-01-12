@@ -5,37 +5,42 @@ import styles from "../styles/Home.module.css";
 export default function Home() {
   return (
     <Layout>
-      <div className={styles.container}>
-        <Head>
-          <title>Create Next App</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
+          <h1 class="govuk-heading-xl">Here to help</h1>
 
-        <main className={styles.main}>
-          <h1 className={styles.title}>Here to help</h1>
+          <table class="govuk-table lbh-table">
+    <tbody class="govuk-table__body">
 
-          <p className={styles.description}>
-            Search for residents
-            <a href="/residents"> GO</a>
-          </p>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Search for residents</th>
+        <td class="govuk-table__cell govuk-table__cell--numeric">
+            <a href="/residents" class="govuk-button lbh-button" data-module="govuk-button">Go</a>
+        </td>
+    </tr>
 
-          <hr />
 
-          <p className={styles.description}>
-            View callback list
-            <a href="/callback-list"> GO</a>
-          </p>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">View callback list</th>
+        <td class="govuk-table__cell govuk-table__cell--numeric">
+            <a href="/callback-list" class="govuk-button lbh-button js-cta-btn" data-module="govuk-button">Go</a>
+        </td>
+    </tr>
 
-          <hr />
 
-          <p className={styles.description}>
-            Assign calls
-            <a href="/assign-calls"> GO</a>
-          </p>
-        </main>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Assign calls</th>
+        <td class="govuk-table__cell govuk-table__cell--numeric">
+            <a href="/assign-calls" class="govuk-button lbh-button js-cta-btn" data-module="govuk-button">Go</a>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+       
 
         <footer className={styles.footer}></footer>
-      </div>
+      
     </Layout>
   );
 }
+
+
