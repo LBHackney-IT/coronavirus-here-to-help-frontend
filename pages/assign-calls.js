@@ -7,11 +7,11 @@ export default function residents() {
   return (
     <Layout>
       <div>
-        <a href="#" onClick={() => router.back()}>
+        <a href="#" onClick={() => router.back()} class="govuk-back-link">
           Back
         </a>
 
-        <h1 class="lbh-heading-h1">Assign calls</h1>
+        <h1 class="govuk-heading-xl">Assign calls</h1>
 
         <form action="/assign" method="post">
           <div class="govuk-grid-row">
@@ -24,7 +24,7 @@ export default function residents() {
                 <option value="welfare">Welfare</option>
                 <option value="shielding">Shielding</option>
               </select>
-              <h3>Select call help type</h3>
+              <div class="govuk-hint">Select call help type</div>
             </div>
             <div class="govuk-grid-column-one-third">
               <label class="govuk-label">Call handlers</label>
@@ -34,7 +34,9 @@ export default function residents() {
                 <option value="lt">Liudvikas T</option>
                 <option value="mw">Marten Wetterberg</option>
               </select>
-              <h3>Select who is able to make calls today</h3>
+              <div class="govuk-hint">
+                Select who is able to make calls today
+              </div>
             </div>
           </div>
 
