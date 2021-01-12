@@ -6,7 +6,7 @@ export default function residents() {
   return (
     <Layout>
       <div>
-        <a href="#" onClick={() => router.back()}>
+        <a href="#" onClick={() => router.back()} class="govuk-back-link">
           Back
         </a>
         <h2 class="govuk-heading-xl govuk-!-margin-top-7">Resident lookup</h2>
