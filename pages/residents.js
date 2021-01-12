@@ -9,7 +9,7 @@ export default function residents() {
         <a href="#" onClick={() => router.back()} class="govuk-back-link">
           Back
         </a>
-        <h2 class="govuk-heading-xl govuk-!-margin-top-7">Resident lookup</h2>
+        <h1 class="govuk-heading-xl govuk-!-margin-top-7">Resident lookup</h1>
         <p class="govuk-body">
           Search for resident by postcode <strong>or</strong> name to see if
           weve helped them before.
