@@ -14,18 +14,19 @@ export default function residents() {
         <h1 class="lbh-heading-h1">Assign calls</h1>
 
         <form action="/assign" method="post">
-          <label class="govuk-label">Call types</label>
-          <select class="govuk-select">
-            <option value="">All</option>
-            <option>Help Request</option>
-            <option>CEV</option>
-            <option>Welfare</option>
-            <option>Shielding</option>
-          </select>
-          <br />
-          <br />
-
-          <h3>Select who is able to make calls today</h3>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-third">
+              <label class="govuk-label">Call types</label>
+              <select class="govuk-select">
+                <option value="all">All</option>
+                <option value="help-request">Help Request</option>
+                <option value="cev">CEV</option>
+                <option value="welfare">Welfare</option>
+                <option value="shielding">Shielding</option>
+              </select>
+              <h3>Select who is able to make calls today</h3>
+            </div>
+          </div>
 
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-third">
