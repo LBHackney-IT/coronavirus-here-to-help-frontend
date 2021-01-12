@@ -20,9 +20,9 @@ export default function residents() {
               <label class="govuk-label" for="postcode">
                 Postcode
               </label>
-              <div class="govuk-form-group lbh-form-group">
+              <div class="govuk-form-group">
                 <input
-                  class="govuk-input govuk-input--width-10 lbh-input"
+                  class="govuk-input govuk-input--width-10"
                   id="postcode"
                   name="postcode"
                   type="text"
@@ -34,9 +34,9 @@ export default function residents() {
               <label class="govuk-label" for="firstName">
                 First name
               </label>
-              <div class="govuk-form-group lbh-form-group">
+              <div class="govuk-form-group">
                 <input
-                  class="govuk-input govuk-input--width-12 lbh-input"
+                  class="govuk-input govuk-input--width-12"
                   id="firstName"
                   name="firstName"
                   type="text"
@@ -49,9 +49,9 @@ export default function residents() {
                 Last name
               </label>
 
-              <div class="govuk-form-group lbh-form-group">
+              <div class="govuk-form-group">
                 <input
-                  class="govuk-input govuk-input--width-12 lbh-input"
+                  class="govuk-input govuk-input--width-12"
                   id="lastName"
                   name="lastName"
                   type="text"
@@ -59,10 +59,7 @@ export default function residents() {
               </div>
             </div>
           </div>
-          <button
-            class="govuk-button lbh-button js-cta-btn"
-            data-module="govuk-button"
-          >
+          <button class="govuk-button js-cta-btn" data-module="govuk-button">
             Search
           </button>
         </form>
