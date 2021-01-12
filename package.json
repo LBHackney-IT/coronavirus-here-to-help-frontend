@@ -12,7 +12,8 @@
     "govuk-frontend": "^3.10.2",
     "next": "10.0.4",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "sass": "^1.32.4"
   },
   "devDependencies": {
     "@testing-library/dom": "^7.29.2",
