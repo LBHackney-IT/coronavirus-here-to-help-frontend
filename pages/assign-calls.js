@@ -6,10 +6,11 @@ import { useState } from 'react';
 export default function residents() {
     const router = useRouter();
     const callHandlers = ["Annalyvia", "Ryan", "Ben", "Liudvikas", "Kat", "Marten"]
-    const CEV = [];
-    const Shielding = [];
-    const Welfare = [];
+    const callTypes = ["All", "Help Request", "CEV", "Welfare", "Shielding"];
     const HelpRequest = [];
+    const CEV = [];
+    const Welfare = [];
+    const Shielding = [];
 
     // const [assignee, setAssignee] = useState([]);
 
@@ -36,11 +37,14 @@ export default function residents() {
               <div class="govuk-grid-column-one-half">
                 <label class="govuk-label">Call types</label>
                 <select class="govuk-select">
-                  <option value="all">All</option>
-                  <option value="help-request">Help Request</option>
-                  <option value="cev">CEV</option>
-                  <option value="welfare">Welfare</option>
-                  <option value="shielding">Shielding</option>
+                 {callTypes.map((callType) => {
+                     return (
+                        <option 
+                            id={callType} 
+                            value={callType}>{callType}
+                        </option>
+                     );
+                 })}
                 </select>
                 <div class="govuk-hint">Select call help type</div>
               </div>
@@ -52,14 +56,19 @@ export default function residents() {
 
               <div class="govuk-checkboxes  lbh-checkboxes">
               {callHandlers.map((callHandler) => {
-                  const { value, label } = 
-                    typeof callHandler == "string" ? { value: callHandler, label: callHandler } : callHandler;
                     return (
                         <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="initial-bd" name="initial-bd" type="checkbox" value="bd" aria-describedby="CallOutcome-hint" value={value} />
-                                <label class="govuk-label govuk-checkboxes__label" for="initial-bd">
-                                    {label}                      
-                                </label>
+                        <input 
+                            class="govuk-checkboxes__input" 
+                            id={callHandler} 
+                            name={callHandler} 
+                            type="checkbox" 
+                            value={callHandler} 
+                            aria-describedby="CallOutcome-hint" 
+                            value={callHandler} />
+                            <label class="govuk-label govuk-checkboxes__label" for={callHandler}>
+                                {callHandler}                      
+                            </label>
                         </div>
                 );
               })}
