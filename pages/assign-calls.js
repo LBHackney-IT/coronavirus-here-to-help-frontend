@@ -1,9 +1,26 @@
 import React from "react";
 import Layout from "../components/layout";
 import { useRouter } from "next/router";
+import { useState } from 'react';
 
 export default function residents() {
-  const router = useRouter();
+    const router = useRouter();
+    const callHandlers = ["Annalyvia", "Ryan", "Ben", "Liudvikas", "Kat", "Marten"]
+    const CEV = [];
+    const Shielding = [];
+    const Welfare = [];
+    const HelpRequest = [];
+
+    // const [assignee, setAssignee] = useState([]);
+
+    // // const handleChange = (event) => ({
+        
+    // // });
+    console.log();
+
+
+
+
   return (
     <Layout>
       <div>
@@ -16,7 +33,7 @@ export default function residents() {
         <form action="/assign" method="post">
           <div class="govuk-!-margin-bottom-5">
             <div class="govuk-grid-row">
-              <div class="govuk-grid-column-one-third">
+              <div class="govuk-grid-column-one-half">
                 <label class="govuk-label">Call types</label>
                 <select class="govuk-select">
                   <option value="all">All</option>
@@ -27,19 +44,28 @@ export default function residents() {
                 </select>
                 <div class="govuk-hint">Select call help type</div>
               </div>
-              <div class="govuk-grid-column-two-thirds">
-                <label class="govuk-label">Call handlers</label>
-                <select class="govuk-select">
-                  <option value="">Select</option>
-                  <option value="bd">Ben Dalton</option>
-                  <option value="lt">Liudvikas T</option>
-                  <option value="mw">Marten Wetterberg</option>
-                </select>
-                <div class="govuk-hint">
-                  Select who is able to make calls today
+              <br />
+              <br />
+              <br />
+              <br />
+              <h3 class="govuk-heading-m" style={{marginRight: '1em', marginLeft: '.2em', marginTop: '3em'}}>Select who is able to make calls today</h3>
+
+              <div class="govuk-checkboxes  lbh-checkboxes">
+              {callHandlers.map((callHandler) => {
+                  const { value, label } = 
+                    typeof callHandler == "string" ? { value: callHandler, label: callHandler } : callHandler;
+                    return (
+                        <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="initial-bd" name="initial-bd" type="checkbox" value="bd" aria-describedby="CallOutcome-hint" value={value} />
+                                <label class="govuk-label govuk-checkboxes__label" for="initial-bd">
+                                    {label}                      
+                                </label>
+                        </div>
+                );
+              })}
+               
                 </div>
-              </div>
-            </div>
+                </div>
           </div>
 
           <div class="govuk-grid-row" id="btn-bottom-panel">
