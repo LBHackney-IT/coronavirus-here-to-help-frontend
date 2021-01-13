@@ -1,9 +1,34 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../components/layout";
+import CallbacksList from "../components/CallbacksList/CallbacksList";
 
 export default function CallbacksListPage() {
   const router = useRouter();
+  const dummyCallbackResp = [
+    {
+      resident_name: "First name",
+      address: "Markmanor Ave 15",
+      requested_date: "13 Jan 2021",
+      type: "CT",
+      unsuccessful_call_attempts: 8,
+      follow_up_required: "Yes",
+      assigned_to: "John Harries",
+      rescheduled_at: "15:34",
+    },
+    {
+      resident_name: "Darth Vader",
+      address: "Baker street 1",
+      requested_date: "21 Dec 2020",
+      type: "HR",
+      unsuccessful_call_attempts: 3,
+      follow_up_required: "No",
+      assigned_to: "Luke Skywalker",
+      rescheduled_at: "17:55",
+    },
+  ];
+
+  const [callbacks, setCallbacks] = useState(dummyCallbackResp);
   // const supportType = [{hr:"Help Request", cev:"CEV", welfare:"Welfare", shield:"Shielding", ct:"Contact tracing"}];
 
   return (
@@ -38,60 +63,7 @@ export default function CallbacksListPage() {
           </div>
         </div>
 
-        <p class="govuk-body govuk-!-margin-bottom-1">Displaying 2 record(s)</p>
-
-        <table class="govuk-table">
-          <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-              <th scope="col" class="govuk-table__header">
-                Name
-              </th>
-              <th scope="col" class="govuk-table__header">
-                Address
-              </th>
-              <th scope="col" class="govuk-table__header">
-                Requested Date
-              </th>
-              <th scope="col" class="govuk-table__header">
-                Type
-              </th>
-              <th scope="col" class="govuk-table__header">
-                Unsuccessful call attempts
-              </th>
-              <th scope="col" class="govuk-table__header">
-                Follow-up required
-              </th>
-              <th scope="col" class="govuk-table__header">
-                Assigned to
-              </th>
-              <th scope="col" class="govuk-table__header">
-                Rescheduled at
-              </th>
-              <th scope="col" class="govuk-table__header"></th>
-            </tr>
-          </thead>
-          <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">First name</td>
-              <td class="govuk-table__cell">test</td>
-              <td class="govuk-table__cell">13 Jan 2021</td>
-              <td class="govuk-table__cell">
-                <span title="Contact Tracing">ct</span>
-              </td>
-              <td class="govuk-table__cell ">name</td>
-              <td class="govuk-table__cell">name</td>
-              <td class="govuk-table__cell">
-                <a href="/singleassign" title="John Harries">
-                  jh✎
-                </a>
-              </td>
-              <td class="govuk-table__cell">15:34</td>
-              <td class="govuk-table__cell">
-                <a href="/resident-profile">View</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <CallbacksList callbacks={callbacks} />
       </div>
     </Layout>
   );
