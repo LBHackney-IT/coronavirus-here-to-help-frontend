@@ -3,7 +3,7 @@ import Layout from "../components/layout";
 import { useRouter } from "next/router";
 import { useState } from 'react';
 
-export default function residents() {
+export default function AssignCallsPage() {
     const router = useRouter();
     const callHandlers = ["Annalyvia", "Ryan", "Ben", "Liudvikas", "Kat", "Marten"]
     const callTypes = ["All", "Help Request", "CEV", "Welfare", "Shielding"];
