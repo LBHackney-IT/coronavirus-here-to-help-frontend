@@ -2,25 +2,13 @@ import React from "react";
 import Layout from "../components/layout";
 import { useRouter } from "next/router";
 import { useState } from 'react';
+import { Button, Checkbox } from "../components/Form";
+
+const callTypes = ["All", "Help Request", "CEV", "Welfare", "Shielding"];
+const callHandlers = ["Annalyvia", "Ryan", "Ben", "Liudvikas", "Kat", "Marten", "John"]
 
 export default function AssignCallsPage() {
     const router = useRouter();
-    const callHandlers = ["Annalyvia", "Ryan", "Ben", "Liudvikas", "Kat", "Marten"]
-    const callTypes = ["All", "Help Request", "CEV", "Welfare", "Shielding"];
-    const HelpRequest = [];
-    const CEV = [];
-    const Welfare = [];
-    const Shielding = [];
-
-    // const [assignee, setAssignee] = useState([]);
-
-    // // const handleChange = (event) => ({
-        
-    // // });
-    console.log();
-
-
-
 
   return (
     <Layout>
@@ -55,21 +43,10 @@ export default function AssignCallsPage() {
               <h3 class="govuk-heading-m" style={{marginRight: '1em', marginLeft: '.2em', marginTop: '3em'}}>Select who is able to make calls today</h3>
 
               <div class="govuk-checkboxes  lbh-checkboxes">
+              
               {callHandlers.map((callHandler) => {
                     return (
-                        <div class="govuk-checkboxes__item">
-                        <input 
-                            class="govuk-checkboxes__input" 
-                            id={callHandler} 
-                            name={callHandler} 
-                            type="checkbox" 
-                            value={callHandler} 
-                            aria-describedby="CallOutcome-hint" 
-                            value={callHandler} />
-                            <label class="govuk-label govuk-checkboxes__label" for={callHandler}>
-                                {callHandler}                      
-                            </label>
-                        </div>
+                        <Checkbox key={callHandler} label={callHandler} />
                 );
               })}
                
@@ -79,13 +56,11 @@ export default function AssignCallsPage() {
 
           <div class="govuk-grid-row" id="btn-bottom-panel">
             <div class="govuk-grid-column-one-half">
-              <button
-                class="govuk-button govuk-!-margin-right-1 js-cta-btn"
-                data-module="govuk-button"
-              >
-                Assign
-              </button>
-
+            <Button
+                text="Assign"
+                addClass="govuk-!-margin-right-1"
+                type="submit"
+            />
               <a href="/" class="govuk-button govuk-button--secondary">
                 Cancel
               </a>
