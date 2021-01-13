@@ -9,6 +9,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "classnames": "^2.2.6",
     "govuk-frontend": "^3.10.2",
     "next": "10.0.4",
     "react": "17.0.1",

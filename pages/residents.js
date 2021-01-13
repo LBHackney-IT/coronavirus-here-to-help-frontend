@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import Layout from "../components/layout";
+import { Button } from "../components/Form";
 
 export default function residents() {
   const router = useRouter();
@@ -59,9 +60,11 @@ export default function residents() {
               </div>
             </div>
           </div>
-          <button class="govuk-button js-cta-btn" data-module="govuk-button">
-            Search
-          </button>
+          <Button
+            text="Search"
+            addClass="govuk-!-margin-right-1"
+            type="submit"
+          />
         </form>
       </div>
     </Layout>
