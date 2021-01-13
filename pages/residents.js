@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import Layout from "../components/layout";
 import { Button } from "../components/Form";
 
-export default function residents() {
+export default function ResidentsLookupPage() {
   const router = useRouter();
   return (
     <Layout>

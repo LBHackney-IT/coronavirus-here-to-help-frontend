@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import Layout from "../components/layout";
 
-export default function residents() {
+export default function CallbacksListPage() {
   const router = useRouter();
   // const supportType = [{hr:"Help Request", cev:"CEV", welfare:"Welfare", shield:"Shielding", ct:"Contact tracing"}];
 
