@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "../components/layout";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { useState } from 'react';
 import { Button, Checkbox } from "../components/Form";
 
@@ -61,9 +62,12 @@ export default function AssignCallsPage() {
                 addClass="govuk-!-margin-right-1"
                 type="submit"
             />
-              <a href="/" class="govuk-button govuk-button--secondary">
-                Cancel
-              </a>
+              
+              <Link href="/">
+                    <Button
+                        text="Cancel"
+                    />
+                </Link>
             </div>
           </div>
         </form>
