@@ -6,7 +6,7 @@ phases:
       nodejs: 12
     commands:
       - npm prune --production
-      - sudo npm i -g serverless
+      - npm i -g serverless
   build:
     commands:
       - serverless deploy -s development
