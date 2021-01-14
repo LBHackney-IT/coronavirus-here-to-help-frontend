@@ -4,10 +4,21 @@ const randexp = require("randexp").randexp;
 faker.locale = "en";
 
 const residents = [];
+const case_notes = [];
 const help_requests = [];
 
 const randomNullableBool = () =>
   Math.random() > 2 / 3 ? faker.random.boolean() : null;
+
+function createCaseNote(autoincrId, residentId, helpReqId) {
+  return {
+    id: autoincrId,
+    case_notes: faker.lorem.words(),
+    help_request_id: helpReqId,
+    resident_id: residentId,
+    created_at: faker.date.recent(40),
+  };
+}
 
 function createResident(autoincrId) {
   const firstname = faker.name.firstName();
