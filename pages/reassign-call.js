@@ -1,7 +1,9 @@
 import React from 'react';
-import { Button } from '../components/Form';
+import { Button, Dropdown } from '../components/Form';
 import Layout from '../components/layout';
 import Link from 'next/link';
+
+const callHandlers = ["Annalyvia", "Ryan", "Ben", "Liudvikas", "Kat", "Marten", "John"]
 
 export default function ReassignCalls() {
     return (
@@ -12,9 +14,9 @@ export default function ReassignCalls() {
             </Link>
             <h1 class="govuk-heading-l">Reassign call to initials</h1>
                 <form action="/listcall" method="post">
-                    <h3 class="govuk-heading-m">Initials of new assignee</h3>
+                    <h3 class="govuk-heading-m">Select a new call handler</h3>
                     <div class="govuk-form-group">
-                        <input class="govuk-input" id="initials" name="initials" type="text" placeholder="e.g. 'JK'"/>
+                        <Dropdown dropdownItems={callHandlers} />
                     </div>
                     <div class="govuk-grid-row" id="btn-bottom-panel">
                         <div class="govuk-grid-column-one-half">
