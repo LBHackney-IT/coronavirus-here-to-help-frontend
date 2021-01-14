@@ -66,6 +66,7 @@ export default function AssignCallsPage() {
               <Link href="/">
                     <Button
                         text="Cancel"
+                        addClass="govuk-button--secondary"
                     />
                 </Link>
             </div>
