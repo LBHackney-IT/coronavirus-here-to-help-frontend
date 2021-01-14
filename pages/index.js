@@ -15,7 +15,7 @@ export default function HomePage() {
             </th>
             <td class="govuk-table__cell govuk-table__cell--numeric">
               <a
-                href="/residents"
+                href="/resident-search"
                 class="govuk-button lbh-button"
                 data-module="govuk-button"
               >
