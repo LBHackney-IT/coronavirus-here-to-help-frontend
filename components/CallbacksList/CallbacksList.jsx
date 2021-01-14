@@ -55,7 +55,7 @@ return (
                         <td class="govuk-table__cell ">{callback.unsuccessful_call_attempts}</td>
                         <td class="govuk-table__cell">{callback.follow_up_required}</td>
                         <td class="govuk-table__cell">
-                            <a href="/singleassign" title={callback.assigned_to}>
+                            <a href="/reassign-call" title={callback.assigned_to}>
                             {calcInitials(callback.assigned_to)}✎
                             </a>
                         </td>
