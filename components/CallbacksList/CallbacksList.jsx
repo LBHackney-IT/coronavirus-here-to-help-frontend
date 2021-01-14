@@ -61,7 +61,7 @@ return (
                         </td>
                         <td class="govuk-table__cell">{callback.rescheduled_at}</td>
                         <td class="govuk-table__cell">
-                            <a href="/resident-profile">View</a> {/* Need resident Id so the link could be generated */}
+                            <a href="/helpcase-profile">View</a> {/* Need resident Id so the link could be generated */}
                         </td>
                     </tr>
                 );
