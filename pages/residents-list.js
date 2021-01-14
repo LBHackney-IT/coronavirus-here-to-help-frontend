@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { Button } from '../components/Form';
 import Layout from '../components/layout';
 import { useState } from 'react';
@@ -39,14 +40,17 @@ export default function ResidentsList({ searchPostcode }) {
             <p class="govuk-body">Displaying {residents.length} record(s)</p>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-half">
-                    <Button
-                        text="New search"
-                        addClass="govuk-button--secondary"
-                    />
+                    <Link href="/resident-search">
+                        <Button
+                            text="New search"
+                            addClass="govuk-button--secondary"
+                        />
+                    </Link>
                 </div>
                 <div class="govuk-grid-column-one-half text-align-right">
                     <Button
                             text="Add new resident"
+                            style={{marginLeft: '15em'}}
                     />
                 </div>
             </div>
