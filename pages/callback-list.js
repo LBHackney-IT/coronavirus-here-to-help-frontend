@@ -2,8 +2,10 @@ import Link from "next/link";
 import React, { useState } from "react";
 import Layout from "../components/layout";
 import CallbacksList from "../components/CallbacksList/CallbacksList";
+import { Dropdown } from "../components/Form";
 
 export default function CallbacksListPage() {
+  const callTypes = ["All", "Help Request", "CEV", "Welfare", "Shielding"];
   const dummyCallbackResp = [
     {
       resident_name: "First name",
@@ -43,13 +45,7 @@ export default function CallbacksListPage() {
         <div class="govuk-!-margin-bottom-5">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-third">
-              <select class="govuk-select">
-                <option value="all">All</option>
-                <option value="help-request">Help Request</option>
-                <option value="cev">CEV</option>
-                <option value="welfare">Welfare</option>
-                <option value="shielding">Shielding</option>
-              </select>
+              <Dropdown dropdownItems={callTypes} />
             </div>
             <div class="govuk-grid-column-one-third">
               <select class="govuk-select">
