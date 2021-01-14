@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from "next/router";
-import { Button } from '../components/Form/Button/Button';
+import { Button } from '../components/Form';
 import Layout from '../components/layout';
 import { useState } from 'react';
 import ResidentList from '../components/ResidentsList/ResidentList';
@@ -39,14 +39,15 @@ export default function ResidentsList({ searchPostcode }) {
             <p class="govuk-body">Displaying {residents.length} record(s)</p>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-half">
-                    <a href="/searchresident" role="button" draggable="false" class="govuk-button  govuk-button--secondary" data-module="govuk-button">
-                        New search
-                    </a>
+                    <Button
+                        text="New search"
+                        addClass="govuk-button--secondary"
+                    />
                 </div>
                 <div class="govuk-grid-column-one-half text-align-right">
-                    <a href="/editresident" role="button" draggable="false" class="govuk-button" data-module="govuk-button">
-                        Add new resident
-                    </a>
+                    <Button
+                            text="Add new resident"
+                    />
                 </div>
             </div>
             <ResidentList residents={residents} />
