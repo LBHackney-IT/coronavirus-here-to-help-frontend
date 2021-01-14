@@ -1,5 +1,4 @@
 import React from 'react';
-import { useRouter } from "next/router";
 import Link from "next/link";
 import { Button } from '../components/Form';
 import Layout from '../components/layout';
@@ -7,7 +6,6 @@ import { useState } from 'react';
 import ResidentList from '../components/ResidentsList/ResidentList';
 
 export default function ResidentsList({ searchPostcode }) {
-    const router = useRouter();
 
     const dummyResidentsList = [
         {
@@ -33,7 +31,9 @@ export default function ResidentsList({ searchPostcode }) {
     return (
         <Layout>
         <div>
-            <a href="#" onClick={() => router.back()} class="govuk-back-link  lbh-back-link">Back</a>
+            <Link href="/resident-search">
+                <a href="#" class="govuk-back-link">Back</a>
+            </Link>
             <br />
             <h1 class="govuk-heading-xl" style={{marginBottom: '0.4em'}}>Search results</h1>
             <h2 class="govuk-heading-m">Help requests matching postcode: </h2>

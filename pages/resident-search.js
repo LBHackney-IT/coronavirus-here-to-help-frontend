@@ -1,16 +1,16 @@
 import React from 'react';
-import { useRouter } from "next/router";
 import Link from 'next/link';
 import { Button, Checkbox } from "../components/Form";
 import Layout from '../components/layout';
 
 export default function ResidentSearchPage() {
-    const router = useRouter();
 
     return (
         <Layout>
         <div>
-            <a href="#" onClick={()=> router.back()} class="govuk-back-link">Back</a>
+            <Link href="/">
+                <a href="#" class="govuk-back-link  lbh-back-link">Back</a>
+            </Link>
             <hr class="govuk-section-break govuk-section-break--s govuk-section-break"></hr>
               <h1 class="govuk-heading-xl" style={{marginBottom: '0.1em'}}>Resident lookup</h1>
               <p class="govuk-body">Search for resident by postcode <strong>or</strong> name to see if weve helped them before.</p>

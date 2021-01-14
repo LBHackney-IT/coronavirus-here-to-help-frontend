@@ -1,6 +1,5 @@
 import React from "react";
 import Layout from "../components/layout";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import { useState } from 'react';
 import { Button, Checkbox } from "../components/Form";
@@ -9,14 +8,13 @@ const callTypes = ["All", "Help Request", "CEV", "Welfare", "Shielding"];
 const callHandlers = ["Annalyvia", "Ryan", "Ben", "Liudvikas", "Kat", "Marten", "John"]
 
 export default function AssignCallsPage() {
-    const router = useRouter();
 
   return (
     <Layout>
       <div>
-        <a href="#" onClick={() => router.back()} class="govuk-back-link">
-          Back
-        </a>
+        <Link href="/">
+            <a href="#" class="govuk-back-link  lbh-back-link">Back</a>
+        </Link>
 
         <h1 class="govuk-heading-xl">Assign calls</h1>
 

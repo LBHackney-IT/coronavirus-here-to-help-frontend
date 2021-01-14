@@ -1,10 +1,9 @@
-import { useRouter } from "next/router";
+import Link from "next/link";
 import React, { useState } from "react";
 import Layout from "../components/layout";
 import CallbacksList from "../components/CallbacksList/CallbacksList";
 
 export default function CallbacksListPage() {
-  const router = useRouter();
   const dummyCallbackResp = [
     {
       resident_name: "First name",
@@ -34,9 +33,9 @@ export default function CallbacksListPage() {
   return (
     <Layout>
       <div>
-        <a href="#" onClick={() => router.back()} class="govuk-back-link">
-          Back
-        </a>
+        <Link href="/">
+            <a href="#" class="govuk-back-link">Back</a>
+        </Link>
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Callback list</h1>
         <br />
         <h3 class="govuk-heading-m">Filter by Help Type:</h3>
