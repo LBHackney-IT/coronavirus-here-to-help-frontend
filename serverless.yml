@@ -81,18 +81,18 @@ custom:
         - eu-west-2
         - amazonaws.com
   aliases:
-    development: here-to-help-development.hackney.gov.uk
+    test: here-to-help-test.hackney.gov.uk
     production: here-to-help.hackney.gov.uk
   certificate-arn:
 #    staging: arn:aws:acm:us-east-1:*:certificate/*
 #    production: arn:aws:acm:us-east-1:*:certificate/*
   securityGroups:
-    development:
+    test:
       - sg-0ebfce25888807a37
     production:
  #     - sg-*
   subnets:
-    development:
+    test:
       - subnet-e7d40eab
     production:
 #      - subnet-*

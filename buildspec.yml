@@ -9,4 +9,4 @@ phases:
       - npm i -g serverless
   build:
     commands:
-      - serverless deploy -s development
+      - serverless deploy -s test
