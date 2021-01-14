@@ -10,8 +10,8 @@ function createCaseNote(autoincrId, residentId, helpReqId) {
   return {
     id: autoincrId,
     case_notes: faker.lorem.words(),
-    help_request_id: helpReqId,
-    resident_id: residentId,
+    help_requestId: helpReqId, // name change so the relationships would work
+    residentId: residentId, // same here
     created_at: faker.date.recent(40),
   };
 }
@@ -68,7 +68,7 @@ function createHelpRequest(autoincrId, residentId) {
 
   return {
     id: autoincrId,
-    resident_id: residentId,
+    residentId: residentId, // name change so the relationships would work
     advice_notes: faker.lorem.words(),
     callback_required: randomNullableBool(),
     current_support: faker.random.word(), // no idea what this is!

@@ -9,6 +9,24 @@ const middlewares = jsonServer.defaults({
 const inMemDb = dataGenerator(10);
 const router = jsonServer.router(inMemDb);
 
+server.use(jsonServer.bodyParser);
+
+server.use(function (req, res, next) {
+  if (req.method !== "GET") {
+    const reqJson = JSON.stringify(req.body);
+    req.body = JSON.parse(reqJson.replace(/_id(?=\":)/g, "Id"));
+  }
+  next();
+});
+
+router.render = (req, res) => {
+  response = JSON.stringify(res.locals.data).replace(
+    /(?<![\s\,\{\"])[Ii]d(?=\":)/g,
+    "_id"
+  );
+  res.jsonp(JSON.parse(response));
+};
+
 server.use(middlewares);
 server.use(router);
 
