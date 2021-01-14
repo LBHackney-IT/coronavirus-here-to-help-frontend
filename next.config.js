@@ -12,5 +12,5 @@ module.exports = {
 
         return config;
     },
-    basePath: '/' + process.env.NODE_ENV,
+    basePath: (process.env.STAGE ? "/" + process.env.STAGE : ""),
 };

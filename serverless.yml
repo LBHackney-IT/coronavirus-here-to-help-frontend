@@ -16,7 +16,7 @@ package:
 functions:
   coronavirus-here-to-help-frontend:
     name: ${self:service}-${self:provider.stage}
-    handler: src/lambda.handler
+    handler: STAGE=${self:provider.stage} src/lambda.handler
     package:
       include:
         - auth-groups.json
