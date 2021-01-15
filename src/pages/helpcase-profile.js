@@ -1,7 +1,6 @@
 import React from "react";
 import Layout from "../components/layout";
 import SupportTable from "../components/SupportTable/SupportTable";
-import CaseNotes from "../components/CaseNotes/CaseNotes";
 import KeyInformation from "../components/KeyInformation/KeyInformation";
 
 export default function HelpcaseProfile() {
