@@ -10,6 +10,8 @@ phases:
       - npm install -g serverless
   pre_build:
     commands:
+      - cypress install
+      - npm run dev &> /dev/null
       - npm run test:e2e:ci
   build:
     commands:
