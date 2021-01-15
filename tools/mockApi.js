@@ -27,7 +27,7 @@ server.use(function (req, res, next) {
   next();
 });
 
-function getFilteredHelpRequestsWithCaseNotes(req, res) {
+function getFilteredHelpRequestsWithCaseNotes(req, respData) {
   const url = req.originalUrl;
   const isGET = req.method === "GET";
   const urlPattern = /^\/residents?\/\d+\/help_requests\?_embed=case_notes$/i;
@@ -35,26 +35,30 @@ function getFilteredHelpRequestsWithCaseNotes(req, res) {
 
   //If endpoint call matches, add case notes before returning response back
   if (isGET && urlMatches) {
-    for (let i = 0; i < res.length; i++) {
-      const hreqId = res[i].id;
+    for (let i = 0; i < respData.length; i++) {
+      const hreqId = respData[i].id;
       const assocCaseNotes = inMemDb.case_notes.filter(
         (cn) => cn.help_requestId == hreqId
       );
-      res[i].case_notes = assocCaseNotes;
+      respData[i].case_notes = assocCaseNotes;
     }
   }
-  return res;
+  return respData;
 }
+
+const returnOnlyCreatedObjectsIdForPOSTRequests = (req, respData) =>
+  req.method === "POST" ? respData.id : respData;
 
 router.render = (req, res) => {
   // Json-Server doesn't have nesting support filtered objects, hence this
   response = getFilteredHelpRequestsWithCaseNotes(req, res.locals.data);
-
-  response = JSON.stringify(res.locals.data).replace(
+  // Override the POST responses to return only Id as specified
+  response = returnOnlyCreatedObjectsIdForPOSTRequests(req, response);
+  // Add different foreign key name format support
+  response = JSON.stringify(response).replace(
     /(?<![\s\,\{\"])[Ii]d(?=\":)/g,
     "_id"
   );
-
   res.jsonp(JSON.parse(response));
 };
 
