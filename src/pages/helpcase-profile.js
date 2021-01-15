@@ -16,7 +16,7 @@ export default function HelpcaseProfile() {
 
     <div class="govuk-grid-column-three-quarters-from-desktop">
 
-        <h1 style={{marginTop: '0px', marginBottom: '40px'}}>Name Surname</h1>
+        <h1 class="govuk-heading-xl" style={{marginTop: '0px', marginBottom: '40px'}}>Name Surname</h1>
 
         <SupportTable />
 
@@ -25,7 +25,7 @@ export default function HelpcaseProfile() {
         <hr />
 
         <br />
-        <CaseNotes />
+        {/* <CaseNotes /> */}
 
     </div>
         </div>            
