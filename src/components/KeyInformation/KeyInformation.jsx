@@ -3,7 +3,7 @@ import React from "react";
 export default function KeyInformation() {
 	return (
 		<div>
-			<div style={{padding: '20px', marginBottom: '20px', position: 'relative', fontFamily: 'sans-serif', border: '1px', solid: '#b1b4b6'}}>
+			<div style={{padding: '20px', marginBottom: '20px', position: 'relative', fontFamily: 'sans-serif', border: "1px solid #b1b4b6"}}>
 				<h3 style={{fontFamily: 'sans-serif', fontSize: '22px'}}>
 					Contact details
 				</h3>
@@ -43,7 +43,7 @@ width: '20px', textAlign: 'center', color: '#090', margin: '0', padding: '0'}}
 				</a>
 			</div>
 
-			<div style={{padding: '20px', position: 'relative', fontFamily: 'sans-serif', border: '1px', solid: '#b1b4b6'}}>
+			<div style={{padding: '20px', position: 'relative', fontFamily: 'sans-serif', border: '1px solid #b1b4b6'}}>
 				<h3 style={{fontFamily: 'sans-serif', fontSize: '20px'}}>
 					Key information
 				</h3>
