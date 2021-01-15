@@ -58,6 +58,18 @@ router.render = (req, res) => {
 };
 
 server.use(middlewares);
+
+// Mitigating a bug within Json-Server, where foreign key id of nested entity
+// is saved as string it's required to keep to the specification that says
+// that the resident_id should be taken from url
+server.post("/residents/:residentId/help_requests/", function (req, res, next) {
+  req.url = "/help_requests";
+  let residentId = parseInt(req.params.residentId);
+  req.params = {};
+  req.body["residentId"] = residentId;
+  next();
+});
+
 server.use(router);
 
 server.listen(3001, () => {
