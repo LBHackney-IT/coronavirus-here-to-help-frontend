@@ -6,6 +6,9 @@ faker.locale = "en";
 const randomNullableBool = () =>
   Math.random() > 2 / 3 ? faker.random.boolean() : null;
 
+const randomArrayItem = (collection) =>
+  collection[Math.floor(Math.random() * collection.length)];
+
 function createCaseNote(autoincrId, residentId, helpReqId) {
   return {
     id: autoincrId,
@@ -44,7 +47,10 @@ function createResident(autoincrId) {
   };
 }
 
-function createHelpRequest(autoincrId, residentId) {
+function createHelpRequest(autoincrId, residentId, callHandlersList) {
+  // Assigned call handler
+  const assignedCallHandler = randomArrayItem(callHandlersList);
+
   // On behalf:
   let isOnBehalf = randomNullableBool();
   consentToCompleteOnBehalf = null;
@@ -69,6 +75,7 @@ function createHelpRequest(autoincrId, residentId) {
   return {
     id: autoincrId,
     residentId: residentId, // name change so the relationships would work
+    assigned_to: assignedCallHandler,
     advice_notes: faker.lorem.words(),
     callback_required: randomNullableBool(),
     current_support: faker.random.word(), // no idea what this is!
@@ -106,16 +113,30 @@ function createHelpRequest(autoincrId, residentId) {
   };
 }
 
-function dataGenerator(residnts = 30, hreqsPerRes = 5, cnotesPerHR = 2) {
+function createCallHandler() {
+  return `${faker.name.firstName()} ${faker.name.lastName()}`;
+}
+
+function dataGenerator(
+  residnts = 30,
+  hreqsPerRes = 5,
+  cnotesPerHR = 2,
+  callHandlerQ = 15
+) {
+  const callHandlers = [];
   const residents = [];
   const help_requests = [];
   const case_notes = [];
+
+  for (let ch = 1; ch <= callHandlerQ; ch++) {
+    callHandlers.push(createCallHandler());
+  }
 
   for (let r = 1; r <= residnts; r++) {
     residents.push(createResident(r));
     for (let hr = 1; hr <= hreqsPerRes; hr++) {
       let help_request_id = hr + (r - 1) * hreqsPerRes;
-      help_requests.push(createHelpRequest(help_request_id, r));
+      help_requests.push(createHelpRequest(help_request_id, r, callHandlers));
       for (let cn = 1; cn <= cnotesPerHR; cn++) {
         let case_note_id =
           cn + (hr - 1) * cnotesPerHR + (r - 1) * cnotesPerHR * hreqsPerRes;
@@ -124,7 +145,7 @@ function dataGenerator(residnts = 30, hreqsPerRes = 5, cnotesPerHR = 2) {
     }
   }
 
-  return { residents, help_requests, case_notes };
+  return { residents, help_requests, case_notes, call_handlers };
 }
 
 module.exports = { dataGenerator };

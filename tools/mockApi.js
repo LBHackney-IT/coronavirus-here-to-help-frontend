@@ -6,7 +6,7 @@ const middlewares = jsonServer.defaults({
   // Display json-server's built in homepage when json-server starts.
   static: "node_modules/json-server/public",
 });
-const inMemDb = dataGenerator(10);
+const inMemDb = dataGenerator();
 const router = jsonServer.router(inMemDb);
 
 server.use(jsonServer.bodyParser);
