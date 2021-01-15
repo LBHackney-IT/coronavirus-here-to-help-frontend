@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "../components/layout";
 import SupportTable from "../components/SupportTable/SupportTable";
 import KeyInformation from "../components/KeyInformation/KeyInformation";
+import CaseNotes from "../components/CaseNotes/CaseNotes";
 
 export default function HelpcaseProfile() {
 	return (
@@ -24,7 +25,7 @@ export default function HelpcaseProfile() {
         <hr />
 
         <br />
-        {/* <CaseNotes /> */}
+        <CaseNotes />
 
     </div>
         </div>            
