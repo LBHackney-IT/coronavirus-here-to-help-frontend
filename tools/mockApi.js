@@ -17,8 +17,8 @@ server.use(
     "/resident/*": "/residents/$1",
     "/residents/:residentId": "/residents/:residentId?_embed=case_notes",
     "/search/resident?*": "/residents?$1",
-    "/residents/:residentId/help_requests*": "/help_requests$2",
-    "/help_requests/:help_requestId/calls*": "/help_request_calls$2",
+    "/residents/:residentId/help_requests/:help_requestId/calls*":
+      "/help_request_calls$3",
   })
 );
 
@@ -32,20 +32,20 @@ server.use(function (req, res, next) {
   next();
 });
 
-function getFilteredHelpRequestsWithCaseNotes(req, respData) {
+function getFilteredHelpRequestsWithHelpRequestCalls(req, respData) {
   const url = req.originalUrl;
   const isGET = req.method === "GET";
-  const urlPattern = /^\/residents?\/\d+\/help_requests\?_embed=case_notes$/i;
+  const urlPattern = /^\/residents?\/\d+\/help_requests\?_embed=help_request_calls$/i;
   const urlMatches = url.match(urlPattern) !== null;
-
+  console.log("blyaaat?");
   //If endpoint call matches, add case notes before returning response back
   if (isGET && urlMatches) {
     for (let i = 0; i < respData.length; i++) {
       const hreqId = respData[i].id;
-      const assocCaseNotes = inMemDb.case_notes.filter(
-        (cn) => cn.help_requestId == hreqId
+      const assocCaseNotes = inMemDb.help_request_calls.filter(
+        (hrc) => hrc.help_requestId == hreqId
       );
-      respData[i].case_notes = assocCaseNotes;
+      respData[i].help_request_calls = assocCaseNotes;
     }
   }
   return respData;
@@ -60,9 +60,9 @@ router.render = (req, res) => {
     JSON.stringify(res.locals.data).replace(/(?<![\s\,\{\"])Id(?=\":)/g, "_id")
   );
   // Json-Server doesn't have nesting support filtered objects, hence this
-  response = getFilteredHelpRequestsWithCaseNotes(req, response);
+  response = getFilteredHelpRequestsWithHelpRequestCalls(req, response);
   // Override the POST responses to return only Id as specified
-  response = returnOnlyCreatedObjectsIdForPOSTRequests(req, response);
+  //response = returnOnlyCreatedObjectsIdForPOSTRequests(req, response);
 
   res.jsonp(response);
 };
