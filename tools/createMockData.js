@@ -25,7 +25,7 @@ function createHelpRequestCall(autoincrId, helpRequestId, callbackRequired) {
     : /(refused_to_engage|wrong_number)(callback_complete)?/;
   return {
     id: autoincrId,
-    help_request_id: helpRequestId,
+    help_requestId: helpRequestId,
     call_type: randexp(/Contact Tracing|Shielding|Welfare|Help Request/),
     call_direction: randexp(/outbound|inbound/),
     call_outcome: randexp(callOutcomeExp),

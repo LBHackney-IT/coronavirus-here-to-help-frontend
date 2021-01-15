@@ -52,16 +52,16 @@ const returnOnlyCreatedObjectsIdForPOSTRequests = (req, respData) =>
   req.method === "POST" ? respData.id : respData;
 
 router.render = (req, res) => {
+  // Add different foreign key name format support
+  response = JSON.parse(
+    JSON.stringify(res.locals.data).replace(/(?<![\s\,\{\"])Id(?=\":)/g, "_id")
+  );
   // Json-Server doesn't have nesting support filtered objects, hence this
-  response = getFilteredHelpRequestsWithCaseNotes(req, res.locals.data);
+  response = getFilteredHelpRequestsWithCaseNotes(req, response);
   // Override the POST responses to return only Id as specified
   response = returnOnlyCreatedObjectsIdForPOSTRequests(req, response);
-  // Add different foreign key name format support
-  response = JSON.stringify(response).replace(
-    /(?<![\s\,\{\"])[Ii]d(?=\":)/g,
-    "_id"
-  );
-  res.jsonp(JSON.parse(response));
+
+  res.jsonp(response);
 };
 
 server.use(middlewares);
@@ -76,6 +76,17 @@ server.post("/residents/:residentId/help_requests/", function (req, res, next) {
   req.body["residentId"] = residentId;
   next();
 });
+
+server.post(
+  "/residents/:residentId/help_requests/:help_requestId/calls",
+  function (req, res, next) {
+    req.url = "/help_request_calls";
+    let help_requestId = parseInt(req.params.residentId);
+    req.params = {};
+    req.body["help_requestId"] = help_requestId;
+    next();
+  }
+);
 
 server.use(router);
 
