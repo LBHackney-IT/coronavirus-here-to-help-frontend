@@ -13,6 +13,7 @@ server.use(
   jsonServer.rewriter({
     "/api/v4/*": "/$1",
     "/resident/*": "/residents/$1",
+    "/search/resident?*": "/residents?$1",
   })
 );
 
