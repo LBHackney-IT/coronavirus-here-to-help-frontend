@@ -8,6 +8,9 @@ phases:
       - npm prune --production
       - npm run build
       - npm install -g serverless
+  pre_build:
+    commands:
+      - npm run test:e2e:ci
   build:
     commands:
       - serverless deploy -s test
