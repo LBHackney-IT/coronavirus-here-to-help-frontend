@@ -9,7 +9,7 @@ phases:
       - npm run build
       - npm install -g serverless
       - npm install -g wait-on
-      - npm install -g cypress
+      - npm install cypress
   pre_build:
     commands:
       - npm run dev &> /dev/null
