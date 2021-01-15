@@ -19,6 +19,20 @@ function createCaseNote(autoincrId, residentId, helpReqId) {
   };
 }
 
+function createHelpRequestCall(autoincrId, helpRequestId, callbackRequired) {
+  const callOutcomeExp = callbackRequired
+    ? /((callback_complete|call_rescheduled|no_answer_machine)(,follow_up_requested)?)|follow_up_requested/
+    : /(refused_to_engage|wrong_number)(callback_complete)?/;
+  return {
+    id: autoincrId,
+    help_request_id: helpRequestId,
+    call_type: randexp(/Contact Tracing|Shielding|Welfare|Help Request/),
+    call_direction: randexp(/outbound|inbound/),
+    call_outcome: randexp(callOutcomeExp),
+    call_date_time: faker.date.recent(40),
+  };
+}
+
 function createResident(autoincrId) {
   const firstname = faker.name.firstName();
   const lastname = faker.name.lastName();
@@ -123,29 +137,50 @@ function dataGenerator(
   cnotesPerHR = 2,
   callHandlerQ = 15
 ) {
-  const callHandlers = [];
+  const call_handlers = [];
   const residents = [];
   const help_requests = [];
   const case_notes = [];
+  const help_request_calls = [];
 
   for (let ch = 1; ch <= callHandlerQ; ch++) {
-    callHandlers.push(createCallHandler());
+    call_handlers.push(createCallHandler());
   }
 
   for (let r = 1; r <= residnts; r++) {
     residents.push(createResident(r));
     for (let hr = 1; hr <= hreqsPerRes; hr++) {
       let help_request_id = hr + (r - 1) * hreqsPerRes;
-      help_requests.push(createHelpRequest(help_request_id, r, callHandlers));
+      let help_request = createHelpRequest(help_request_id, r, call_handlers);
+      help_requests.push(help_request);
       for (let cn = 1; cn <= cnotesPerHR; cn++) {
         let case_note_id =
           cn + (hr - 1) * cnotesPerHR + (r - 1) * cnotesPerHR * hreqsPerRes;
         case_notes.push(createCaseNote(case_note_id, r, help_request_id));
       }
+      //keeping it separate so it would be easier to follow
+      for (let hrc = 1; hrc <= cnotesPerHR; hrc++) {
+        //keeping case notes and calls quantity equal
+        let help_request_call_id =
+          hrc + (hr - 1) * cnotesPerHR + (r - 1) * cnotesPerHR * hreqsPerRes;
+        help_request_calls.push(
+          createHelpRequestCall(
+            help_request_call_id,
+            help_request_id,
+            help_request.callback_required
+          )
+        );
+      }
     }
   }
 
-  return { residents, help_requests, case_notes, call_handlers };
+  return {
+    residents,
+    help_requests,
+    case_notes,
+    help_request_calls,
+    call_handlers,
+  };
 }
 
 module.exports = { dataGenerator };
