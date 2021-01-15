@@ -9,6 +9,13 @@ const middlewares = jsonServer.defaults({
 const inMemDb = dataGenerator();
 const router = jsonServer.router(inMemDb);
 
+server.use(
+  jsonServer.rewriter({
+    "/api/v4/*": "/$1",
+    "/resident/*": "/residents/$1",
+  })
+);
+
 server.use(jsonServer.bodyParser);
 
 server.use(function (req, res, next) {
