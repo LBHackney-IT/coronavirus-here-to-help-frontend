@@ -16,7 +16,7 @@ package:
 functions:
   coronavirus-here-to-help-frontend:
     name: ${self:service}-${self:provider.stage}
-    handler: STAGE=${self:provider.stage} src/lambda.handler
+    handler: src/lambda.handler
     package:
       include:
         - auth-groups.json
@@ -70,6 +70,7 @@ resources:
           Origins:
             - Id: ${self:service}-${self:provider.stage}-custom-origin
               DomainName: ${self:custom.domain-name}
+              OriginPath: /${self:provider.stage}
               CustomOriginConfig:
                 HTTPPort: 80
                 HTTPSPort: 443
