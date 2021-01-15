@@ -8,12 +8,12 @@ phases:
       - npm prune --production
       - npm run build
       - npm install -g serverless
+      - npm install -g wait-on
+      - npm install -g cypress
   pre_build:
     commands:
-      - npm install cypress
-      - cypress install
       - npm run dev &> /dev/null
-      - npm run test:e2e:ci
+      - npx wait-on tcp:3000 && npm run test:e2e:ci
   build:
     commands:
       - serverless deploy -s test
