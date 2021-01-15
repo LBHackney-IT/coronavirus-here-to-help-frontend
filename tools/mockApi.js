@@ -14,6 +14,8 @@ server.use(
     "/api/v4/*": "/$1",
     "/resident/*": "/residents/$1",
     "/search/resident?*": "/residents?$1",
+    "/residents/:residentId/help_requests/:help_requestId/":
+      "/help_requests/:help_requestId/",
   })
 );
 
