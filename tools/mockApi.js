@@ -15,6 +15,7 @@ server.use(
   jsonServer.rewriter({
     "/api/v4/*": "/$1",
     "/resident/*": "/residents/$1",
+    "/residents/:residentId": "/residents/:residentId?_embed=case_notes",
     "/search/resident?*": "/residents?$1",
     "/residents/:residentId/help_requests*": "/help_requests$2",
     "/help_requests/:help_requestId/calls*": "/help_request_calls$2",
