@@ -6,10 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "jest"
+    "test": "jest",
+    "test:e2e:ci": "cypress run"
   },
   "dependencies": {
     "classnames": "^2.2.6",
+    "cypress": "^6.2.1",
     "govuk-frontend": "^3.10.2",
     "next": "10.0.4",
     "react": "17.0.1",
