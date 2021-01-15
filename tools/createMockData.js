@@ -114,15 +114,12 @@ function dataGenerator(residnts = 30, hreqsPerRes = 5, cnotesPerHR = 2) {
   for (let r = 1; r <= residnts; r++) {
     residents.push(createResident(r));
     for (let hr = 1; hr <= hreqsPerRes; hr++) {
-      help_requests.push(createHelpRequest(hr + (r - 1) * hreqsPerRes, r));
+      let help_request_id = hr + (r - 1) * hreqsPerRes;
+      help_requests.push(createHelpRequest(help_request_id, r));
       for (let cn = 1; cn <= cnotesPerHR; cn++) {
-        case_notes.push(
-          createCaseNote(
-            cn + (hr - 1) * cnotesPerHR + (r - 1) * cnotesPerHR * hreqsPerRes,
-            r,
-            hr
-          )
-        );
+        let case_note_id =
+          cn + (hr - 1) * cnotesPerHR + (r - 1) * cnotesPerHR * hreqsPerRes;
+        case_notes.push(createCaseNote(case_note_id, r, help_request_id));
       }
     }
   }
