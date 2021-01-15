@@ -19,7 +19,7 @@ export default function AssignCallsPage() {
 
         <h1 class="govuk-heading-xl" style={{marginBottom: "20px"}}>Assign calls</h1>
 
-        <form action="/assign" method="post">
+        <form action="/callback-list" method="post">
           <div class="govuk-!-margin-bottom-5">
             <div class="govuk-grid-row">
               <div class="govuk-grid-column-one-half">
@@ -51,6 +51,7 @@ export default function AssignCallsPage() {
                 text="Assign"
                 addClass="govuk-!-margin-right-1"
                 type="submit"
+                onClick={() => alert("Calls assigned")}
             />
               
               <Link href="/">

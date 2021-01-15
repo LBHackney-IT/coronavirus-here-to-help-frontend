@@ -13,7 +13,7 @@ export default function ReassignCalls() {
                 <a href="#" class="govuk-back-link">Back</a>
             </Link>
             <h1 class="govuk-heading-l">Reassign call to initials</h1>
-                <form action="/listcall" method="post">
+                <form action="/callback-list" method="post">
                     <h3 class="govuk-heading-m">Select a new call handler</h3>
                     <div class="govuk-form-group">
                         <Dropdown dropdownItems={callHandlers} />
@@ -23,6 +23,7 @@ export default function ReassignCalls() {
                             <Button
                                 text="Assign"
                                 addClass="govuk-button govuk-!-margin-right-1"
+                                onClick={() => alert("Call handler reassigned")}
                             />
                             <Button
                                 text="Cancel"
