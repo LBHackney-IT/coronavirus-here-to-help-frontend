@@ -16,6 +16,8 @@ server.use(
     "/api/v4/*": "/$1",
     "/resident/*": "/residents/$1",
     "/residents/:residentId": "/residents/:residentId?_embed=case_notes",
+    "/residents/:residentId/help_requests":
+      "/residents/:residentId/help_requests?_embed=help_request_calls",
     "/search/resident?*": "/residents?$1",
     "/residents/:residentId/help_requests/:help_requestId/calls*":
       "/help_request_calls$3",
@@ -37,7 +39,6 @@ function getFilteredHelpRequestsWithHelpRequestCalls(req, respData) {
   const isGET = req.method === "GET";
   const urlPattern = /^\/residents?\/\d+\/help_requests\?_embed=help_request_calls$/i;
   const urlMatches = url.match(urlPattern) !== null;
-  console.log("blyaaat?");
   //If endpoint call matches, add case notes before returning response back
   if (isGET && urlMatches) {
     for (let i = 0; i < respData.length; i++) {
