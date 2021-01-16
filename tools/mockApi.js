@@ -155,5 +155,8 @@ server.get("/callback_list", function (req, res) {
 server.use(router);
 
 server.listen(3001, () => {
-  console.log("JSON Server is running");
+  console.log("\x1b[33m", "JSON Server is running", "\x1b[0m");
+  console.log(
+    "Visit a Mock-API home page at \x1b[34m http://localhost:3001 \x1b[0m"
+  );
 });

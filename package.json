@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "run-p dev:front dev:api",
+    "dev:front": "next dev",
+    "dev:api": "node tools/mockApi.js",
     "build": "next build",
     "start": "next start",
     "test": "jest"
