@@ -36,7 +36,17 @@ describe('Test for user input', () => {
             cy.get('input[name="firstName"]').type("Mary");
             cy.get('input[name="firstName"]').invoke('val').should('contain', "Mary");
             cy.get('input[name="firstName"]').clear();
-        })
+        });
+
+        it('Checks that the first name is entered in the correct format', () => {
+            cy.get('input[name="firstName"]').type("Joseph");
+            cy.get('input[name="firstName"]').invoke('val').should('match', /^[a-zA-Z]{1,50}$/);
+            cy.get('input[name="firstName"]').clear();
+
+            cy.get('input[name="firstName"]').type("J@m£s");
+            cy.get('input[name="firstName"]').invoke('val').should('not.match', /^[a-zA-Z]{1,50}$/);
+            cy.get('input[name="firstName"]').clear();
+        });
     });
 });
 
