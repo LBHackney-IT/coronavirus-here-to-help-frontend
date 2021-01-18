@@ -3,6 +3,8 @@ import Layout from "../components/layout";
 import SupportTable from "../components/SupportTable/SupportTable";
 import KeyInformation from "../components/KeyInformation/KeyInformation";
 import CaseNotes from "../components/CaseNotes/CaseNotes";
+import Link from "next/link";
+import { Button } from "../components/Form";
 
 export default function HelpcaseProfile() {
 	return (
@@ -20,7 +22,12 @@ export default function HelpcaseProfile() {
 
         <SupportTable />
 
-        <br />
+        
+        <Link href="/add-support">
+            <Button
+                text="+ Add new support"
+            />
+        </Link>
 
         <hr />
 
