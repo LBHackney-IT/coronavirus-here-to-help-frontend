@@ -1,32 +1,60 @@
-import React from 'react';
-import { Button, Dropdown } from '../Form';
+import React from "react";
+import { Button, Dropdown } from "../Form";
+import { useState } from "react";
 
 export default function CaseNotes() {
-    const fakeUsers = ["Annalivia Ryan", "Ben Dalton", "Liudvikas T", "Marten Wetterberg"];
-    const supportTypes = {"hr": "Help Request", "cev": "CEV", "welfare": "Welfare", "shield": "Shielding", "ct": "Contact tracing"};
+	const fakeUsers = [
+		"Annalivia Ryan",
+		"Ben Dalton",
+		"Liudvikas T",
+		"Marten Wetterberg",
+	];
+	const supportTypes = [
+		"Help Request",
+		"CEV",
+		"Welfare",
+		"Shielding",
+		"Contact tracing",
+	];
 
-    return (
-        <div>
-            <h2 class="govuk-heading-l">Case notes</h2>
-        <Dropdown dropdownItems={Object.values(supportTypes)} /> 
-        <br />  
+	const [selectedSupportType, setSelectedSupportType] = useState("");
 
-        {fakeUsers.map((fakeUser, index) => {
-            return (
-            <>
-            <h4>2020-01-0{index} by {fakeUser}</h4>
-            <p>Random Text</p>
-            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-            </>
-        )})} 
+	const onChange = (value) => {
+		setSelectedSupportType(value);
+	};
 
-            <p>
-                {/* {type: caseNote} */}
-            </p>
-
-        </div>
-    )
+	return (
+		<div>
+			<h2 class="govuk-heading-l">Case notes</h2>
+			<Dropdown
+				onChange={(value) => onChange(value)}
+				dropdownItems={Object.values(supportTypes)}
+			/>
+			{fakeUsers.map((fakeUser, index) => {
+				return (
+					supportTypes[index] == selectedSupportType && (
+						<>
+							<div
+								style={{
+									backgroundColor: "rgba(220, 233, 213, 1)",
+									padding: "20px",
+									marginTop: "20px",
+								}}
+								id={supportTypes[index]}
+								className="filter"
+								data-type={supportTypes[index]}
+							>
+								<h4 class="govuk-heading-s" className="filter">
+									2020-01-0{Math.floor(Math.random() * 9)} by{" "}
+									{fakeUser}
+								</h4>
+								<p>{supportTypes[index]}: Random Text</p>
+							</div>
+							<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+						</>
+					)
+				);
+			})}
+		</div>
+	);
 }
-
-
-
