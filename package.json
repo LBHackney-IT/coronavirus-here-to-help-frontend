@@ -12,6 +12,7 @@
     "test:e2e:ci": "cypress run"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "cypress": "^6.2.1",
     "govuk-frontend": "^3.10.2",
