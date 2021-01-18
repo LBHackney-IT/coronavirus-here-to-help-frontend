@@ -1,7 +1,11 @@
 import React from "react";
 import Layout from "../components/layout";
+import { Checkbox } from "../components/Form";
 
 export default function addSupportPage() {
+    const spokeToResidentCallOutcomes = ["Callback complete", "Refused to engage", "Follow up requested", "Call rescheduled"]; 
+    const noAnswerCallOutcomes = ["Voicemail left", "Wrong number", "No answer maching", "Close case"]; 
+
 	return (
 		<Layout>
 			<form action="/oneresident" method="post">
@@ -155,78 +159,22 @@ export default function addSupportPage() {
 																		call
 																		outcome
 																	</span>
-																	<div class="govuk-checkboxes  lbh-checkboxes">
-																		<div class="govuk-checkboxes__item">
-																			<input
-																				class="govuk-checkboxes__input"
-																				id="CallOutcome"
-																				name="CallOutcome"
+                                                                    {
+                                                                        spokeToResidentCallOutcomes.map((spokeToResidentCallOutcome) => {
+                                                                            return (
+                                                                                <Checkbox
+																				id={spokeToResidentCallOutcome}
+																				name="spokeToResidentCallOutcome"
 																				type="checkbox"
-																				value="callback_complete"
+																				value={spokeToResidentCallOutcome}
+                                                                                label={spokeToResidentCallOutcome}
 																				aria-describedby="CallOutcome-hint"
-																			/>
-																			<label
-																				class="govuk-label govuk-checkboxes__label"
-																				for="CallOutcome"
-																			>
-																				Callback
-																				complete
-																			</label>
-																		</div>
-																		<div class="govuk-checkboxes__item">
-																			<input
-																				class="govuk-checkboxes__input"
-																				id="CallOutcome-2"
-																				name="CallOutcome"
-																				type="checkbox"
-																				value="refused_to_engage"
-																				aria-describedby="CallOutcome-hint"
-																			/>
-																			<label
-																				class="govuk-label govuk-checkboxes__label"
-																				for="CallOutcome-2"
-																			>
-																				Refused
-																				to
-																				engage
-																			</label>
-																		</div>
-																		<div class="govuk-checkboxes__item">
-																			<input
-																				class="govuk-checkboxes__input"
-																				id="CallOutcome-3"
-																				name="CallOutcome"
-																				type="checkbox"
-																				value="follow_up_requested"
-																				aria-describedby="CallOutcome-hint"
-																			/>
-																			<label
-																				class="govuk-label govuk-checkboxes__label"
-																				for="CallOutcome-3"
-																			>
-																				Follow
-																				up
-																				requested
-																			</label>
-																		</div>
-																		<div class="govuk-checkboxes__item">
-																			<input
-																				class="govuk-checkboxes__input"
-																				id="CallOutcome-4"
-																				name="CallOutcome"
-																				type="checkbox"
-																				value="call_rescheduled"
-																				aria-describedby="CallOutcome-hint"
-																			/>
-																			<label
-																				class="govuk-label govuk-checkboxes__label"
-																				for="CallOutcome-4"
-																			>
-																				Call
-																				rescheduled
-																			</label>
-																		</div>
-																	</div>
+                                                                                >
+                                                                                </Checkbox>
+                                                                            );
+                                                                        })
+                                                                    }
+																	
 																</div>
 																<div class="display-call-attempted"></div>
 															</div>
@@ -263,77 +211,21 @@ export default function addSupportPage() {
 																	Select a
 																	call outcome
 																</span>
-																<div class="govuk-checkboxes  lbh-checkboxes">
-																	<div class="govuk-checkboxes__item">
-																		<input
-																			class="govuk-checkboxes__input"
-																			id="CallOutcome"
-																			name="CallOutcome"
-																			type="checkbox"
-																			value="voicemail"
-																			aria-describedby="CallOutcome-hint"
-																		/>
-																		<label
-																			class="govuk-label govuk-checkboxes__label"
-																			for="CallOutcome"
-																		>
-																			Voicemail
-																			left
-																		</label>
-																	</div>
-																	<div class="govuk-checkboxes__item">
-																		<input
-																			class="govuk-checkboxes__input"
-																			id="CallOutcome-2"
-																			name="CallOutcome"
-																			type="checkbox"
-																			value="wrong_number"
-																			aria-describedby="CallOutcome-hint"
-																		/>
-																		<label
-																			class="govuk-label govuk-checkboxes__label"
-																			for="CallOutcome-2"
-																		>
-																			Wrong
-																			number
-																		</label>
-																	</div>
-																	<div class="govuk-checkboxes__item">
-																		<input
-																			class="govuk-checkboxes__input"
-																			id="CallOutcome-3"
-																			name="CallOutcome"
-																			type="checkbox"
-																			value="no_answer_machine"
-																			aria-describedby="CallOutcome-hint"
-																		/>
-																		<label
-																			class="govuk-label govuk-checkboxes__label"
-																			for="CallOutcome-3"
-																		>
-																			No
-																			answer
-																			machine
-																		</label>
-																	</div>
-																	<div class="govuk-checkboxes__item">
-																		<input
-																			class="govuk-checkboxes__input"
-																			id="CallOutcome-4"
-																			name="CallOutcome"
-																			type="checkbox"
-																			value="close_case"
-																			aria-describedby="CallOutcome-hint"
-																		/>
-																		<label
-																			class="govuk-label govuk-checkboxes__label"
-																			for="CallOutcome-4"
-																		>
-																			Close
-																			case
-																		</label>
-																	</div>
-																</div>
+                                                                {
+                                                                        noAnswerCallOutcomes.map((noAnswerCallOutcome) => {
+                                                                            return (
+                                                                                <Checkbox
+																				id={noAnswerCallOutcome}
+																				name="noAnswerCallOutcome"
+																				type="checkbox"
+																				value={noAnswerCallOutcome}
+                                                                                label={noAnswerCallOutcome}
+																				aria-describedby="CallOutcome-hint"
+                                                                                >
+                                                                                </Checkbox>
+                                                                            );
+                                                                        })
+                                                                    }
 															</div>
 														</div>
 													</div>
