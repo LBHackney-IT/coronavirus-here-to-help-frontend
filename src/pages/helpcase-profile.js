@@ -10,33 +10,43 @@ export default function HelpcaseProfile() {
 	return (
 		<Layout>
 			<div>
-            <a href="#" class="govuk-back-link" style={{marginTop: '-40px', display: 'block', borderBottom: 'none'}}>Back</a>
-            <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-quarter-from-desktop sticky-magic">
-        <KeyInformation />
-    </div>
+				<a
+					href="#"
+					class="govuk-back-link"
+					style={{
+						marginTop: "-40px",
+						display: "block",
+						borderBottom: "none",
+					}}
+				>
+					Back
+				</a>
+				<div class="govuk-grid-row">
+					<div class="govuk-grid-column-one-quarter-from-desktop sticky-magic">
+						<KeyInformation />
+					</div>
 
-    <div class="govuk-grid-column-three-quarters-from-desktop">
+					<div class="govuk-grid-column-three-quarters-from-desktop">
+						<h1
+							class="govuk-heading-xl"
+							style={{ marginTop: "0px", marginBottom: "40px" }}
+						>
+							Name Surname
+						</h1>
 
-        <h1 class="govuk-heading-xl" style={{marginTop: '0px', marginBottom: '40px'}}>Name Surname</h1>
+						<SupportTable />
 
-        <SupportTable />
+						<Link href="/add-support">
+							<Button text="+ Add new support" />
+						</Link>
 
-        
-        <Link href="/add-support">
-            <Button
-                text="+ Add new support"
-            />
-        </Link>
+						<hr />
 
-        <hr />
-
-        <br />
-        <CaseNotes />
-
-    </div>
-        </div>            
-            </div>
+						<br />
+						<CaseNotes />
+					</div>
+				</div>
+			</div>
 		</Layout>
 	);
 }
