@@ -43,9 +43,9 @@ return (
                 </tr>
             </thead>
             <tbody class="govuk-table__body">
-                {callbacks.map(callback => {
+                {callbacks.map((callback, index) => {
                 return (
-                    <tr class="govuk-table__row" key={callback.resident_name}> {/* Should be something unique - name is not unique enough */}
+                    <tr class="govuk-table__row" key={index}> {/* Should be something unique - name is not unique enough */}
                         <td class="govuk-table__cell">{callback.resident_name}</td>
                         <td class="govuk-table__cell">{callback.address}</td>
                         <td class="govuk-table__cell">{callback.requested_date}</td>

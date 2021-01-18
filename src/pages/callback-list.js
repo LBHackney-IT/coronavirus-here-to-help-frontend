@@ -7,12 +7,48 @@ import axios from "axios";
 import { objectToQuery } from "./api/utilityFuncs";
 
 export default function CallbacksListPage() {
-  const callTypes = ["All", "Help Request", "CEV", "Welfare", "Shielding"];
+  const callTypes = [
+    "All",
+    "Help Request",
+    "CEV",
+    "Welfare",
+    "Contact Tracing",
+  ];
 
-  const getCallBacks = async (queryParams = {}) => {
-    const host = "http://localhost:3001"; //hardcode for now
+  const [callbacks, setCallbacks] = useState([]);
+  const [callHandlers, setCallHandlers] = useState([]);
+  const [dropdowns, setDropdowns] = useState({
+    call_type: "All",
+    assigned_to: "Assigned to",
+  });
+
+  const host = "http://localhost:3001"; //hardcode for now
+
+  const getCallBacks = async () => {
+    const queryParams = { ...dropdowns };
+    if (queryParams.call_type === "All") delete queryParams["call_type"];
+    if (queryParams.assigned_to === "Assigned to")
+      delete queryParams["assigned_to"];
+
     const url = `${host}/callback_list${objectToQuery(queryParams)}`;
+    const res = await axios.get(url, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    setCallbacks(res.data);
+  };
 
+  const handleCallHandlerChange = (event) => {
+    setDropdowns({ ...dropdowns, assigned_to: event });
+  };
+
+  const handleCallTypeChange = (event) => {
+    setDropdowns({ ...dropdowns, call_type: event });
+  };
+
+  const getCallHandlers = async () => {
+    const url = `${host}/call_handlers`;
     axios
       .get(url, {
         headers: {
@@ -20,16 +56,18 @@ export default function CallbacksListPage() {
         },
       })
       .then((res) => {
-        setCallbacks(res.data);
+        const callHandlers = res.data;
+        callHandlers.unshift("Assigned to");
+        setCallHandlers(callHandlers);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const [callbacks, setCallbacks] = useState([]); //dummyCallbackResp);
-  // const supportType = [{hr:"Help Request", cev:"CEV", welfare:"Welfare", shield:"Shielding", ct:"Contact tracing"}];
-  useEffect(getCallBacks, []);
+  useEffect(getCallBacks, [dropdowns]);
+
+  useEffect(getCallHandlers, []);
 
   return (
     <Layout>
@@ -46,15 +84,16 @@ export default function CallbacksListPage() {
         <div class="govuk-!-margin-bottom-5">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-third">
-              <Dropdown dropdownItems={callTypes} />
+              <Dropdown
+                dropdownItems={callTypes}
+                onChange={handleCallTypeChange}
+              />
             </div>
             <div class="govuk-grid-column-one-third">
-              <select class="govuk-select">
-                <option value="">Assigned to</option>
-                <option value="bd">Ben Dalton</option>
-                <option value="lt">Liudvikas T</option>
-                <option value="mw">Marten Wetterberg</option>
-              </select>
+              <Dropdown
+                dropdownItems={callHandlers}
+                onChange={handleCallHandlerChange}
+              />
             </div>
           </div>
         </div>
