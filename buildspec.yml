@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+      - npm prune --production
+      - npm run build
+      - npm install -g serverless
+      - npm install -g wait-on
+      - npm install cypress
+  pre_build:
+    commands:
+      - npm run dev &> /dev/null
+      - npx wait-on tcp:3000 && npm run test:e2e:ci
+  build:
+    commands:
+      - serverless deploy -s test
