@@ -1,6 +1,6 @@
 import React from "react";
-import Layout from "../components/layout";
-import { Checkbox } from "../components/Form";
+import Layout from "../../components/layout";
+import { Checkbox } from "../../components/Form";
 
 export default function addSupportPage() {
     const spokeToResidentCallOutcomes = ["Callback complete", "Refused to engage", "Follow up requested", "Call rescheduled"]; 
