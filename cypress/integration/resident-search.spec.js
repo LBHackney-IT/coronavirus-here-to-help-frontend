@@ -26,6 +26,18 @@ describe('Test for user input', () => {
             cy.get('input[name="postcode"]').clear();
         });
     });
+
+    context('First name input field', () => {
+        it('Checks that a name can be entered in either field', () => {
+            cy.get('input[name="firstName"]').type("Joseph");
+            cy.get('input[name="firstName"]').invoke('val').should('contain', "Joseph");
+            cy.get('input[name="firstName"]').clear();
+
+            cy.get('input[name="firstName"]').type("Mary");
+            cy.get('input[name="firstName"]').invoke('val').should('contain', "Mary");
+            cy.get('input[name="firstName"]').clear();
+        })
+    });
 });
 
 export {};
