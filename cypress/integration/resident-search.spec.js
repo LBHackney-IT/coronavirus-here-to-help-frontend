@@ -5,4 +5,16 @@ describe('View resident lookup page', () => {
     });
 });
 
+describe('Test for user input', () => {
+    context('Postcode input field', () => {
+        it('Checks that a postcode can be entered', () => {
+            cy.visit(`http://localhost:3000/resident-search`);
+
+            cy.get('input[name="postcode"]').type("E7 0DE");
+            cy.get('input[name="postcode"]').invoke('val').should('not.be.empty');
+            
+        });
+    });
+});
+
 export {};
