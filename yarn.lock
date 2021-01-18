@@ -4277,6 +4277,16 @@
   "integrity" "sha512-N0BT0PI/t3+gD8jKa83zJJUb7ssfQnRRfqN+GIErokW6U4guBpfYl8qYB+OFLEho+QvnV5ZH1R9qhUC/Z2Ch9w=="
   "resolved" "https://registry.npmjs.org/sass/-/sass-1.32.4.tgz"
   "version" "1.32.4"
+<<<<<<< Updated upstream
+=======
+  dependencies:
+    "chokidar" ">=2.0.0 <4.0.0"
+
+"saxes@^5.0.0":
+  "integrity" "sha512-5LBh1Tls8c9xgGjw3QrMwETmTMVk0oFgvrFSvWx62llR2hcEInrKNZ2GZCCuuy2lvWrdl5jhbpeqc5hRYKFOcw=="
+  "resolved" "https://registry.npmjs.org/saxes/-/saxes-5.0.1.tgz"
+  "version" "5.0.1"
+>>>>>>> Stashed changes
   dependencies:
     "chokidar" ">=2.0.0 <4.0.0"
 
