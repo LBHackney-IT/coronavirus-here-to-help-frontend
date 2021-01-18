@@ -146,11 +146,15 @@ server.get("/callback_list", function (req, res) {
       unsuccessful_call_attempts: unsuccessfulCalls(calls),
       follow_up_required: helpRequest.callback_required, // Is this correct assumption?
       assigned_to: helpRequest.assigned_to,
-      rescheduled_at: randexp(/(0\d)|(1\d)|(2[0-3])[0-5]\d/), // Need to think about this one!!! Where is it stored? How do we set it on front-end?
+      rescheduled_at: randexp(/((0\d)|(1\d)|(2[0-3])):[0-5]\d/), // Need to think about this one!!! Where is it stored? How do we set it on front-end?
     };
     return real_callback;
   });
-  res.jsonp(helpRequests);
+  res.jsonp(
+    helpRequests.sort(function (a, b) {
+      return new Date(b.requested_date) - new Date(a.requested_date);
+    })
+  );
 });
 
 server.use(router);
