@@ -1,10 +1,12 @@
 import React from "react";
 import Layout from "../../components/layout";
-import { Checkbox } from "../../components/Form";
+import { Checkbox, RadioButton } from "../../components/Form";
 
 export default function addSupportPage() {
     const spokeToResidentCallOutcomes = ["Callback complete", "Refused to engage", "Follow up requested", "Call rescheduled"]; 
-    const noAnswerCallOutcomes = ["Voicemail left", "Wrong number", "No answer maching", "Close case"]; 
+	const noAnswerCallOutcomes = ["Voicemail left", "Wrong number", "No answer maching", "Close case"]; 
+	const callTypes = ["Contact Tracing", "Shielding", "Welfare Call", "Help Request"];
+	const whoMadeInitialContact = ["I contacted the resident", "The resident contacted me"];
 
 	return (
 		<Layout>
@@ -17,69 +19,8 @@ export default function addSupportPage() {
 									Call type required
 								</legend>
 								<br />
-								<div class="govuk-radios govuk-radios--inline lbh-radios">
-									<div class="govuk-radios__item">
-										<input
-											class="govuk-radios__input"
-											id="HelpNeeded"
-											name="HelpNeeded"
-											type="radio"
-											value="Contact Tracing"
-										/>
-										<label
-											class="govuk-label govuk-radios__label"
-											for="HelpNeeded"
-										>
-											Contact Tracing
-										</label>
-									</div>
-									<div class="govuk-radios__item">
-										<input
-											class="govuk-radios__input"
-											id="HelpNeeded-2"
-											name="HelpNeeded"
-											type="radio"
-											value="Shielding"
-										/>
-										<label
-											class="govuk-label govuk-radios__label"
-											for="HelpNeeded-2"
-										>
-											Shielding
-										</label>
-									</div>
-									<div class="govuk-radios__item">
-										<input
-											class="govuk-radios__input"
-											id="HelpNeeded-3"
-											name="HelpNeeded"
-											type="radio"
-											value="Help Request"
-										/>
-										{/* <?=$_REQUEST['new']=='true'?" checked='checked' ":""?> */}
-										<label
-											class="govuk-label govuk-radios__label"
-											for="HelpNeeded-3"
-										>
-											Help Request
-										</label>
-									</div>
-									<div class="govuk-radios__item">
-										<input
-											class="govuk-radios__input"
-											id="HelpNeeded-4"
-											name="HelpNeeded"
-											type="radio"
-											value="Welfare Call"
-										/>
-										<label
-											class="govuk-label govuk-radios__label"
-											for="HelpNeeded-4"
-										>
-											Welfare Call
-										</label>
-									</div>
-								</div>
+							
+								<RadioButton radioButtonItems={callTypes} />
 							</fieldset>
 						</div>
 					</div>
@@ -238,68 +179,7 @@ export default function addSupportPage() {
 													What type of help was given
 													in the call
 												</legend>
-												<div class="govuk-radios  lbh-radios">
-													<div class="govuk-radios__item">
-														<input
-															class="govuk-radios__input"
-															id="CallType"
-															name="CallType"
-															type="radio"
-															value="Contact Tracing"
-														/>
-														<label
-															class="govuk-label govuk-radios__label"
-															for="CallType"
-														>
-															Contact Tracing
-														</label>
-													</div>
-													<div class="govuk-radios__item">
-														<input
-															class="govuk-radios__input"
-															id="CallType-2"
-															name="CallType"
-															type="radio"
-															value="Shielding"
-														/>
-														<label
-															class="govuk-label govuk-radios__label"
-															for="CallType-2"
-														>
-															Shielding
-														</label>
-													</div>
-													<div class="govuk-radios__item">
-														<input
-															class="govuk-radios__input"
-															id="CallType-3"
-															name="CallType"
-															type="radio"
-															value="Welfare Call"
-														/>
-														<label
-															class="govuk-label govuk-radios__label"
-															for="CallType-3"
-														>
-															Welfare Call
-														</label>
-													</div>
-													<div class="govuk-radios__item">
-														<input
-															class="govuk-radios__input"
-															id="CallType-4"
-															name="CallType"
-															type="radio"
-															value="Help Request"
-														/>
-														<label
-															class="govuk-label govuk-radios__label"
-															for="CallType-4"
-														>
-															Help Request
-														</label>
-													</div>
-												</div>
+												<RadioButton radioButtonItems={callTypes}/>
 											</fieldset>
 										</div>
 										<div class="govuk-form-group lbh-form-group">
@@ -308,40 +188,7 @@ export default function addSupportPage() {
 													Who made the initial
 													contact?
 												</legend>
-												<div class="govuk-radios  lbh-radios">
-													<div class="govuk-radios__item">
-														<input
-															class="govuk-radios__input"
-															id="CallDirection"
-															name="CallDirection"
-															type="radio"
-															value="outbound"
-														/>
-														<label
-															class="govuk-label govuk-radios__label"
-															for="CallDirection"
-														>
-															I contacted the
-															resident
-														</label>
-													</div>
-													<div class="govuk-radios__item">
-														<input
-															class="govuk-radios__input"
-															id="CallDirection-2"
-															name="CallDirection"
-															type="radio"
-															value="inbound"
-														/>
-														<label
-															class="govuk-label govuk-radios__label"
-															for="CallDirection-2"
-														>
-															The resident
-															contacted me
-														</label>
-													</div>
-												</div>
+												<RadioButton radioButtonItems={whoMadeInitialContact} />
 											</fieldset>
 										</div>
 									</div>
