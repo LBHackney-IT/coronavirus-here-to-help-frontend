@@ -48,6 +48,28 @@ describe('Test for user input', () => {
             cy.get('input[name="firstName"]').clear();
         });
     });
+
+    context('Last name input field', () => {
+        it('Checks that a name can be entered in the last name field', () => {
+            cy.get('input[name="lastName"]').type("Joseph");
+            cy.get('input[name="lastName"]').invoke('val').should('contain', "Joseph");
+            cy.get('input[name="lastName"]').clear();
+
+            cy.get('input[name="lastName"]').type("Mary");
+            cy.get('input[name="lastName"]').invoke('val').should('contain', "Mary");
+            cy.get('input[name="lastName"]').clear();
+        });
+
+        it('Checks that the last name is entered in the correct format', () => {
+            cy.get('input[name="lastName"]').type("Joseph");
+            cy.get('input[name="lastName"]').invoke('val').should('match', /^[a-zA-Z]{1,50}$/);
+            cy.get('input[name="lastName"]').clear();
+
+            cy.get('input[name="lastName"]').type("J@m£s");
+            cy.get('input[name="lastName"]').invoke('val').should('not.match', /^[a-zA-Z]{1,50}$/);
+            cy.get('input[name="lastName"]').clear();
+        });
+    });
 });
 
 export {};
