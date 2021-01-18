@@ -113,7 +113,8 @@ server.get("/callback_list", function (req, res) {
   const queryObj = req.query;
   let helpRequests = inMemDb.help_requests; // starting point
 
-  replaceObjectKey(queryObj, "call_type", "help_needed");
+  if (queryObj.hasOwnProperty("call_type"))
+    replaceObjectKey(queryObj, "call_type", "help_needed");
 
   for (param in queryObj)
     helpRequests = helpRequests.filter(
