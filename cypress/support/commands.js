@@ -27,7 +27,3 @@
 Cypress.Commands.add("getBySel", (selector, ...args) => {
     return cy.get(`[data-cy=${selector}]`, ...args);
   });
-
-Cypress.Commands.add("findBySel", (selector, ...args) => {
-    return cy.find(`[data-cy=${selector}]`, ...args);
-  });
