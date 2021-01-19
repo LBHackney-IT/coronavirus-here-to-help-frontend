@@ -3,6 +3,7 @@ import Layout from "../../components/layout";
 import { Checkbox, RadioButton } from "../../components/Form";
 import KeyInformation from "../../components/KeyInformation/KeyInformation";
 import CaseNotes from "../../components/CaseNotes/CaseNotes";
+import Link from "next/link";
 
 export default function addSupportPage() {
 	const spokeToResidentCallOutcomes = [
@@ -32,17 +33,9 @@ export default function addSupportPage() {
 	return (
 		<Layout>
 			<div>
-				<a
-					href="#"
-					class="govuk-back-link"
-					style={{
-						marginTop: "-40px",
-						display: "block",
-						borderBottom: "none",
-					}}
-				>
-					Back
-				</a>
+			<Link href="/">
+                <a href="#" class="govuk-back-link">Back</a>
+            </Link>
 				<div class="govuk-grid-row">
 					<div class="govuk-grid-column-one-quarter-from-desktop sticky-magic">
 						<KeyInformation />
