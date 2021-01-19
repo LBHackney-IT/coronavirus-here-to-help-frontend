@@ -26,3 +26,11 @@ describe('Callbacks list page filters callbacks correctly', () => {
         })
     });
 });
+
+describe('Navigating Away from Callbacks list page', () => {
+    it('Callbacks are retrieved and mapped to table rows', () => {
+        cy.visit(`http://localhost:3000/callback-list`);
+        cy.getBySel('callbacks-table').find('tbody > tr').find('td:has(a:contains("View"))').eq(1).find('a').click({force: true});
+        cy.url().should('match', /\/helpcase-profile\/\d+$/);
+    });
+});
