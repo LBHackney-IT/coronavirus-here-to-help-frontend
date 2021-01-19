@@ -11,6 +11,11 @@ describe('Callbacks list page displays and maps data correctly', () => {
         cy.visit(`http://localhost:3000/callback-list`);
         cy.getBySel('call-handlers-dropdown').find('option').its('length').should('be.gte', 1) // 1st item is default
     });
+    it('Dropdowns have correct default values', () => {
+        cy.visit(`http://localhost:3000/callback-list`);
+        cy.getBySel('help-type-dropdown').find('option').eq(0).should('have.text', 'All');
+        cy.getBySel('call-handlers-dropdown').find('option').eq(0).should('have.text', 'Assigned to');
+    });
 });
 
 describe('Callbacks list page filters callbacks correctly', () => {
@@ -38,7 +43,7 @@ describe('Callbacks list page filters callbacks correctly', () => {
 describe('Navigating Away from Callbacks list page', () => {
     it('Callbacks are retrieved and mapped to table rows', () => {
         cy.visit(`http://localhost:3000/callback-list`);
-        cy.getBySel('callbacks-table').find('tbody > tr').find('td:has(a:contains("View"))').eq(1).find('a').click({force: true});
+        cy.getBySel('callbacks-table').find('tbody > tr').find('td:has(a:contains("View"))').eq(0).find('a').click({force: true});
         cy.url().should('match', /\/helpcase-profile\/\d+$/);
     });
 });
