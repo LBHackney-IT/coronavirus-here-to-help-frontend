@@ -10,17 +10,9 @@ export default function HelpcaseProfile() {
 	return (
 		<Layout>
 			<div>
-				<a
-					href="#"
-					class="govuk-back-link"
-					style={{
-						marginTop: "-40px",
-						display: "block",
-						borderBottom: "none",
-					}}
-				>
-					Back
-				</a>
+			<Link href="/">
+                <a href="#" class="govuk-back-link">Back</a>
+            </Link>
 				<div class="govuk-grid-row">
 					<div class="govuk-grid-column-one-quarter-from-desktop sticky-magic">
 						<KeyInformation />
