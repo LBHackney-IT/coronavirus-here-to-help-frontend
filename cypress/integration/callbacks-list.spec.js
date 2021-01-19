@@ -1,7 +1,15 @@
-describe('Callbacks list page displays callbacks table correctly', () => {
+describe('Callbacks list page displays and maps data correctly', () => {
     it('Callbacks are retrieved and mapped to table rows', () => {
         cy.visit(`http://localhost:3000/callback-list`);
-        cy.getBySel('callbacks-table').find('tr').its('length').should('be.gte', 1) // 1st row is thead
+        cy.getBySel('callbacks-table').find('tbody > tr').its('length').should('be.gte', 0)
+    });
+    it('Help types are mapped to help case type dropdown options', () => {
+        cy.visit(`http://localhost:3000/callback-list`);
+        cy.getBySel('help-type-dropdown').find('option').its('length').should('be.gte', 1) // 1st item is default
+    });
+    it('Call handlers are mapped to call handlers dropdown options', () => {
+        cy.visit(`http://localhost:3000/callback-list`);
+        cy.getBySel('call-handlers-dropdown').find('option').its('length').should('be.gte', 1) // 1st item is default
     });
 });
 
