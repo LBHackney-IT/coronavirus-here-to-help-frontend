@@ -94,6 +94,7 @@ export default function CallbacksListPage() {
               <Dropdown
                 dropdownItems={callHandlers}
                 onChange={handleCallHandlerChange}
+                data-cy="call-handlers-dropdown"
               />
             </div>
           </div>

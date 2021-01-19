@@ -14,4 +14,15 @@ describe('Callbacks list page filters callbacks correctly', () => {
             cy.getBySel('callbacks-table').find('tbody > tr').its('length').should('eq', size);
          });
     });
+
+    it('Upon selecting Call Handlers dropdown value, callbacks get filtered by that value', () => {
+        cy.visit(`http://localhost:3000/callback-list`);
+        cy.getBySel('call-handlers-dropdown').find('option').eq(4).invoke('val').then((callHandlerVal) => {
+            cy.getBySel('callbacks-table').find('tr').find(`td:has(a[title="${callHandlerVal}"])`).its('length').then((size) => {
+                cy.getBySel('call-handlers-dropdown').select(callHandlerVal);
+                cy.wait(1000);
+                cy.getBySel('callbacks-table').find('tbody > tr').its('length').should('eq', size);
+             });
+        })
+    });
 });
