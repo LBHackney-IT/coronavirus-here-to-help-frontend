@@ -15,7 +15,7 @@ export default function CallbacksList({ callbacks }) {
         Displaying {callbacks.length} record(s)
       </p>
 
-      <table class="govuk-table">
+      <table class="govuk-table" data-cy="callbacks-table">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header">
