@@ -1,8 +1,8 @@
 import React from "react";
-import Layout from "../../components/layout";
-import { Checkbox, RadioButton } from "../../components/Form";
-import KeyInformation from "../../components/KeyInformation/KeyInformation";
-import CaseNotes from "../../components/CaseNotes/CaseNotes";
+import Layout from "../components/layout";
+import { Checkbox, RadioButton } from "../components/Form";
+import KeyInformation from "../components/KeyInformation/KeyInformation";
+import CaseNotes from "../components/CaseNotes/CaseNotes";
 import Link from "next/link";
 
 export default function addSupportPage() {

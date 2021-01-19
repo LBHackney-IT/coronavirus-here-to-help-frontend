@@ -1,10 +1,10 @@
 import React from "react";
-import Layout from "../../components/layout";
-import SupportTable from "../../components/SupportTable/SupportTable";
-import KeyInformation from "../../components/KeyInformation/KeyInformation";
-import CaseNotes from "../../components/CaseNotes/CaseNotes";
+import Layout from "../components/layout";
+import SupportTable from "../components/SupportTable/SupportTable";
+import KeyInformation from "../components/KeyInformation/KeyInformation";
+import CaseNotes from "../components/CaseNotes/CaseNotes";
 import Link from "next/link";
-import { Button } from "../../components/Form";
+import { Button } from "../components/Form";
 
 export default function HelpcaseProfile() {
 	return (
