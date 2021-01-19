@@ -9,13 +9,13 @@ export default function RadioButton({ radioButtonItems }) {
                     <input
                         class="govuk-radios__input"
                         id={radioButtonItem}
-                        name="HelpNeeded"
+                        name={radioButtonItem}
                         type="radio"
                         value={radioButtonItem}
                     />
                     <label
                         class="govuk-label govuk-radios__label"
-                        for="HelpNeeded"
+                        for={radioButtonItem}
                         style={{marginBottom: "15px"}}
                     >
                         {radioButtonItem}
