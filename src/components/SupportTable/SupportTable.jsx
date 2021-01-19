@@ -32,7 +32,7 @@ export default function SupportTable() {
 							</td>
 							<td class="govuk-table__cell">Call rescheduled</td>
 							<td class="govuk-table__cell govuk-table__cell--numeric">
-								<a href="/onecall?filter=ct">View</a>
+								<a href="/helpcase-profile/1/call-starter">View</a> {/* Will filter case notes accordingly  */}
 							</td>
 						</tr>
 						<tr class="govuk-table__row">
@@ -41,7 +41,7 @@ export default function SupportTable() {
 							</td>
 							<td class="govuk-table__cell">Follow-up</td>
 							<td class="govuk-table__cell govuk-table__cell--numeric">
-								<a href="/onecall?filter=shield">View</a>
+								<a href="/helpcase-profile/1/call-starter">View</a> {/* Will filter case notes accordingly  */}
 							</td>
 						</tr>
 						<tr class="govuk-table__row">
@@ -50,7 +50,7 @@ export default function SupportTable() {
 							</td>
 							<td class="govuk-table__cell">Call</td>
 							<td class="govuk-table__cell govuk-table__cell--numeric">
-								<a href="/onecall?filter=hr">View</a>
+								<a href="/helpcase-profile/1/call-starter">View</a> {/* Will filter case notes accordingly  */}
 							</td>
 						</tr>
 					</tbody>
