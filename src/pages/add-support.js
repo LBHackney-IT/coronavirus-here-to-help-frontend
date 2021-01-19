@@ -61,6 +61,7 @@ export default function addSupportPage() {
 
 											<RadioButton
 												radioButtonItems={callTypes}
+												name="HelpNeeded"
 											/>
 										</fieldset>
 									</div>
@@ -245,6 +246,7 @@ export default function addSupportPage() {
 																radioButtonItems={
 																	callTypes
 																}
+																name="SupportType"
 															/>
 														</fieldset>
 													</div>
@@ -258,6 +260,7 @@ export default function addSupportPage() {
 																radioButtonItems={
 																	whoMadeInitialContact
 																}
+																name="InitialContact"
 															/>
 														</fieldset>
 													</div>
@@ -508,6 +511,7 @@ export default function addSupportPage() {
 													radioButtonItems={
 														numberOfChildrenUnder18
 													}
+													name="ChildrenUnder18"
 												/>
 											</fieldset>
 										</div>
