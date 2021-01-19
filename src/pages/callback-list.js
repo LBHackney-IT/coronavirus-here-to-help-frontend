@@ -87,6 +87,7 @@ export default function CallbacksListPage() {
               <Dropdown
                 dropdownItems={callTypes}
                 onChange={handleCallTypeChange}
+                data-cy="help-type-dropdown"
               />
             </div>
             <div class="govuk-grid-column-one-third">
