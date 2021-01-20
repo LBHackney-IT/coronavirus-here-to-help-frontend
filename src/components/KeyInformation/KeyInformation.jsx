@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./KeyInformation.module.scss";
 
 export default function KeyInformation({ resident }) {
   const numbers = resident.ContactTelephoneNumber.concat(
@@ -6,15 +7,7 @@ export default function KeyInformation({ resident }) {
   );
   return (
     <div>
-      <div
-        style={{
-          padding: "20px",
-          marginBottom: "20px",
-          position: "relative",
-          fontFamily: "sans-serif",
-          border: "1px solid #b1b4b6"
-        }}
-      >
+      <div className={styles["key-information-box"]}>
         <h3 style={{ fontFamily: "sans-serif", fontSize: "22px" }}>
           Contact details
         </h3>
@@ -73,14 +66,7 @@ export default function KeyInformation({ resident }) {
         </a>
       </div>
 
-      <div
-        style={{
-          padding: "20px",
-          position: "relative",
-          fontFamily: "sans-serif",
-          border: "1px solid #b1b4b6"
-        }}
-      >
+      <div className={styles["key-information-box"]}>
         <h3 style={{ fontFamily: "sans-serif", fontSize: "20px" }}>
           Key information
         </h3>
