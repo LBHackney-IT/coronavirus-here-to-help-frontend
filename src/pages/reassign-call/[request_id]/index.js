@@ -9,7 +9,7 @@ import { HelpRequestGateway } from "../../../gateways/help-request";
 export default function ReassignCalls() {
   const router = useRouter();
 
-  const { request_id, resident_id } = router.query; //fails upon refreshing for some reason
+  const { request_id, resident_id } = router.query;
 
   const getCallHandlers = async () => {
     const gateway = new CallHandlerGateway();
@@ -57,3 +57,9 @@ export default function ReassignCalls() {
     </Layout>
   );
 }
+
+export const getServerSideProps = async () => {
+  return {
+    props: {},
+  };
+};
