@@ -15,7 +15,7 @@ export default function callStarter() {
                 <a href="#" class="govuk-back-link">Back</a>
             </Link>
                 <div class="govuk-grid-column-one-quarter-from-desktop sticky-magic">
-                    <KeyInformation />
+                    <KeyInformation resident={{}}/>
                 </div>
 
 				<h2 class="govuk-heading-l">Start a conversation</h2>

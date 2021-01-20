@@ -2,14 +2,14 @@ import React from "react";
 import styles from "./KeyInformation.module.scss";
 
 export default function KeyInformation({ resident }) {
-  const numbers = resident.ContactTelephoneNumber.concat(
+  const numbers = resident.ContactTelephoneNumber?.concat(
     resident.ContactMobileNumber
   );
   return (
     <div>
       <div className={styles["key-information-box"]}>
         <h3 class="govuk-heading-s">Contact details</h3>
-        {numbers.map((number, index) => {
+        {numbers?.map((number, index) => {
           return (
             <p data-testid={`key-information_phone-number_${index}`}>
               Phone {index + 1}: {number}

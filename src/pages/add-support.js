@@ -38,7 +38,7 @@ export default function addSupportPage() {
             </Link>
 				<div class="govuk-grid-row">
 					<div class="govuk-grid-column-one-quarter-from-desktop sticky-magic">
-						<KeyInformation />
+						<KeyInformation resident={{}}/>
 					</div>
 
 					<div class="govuk-grid-column-three-quarters-from-desktop">
