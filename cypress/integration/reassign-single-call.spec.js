@@ -20,6 +20,15 @@ describe('Reassign single call page navigation', () => {
             });
         });
     });
+
+    it('Back button should route back to Callbacks list page', () => {
+       navigateToReassignSingleCallPage(() => {
+           cy.getBySel('back-button').click({force: true});
+           cy.wait(500);
+           cy.url().should('match', /\/callback-list$/);
+       });
+    });
+
 });
 
 describe('Reassign single call page displays and maps data correctly', () => {

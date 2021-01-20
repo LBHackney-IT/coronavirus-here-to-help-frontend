@@ -39,7 +39,7 @@ export default function ReassignCalls() {
     <Layout>
       <div>
         <Link href="/callback-list">
-          <a href="#" class="govuk-back-link">
+          <a href="#" class="govuk-back-link" data-cy="back-button">
             Back
           </a>
         </Link>
