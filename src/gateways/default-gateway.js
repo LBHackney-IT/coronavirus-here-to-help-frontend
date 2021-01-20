@@ -1,19 +1,32 @@
 import axios from "axios";
 
 export class DefaultGateway {
-    async getFromUrl(url) {
-        const host = "http://localhost:3001";
+  host = "http://localhost:3001";
 
-        url = `${host}/${url}`;
+  createFullUrl(url) {
+    return `${this.host}/${url}`;
+  }
 
-        console.log(url);
+  async getFromUrl(url) {
+    url = this.createFullUrl(url);
 
-        const res = await axios.get(url, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
+    console.log(url);
 
-        return res.data;
-    }
+    const res = await axios.get(url, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return res.data;
+  }
+
+  async putToUrl(url, body) {
+    const res = await axios.put(this.createFullUrl(url), body, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data;
+  }
 }
