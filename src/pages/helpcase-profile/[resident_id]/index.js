@@ -6,7 +6,7 @@ import CaseNotes from "../../../components/CaseNotes/CaseNotes";
 import Link from "next/link";
 import { Button } from "../../../components/Form";
 import { useRouter } from "next/router";
-import axios from "axios";
+import { ResidentGateway } from "../../../gateways/resident";
 
 export default function HelpcaseProfile({ resident_id, resident }) {
   const router = useRouter();
@@ -62,16 +62,12 @@ HelpcaseProfile.getInitialProps = async ({
   res
 }) => {
   try {
-    const host = "http://localhost:3001"; //hardcode for now
-    const url = `${host}/residents/${resident_id}`;
-    const resident = await axios.get(url, {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
+    const gateway = new ResidentGateway();
+    const resident = await gateway.getResident(resident_id);
+
     return {
-      resident_id: resident_id,
-      resident: resident.data
+      resident_id,
+      resident
     };
   } catch (err) {
     console.Console(
