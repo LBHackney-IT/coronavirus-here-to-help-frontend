@@ -40,7 +40,10 @@ export default function ReassignCalls() {
         <form action="/callback-list" method="post">
           <h3 class="govuk-heading-m">Select a new call handler</h3>
           <div class="govuk-form-group">
-            <Dropdown dropdownItems={callHandlers} />
+            <Dropdown
+              dropdownItems={callHandlers}
+              value={helpRequest.assigned_to}
+            />
           </div>
           <div class="govuk-grid-row" id="btn-bottom-panel">
             <div class="govuk-grid-column-one-half">
