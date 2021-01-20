@@ -58,7 +58,9 @@ export default function CallbacksList({ callbacks }) {
                 <td class="govuk-table__cell ">
                   {callback.unsuccessful_call_attempts}
                 </td>
-                <td class="govuk-table__cell">{callback.follow_up_required}</td>
+                <td class="govuk-table__cell">
+                  {callback.follow_up_required ? "Yes" : "No"}
+                </td>
                 <td class="govuk-table__cell">
                   <Link
                     href={{
