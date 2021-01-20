@@ -40,10 +40,10 @@ export default function ReassignCalls() {
       <div>
         <Link href="/callback-list">
           <a href="#" class="govuk-back-link">
-            Back {request_id}/{resident_id}
+            Back
           </a>
         </Link>
-        <h1 class="govuk-heading-l">Reassign call to initials</h1>
+        <h1 class="govuk-heading-l">Reassign this call</h1>
         <form action="/callback-list" method="post">
           <h3 class="govuk-heading-m">Select a new call handler</h3>
           <div class="govuk-form-group">
