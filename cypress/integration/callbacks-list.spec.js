@@ -14,7 +14,7 @@ describe('Callbacks list page displays and maps data correctly', () => {
     it('Dropdowns have correct default values', () => {
         cy.visit(`http://localhost:3000/callback-list`);
         cy.getBySel('help-type-dropdown').find('option').eq(0).should('have.text', 'All');
-        cy.getBySel('call-handlers-dropdown').find('option').eq(0).should('have.text', 'Assigned to');
+        cy.getBySel('call-handlers-dropdown').find('option').eq(0).should('have.text', 'Assigned to all');
     });
 });
 

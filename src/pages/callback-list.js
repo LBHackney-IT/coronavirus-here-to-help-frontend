@@ -12,13 +12,13 @@ function CallbacksListPage({ callTypes }) {
   const [callHandlers, setCallHandlers] = useState([]);
   const [dropdowns, setDropdowns] = useState({
     call_type: "All",
-    assigned_to: "Assigned to",
+    assigned_to: "Assigned to all",
   });
 
   const getCallBacks = async () => {
     const queryParams = { ...dropdowns };
     if (queryParams.call_type === "All") delete queryParams["call_type"];
-    if (queryParams.assigned_to === "Assigned to")
+    if (queryParams.assigned_to === "Assigned to all")
       delete queryParams["assigned_to"];
 
     const gateway = new CallbackGateway();
@@ -39,7 +39,7 @@ function CallbacksListPage({ callTypes }) {
     const gateway = new CallHandlerGateway();
     const callhandler_list = await gateway.getCallHandler();
 
-    callhandler_list.unshift("Assigned to");
+    callhandler_list.unshift("Assigned to all");
 
     setCallHandlers(callhandler_list);
   };
@@ -90,4 +90,4 @@ CallbacksListPage.getInitialProps = async (ctx) => {
   return { callTypes: res };
 };
 
-export default CallbacksListPage
+export default CallbacksListPage;
