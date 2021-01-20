@@ -8,10 +8,7 @@ export default function KeyInformation({ resident }) {
   return (
     <div>
       <div className={styles["key-information-box"]}>
-        <h3 style={{ fontFamily: "sans-serif", fontSize: "22px" }}>
-          Contact details
-        </h3>
-        <br />
+        <h3 class="govuk-heading-s">Contact details</h3>
         {numbers.map((number, index) => {
           return (
             <p data-testid={`key-information_phone-number_${index}`}>
@@ -20,9 +17,7 @@ export default function KeyInformation({ resident }) {
           );
         })}
         <br />
-        <h4 class="govuk-heading-s" style={{ fontFamily: "sans-serif" }}>
-          Address
-        </h4>
+        <h3 class="govuk-heading-s">Address</h3>
         <p data-testid="key-information_resident-address">
           {resident.AddressFirstLine}
           <br />
@@ -33,9 +28,7 @@ export default function KeyInformation({ resident }) {
           {resident.PostCode}
         </p>
         <br />
-        <h4 class="govuk-heading-s" style={{ fontFamily: "sans-serif" }}>
-          Alternate contact:
-        </h4>
+        <h3 class="govuk-heading-s">Alternate contact:</h3>
         <p>
           Test Test
           <br />
@@ -46,30 +39,13 @@ export default function KeyInformation({ resident }) {
           Phone 2: 071839
         </p>
 
-        <a
-          href="/editresident"
-          style={{
-            textDecoration: "none",
-            position: "absolute",
-            top: "10px",
-            right: "10px",
-            fontSize: "15px",
-            lineHeight: "20px",
-            width: "20px",
-            textAlign: "center",
-            color: "#090",
-            margin: "0",
-            padding: "0"
-          }}
-        >
+        <a href="/editresident" className={styles["edit-link-icon"]}>
           ✎
         </a>
       </div>
 
       <div className={styles["key-information-box"]}>
-        <h3 style={{ fontFamily: "sans-serif", fontSize: "20px" }}>
-          Key information
-        </h3>
+        <h3 class="govuk-heading-s">Key information</h3>
         <br />
         <p>
           CEV
@@ -79,33 +55,12 @@ export default function KeyInformation({ resident }) {
           CEV Contact Tracing ID: SL 99 88 12 A
         </p>
         <br />
-        <h4
-          style={{
-            position: "relative",
-            fontFamily: "sans-serif",
-            fontSize: "22px"
-          }}
-        >
+        <h3 className="govuk-heading-s">
           Key notes:
-          <a
-            href="/editresident#down"
-            style={{
-              textDecoration: "none",
-              position: "absolute",
-              top: "0px",
-              right: "10px",
-              fontSize: "15px",
-              lineHeight: "20px",
-              width: "20px",
-              textAlign: "center",
-              color: "#090",
-              margin: "0",
-              padding: "0"
-            }}
-          >
+          <a href="/editresident#down" className={styles["edit-link-icon"]}>
             ✎
           </a>
-        </h4>
+        </h3>
         <br />
         <p>Calls Helpline often, highly anxious about Covid</p>
       </div>
