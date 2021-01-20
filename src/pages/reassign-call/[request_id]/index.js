@@ -4,10 +4,12 @@ import Layout from "../../../components/layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { CallHandlerGateway } from "../../../gateways/call-handler";
+import { HelpRequestGateway } from "../../../gateways/help-request";
 
 export default function ReassignCalls() {
   const router = useRouter();
-  const { request_id, resident_id } = router.query;
+
+  const { request_id, resident_id } = router.query; //fails upon refreshing for some reason
 
   const getCallHandlers = async () => {
     const gateway = new CallHandlerGateway();
@@ -15,8 +17,16 @@ export default function ReassignCalls() {
     setCallHandlers(callhandler_list);
   };
 
+  const getHelpRequest = async () => {
+    const gateway = new HelpRequestGateway();
+    const help_request = await gateway.getHelpRequest(resident_id, request_id);
+    setHelpRequest(help_request);
+  };
+
+  const [helpRequest, setHelpRequest] = useState({});
   const [callHandlers, setCallHandlers] = useState([]);
   useEffect(getCallHandlers, []);
+  useEffect(getHelpRequest, []);
 
   return (
     <Layout>
