@@ -8,7 +8,14 @@ export default function KeyInformation({ resident }) {
   return (
     <div>
       <div className={styles["key-information-box"]}>
-        <h3 class="govuk-heading-s">Contact details</h3>
+        <div>
+          <h3 className="govuk-heading-s">
+            Contact details
+            <a href="/editresident" className={styles["edit-link-icon"]}>
+              ✎
+            </a>
+          </h3>
+        </div>
         {numbers?.map((number, index) => {
           return (
             <p data-testid={`key-information_phone-number_${index}`}>
@@ -28,7 +35,7 @@ export default function KeyInformation({ resident }) {
           {resident.PostCode}
         </p>
         <br />
-        <h3 class="govuk-heading-s">Alternate contact:</h3>
+        {/* <h3 class="govuk-heading-s">Alternate contact:</h3>
         <p>
           Test Test
           <br />
@@ -37,16 +44,11 @@ export default function KeyInformation({ resident }) {
           Phone 1: 039384
           <br />
           Phone 2: 071839
-        </p>
-
-        <a href="/editresident" className={styles["edit-link-icon"]}>
-          ✎
-        </a>
+        </p> */}
       </div>
 
       <div className={styles["key-information-box"]}>
         <h3 class="govuk-heading-s">Key information</h3>
-        <br />
         <p>
           CEV
           <br />
@@ -55,16 +57,17 @@ export default function KeyInformation({ resident }) {
           CEV Contact Tracing ID: SL 99 88 12 A
         </p>
         <br />
-        <h3 className="govuk-heading-s">
-          Key notes:
-          <a href="/editresident#down" className={styles["edit-link-icon"]}>
-            ✎
-          </a>
-        </h3>
+        <div>
+          <h3 className="govuk-heading-s">
+            Key notes:
+            <a href="/editresident#down" className={styles["edit-link-icon"]}>
+              ✎
+            </a>
+          </h3>
+        </div>
         <br />
-        <p>Calls Helpline often, highly anxious about Covid</p>
+        <p>{resident.KeyNotes}</p>
       </div>
-
       <a
         href="#"
         class="minimize"
