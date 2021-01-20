@@ -27,7 +27,7 @@ export default function HelpcaseProfile({ resident_id, resident }) {
         </a>
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-one-quarter-from-desktop sticky-magic">
-            <KeyInformation />
+            <KeyInformation resident={resident} />
           </div>
 
           <div class="govuk-grid-column-three-quarters-from-desktop">
