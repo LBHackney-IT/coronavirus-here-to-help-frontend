@@ -28,6 +28,13 @@ export default function ReassignCalls() {
   useEffect(getCallHandlers, []);
   useEffect(getHelpRequest, []);
 
+  const handleAssignClick = async () => {
+    const gateway = new HelpRequestGateway();
+    await gateway.putHelpRequest(resident_id, request_id, helpRequest);
+    alert("Call handler reassigned"); // could probably have a better notification
+    // magic happens that routes back to callbacks list page automatically
+  };
+
   return (
     <Layout>
       <div>
@@ -43,6 +50,9 @@ export default function ReassignCalls() {
             <Dropdown
               dropdownItems={callHandlers}
               value={helpRequest.assigned_to}
+              onChange={(callHandler) => {
+                setHelpRequest({ ...helpRequest, assigned_to: callHandler });
+              }}
             />
           </div>
           <div class="govuk-grid-row" id="btn-bottom-panel">
@@ -50,7 +60,7 @@ export default function ReassignCalls() {
               <Button
                 text="Assign"
                 addClass="govuk-button govuk-!-margin-right-1"
-                onClick={() => alert("Call handler reassigned")}
+                onClick={handleAssignClick}
               />
               <Button text="Cancel" addClass="govuk-button--secondary" />
             </div>
