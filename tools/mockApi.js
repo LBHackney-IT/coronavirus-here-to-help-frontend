@@ -2,11 +2,12 @@ const { dataGenerator } = require("./createMockData");
 const jsonServer = require("json-server");
 const randexp = require("randexp").randexp;
 const faker = require("faker");
+const resident = require("./fixtures/resident.json");
 
 const server = jsonServer.create();
 const middlewares = jsonServer.defaults({
   // Display json-server's built in homepage when json-server starts.
-  static: "node_modules/json-server/public",
+  static: "node_modules/json-server/public"
 });
 const inMemDb = dataGenerator();
 const router = jsonServer.router(inMemDb);
@@ -20,7 +21,7 @@ server.use(
       "/residents/:residentId/help_requests?_embed=help_request_calls",
     "/search/resident?*": "/residents?$1",
     "/residents/:residentId/help_requests/:help_requestId/calls*":
-      "/help_request_calls$3",
+      "/help_request_calls$3"
   })
 );
 
@@ -44,7 +45,7 @@ function getFilteredHelpRequestsWithHelpRequestCalls(req, respData) {
     for (let i = 0; i < respData.length; i++) {
       const hreqId = respData[i].id;
       const assocCaseNotes = inMemDb.help_request_calls.filter(
-        (hrc) => hrc.help_requestId == hreqId
+        hrc => hrc.help_requestId == hreqId
       );
       respData[i].help_request_calls = assocCaseNotes;
     }
@@ -98,10 +99,9 @@ const isCallbackPredicate = (callbackRequired, InitialCallbackCompleted) =>
   (InitialCallbackCompleted == false && callbackRequired == false);
 
 // Is the following check correct?
-const unsuccessfulCalls = (collection) =>
-  collection.filter((c) =>
-    /refused_to_engage|wrong_number/.test(c.call_outcome)
-  ).length;
+const unsuccessfulCalls = collection =>
+  collection.filter(c => /refused_to_engage|wrong_number/.test(c.call_outcome))
+    .length;
 
 // because the url asks for param to be call_type, when in the db it's called help_needed
 const replaceObjectKey = (obj, currentKey, newKey) => {
@@ -118,20 +118,20 @@ server.get("/callback_list", function (req, res) {
 
   for (param in queryObj)
     helpRequests = helpRequests.filter(
-      (helpRequest) => helpRequest[param] == queryObj[param]
+      helpRequest => helpRequest[param] == queryObj[param]
     );
   // == instead of === for potential fields that contain numbers - allows avoid parsing
 
-  helpRequests = helpRequests.filter((hr) =>
+  helpRequests = helpRequests.filter(hr =>
     isCallbackPredicate(hr.callback_required, hr.initial_callback_completed)
   );
 
-  helpRequests = helpRequests.map((helpRequest) => {
+  helpRequests = helpRequests.map(helpRequest => {
     const resident = inMemDb.residents.find(
-      (r) => r.id == helpRequest.residentId
+      r => r.id == helpRequest.residentId
     );
     const calls = inMemDb.help_request_calls.filter(
-      (hrc) => hrc.help_requestId == helpRequest.id
+      hrc => hrc.help_requestId == helpRequest.id
     );
     const real_callback = {
       resident_name: [resident.first_name, resident.last_name].join(" "),
@@ -139,14 +139,14 @@ server.get("/callback_list", function (req, res) {
       address: [
         resident.address_first_line,
         resident.address_second_line,
-        resident.address_third_line,
+        resident.address_third_line
       ].join(", "),
       requested_date: faker.date.soon(7), // where does this info is supposed to come from?!!! Need to add field to db schema?
       type: helpRequest.help_needed,
       unsuccessful_call_attempts: unsuccessfulCalls(calls),
       follow_up_required: helpRequest.callback_required, // Is this correct assumption?
       assigned_to: helpRequest.assigned_to,
-      rescheduled_at: randexp(/((0\d)|(1\d)|(2[0-3])):[0-5]\d/), // Need to think about this one!!! Where is it stored? How do we set it on front-end?
+      rescheduled_at: randexp(/((0\d)|(1\d)|(2[0-3])):[0-5]\d/) // Need to think about this one!!! Where is it stored? How do we set it on front-end?
     };
     return real_callback;
   });
@@ -155,6 +155,18 @@ server.get("/callback_list", function (req, res) {
       return new Date(b.requested_date) - new Date(a.requested_date);
     })
   );
+});
+
+server.post("/residents/:residentId", function (req, res, next) {
+  req.params = {};
+  req.body["help_requestId"] = help_requestId;
+  next();
+});
+
+server.get("/residents/:residentId", (req, res) => {
+  console.log("Requesting resident with ID: ", req.params.residentId);
+
+  res.status(200).send(resident);
 });
 
 server.use(router);

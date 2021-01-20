@@ -6,6 +6,7 @@ import CaseNotes from "../../../components/CaseNotes/CaseNotes";
 import Link from "next/link";
 import { Button } from "../../../components/Form";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 export default function HelpcaseProfile({ helpr_id, resident }) {
   const router = useRouter();
@@ -35,6 +36,7 @@ export default function HelpcaseProfile({ helpr_id, resident }) {
             <h1
               class="govuk-heading-xl"
               style={{ marginTop: "0px", marginBottom: "40px" }}
+              data-testid="resident-name_header"
             >
               {resident.FirstName} {resident.LastName}
             </h1>
@@ -58,14 +60,20 @@ export default function HelpcaseProfile({ helpr_id, resident }) {
 
 HelpcaseProfile.getInitialProps = async ({ query: { helpr_id }, req, res }) => {
   try {
-    const resident = { FirstName: "Firstname", LastName: "Lastname" };
+    const host = "http://localhost:3001"; //hardcode for now
+    const url = `${host}/residents/${helpr_id}`;
+    const resident = await axios.get(url, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
     return {
       helpr_id: helpr_id,
-      resident: resident
+      resident: resident.data
     };
   } catch (err) {
-    console.log(
-      `Error getting resident props with help request ID ${helpr_id}`
+    console.Console(
+      `Error getting resident props with help request ID ${helpr_id}: ${err}`
     );
   }
 };
