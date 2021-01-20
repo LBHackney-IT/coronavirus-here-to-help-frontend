@@ -3,7 +3,7 @@ function navigateToReassignSingleCallPage(f) {
         cy.getBySel('call-handlers-dropdown').find('option').eq(4).invoke('val').then((callHandlerVal) => {
             cy.getBySel('callbacks-table').find(`tbody > tr:has(a[title="${callHandlerVal}"])`)
             .eq(0).find(`td:has(a[title])`).find('a').click({force: true});
-            cy.wait(500);
+            cy.wait(1500);
             f(callHandlerVal);
         })
     });
@@ -28,6 +28,14 @@ describe('Reassign single call page navigation', () => {
            cy.url().should('match', /\/callback-list$/);
        });
     });
+
+    it('Back button should route back to Callbacks list page', () => {
+        navigateToReassignSingleCallPage(() => {
+            cy.getBySel('cancel-button').click();
+            cy.wait(500);
+            cy.url().should('match', /\/callback-list$/);
+        });
+     });
 
 });
 
