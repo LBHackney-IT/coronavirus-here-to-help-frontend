@@ -61,8 +61,15 @@ export default function CallbacksList({ callbacks }) {
                 <td class="govuk-table__cell">{callback.follow_up_required}</td>
                 <td class="govuk-table__cell">
                   <Link
-                    href="/reassign-call/[help_request_id]"
-                    as={`/reassign-call/${callback.help_request_id}`}
+                    href={{
+                      pathname:
+                        "/reassign-call/[request_id]?resident_id=:[resident_id]",
+                      query: {
+                        request_id: callback.help_request_id,
+                        resident_id: callback.resident_id,
+                      },
+                    }}
+                    as={`/reassign-call/${callback.help_request_id}?resident_id=${callback.resident_id}`}
                   >
                     <a href="#" title={callback.assigned_to}>
                       {calcInitials(callback.assigned_to)}✎

@@ -16,13 +16,14 @@ const callHandlers = [
 
 export default function ReassignCalls() {
   const router = useRouter();
-  const { help_request_id } = router.query;
+  const { request_id, resident_id } = router.query;
+  console.log(router.query);
   return (
     <Layout>
       <div>
         <Link href="/callback-list">
           <a href="#" class="govuk-back-link">
-            Back {help_request_id}
+            Back {request_id}/{resident_id}
           </a>
         </Link>
         <h1 class="govuk-heading-l">Reassign call to initials</h1>
