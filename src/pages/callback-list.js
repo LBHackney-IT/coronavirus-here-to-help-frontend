@@ -1,20 +1,13 @@
 import Link from "next/link";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/layout";
 import CallbacksList from "../components/CallbacksList/CallbacksList";
 import { Dropdown } from "../components/Form";
-import axios from "axios";
-import { objectToQuery } from "./api/utilityFuncs";
+import { CallbackGateway } from "../gateways/callback";
+import { CallHandlerGateway } from "../gateways/call-handler";
+import { CallTypesGateway } from "../gateways/call-types";
 
-export default function CallbacksListPage() {
-  const callTypes = [
-    "All",
-    "Help Request",
-    "CEV",
-    "Welfare",
-    "Contact Tracing",
-  ];
-
+function CallbacksListPage({ callTypes }) {
   const [callbacks, setCallbacks] = useState([]);
   const [callHandlers, setCallHandlers] = useState([]);
   const [dropdowns, setDropdowns] = useState({
@@ -22,21 +15,16 @@ export default function CallbacksListPage() {
     assigned_to: "Assigned to",
   });
 
-  const host = "http://localhost:3001"; //hardcode for now
-
   const getCallBacks = async () => {
     const queryParams = { ...dropdowns };
     if (queryParams.call_type === "All") delete queryParams["call_type"];
     if (queryParams.assigned_to === "Assigned to")
       delete queryParams["assigned_to"];
 
-    const url = `${host}/callback_list${objectToQuery(queryParams)}`;
-    const res = await axios.get(url, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    setCallbacks(res.data);
+    const gateway = new CallbackGateway();
+    const callback_list = await gateway.getCallback(queryParams);
+
+    setCallbacks(callback_list);
   };
 
   const handleCallHandlerChange = (event) => {
@@ -48,25 +36,15 @@ export default function CallbacksListPage() {
   };
 
   const getCallHandlers = async () => {
-    const url = `${host}/call_handlers`;
-    axios
-      .get(url, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        const callHandlers = res.data;
-        callHandlers.unshift("Assigned to");
-        setCallHandlers(callHandlers);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const gateway = new CallHandlerGateway();
+    const callhandler_list = await gateway.getCallHandler();
+
+    callhandler_list.unshift("Assigned to");
+
+    setCallHandlers(callhandler_list);
   };
 
   useEffect(getCallBacks, [dropdowns]);
-
   useEffect(getCallHandlers, []);
 
   return (
@@ -105,3 +83,11 @@ export default function CallbacksListPage() {
     </Layout>
   );
 }
+
+CallbacksListPage.getInitialProps = async (ctx) => {
+  const gateway = new CallTypesGateway();
+  const res = await gateway.getCallTypes();
+  return { callTypes: res };
+};
+
+export default CallbacksListPage
