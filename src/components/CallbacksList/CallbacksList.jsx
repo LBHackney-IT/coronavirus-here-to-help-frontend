@@ -60,9 +60,14 @@ export default function CallbacksList({ callbacks }) {
                 </td>
                 <td class="govuk-table__cell">{callback.follow_up_required}</td>
                 <td class="govuk-table__cell">
-                  <a href="/reassign-call" title={callback.assigned_to}>
-                    {calcInitials(callback.assigned_to)}✎
-                  </a>
+                  <Link
+                    href="/reassign-call/[help_request_id]"
+                    as={`/reassign-call/${callback.help_request_id}`}
+                  >
+                    <a href="#" title={callback.assigned_to}>
+                      {calcInitials(callback.assigned_to)}✎
+                    </a>
+                  </Link>
                 </td>
                 <td class="govuk-table__cell">{callback.rescheduled_at}</td>
                 <td class="govuk-table__cell">
