@@ -31,7 +31,7 @@ export default function ReassignCalls() {
   const handleAssignClick = async () => {
     const gateway = new HelpRequestGateway();
     await gateway.putHelpRequest(resident_id, request_id, helpRequest);
-    alert("Call handler reassigned"); // could probably have a better notification
+    //alert("Call handler reassigned"); // could probably have a better notification - disabling alert for the sake of cypress
     // magic happens that routes back to callbacks list page automatically
   };
 
@@ -53,6 +53,7 @@ export default function ReassignCalls() {
               onChange={(callHandler) => {
                 setHelpRequest({ ...helpRequest, assigned_to: callHandler });
               }}
+              data-cy="call-handlers-dropdown"
             />
           </div>
           <div class="govuk-grid-row" id="btn-bottom-panel">
