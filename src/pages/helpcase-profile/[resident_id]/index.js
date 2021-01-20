@@ -8,11 +8,9 @@ import { Button } from "../../../components/Form";
 import { useRouter } from "next/router";
 import axios from "axios";
 
-export default function HelpcaseProfile({ helpr_id, resident }) {
+export default function HelpcaseProfile({ resident_id, resident }) {
   const router = useRouter();
 
-  console.log(router.query);
-  //useEffect();
   return (
     <Layout>
       <div>
@@ -25,7 +23,7 @@ export default function HelpcaseProfile({ helpr_id, resident }) {
             borderBottom: "none"
           }}
         >
-          Back {helpr_id}
+          Back {resident_id}
         </a>
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-one-quarter-from-desktop sticky-magic">
@@ -58,22 +56,26 @@ export default function HelpcaseProfile({ helpr_id, resident }) {
   );
 }
 
-HelpcaseProfile.getInitialProps = async ({ query: { helpr_id }, req, res }) => {
+HelpcaseProfile.getInitialProps = async ({
+  query: { resident_id },
+  req,
+  res
+}) => {
   try {
     const host = "http://localhost:3001"; //hardcode for now
-    const url = `${host}/residents/${helpr_id}`;
+    const url = `${host}/residents/${resident_id}`;
     const resident = await axios.get(url, {
       headers: {
         "Content-Type": "application/json"
       }
     });
     return {
-      helpr_id: helpr_id,
+      resident_id: resident_id,
       resident: resident.data
     };
   } catch (err) {
     console.Console(
-      `Error getting resident props with help request ID ${helpr_id}: ${err}`
+      `Error getting resident props with help request ID ${resident_id}: ${err}`
     );
   }
 };

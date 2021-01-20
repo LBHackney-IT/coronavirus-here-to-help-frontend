@@ -67,8 +67,8 @@ export default function CallbacksList({ callbacks }) {
                 <td class="govuk-table__cell">{callback.rescheduled_at}</td>
                 <td class="govuk-table__cell">
                   <Link
-                    href="/helpcase-profile/[helpr_id]"
-                    as={`/helpcase-profile/${callback.id}`}
+                    href="/helpcase-profile/[resident_id]"
+                    as={`/helpcase-profile/${callback.resident_id}`}
                   >
                     <a href="#">View</a>
                   </Link>
