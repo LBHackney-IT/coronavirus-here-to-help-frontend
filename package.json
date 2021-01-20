@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start",
     "test": "jest",
-    "test:e2e:ci": "cypress run"
+    "test:e2e:ci": "cypress run",
+    "cypress:local": "npx cypress open"
   },
   "dependencies": {
     "axios": "^0.21.1",

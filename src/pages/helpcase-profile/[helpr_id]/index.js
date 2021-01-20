@@ -7,9 +7,8 @@ import Link from "next/link";
 import { Button } from "../../../components/Form";
 import { useRouter } from "next/router";
 
-export default function HelpcaseProfile() {
+export default function HelpcaseProfile({ helpr_id, resident }) {
   const router = useRouter();
-  const { helpr_id } = router.query;
 
   console.log(router.query);
   //useEffect();
@@ -22,7 +21,7 @@ export default function HelpcaseProfile() {
           style={{
             marginTop: "-40px",
             display: "block",
-            borderBottom: "none",
+            borderBottom: "none"
           }}
         >
           Back {helpr_id}
@@ -37,7 +36,7 @@ export default function HelpcaseProfile() {
               class="govuk-heading-xl"
               style={{ marginTop: "0px", marginBottom: "40px" }}
             >
-              Name Surname
+              {resident.FirstName} {resident.LastName}
             </h1>
 
             <SupportTable />
@@ -56,3 +55,17 @@ export default function HelpcaseProfile() {
     </Layout>
   );
 }
+
+HelpcaseProfile.getInitialProps = async ({ query: { helpr_id }, req, res }) => {
+  try {
+    const resident = { FirstName: "Firstname", LastName: "Lastname" };
+    return {
+      helpr_id: helpr_id,
+      resident: resident
+    };
+  } catch (err) {
+    console.log(
+      `Error getting resident props with help request ID ${helpr_id}`
+    );
+  }
+};
