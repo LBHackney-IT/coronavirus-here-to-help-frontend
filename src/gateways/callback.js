@@ -1,17 +1,9 @@
 import axios from 'axios';
 import {objectToQuery} from "../pages/api/utilityFuncs";
+import { DefaultGateway } from "../gateways/default-gateway";
 
-export class CallbackGateway {
+export class CallbackGateway extends DefaultGateway {
     async getCallback(queryParams) {
-        const host = "http://localhost:3001";
-
-        const url = `${host}/callback_list${objectToQuery(queryParams)}`;
-        const res = await axios.get(url, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-
-        return res.data;
+        return await this.getFromUrl(`callback_list${objectToQuery(queryParams)}`);
     }
 }
