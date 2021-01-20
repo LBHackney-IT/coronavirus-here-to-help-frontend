@@ -7,11 +7,9 @@ import Link from "next/link";
 import { Button } from "../../../components/Form";
 import { useRouter } from "next/router";
 
-export default function HelpcaseProfile({ helpr_id, resident }) {
+export default function HelpcaseProfile({ resident_id, resident }) {
   const router = useRouter();
 
-  console.log(router.query);
-  //useEffect();
   return (
     <Layout>
       <div>
@@ -21,10 +19,10 @@ export default function HelpcaseProfile({ helpr_id, resident }) {
           style={{
             marginTop: "-40px",
             display: "block",
-            borderBottom: "none"
+            borderBottom: "none",
           }}
         >
-          Back {helpr_id}
+          Back {resident_id}
         </a>
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-one-quarter-from-desktop sticky-magic">
@@ -56,16 +54,16 @@ export default function HelpcaseProfile({ helpr_id, resident }) {
   );
 }
 
-HelpcaseProfile.getInitialProps = async ({ query: { helpr_id }, req, res }) => {
+HelpcaseProfile.getInitialProps = async ({ query: { resident_id }, req, res }) => {
   try {
     const resident = { FirstName: "Firstname", LastName: "Lastname" };
     return {
-      helpr_id: helpr_id,
+      resident_id: resident_id,
       resident: resident
     };
   } catch (err) {
     console.log(
-      `Error getting resident props with help request ID ${helpr_id}`
+      `Error getting resident props with help request ID ${resident_id}`
     );
   }
 };

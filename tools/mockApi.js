@@ -135,7 +135,7 @@ server.get("/callback_list", function (req, res) {
     );
     const real_callback = {
       resident_name: [resident.first_name, resident.last_name].join(" "),
-      id: resident.id,
+      resident_id: resident.id,
       address: [
         resident.address_first_line,
         resident.address_second_line,
