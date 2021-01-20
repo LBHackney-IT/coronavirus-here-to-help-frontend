@@ -8,9 +8,9 @@ export default function Dropdown({ onChange, dropdownItems, ...otherProps }) {
         onChange={(e) => onChange(e.target.value)}
         {...otherProps}
       >
-        {dropdownItems.map((dropdownItem) => {
+        {dropdownItems.map((dropdownItem, index) => {
           return (
-            <option id={dropdownItem} value={dropdownItem}>
+            <option key={index} value={dropdownItem}>
               {dropdownItem}
             </option>
           );
