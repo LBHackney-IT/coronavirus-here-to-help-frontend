@@ -145,12 +145,12 @@ server.get("/callback_list", function (req, res) {
         resident.address_second_line,
         resident.address_third_line,
       ].join(", "),
-      requested_date: faker.date.soon(7), // where does this info is supposed to come from?!!! Need to add field to db schema?
+      requested_date: helpRequest.requested_date, // where does this info is supposed to come from?!!! Need to add field to db schema? For now dropped it under a HelpRequest
       type: helpRequest.help_needed,
       unsuccessful_call_attempts: unsuccessfulCalls(calls),
       follow_up_required: helpRequest.callback_required, // Is this correct assumption?
       assigned_to: helpRequest.assigned_to,
-      rescheduled_at: randexp(/((0\d)|(1\d)|(2[0-3])):[0-5]\d/), // Need to think about this one!!! Where is it stored? How do we set it on front-end?
+      rescheduled_at: helpRequest.rescheduled_at, // Need to think about this one!!! Where is it stored? How do we set it on front-end? For now I'll drop it into under a help request
     };
     return real_callback;
   });

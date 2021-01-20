@@ -86,12 +86,15 @@ function createHelpRequest(autoincrId, residentId, callHandlersList) {
     relationshipWithResident = faker.lorem.word();
   }
 
+  // Callback Required:
+  const callbackRequired = Math.random() > 0.5 ? randomNullableBool() : true;
+
   return {
     id: autoincrId,
     residentId: residentId, // name change so the relationships would work
     assigned_to: assignedCallHandler,
     advice_notes: faker.lorem.words(),
-    callback_required: randomNullableBool(),
+    callback_required: callbackRequired,
     current_support: faker.random.word(), // no idea what this is!
     current_support_feedback: faker.lorem.words(5),
     date_time_recorded: faker.date.recent(40),
@@ -124,6 +127,10 @@ function createHelpRequest(autoincrId, residentId, callHandlersList) {
       Math.random() < 0.2 ? faker.lorem.words(5) : "",
     when_is_medicines_delivered:
       Math.random() < 0.2 ? faker.date.weekday() : "",
+    rescheduled_at: callbackRequired
+      ? randexp(/((0\d)|(1\d)|(2[0-3])):[0-5]\d/)
+      : "",
+    requested_date: faker.date.soon(7),
   };
 }
 
