@@ -1,23 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Dropdown } from "../../../components/Form";
 import Layout from "../../../components/layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
-const callHandlers = [
-  "Annalyvia",
-  "Ryan",
-  "Ben",
-  "Liudvikas",
-  "Kat",
-  "Marten",
-  "John",
-];
+import { CallHandlerGateway } from "../../../gateways/call-handler";
 
 export default function ReassignCalls() {
   const router = useRouter();
   const { request_id, resident_id } = router.query;
-  console.log(router.query);
+
+  const getCallHandlers = async () => {
+    const gateway = new CallHandlerGateway();
+    const callhandler_list = await gateway.getCallHandler();
+    setCallHandlers(callhandler_list);
+  };
+
+  const [callHandlers, setCallHandlers] = useState([]);
+  useEffect(getCallHandlers, []);
+
   return (
     <Layout>
       <div>
