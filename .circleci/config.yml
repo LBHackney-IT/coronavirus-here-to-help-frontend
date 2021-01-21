@@ -152,6 +152,5 @@ workflows:
             - permit-deploy-production
 
       - deploy-production:
-          context: api-assume-role-production-context
           requires:
             - assume-role-production
