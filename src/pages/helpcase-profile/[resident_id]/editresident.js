@@ -50,8 +50,16 @@ export default function HelpcaseProfile({ resident_id, resident }) {
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
                 <CaseNotes />
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break" />
-                <Button text="Update" addClass="govuk-!-margin-right-1" onClick={() => logNewResidentDetails()} />
-                <Button text="Cancel" addClass="govuk-button--secondary" onClick={() => logNewResidentDetails()} />
+                <Button
+                    text="Update"
+                    addClass="govuk-!-margin-right-1"
+                    onClick={() => logNewResidentDetails()}
+                />
+                <Button
+                    text="Cancel"
+                    addClass="govuk-button--secondary"
+                    onClick={() => logNewResidentDetails()}
+                />
             </div>
         </Layout>
     );
@@ -67,6 +75,6 @@ HelpcaseProfile.getInitialProps = async ({ query: { resident_id }, req, res }) =
             resident
         };
     } catch (err) {
-        console.Console(`Error getting resident props with help request ID ${resident_id}: ${err}`);
+        console.log(`Error getting resident props with help request ID ${resident_id}: ${err}`);
     }
 };
