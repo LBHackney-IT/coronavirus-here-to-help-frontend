@@ -56,9 +56,9 @@ jobs:
       - *attach_workspace
       - checkout
 
-      - run:
-          name: Run linter
-          command: npm run lint
+#      - run:
+#          name: Run linter
+#          command: npm run lint
 
       - run:
           name: Run prettier
