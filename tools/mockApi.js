@@ -63,7 +63,7 @@ router.render = (req, res) => {
   // Json-Server doesn't have nesting support filtered objects, hence this
   response = getFilteredHelpRequestsWithHelpRequestCalls(req, response);
   // Override the POST responses to return only Id as specified
-  //response = returnOnlyCreatedObjectsIdForPOSTRequests(req, response);
+  response = returnOnlyCreatedObjectsIdForPOSTRequests(req, response);
 
   res.jsonp(response);
 };
