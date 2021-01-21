@@ -29,14 +29,24 @@ describe('Reassign single call page navigation', () => {
        });
     });
 
-    it('Back button should route back to Callbacks list page', () => {
+    it('Cancel button should route back to Callbacks list page', () => {
         navigateToReassignSingleCallPage(() => {
             cy.getBySel('cancel-button').click();
             cy.wait(500);
             cy.url().should('match', /\/callback-list$/);
         });
-     });
+    });
 
+    it('Assign button should route back to Callbacks list page', () => {
+        navigateToReassignSingleCallPage((callHandler) => {
+            cy.getBySel('call-handlers-dropdown').find(`option:not(:contains(${callHandler}))`).eq(0).invoke('val').then((newCH) => {
+                cy.getBySel('call-handlers-dropdown').select(newCH);
+                cy.getBySel('assign-button').click()
+                cy.wait(500);
+                cy.url().should('match', /\/callback-list$/);
+            })
+        });
+    });
 });
 
 describe('Reassign single call page displays and maps data correctly', () => {
