@@ -39,7 +39,7 @@ CustomApp.getInitialProps = async (appContext) => {
   const user = req && res ? authoriseUser(req) : unsafeExtractUser();
   const props = { ...appProps, user };
 
-  if (pathIsWhitelisted(pathname)||1==1) {
+  if (pathIsWhitelisted(pathname)) {
     return props;
   }
 
