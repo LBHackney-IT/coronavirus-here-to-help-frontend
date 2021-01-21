@@ -15,9 +15,16 @@ export default function KeyInformation({ resident }) {
     <div>
       <div className={styles["key-information-box"]}>
         <div>
+          <a href="#" onClick={() => setHiddenValue()}>
+            {hidden && <p>Show</p>}
+            {!hidden && <p>Hide</p>}
+          </a>
           <h3 className="govuk-heading-s">
             Contact details
-            <a href="/editresident" className={styles["edit-link-icon"]}>
+            <a
+              href={`/helpcase-profile/${resident.Id}/editresident`}
+              className={styles["edit-link-icon"]}
+            >
               ✎
             </a>
           </h3>
@@ -31,7 +38,7 @@ export default function KeyInformation({ resident }) {
             );
           })}
           <br />
-          <h3 class="govuk-heading-s">Address</h3>
+          <h3 className="govuk-heading-s">Address</h3>
           <p data-testid="key-information_resident-address">
             {resident.AddressFirstLine}
             <br />
@@ -78,10 +85,6 @@ export default function KeyInformation({ resident }) {
           <p>{resident.KeyNotes}</p>
         </div>
       </div>
-      <a href="#" class="minimize" onClick={() => setHiddenValue()}>
-        {hidden && <p>Show</p>}
-        {!hidden && <p>Hide</p>}
-      </a>
     </div>
   );
 }
