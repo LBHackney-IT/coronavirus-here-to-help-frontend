@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from "next/link";
+import Link from 'next/link';
 import { Button } from '../components/Form';
 import Layout from '../components/layout';
 import { useState } from 'react';
@@ -8,8 +8,6 @@ import { ResidentGateway } from "../gateways/resident";
 
 
 export default function ResidentsList({res, postcode}) {
-
-    
     const [residents, setResidents] = useState(res);
 
     return (
@@ -37,12 +35,13 @@ export default function ResidentsList({res, postcode}) {
                             style={{marginLeft: '15em'}}
                     />
                 </div>
+                <ResidentList residents={residents} />
             </div>
-            <ResidentList residents={residents} />
-        </div>
-    </Layout>
-    )
+            </div>
+        </Layout>
+    );
 }
+
 ResidentsList.getInitialProps = async ({query}) => {
     let postcode = query.postcode.replace(/ /g,'')
     const firstName = query.firstName

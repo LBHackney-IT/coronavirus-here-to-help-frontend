@@ -71,15 +71,15 @@ describe('As a call handler, I want to search for a resident', () => {
     context('On the Resident lookup page', () => {
         it('User enters a postcode in the "Postcode" input field', () => {
             cy.visit(`http://localhost:3000/resident-search`);
-            cy.get('input[name="postcode"]').type("E7 0DE");
+            cy.get('input[name="PostCode"]').type('E7 0DE');
         });
 
         it('User clicks "Search" and is redirected to a list of residents matching the search', () => {
             cy.contains('Search').click();
-            cy.on("url:changed", (newUrl) => {
-                expect(newUrl).to.contain("residents-list");
+            cy.on('url:changed', (newUrl) => {
+                expect(newUrl).to.contain('residents-list');
             });
-            // cy.get('h1').should('contain', 'Search results'); 
+            // cy.get('h1').should('contain', 'Search results');
         });
     });
 });
