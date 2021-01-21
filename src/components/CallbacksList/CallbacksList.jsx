@@ -48,7 +48,11 @@ export default function CallbacksList({ callbacks }) {
         <tbody class="govuk-table__body">
           {callbacks.map((callback, index) => {
             return (
-              <tr class="govuk-table__row" key={index}>
+              <tr
+                class="govuk-table__row"
+                key={index}
+                data-cy={`r-${callback.help_request_id}`}
+              >
                 <td class="govuk-table__cell">{callback.resident_name}</td>
                 <td class="govuk-table__cell">{callback.address}</td>
                 <td class="govuk-table__cell">{callback.requested_date}</td>
