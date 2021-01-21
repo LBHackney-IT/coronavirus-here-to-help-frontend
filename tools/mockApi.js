@@ -1,8 +1,5 @@
 const { dataGenerator } = require("./createMockData");
 const jsonServer = require("json-server");
-const randexp = require("randexp").randexp;
-const faker = require("faker");
-const resident = require("./fixtures/resident.json");
 
 const server = jsonServer.create();
 const middlewares = jsonServer.defaults({
@@ -159,18 +156,6 @@ server.get("/callback_list", function (req, res) {
       return new Date(b.requested_date) - new Date(a.requested_date);
     })
   );
-});
-
-server.post("/residents/:residentId", function (req, res, next) {
-  req.params = {};
-  req.body["help_requestId"] = help_requestId;
-  next();
-});
-
-server.get("/residents/:residentId", (req, res) => {
-  console.log("Requesting resident with ID: ", req.params.residentId);
-
-  res.status(200).send(resident);
 });
 
 server.use(router);
