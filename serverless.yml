@@ -41,13 +41,13 @@ resources:
       Type: AWS::CloudFront::Distribution
       Properties:
         DistributionConfig:
-#          Aliases:
-#            - ${self:custom.aliases.${self:provider.stage}}
+          Aliases:
+            - ${self:custom.aliases.${self:provider.stage}}
           PriceClass: PriceClass_100
-#          ViewerCertificate:
-#            AcmCertificateArn: ${self:custom.certificate-arn.${self:provider.stage}}
-#            MinimumProtocolVersion: TLSv1.2_2018
-#            SslSupportMethod: sni-only
+          ViewerCertificate:
+            AcmCertificateArn: ${self:custom.certificate-arn.${self:provider.stage}}
+            MinimumProtocolVersion: TLSv1.2_2018
+            SslSupportMethod: sni-only
           DefaultCacheBehavior:
             TargetOriginId: ${self:service}-${self:provider.stage}-custom-origin
             ViewerProtocolPolicy: 'redirect-to-https'
@@ -85,18 +85,20 @@ custom:
         - eu-west-2
         - amazonaws.com
   aliases:
-    test: here-to-help-test.hackney.gov.uk
+    staging: here-to-help-staging.hackney.gov.uk
     production: here-to-help.hackney.gov.uk
   certificate-arn:
-#    staging: arn:aws:acm:us-east-1:*:certificate/*
-#    production: arn:aws:acm:us-east-1:*:certificate/*
+    staging: arn:aws:acm:us-east-1:*:certificate/*
+    production: arn:aws:acm:us-east-1:*:certificate/*
   securityGroups:
-    test:
-      - sg-0ebfce25888807a37
+    staging:
+      - sg-0166cbf56b7e77af0
     production:
- #     - sg-*
+      - sg-04b71cc889c5790e7
   subnets:
-    test:
-      - subnet-e7d40eab
+    staging:
+      - subnet-06d3de1bd9181b0d7
+      - subnet-0ed7d7713d1127656
     production:
-#      - subnet-*
+      - subnet-0b7b8fea07efabf34
+      - subnet-01d3657f97a243261
