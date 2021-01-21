@@ -1,4 +1,4 @@
-service: coronavirus-here-to-help-frontend
+service: here-to-help-frontend
 
 provider:
   name: aws
@@ -14,7 +14,7 @@ package:
     - ./**
 
 functions:
-  coronavirus-here-to-help-frontend:
+  here-to-help-frontend:
     name: ${self:service}-${self:provider.stage}
     handler: src/lambda.handler
     package:
