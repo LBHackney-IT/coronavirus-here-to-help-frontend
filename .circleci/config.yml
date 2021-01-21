@@ -60,13 +60,13 @@ jobs:
 #          name: Run linter
 #          command: npm run lint
 
-      - run:
-          name: Run prettier
-          command: npm run prettier:test
+#      - run:
+#          name: Run prettier
+#          command: npm run prettier:test
 
-      - run:
-          name: Run unit tests
-          command: npm run test:unit
+#      - run:
+#          name: Run unit tests
+#          command: npm run test:unit
 
   assume-role-staging:
     executor: node
