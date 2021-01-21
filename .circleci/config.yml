@@ -1,0 +1,162 @@
+version: 2.1
+
+orbs:
+  cypress: cypress-io/cypress@1
+  aws_assume_role: lbh-hackit/aws_assume_role@0.1.0
+
+executors:
+  node:
+    docker:
+      - image: circleci/node:14
+    working_directory: ~/project
+
+references:
+  workspace_root: &workspace_root '~'
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+commands:
+  assume-role-and-persist-workspace:
+    description: 'Assumes deployment role and persists credentials across jobs'
+    parameters:
+      aws-account:
+        type: string
+    steps:
+      - checkout
+      - aws_assume_role/assume_role:
+          account: <<parameters.aws-account>>
+          profile_name: default
+          role: 'LBH_Circle_CI_Deployment_Role'
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - .aws
+
+  deploy-lambda:
+    description: 'Deploys application'
+    parameters:
+      stage:
+        type: string
+        default: staging
+    steps:
+      - *attach_workspace
+      - run:
+          name: Deploy application
+          command: |
+            npm prune --production
+            sudo npm i -g serverless
+            sls deploy -s <<parameters.stage>>
+
+jobs:
+  test:
+    executor: node
+
+    steps:
+      - *attach_workspace
+      - checkout
+
+      - run:
+          name: Run linter
+          command: npm run lint
+
+      - run:
+          name: Run prettier
+          command: npm run prettier:test
+
+      - run:
+          name: Run unit tests
+          command: npm run test:unit
+
+  assume-role-staging:
+    executor: node
+    steps:
+      - assume-role-and-persist-workspace:
+          aws-account: $AWS_ACCOUNT_STAGING
+
+  assume-role-production:
+    executor: node
+    steps:
+      - assume-role-and-persist-workspace:
+          aws-account: $AWS_ACCOUNT_PRODUCTION
+
+  deploy-staging:
+    executor: node
+
+    steps:
+      - *attach_workspace
+      - checkout
+
+      - assume-role-and-persist-workspace:
+          aws-account: $AWS_ACCOUNT_STAGING
+
+      - deploy-lambda:
+          stage: staging
+
+  deploy-production:
+    executor: node
+
+    steps:
+      - *attach_workspace
+      - checkout
+
+      - assume-role:
+          aws-account: $AWS_ACCOUNT_PRODUCTION
+
+      - deploy-lambda:
+          stage: production
+
+workflows:
+  version: 2
+  continuous-delivery:
+    jobs:
+      - cypress/install: # Use Cypress step to install and cache dependencies
+          build: npm run build
+          post-checkout:
+            - run: cp .env.sample .env
+
+      - test:
+          requires:
+            - cypress/install
+
+      - cypress/run:
+          requires:
+            - cypress/install
+          executor: cypress/base-14
+          attach-workspace: true
+          start: npm run start
+          wait-on: 'http-get://127.0.0.1:3000'
+          store_artifacts: true
+
+      - assume-role-staging:
+          context: api-assume-role-staging-context
+          requires:
+            - cypress/run
+            - test
+          filters:
+            branches:
+              only: main
+
+      - deploy-staging:
+          context: api-assume-role-staging-context
+          requires:
+            - assume-role-staging
+          filters:
+            branches:
+              only:
+                - main
+
+      # - permit-deploy-production:
+      #     type: approval
+      #     requires:
+      #       - deploy-staging
+
+      # - assume-role-production:
+      #     context: api-assume-role-production-context
+      #     requires:
+      #       - permit-deploy-production
+
+      # - deploy-production:
+      #     context: api-assume-role-staging-context
+      #     requires:
+      #       - assume-role-production
