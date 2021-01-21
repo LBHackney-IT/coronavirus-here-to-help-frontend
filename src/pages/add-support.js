@@ -4,8 +4,9 @@ import { Checkbox, RadioButton, Button } from "../components/Form";
 import KeyInformation from "../components/KeyInformation/KeyInformation";
 import CaseNotes from "../components/CaseNotes/CaseNotes";
 import Link from "next/link";
+import { ResidentGateway } from '../gateways/resident';
 
-export default function addSupportPage() {
+export default function addSupportPage({resident}) {
 	const spokeToResidentCallOutcomes = [
 		"Callback complete",
 		"Refused to engage",
@@ -38,7 +39,7 @@ export default function addSupportPage() {
             </Link>
 				<div class="govuk-grid-row">
 					<div class="govuk-grid-column-one-quarter-from-desktop sticky-magic">
-						<KeyInformation resident={{}}/>
+						<KeyInformation resident={resident}/>
 					</div>
 
 					<div class="govuk-grid-column-three-quarters-from-desktop">
@@ -516,3 +517,17 @@ export default function addSupportPage() {
 		</Layout>
 	);
 }
+
+addSupportPage.getInitialProps = async ({ query: { resident_id }, req, res }) => {
+    try {
+        const gateway = new ResidentGateway();
+        const resident = await gateway.getResident(resident_id);
+
+        return {
+            resident_id,
+            resident
+        };
+    } catch (err) {
+        console.Console(`Error getting resident props with help request ID ${resident_id}: ${err}`);
+    }
+};
