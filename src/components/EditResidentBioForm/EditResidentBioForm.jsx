@@ -22,7 +22,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                 style={{
                   marginBottom: "20px"
                 }}
-                value={resident.FirstName}
+                defaultValue={resident.FirstName}
                 onChange={(e) => onChange(e.target.id, e.target.value)}
               />
             </div>
@@ -47,7 +47,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                 style={{
                   marginBottom: "20px"
                 }}
-                placeholder={resident.LastName}
+                defaultValue={resident.LastName}
                 onChange={(e) => onChange(e.target.id, e.target.value)}
               />
             </div>
@@ -66,7 +66,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                 style={{
                   marginBottom: "20px"
                 }}
-                placeholder={resident.ContactTelephoneNumber[0]}
+                defaultValue={resident.ContactTelephoneNumber[0]}
                 onChange={(e) => onChange(e.target.id, e.target.value)}
               />
             </div>
@@ -83,7 +83,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                 style={{
                   marginBottom: "20px"
                 }}
-                placeholder={resident.ContactMobileNumber[0]}
+                defaultValue={resident.ContactMobileNumber[0]}
                 onChange={(e) => onChange(e.target.id, e.target.value)}
               />
             </div>
@@ -102,7 +102,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                 style={{
                   marginBottom: "20px"
                 }}
-                placeholder={resident.EmailAddress}
+                defaultValue={resident.EmailAddress}
                 onChange={(e) => onChange(e.target.id, e.target.value)}
               />
             </div>
@@ -124,7 +124,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                   type="text"
                   pattern="[0-9]*"
                   inputmode="numeric"
-                  placeholder={resident.DobDay}
+                  defaultValue={resident.DobDay}
                   onChange={(e) => onChange(e.target.id, e.target.value)}
                 />
               </div>
@@ -144,7 +144,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                   type="text"
                   pattern="[0-9]*"
                   inputmode="numeric"
-                  placeholder={resident.DobMonth}
+                  defaultValue={resident.DobMonth}
                   onChange={(e) => onChange(e.target.id, e.target.value)}
                 />
               </div>
@@ -164,7 +164,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                   type="text"
                   pattern="[0-9]*"
                   inputmode="numeric"
-                  placeholder={resident.DobYear}
+                  defaultValue={resident.DobYear}
                   onChange={(e) => onChange(e.target.id, e.target.value)}
                 />
               </div>
