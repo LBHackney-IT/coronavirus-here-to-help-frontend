@@ -124,7 +124,7 @@ workflows:
             - cypress/install
           executor: cypress/base-14
           attach-workspace: true
-          start: npm run start
+          start: npm run dev
           wait-on: 'http-get://127.0.0.1:3000'
           store_artifacts: true
 
