@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { DefaultGateway } from '../gateways/default-gateway';
 const { objectToQuery } = require('../helpers/utilityFuncs');
 
