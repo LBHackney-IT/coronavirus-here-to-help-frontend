@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { objectToQuery } from '../utility/utilityFuncs';
 import { DefaultGateway } from '../gateways/default-gateway';
+const { objectToQuery } = require('../helpers/utilityFuncs.js');
 
 export class CallHandlerGateway extends DefaultGateway {
     async getCallHandler() {
