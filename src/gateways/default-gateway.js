@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { parsePascalToCamelCase, parseCamelToPascalCase } from '../utility/utilityFuncs';
+const { parsePascalToCamelCase, parseCamelToPascalCase } = require('../helpers/utilityFuncs.js');
 
 export class DefaultGateway {
     host = 'http://localhost:3001';
@@ -18,16 +18,18 @@ export class DefaultGateway {
                 'Content-Type': 'application/json'
             }
         });
-
+        parsePascalToCamelCase(res.data);
         return res.data;
     }
 
     async putToUrl(url, body) {
+        parseCamelToPascalCase(body);
         const res = await axios.put(this.createFullUrl(url), body, {
             headers: {
                 'Content-Type': 'application/json'
             }
         });
+        parsePascalToCamelCase(res.data);
         return res.data;
     }
 }

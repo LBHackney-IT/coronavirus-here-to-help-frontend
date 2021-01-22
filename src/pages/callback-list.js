@@ -11,36 +11,36 @@ function CallbacksListPage({ callTypes }) {
     const [callbacks, setCallbacks] = useState([]);
     const [callHandlers, setCallHandlers] = useState([]);
     const [dropdowns, setDropdowns] = useState({
-        CallType: 'All',
-        AssignedTo: 'Assigned to all'
+        callType: 'All',
+        assignedTo: 'Assigned to all'
     });
 
     const getCallBacks = async () => {
         const queryParams = { ...dropdowns };
-        if (queryParams.CallType === 'All') delete queryParams['CallType'];
-        if (queryParams.AssignedTo === 'Assigned to all') delete queryParams['AssignedTo'];
+        if (queryParams.callType === 'All') delete queryParams['callType'];
+        if (queryParams.assignedTo === 'Assigned to all') delete queryParams['assignedTo'];
 
         const gateway = new CallbackGateway();
-        const callback_list = await gateway.getCallback(queryParams);
+        const callbackList = await gateway.getCallback(queryParams);
 
-        setCallbacks(callback_list);
+        setCallbacks(callbackList);
     };
 
     const handleCallHandlerChange = (event) => {
-        setDropdowns({ ...dropdowns, AssignedTo: event });
+        setDropdowns({ ...dropdowns, assignedTo: event });
     };
 
     const handleCallTypeChange = (event) => {
-        setDropdowns({ ...dropdowns, CallType: event });
+        setDropdowns({ ...dropdowns, callType: event });
     };
 
     const getCallHandlers = async () => {
         const gateway = new CallHandlerGateway();
-        const callhandler_list = await gateway.getCallHandler();
+        const callHandlersList = await gateway.getCallHandler();
 
-        callhandler_list.unshift('Assigned to all');
+        callHandlersList.unshift('Assigned to all');
 
-        setCallHandlers(callhandler_list);
+        setCallHandlers(callHandlersList);
     };
 
     useEffect(getCallBacks, [dropdowns]);

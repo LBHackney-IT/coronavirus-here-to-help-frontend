@@ -9,18 +9,18 @@ import { HelpRequestGateway } from '../../../gateways/help-request';
 export default function ReassignCalls() {
     const router = useRouter();
 
-    const { request_id, resident_id } = router.query;
+    const { requestId, residentId } = router.query;
 
     const getCallHandlers = async () => {
         const gateway = new CallHandlerGateway();
-        const callhandler_list = await gateway.getCallHandler();
-        setCallHandlers(callhandler_list);
+        const callhandlerList = await gateway.getCallHandler();
+        setCallHandlers(callhandlerList);
     };
 
     const getHelpRequest = async () => {
         const gateway = new HelpRequestGateway();
-        const help_request = await gateway.getHelpRequest(resident_id, request_id);
-        setHelpRequest(help_request);
+        const helpRequest = await gateway.getHelpRequest(residentId, requestId);
+        setHelpRequest(helpRequest);
     };
 
     const [helpRequest, setHelpRequest] = useState({});
@@ -30,7 +30,7 @@ export default function ReassignCalls() {
 
     const handleAssignClick = async () => {
         const gateway = new HelpRequestGateway();
-        await gateway.putHelpRequest(resident_id, request_id, helpRequest);
+        await gateway.putHelpRequest(residentId, requestId, helpRequest);
         //alert("Call handler reassigned"); // could probably have a better notification - disabling alert for the sake of cypress
         // magic happens that routes back to callbacks list page automatically
     };
@@ -49,9 +49,9 @@ export default function ReassignCalls() {
                     <div class="govuk-form-group">
                         <Dropdown
                             dropdownItems={callHandlers}
-                            value={helpRequest.AssignedTo}
+                            value={helpRequest.assignedTo}
                             onChange={(callHandler) => {
-                                setHelpRequest({ ...helpRequest, AssignedTo: callHandler });
+                                setHelpRequest({ ...helpRequest, assignedTo: callHandler });
                             }}
                             data-cy="call-handlers-dropdown"
                         />

@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 const calcInitials = (fullname) =>
     fullname
@@ -51,40 +50,40 @@ export default function CallbacksList({ callbacks }) {
                             <tr
                                 class="govuk-table__row"
                                 key={index}
-                                data-cy={`r-${callback.help_request_id}`}>
-                                <td class="govuk-table__cell">{callback.resident_name}</td>
+                                data-cy={`r-${callback.helpRequestId}`}>
+                                <td class="govuk-table__cell">{callback.residentName}</td>
                                 <td class="govuk-table__cell">{callback.address}</td>
-                                <td class="govuk-table__cell">{callback.RequestedDate}</td>
+                                <td class="govuk-table__cell">{callback.requestedDate}</td>
                                 <td class="govuk-table__cell">
                                     <span title="Contact Tracing">{callback.type}</span>
                                 </td>
                                 <td class="govuk-table__cell ">
-                                    {callback.unsuccessful_call_attempts}
+                                    {callback.unsuccessfulCallAttempts}
                                 </td>
                                 <td class="govuk-table__cell">
-                                    {callback.follow_up_required ? 'Yes' : 'No'}
+                                    {callback.followUpRequired ? 'Yes' : 'No'}
                                 </td>
                                 <td class="govuk-table__cell">
                                     <Link
                                         href={{
                                             pathname:
-                                                '/reassign-call/[request_id]?resident_id=:[resident_id]',
+                                                '/reassign-call/[requestId]?residentId=:[residentId]',
                                             query: {
-                                                request_id: callback.help_request_id,
-                                                resident_id: callback.ResidentId
+                                                requestId: callback.helpRequestId,
+                                                residentId: callback.residentId
                                             }
                                         }}
-                                        as={`/reassign-call/${callback.help_request_id}?resident_id=${callback.ResidentId}`}>
-                                        <a href="#" title={callback.AssignedTo}>
-                                            {calcInitials(callback.AssignedTo)}✎
+                                        as={`/reassign-call/${callback.helpRequestId}?residentId=${callback.residentId}`}>
+                                        <a href="#" title={callback.assignedTo}>
+                                            {calcInitials(callback.assignedTo)}✎
                                         </a>
                                     </Link>
                                 </td>
-                                <td class="govuk-table__cell">{callback.RescheduledAt}</td>
+                                <td class="govuk-table__cell">{callback.rescheduledAt}</td>
                                 <td class="govuk-table__cell">
                                     <Link
-                                        href="/helpcase-profile/[resident_id]"
-                                        as={`/helpcase-profile/${callback.ResidentId}`}>
+                                        href="/helpcase-profile/[residentId]"
+                                        as={`/helpcase-profile/${callback.residentId}`}>
                                         <a href="#">View</a>
                                     </Link>
                                 </td>
