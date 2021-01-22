@@ -5,6 +5,10 @@ const objectToQuery = (obj) =>
         .join('&');
 
 
+const camelToPascal = (str) => str[0].toUpperCase() + str.substring(1);
+const pascalToCamel = (str) => str[0].toLowerCase() + str.substring(1);
+
+
 module.exports = {
     objectToQuery,
 };
