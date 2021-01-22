@@ -18,6 +18,7 @@
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "cypress": "^6.2.1",
+    "cypress-dotenv": "^1.2.2",
     "eslint-react": "^0.0.4",
     "govuk-frontend": "^3.10.2",
     "jsonwebtoken": "^8.5.1",
