@@ -66,7 +66,7 @@ function createResident(autoincrId) {
     };
 }
 
-function createHelpRequest(autoincrId, residentId, callHandlersList) {
+function createHelpRequest(autoincrId, ResidentId, callHandlersList) {
     // Assigned call handler
     const assignedCallHandler = randomArrayItem(callHandlersList);
 
@@ -93,7 +93,7 @@ function createHelpRequest(autoincrId, residentId, callHandlersList) {
 
     return {
         id: autoincrId,
-        residentId: residentId, // name change so the relationships would work
+        ResidentId: ResidentId, // name change so the relationships would work
         AssignedTo: assignedCallHandler,
         AdviceNotes: faker.lorem.words(),
         CallbackRequired: callbackRequired,
@@ -178,7 +178,6 @@ function dataGenerator(residnts = 30, hreqsPerRes = 5, cnotesPerHR = 2, callHand
         residents,
         help_requests,
         CaseNotes,
-        //   case_notes: CaseNotes,
         HelpRequestCalls,
         help_request_calls: HelpRequestCalls,
         call_handlers

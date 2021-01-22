@@ -13,12 +13,12 @@ server.use(
     jsonServer.rewriter({
         '/api/v4/*': '/$1',
         '/resident/*': '/residents/$1',
-        '/residents/:residentId': '/residents/:residentId?_embed=CaseNotes',
-        '/residents/:residentId/help_requests/:help_requestId': '/help_requests/:help_requestId',
-        '/residents/:residentId/help_requests':
-            '/residents/:residentId/help_requests?_embed=help_request_calls',
+        '/residents/:ResidentId': '/residents/:ResidentId?_embed=CaseNotes',
+        '/residents/:ResidentId/help_requests/:HelpRequestId': '/help_requests/:HelpRequestId',
+        '/residents/:ResidentId/help_requests':
+            '/residents/:ResidentId/help_requests?_embed=help_request_calls',
         '/search/resident?*': '/residents?$1',
-        '/residents/:residentId/help_requests/:help_requestId/calls*':
+        '/residents/:ResidentId/help_requests/:HelpRequestId/calls*':
             '/help_requests/$2/help_request_calls$3'
     })
 );
@@ -49,23 +49,37 @@ function getFilteredHelpRequestsWithHelpRequestCalls(req, respData) {
             respData[i].help_request_calls = undefined;
         }
     }
+    respData = JSON.parse(
+        JSON.stringify(respData)
+            // .replace(/"ResidentId"/g, '"ResidentId"')
+            .replace(/"id"/g, '"Id"')
+    );
     return respData;
 }
 
 const returnOnlyCreatedObjectsIdForPOSTRequests = (req, respData) =>
-    req.method === 'POST' ? respData.id : respData;
+    req.method === 'POST' ? { Id: respData.Id } : respData;
 
 router.render = (req, res) => {
     // Add different foreign key name format support
     let response = JSON.parse(
-        JSON.stringify(res.locals.data).replace('residentId:', 'ResidentId:') //.replace(/(?<![\s\,\{\"])Id(?=\":)/g, '_id')
+        JSON.stringify(res.locals.data)
+            // .replace(/"ResidentId"/g, '"ResidentId"')
+            .replace(/"Id"/g, '"id"')
+        //.replace(/(?<![\s\,\{\"])Id(?=\":)/g, '_id')
     );
     // Json-Server doesn't have nesting support filtered objects, hence this
     response = getFilteredHelpRequestsWithHelpRequestCalls(req, response);
     // Override the POST responses to return only Id as specified
     response = returnOnlyCreatedObjectsIdForPOSTRequests(req, response);
 
-    res.jsonp(response);
+    res.jsonp(
+        JSON.parse(
+            JSON.stringify(response ? response : {})
+                // .replace(/"ResidentId"/g, '"ResidentId"')
+                .replace(/"id"/g, '"Id"')
+        )
+    );
 };
 
 server.use(middlewares);
@@ -73,24 +87,21 @@ server.use(middlewares);
 // Mitigating a bug within Json-Server, where foreign key id of nested entity
 // is saved as string it's required to keep to the specification that says
 // that the resident_id should be taken from url
-server.post('/residents/:residentId/help_requests/', function (req, res, next) {
+server.post('/residents/:ResidentId/help_requests/', function (req, res, next) {
     req.url = '/help_requests';
-    const residentId = parseInt(req.params.residentId);
+    const ResidentId = parseInt(req.params.ResidentId);
     req.params = {};
-    req.body['residentId'] = residentId;
+    req.body['ResidentId'] = ResidentId;
     next();
 });
 
-server.post(
-    '/residents/:residentId/help_requests/:help_requestId/calls',
-    function (req, res, next) {
-        req.url = '/help_request_calls';
-        const HelpRequestId = parseInt(req.params.residentId);
-        req.params = {};
-        req.body['HelpRequestId'] = HelpRequestId;
-        next();
-    }
-);
+server.post('/residents/:ResidentId/help_requests/:HelpRequestId/calls', function (req, res, next) {
+    req.url = '/help_request_calls';
+    const HelpRequestId = parseInt(req.params.ResidentId);
+    req.params = {};
+    req.body['HelpRequestId'] = HelpRequestId;
+    next();
+});
 
 const isCallbackPredicate = (callbackRequired, InitialCallbackCompleted) =>
     callbackRequired == true ||
@@ -122,11 +133,11 @@ server.get('/callback_list', function (req, res) {
     );
 
     helpRequests = helpRequests.map((helpRequest) => {
-        const resident = inMemDb.residents.find((r) => r.id == helpRequest.residentId);
+        const resident = inMemDb.residents.find((r) => r.id == helpRequest.ResidentId);
         const calls = inMemDb.HelpRequestCalls.filter((hrc) => hrc.HelpRequestId == helpRequest.id);
         const real_callback = {
             resident_name: [resident.FirstName, resident.LastName].join(' '),
-            resident_id: resident.id,
+            ResidentId: resident.id,
             help_request_id: helpRequest.id,
             address: [
                 resident.AddressFirstLine,

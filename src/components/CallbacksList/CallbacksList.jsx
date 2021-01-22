@@ -71,10 +71,10 @@ export default function CallbacksList({ callbacks }) {
                                                 '/reassign-call/[request_id]?resident_id=:[resident_id]',
                                             query: {
                                                 request_id: callback.help_request_id,
-                                                resident_id: callback.resident_id
+                                                resident_id: callback.ResidentId
                                             }
                                         }}
-                                        as={`/reassign-call/${callback.help_request_id}?resident_id=${callback.resident_id}`}>
+                                        as={`/reassign-call/${callback.help_request_id}?resident_id=${callback.ResidentId}`}>
                                         <a href="#" title={callback.AssignedTo}>
                                             {calcInitials(callback.AssignedTo)}✎
                                         </a>
@@ -84,7 +84,7 @@ export default function CallbacksList({ callbacks }) {
                                 <td class="govuk-table__cell">
                                     <Link
                                         href="/helpcase-profile/[resident_id]"
-                                        as={`/helpcase-profile/${callback.resident_id}`}>
+                                        as={`/helpcase-profile/${callback.ResidentId}`}>
                                         <a href="#">View</a>
                                     </Link>
                                 </td>
