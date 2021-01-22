@@ -31,7 +31,11 @@ function parseObjectTreeCase(item, convertCase) {
     if (isArray) item.forEach((element) => parseObjectTreeCase(element, convertCase));
 }
 
+const parsePascalToCamelCase = (item) => parseObjectTreeCase(item, pascalToCamel);
+const parseCamelToPascalCase = (item) => parseObjectTreeCase(item, camelToPascal);
 
 module.exports = {
     objectToQuery,
+    parsePascalToCamelCase,
+    parseCamelToPascalCase
 };
