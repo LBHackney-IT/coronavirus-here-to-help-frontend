@@ -12,17 +12,13 @@ const Address = ({}) => (
                         id="lookup_postcode"
                         name="lookup_postcode"
                         type="text"
-                        value=""
                     />
                 </div>
                 <button
                     type="button"
                     class="govuk-button  lbh-button"
                     data-module="govuk-button"
-                    id="address-finder"
-                    data-api-url="http://localhost:8080/addresses"
-                    data-api-key=""
-                    data-api-token="">
+                    id="address-finder">
                     Search
                 </button>
             </div>
