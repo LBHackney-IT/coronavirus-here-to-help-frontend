@@ -3,11 +3,11 @@ import Layout from '../../../components/layout';
 import KeyInformation from '../../../components/KeyInformation/KeyInformation';
 import { ResidentGateway } from '../../../gateways/resident';
 import { useState } from 'react';
-import { Button } from '../../../components/Form';
+import { Button, Address } from '../../../components/Form';
 import EditResidentBioForm from '../../../components/EditResidentBioForm/EditResidentBioForm';
 import CaseNotes from '../../../components/CaseNotes/CaseNotes';
 
-export default function HelpcaseProfile({ resident_id, resident }) {
+export default function EditResident({ resident_id, resident }) {
     const [updatedResident, setUpdatedResident] = useState(resident);
 
     const handleEditResident = (id, value) => {
@@ -28,6 +28,7 @@ export default function HelpcaseProfile({ resident_id, resident }) {
                 <EditResidentBioForm resident={resident} onChange={handleEditResident} />
 
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+                <Address />
 
                 <hr class="govuk-section-break govuk-section-break--m govuk-section-break" />
                 <h2 class="govuk-heading-l">Case notes:</h2>
@@ -65,7 +66,7 @@ export default function HelpcaseProfile({ resident_id, resident }) {
     );
 }
 
-HelpcaseProfile.getInitialProps = async ({ query: { resident_id }, req, res }) => {
+EditResident.getInitialProps = async ({ query: { resident_id }, req, res }) => {
     try {
         const gateway = new ResidentGateway();
         const resident = await gateway.getResident(resident_id);

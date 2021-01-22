@@ -66,7 +66,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                 style={{
                   marginBottom: "20px"
                 }}
-                defaultValue={resident.ContactTelephoneNumber[0]}
+                defaultValue={resident.ContactTelephoneNumber?[0]:""}
                 onChange={(e) => onChange(e.target.id, e.target.value)}
               />
             </div>
@@ -83,7 +83,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                 style={{
                   marginBottom: "20px"
                 }}
-                defaultValue={resident.ContactMobileNumber[0]}
+                defaultValue={resident.ContactMobileNumber?[0]:""}
                 onChange={(e) => onChange(e.target.id, e.target.value)}
               />
             </div>
