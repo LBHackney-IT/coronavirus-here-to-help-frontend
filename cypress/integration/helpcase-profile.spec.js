@@ -1,3 +1,7 @@
+beforeEach(() => {
+    cy.login();
+});
+
 describe('View helpcase profile page', () => {
     // it('Resident key information is displayed', () => {
     //     cy.visit(`http://localhost:3000/helpcase-profile/1`);

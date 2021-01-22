@@ -9,6 +9,10 @@ function navigateToReassignSingleCallPage(f) {
     });
 }
 
+beforeEach(() => {
+    cy.login();
+});
+
 describe('Reassign single call page navigation', () => {
     // Not an amazing test, but it essentially shows that the page successfully took parameters from url
     // and used them to make an api call to get help request. Except for the case, where the assignee is the first one on the list

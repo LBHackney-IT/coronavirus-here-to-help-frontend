@@ -1,5 +1,6 @@
 beforeEach(() => {
-    cy.visit(`http://localhost:3000/`);
+    cy.login();
+    cy.visit(`http://localhost:3000/dashboard`);
 });
 
 describe('As a call handler, I want to search for a resident by postcode', () => {

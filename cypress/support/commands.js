@@ -1,29 +1,27 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+import jwt from 'jsonwebtoken';
 
 Cypress.Commands.add("getBySel", (selector, ...args) => {
     return cy.get(`[data-cy=${selector}]`, ...args);
-  });
+});
+
+export const defaultUser = {
+    email: 'test@hackney.gov.uk',
+    name: 'Test User',
+    groups: ['development-team-staging'],
+};
+
+Cypress.Commands.add('login', (userData) => {
+    if(userData === void 0) { userData = defaultUser; }
+    const jwtSecret = Cypress.env('HACKNEY_JWT_SECRET');
+    const cookieName = Cypress.env('RUNTIME_HACKNEY_COOKIE_NAME');
+
+    console.error(cookieName);
+    console.error(jwtSecret);
+    console.error("Yup");
+
+    const token = jwt.sign(userData, jwtSecret);
+
+    cy.setCookie(cookieName, token);
+    cy.wrap(defaultUser).as('defaultUser');
+    cy.wrap(userData).as('user');
+});

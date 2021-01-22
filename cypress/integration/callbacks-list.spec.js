@@ -1,3 +1,7 @@
+beforeEach(() => {
+    cy.login();
+});
+
 describe('Callbacks list page displays and maps data correctly', () => {
     it('Callbacks are retrieved and mapped to table rows', () => {
         cy.visit(`http://localhost:3000/callback-list`);
