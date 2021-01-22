@@ -35,7 +35,7 @@ const parsePascalToCamelCase = (item) => parseObjectTreeCase(item, pascalToCamel
 const parseCamelToPascalCase = (item) => parseObjectTreeCase(item, camelToPascal);
 
 const objectToQueryAndParseToPascal = (obj) => {
-    parseCamelToPascalCase(item);
+    parseCamelToPascalCase(obj);
     return objectToQuery(obj);
 }
 
