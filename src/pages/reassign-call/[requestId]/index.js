@@ -8,8 +8,10 @@ import { HelpRequestGateway } from '../../../gateways/help-request';
 
 export default function ReassignCalls() {
     const router = useRouter();
-
     const { requestId, residentId } = router.query;
+
+    const [assignee, setAssignee] = useState({});
+    const [callHandlers, setCallHandlers] = useState([]);
 
     const getCallHandlers = async () => {
         const gateway = new CallHandlerGateway();
@@ -20,17 +22,16 @@ export default function ReassignCalls() {
     const getHelpRequest = async () => {
         const gateway = new HelpRequestGateway();
         const helpRequest = await gateway.getHelpRequest(residentId, requestId);
-        setHelpRequest(helpRequest);
+        setAssignee(helpRequest);
     };
 
-    const [helpRequest, setHelpRequest] = useState({});
-    const [callHandlers, setCallHandlers] = useState([]);
     useEffect(getCallHandlers, []);
     useEffect(getHelpRequest, []);
 
     const handleAssignClick = async () => {
+        const updateObj = { assignedTo: assignee };
         const gateway = new HelpRequestGateway();
-        await gateway.putHelpRequest(residentId, requestId, helpRequest);
+        await gateway.patchHelpRequest(requestId, updateObj);
         //alert("Call handler reassigned"); // could probably have a better notification - disabling alert for the sake of cypress
         // magic happens that routes back to callbacks list page automatically
     };
@@ -49,9 +50,9 @@ export default function ReassignCalls() {
                     <div class="govuk-form-group">
                         <Dropdown
                             dropdownItems={callHandlers}
-                            value={helpRequest.assignedTo}
+                            value={assignee}
                             onChange={(callHandler) => {
-                                setHelpRequest({ ...helpRequest, assignedTo: callHandler });
+                                setAssignee(callHandler);
                             }}
                             data-cy="call-handlers-dropdown"
                         />
