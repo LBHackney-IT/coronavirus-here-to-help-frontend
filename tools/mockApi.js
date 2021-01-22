@@ -164,11 +164,6 @@ server.post("/residents/:residentId", function (req, res, next) {
   next();
 });
 
-server.get("/residents/:residentId", (req, res) => {
-  console.log("Requesting resident with ID: ", req.params.residentId);
-
-  res.status(200).send(resident);
-});
 
 server.get("/residents", (req, res) => {
   const queryObj = req.query;
