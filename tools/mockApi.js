@@ -14,12 +14,12 @@ server.use(
         '/api/v4/*': '/$1',
         '/resident/*': '/residents/$1',
         '/residents/:ResidentId': '/residents/:ResidentId?_embed=CaseNotes',
-        '/residents/:ResidentId/help_requests/:HelpRequestId': '/help_requests/:HelpRequestId',
-        '/residents/:ResidentId/help_requests':
-            '/residents/:ResidentId/help_requests?_embed=help_request_calls',
+        '/residents/:ResidentId/helpRequests/:HelpRequestId': '/helpRequests/:HelpRequestId',
+        '/residents/:ResidentId/helpRequests':
+            '/residents/:ResidentId/helpRequests?_embed=help_request_calls',
         '/search/resident?*': '/residents?$1',
-        '/residents/:ResidentId/help_requests/:HelpRequestId/calls*':
-            '/help_requests/$2/help_request_calls$3'
+        '/residents/:ResidentId/helpRequests/:HelpRequestId/calls*':
+            '/helpRequests/$2/help_request_calls$3'
     })
 );
 
@@ -36,7 +36,7 @@ server.use(function (req, res, next) {
 function getFilteredHelpRequestsWithHelpRequestCalls(req, respData) {
     const url = req.originalUrl;
     const isGET = req.method === 'GET';
-    const urlPattern = /^\/residents?\/\d+\/help_requests\?_embed=help_request_calls$/i;
+    const urlPattern = /^\/residents?\/\d+\/helpRequests\?_embed=help_request_calls$/i;
     const urlMatches = url.match(urlPattern) !== null;
     //If endpoint call matches, add case notes before returning response back
     if (isGET && urlMatches) {
@@ -87,15 +87,15 @@ server.use(middlewares);
 // Mitigating a bug within Json-Server, where foreign key id of nested entity
 // is saved as string it's required to keep to the specification that says
 // that the resident_id should be taken from url
-server.post('/residents/:ResidentId/help_requests/', function (req, res, next) {
-    req.url = '/help_requests';
+server.post('/residents/:ResidentId/helpRequests/', function (req, res, next) {
+    req.url = '/helpRequests';
     const ResidentId = parseInt(req.params.ResidentId);
     req.params = {};
     req.body['ResidentId'] = ResidentId;
     next();
 });
 
-server.post('/residents/:ResidentId/help_requests/:HelpRequestId/calls', function (req, res, next) {
+server.post('/residents/:ResidentId/helpRequests/:HelpRequestId/calls', function (req, res, next) {
     req.url = '/help_request_calls';
     const HelpRequestId = parseInt(req.params.ResidentId);
     req.params = {};
@@ -120,7 +120,7 @@ const replaceObjectKey = (obj, currentKey, newKey) => {
 
 server.get('/callback_list', function (req, res) {
     const queryObj = req.query;
-    let helpRequests = inMemDb.help_requests; // starting point
+    let helpRequests = inMemDb.helpRequests; // starting point
 
     if (queryObj.hasOwnProperty('CallType')) replaceObjectKey(queryObj, 'CallType', 'HelpNeeded');
 

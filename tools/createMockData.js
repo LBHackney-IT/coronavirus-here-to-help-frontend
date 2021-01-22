@@ -139,7 +139,7 @@ function createCallHandler() {
 function dataGenerator(residnts = 30, hreqsPerRes = 5, cnotesPerHR = 2, callHandlerQ = 15) {
     const call_handlers = [];
     const residents = [];
-    const help_requests = [];
+    const helpRequests = [];
     const CaseNotes = [];
     const HelpRequestCalls = [];
 
@@ -152,7 +152,7 @@ function dataGenerator(residnts = 30, hreqsPerRes = 5, cnotesPerHR = 2, callHand
         for (let hr = 1; hr <= hreqsPerRes; hr++) {
             let help_request_id = hr + (r - 1) * hreqsPerRes;
             let help_request = createHelpRequest(help_request_id, r, call_handlers);
-            help_requests.push(help_request);
+            helpRequests.push(help_request);
             for (let cn = 1; cn <= cnotesPerHR; cn++) {
                 let case_note_id =
                     cn + (hr - 1) * cnotesPerHR + (r - 1) * cnotesPerHR * hreqsPerRes;
@@ -176,7 +176,7 @@ function dataGenerator(residnts = 30, hreqsPerRes = 5, cnotesPerHR = 2, callHand
 
     return {
         residents,
-        help_requests,
+        helpRequests,
         CaseNotes,
         HelpRequestCalls,
         help_request_calls: HelpRequestCalls,
