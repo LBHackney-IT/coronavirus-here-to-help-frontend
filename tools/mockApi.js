@@ -84,6 +84,29 @@ router.render = (req, res) => {
 
 server.use(middlewares);
 
+function validateObjectProperties(obj, respBody){
+    for (prop in respBody)
+            if (!obj.hasOwnProperty(prop)) return false;
+    return true;
+}
+
+server.patch('/api/v3/help-requests/:helpRequestId', function (req, res) {
+    const bodyObj = { ...req.body }; //add try parse json
+    const helpRequestId = req.params.helpRequestId
+    const helpRequest = inMemDb.helpRequests.find(hr => hr.id == helpRequestId);
+    if (helpRequest !== undefined) {
+        const isValid = validateObjectProperties(helpRequest, bodyObj);
+        if (isValid) {
+            for (prop in bodyObj) helpRequest[prop] = bodyObj[prop];
+            res.status(204).jsonp();
+        } else {
+            res.status(400).jsonp(`Help request does not have property '${prop}'.`);
+        }
+    } else {
+        res.status(404).jsonp(`Help request with 'Id' of ${helpRequestId} was not found.`);
+    }
+});
+
 // Mitigating a bug within Json-Server, where foreign key id of nested entity
 // is saved as string it's required to keep to the specification that says
 // that the resident_id should be taken from url
