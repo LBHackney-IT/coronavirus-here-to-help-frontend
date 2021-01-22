@@ -18,7 +18,7 @@ const randomInt = (maxN) => Math.floor(Math.random() * maxN + 1);
 function createCaseNote(autoincrId, residentId, helpReqId) {
     return {
         id: autoincrId,
-        CaseNotes: faker.lorem.words(),
+        CaseNote: faker.lorem.words(),
         HelpRequestId: helpReqId, // name change so the relationships would work
         residentId: residentId, // same here
         CreatedAt: faker.date.recent(40)

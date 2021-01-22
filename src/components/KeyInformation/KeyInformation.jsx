@@ -4,8 +4,8 @@ import { useState } from "react";
 
 export default function KeyInformation({ resident }) {
   const [hidden, setHidden] = useState(false);
-  const numbers = resident.ContactTelephoneNumber?.concat(
-    resident.ContactMobileNumber
+  const numbers = resident.contactTelephoneNumber?.concat(
+    resident.contactMobileNumber
   );
   const setHiddenValue = () => {
     setHidden(!hidden);
@@ -22,7 +22,7 @@ export default function KeyInformation({ resident }) {
           <h3 className="govuk-heading-s">
             Contact details
             <a
-              href={`/helpcase-profile/${resident.Id}/editresident`}
+              href={`/helpcase-profile/${resident.id}/editresident`}
               className={styles["edit-link-icon"]}
             >
               ✎
@@ -40,13 +40,13 @@ export default function KeyInformation({ resident }) {
           <br />
           <h3 className="govuk-heading-s">Address</h3>
           <p data-testid="key-information_resident-address">
-            {resident.AddressFirstLine}
+            {resident.addressFirstLine}
             <br />
-            {resident.AddressSecondLine}
+            {resident.addressSecondLine}
             <br />
-            {resident.AddressThirdLine}
+            {resident.addressThirdLine}
             <br />
-            {resident.PostCode}
+            {resident.postCode}
           </p>
           <br />
           {/* <h3 class="govuk-heading-s">Alternate contact:</h3>
@@ -82,7 +82,7 @@ export default function KeyInformation({ resident }) {
             </h3>
           </div>
           <br />
-          <p>{resident.KeyNotes}</p>
+          <p>{resident.keyNotes}</p>
         </div>
       </div>
     </div>

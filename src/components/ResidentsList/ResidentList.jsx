@@ -1,11 +1,10 @@
-import React from 'react'
+import React from 'react';
 import Link from 'next/link';
-
 
 export default function ResidentList({ residents }) {
     return (
         <div>
-            <table class="govuk-table  lbh-table"  data-cy="residents-search-table">
+            <table class="govuk-table  lbh-table" data-cy="residents-search-table">
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">
@@ -25,23 +24,22 @@ export default function ResidentList({ residents }) {
                         return (
                             <tr class="govuk-table__row">
                                 <td class="govuk-table__cell">
-                                    {[resident.FirstName, resident.LastName].join(' ')}
+                                    {[resident.firstName, resident.lastName].join(' ')}
                                 </td>
                                 <td class="govuk-table__cell">
                                     {[
-                                        resident.AddressFirstLine,
-                                        resident.AddressSecondLine,
-                                        resident.PostCode
+                                        resident.addressFirstLine,
+                                        resident.addressSecondLine,
+                                        resident.postCode
                                     ].join(', ')}
                                 </td>
-                                <td class="govuk-table__cell">{resident.DateOfBirth}</td>
+                                <td class="govuk-table__cell">{resident.dateOfBirth}</td>
                                 <td class="govuk-table__cell">
-                                <Link
-                                    href="/helpcase-profile/[resident_id]"
-                                    as={`/helpcase-profile/${resident.resident_id}`}
-                                >
-                                    <a href="#">View</a>
-                                </Link>
+                                    <Link
+                                        href="/helpcase-profile/[resident_id]"
+                                        as={`/helpcase-profile/${resident.id}`}>
+                                        <a href="#">View</a>
+                                    </Link>
                                     {/* <a data-testid="view-button"  href="/oneresident?empty=true" class="js-cta-btn" id={resident.postcode}>View</a> */}
                                 </td>
                             </tr>

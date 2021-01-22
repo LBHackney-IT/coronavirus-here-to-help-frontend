@@ -3,7 +3,7 @@ import React from 'react';
 export default function EditResidentBioForm({resident, onChange}) {
     return (<>
         <h2 class="govuk-heading-l">
-          {resident.FirstName} {resident.LastName}
+          {resident.firstName} {resident.lastName}
         </h2>
         <h2 class="govuk-heading-m">Update resident profile</h2>
 
@@ -16,13 +16,13 @@ export default function EditResidentBioForm({resident, onChange}) {
             <div class="govuk-form-group lbh-form-group">
               <input
                 class="govuk-input  lbh-input"
-                id="FirstName"
-                name="FirstName"
+                id="firstName"
+                name="firstName"
                 type="text"
                 style={{
                   marginBottom: "20px"
                 }}
-                defaultValue={resident.FirstName}
+                defaultValue={resident.firstName}
                 onChange={(e) => onChange(e.target.id, e.target.value)}
               />
             </div>
@@ -41,13 +41,13 @@ export default function EditResidentBioForm({resident, onChange}) {
             <div class="govuk-form-group lbh-form-group">
               <input
                 class="govuk-input  lbh-input"
-                id="LastName"
-                name="LastName"
+                id="lastName"
+                name="lastName"
                 type="text"
                 style={{
                   marginBottom: "20px"
                 }}
-                defaultValue={resident.LastName}
+                defaultValue={resident.lastName}
                 onChange={(e) => onChange(e.target.id, e.target.value)}
               />
             </div>
@@ -60,13 +60,13 @@ export default function EditResidentBioForm({resident, onChange}) {
             <div class="govuk-form-group lbh-form-group">
               <input
                 class="govuk-input  lbh-input"
-                id="ContactTelephoneNumber"
-                name="ContactTelephoneNumber"
+                id="contactTelephoneNumber"
+                name="contactTelephoneNumber"
                 type="tel"
                 style={{
                   marginBottom: "20px"
                 }}
-                defaultValue={resident.ContactTelephoneNumber?[0]:""}
+                defaultValue={resident.contactTelephoneNumber}
                 onChange={(e) => onChange(e.target.id, e.target.value)}
               />
             </div>
@@ -77,13 +77,13 @@ export default function EditResidentBioForm({resident, onChange}) {
             <div class="govuk-form-group lbh-form-group">
               <input
                 class="govuk-input  lbh-input"
-                id="ContactMobileNumber"
-                name="ContactMobileNumber"
+                id="contactMobileNumber"
+                name="contactMobileNumber"
                 type="tel"
                 style={{
                   marginBottom: "20px"
                 }}
-                defaultValue={resident.ContactMobileNumber?[0]:""}
+                defaultValue={resident.contactMobileNumber}
                 onChange={(e) => onChange(e.target.id, e.target.value)}
               />
             </div>
@@ -96,13 +96,13 @@ export default function EditResidentBioForm({resident, onChange}) {
             <div class="govuk-form-group lbh-form-group">
               <input
                 class="govuk-input  lbh-input"
-                id="EmailAddress"
-                name="EmailAddress"
+                id="emailAddress"
+                name="emailAddress"
                 type="text"
                 style={{
                   marginBottom: "20px"
                 }}
-                defaultValue={resident.EmailAddress}
+                defaultValue={resident.emailAddress}
                 onChange={(e) => onChange(e.target.id, e.target.value)}
               />
             </div>
@@ -119,12 +119,12 @@ export default function EditResidentBioForm({resident, onChange}) {
                 </label>
                 <input
                   class="govuk-input govuk-date-input__input govuk-input--width-2 "
-                  id="DobDay"
-                  name="DobDay"
+                  id="dobDay"
+                  name="dobDay"
                   type="text"
                   pattern="[0-9]*"
                   inputmode="numeric"
-                  defaultValue={resident.DobDay}
+                  defaultValue={resident.dobDay}
                   onChange={(e) => onChange(e.target.id, e.target.value)}
                 />
               </div>
@@ -133,14 +133,14 @@ export default function EditResidentBioForm({resident, onChange}) {
               <div class="govuk-form-group">
                 <label
                   class="govuk-label govuk-date-input__label"
-                  for="DobMonth"
+                  for="dobMonth"
                 >
                   Month
                 </label>
                 <input
                   class="govuk-input govuk-date-input__input govuk-input--width-2 "
-                  id="DobMonth"
-                  name="DobMonth"
+                  id="dobMonth"
+                  name="dobMonth"
                   type="text"
                   pattern="[0-9]*"
                   inputmode="numeric"
@@ -153,18 +153,18 @@ export default function EditResidentBioForm({resident, onChange}) {
               <div class="govuk-form-group">
                 <label
                   class="govuk-label govuk-date-input__label"
-                  for="DobYear"
+                  for="dobYear"
                 >
                   Year
                 </label>
                 <input
                   class="govuk-input govuk-date-input__input govuk-input--width-4 "
-                  id="DobYear"
-                  name="DobYear"
+                  id="dobYear"
+                  name="dobYear"
                   type="text"
                   pattern="[0-9]*"
                   inputmode="numeric"
-                  defaultValue={resident.DobYear}
+                  defaultValue={resident.dobYear}
                   onChange={(e) => onChange(e.target.id, e.target.value)}
                 />
               </div>

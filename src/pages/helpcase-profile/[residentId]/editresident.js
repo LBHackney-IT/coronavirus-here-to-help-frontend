@@ -66,16 +66,16 @@ export default function EditResident({ resident_id, resident }) {
     );
 }
 
-EditResident.getInitialProps = async ({ query: { resident_id }, req, res }) => {
+EditResident.getInitialProps = async ({ query: { residentId }, req, res }) => {
     try {
         const gateway = new ResidentGateway();
-        const resident = await gateway.getResident(resident_id);
+        const resident = await gateway.getResident(residentId);
 
         return {
-            resident_id,
+            residentId,
             resident
         };
     } catch (err) {
-        console.log(`Error getting resident props with help request ID ${resident_id}: ${err}`);
+        console.log(`Error getting resident props with help request ID ${residentId}: ${err}`);
     }
 };

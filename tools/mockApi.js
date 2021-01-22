@@ -216,7 +216,8 @@ server.get('/residents', (req, res) => {
         residents = [];
     }
 
-    res.status(200).send(residents);
+    const result = JSON.parse(JSON.stringify(residents).replace(/"id"/g, '"Id"'));
+    res.status(200).send(result);
 });
 
 server.use(router);

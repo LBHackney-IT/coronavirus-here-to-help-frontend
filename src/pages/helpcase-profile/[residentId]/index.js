@@ -34,7 +34,7 @@ export default function HelpcaseProfile({ resident_id, resident }) {
                             class="govuk-heading-xl"
                             style={{ marginTop: '0px', marginBottom: '40px' }}
                             data-testid="resident-name_header">
-                            {resident.FirstName} {resident.LastName}
+                            {resident.firstName} {resident.lastName}
                         </h1>
 
                         <SupportTable />
@@ -55,16 +55,16 @@ export default function HelpcaseProfile({ resident_id, resident }) {
     );
 }
 
-HelpcaseProfile.getInitialProps = async ({ query: { resident_id }, req, res }) => {
+HelpcaseProfile.getInitialProps = async ({ query: { residentId }, req, res }) => {
     try {
         const gateway = new ResidentGateway();
-        const resident = await gateway.getResident(resident_id);
+        const resident = await gateway.getResident(residentId);
 
         return {
-            resident_id,
+            residentId,
             resident
         };
     } catch (err) {
-        console.log(`Error getting resident props with help request ID ${resident_id}: ${err}`);
+        console.log(`Error getting resident props with help request ID ${residentId}: ${err}`);
     }
 };
