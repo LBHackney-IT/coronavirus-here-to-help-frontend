@@ -23,11 +23,13 @@ export class DefaultGateway {
     }
 
     async putToUrl(url, body) {
+        parseCamelToPascalCase(body);
         const res = await axios.put(this.createFullUrl(url), body, {
             headers: {
                 'Content-Type': 'application/json'
             }
         });
+        parsePascalToCamelCase(res.data);
         return res.data;
     }
 }
