@@ -118,7 +118,7 @@ const replaceObjectKey = (obj, currentKey, newKey) => {
     delete obj[currentKey];
 };
 
-server.get('/callback_list', function (req, res) {
+server.get('/callbackList', function (req, res) {
     const queryObj = req.query;
     let helpRequests = inMemDb.helpRequests; // starting point
 
@@ -136,18 +136,18 @@ server.get('/callback_list', function (req, res) {
         const resident = inMemDb.residents.find((r) => r.id == helpRequest.ResidentId);
         const calls = inMemDb.HelpRequestCalls.filter((hrc) => hrc.HelpRequestId == helpRequest.id);
         const real_callback = {
-            resident_name: [resident.FirstName, resident.LastName].join(' '),
+            ResidentName: [resident.FirstName, resident.LastName].join(' '),
             ResidentId: resident.id,
-            help_request_id: helpRequest.id,
-            address: [
+            HelpRequestId: helpRequest.id,
+            Address: [
                 resident.AddressFirstLine,
                 resident.AddressSecondLine,
                 resident.AddressThirdLine
             ].join(', '),
             RequestedDate: helpRequest.RequestedDate, // where does this info is supposed to come from?!!! Need to add field to db schema? For now dropped it under a HelpRequest
-            type: helpRequest.HelpNeeded,
-            unsuccessful_call_attempts: unsuccessfulCalls(calls),
-            follow_up_required: helpRequest.CallbackRequired, // Is this correct assumption?
+            Type: helpRequest.HelpNeeded,
+            UnsuccessfulCallAttempts: unsuccessfulCalls(calls),
+            FollowUpRequired: helpRequest.CallbackRequired, // Is this correct assumption?
             AssignedTo: helpRequest.AssignedTo,
             RescheduledAt: helpRequest.RescheduledAt // Need to think about this one!!! Where is it stored? How do we set it on front-end? For now I'll drop it into under a help request
         };
