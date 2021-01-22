@@ -32,4 +32,14 @@ export class DefaultGateway {
         parsePascalToCamelCase(res.data);
         return res.data;
     }
+
+    async patchToUrl(url, body) {
+      parseCamelToPascalCase(body);
+      const res = await axios.patch(this.createFullUrl(url), body, {
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      });
+      return res;
+  }
 }

@@ -56,4 +56,8 @@ export class HelpRequestGateway extends DefaultGateway {
         const helpRequest = ToHelpRequest(response);
         return helpRequest;
     }
+
+    async patchHelpRequest(helpRequestId, requestBody) {
+        return await this.patchToUrl(`api/v3/help-requests/${helpRequestId}`, requestBody);
+    }
 }
