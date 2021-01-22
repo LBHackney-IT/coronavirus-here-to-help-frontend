@@ -38,8 +38,9 @@ export default function HelpcaseProfile({ resident_id, resident }) {
                         </h1>
 
                         <SupportTable />
-
-                        <Link href="/add-support">
+                        <Link
+                            href="/add-support/[resident_id]"
+                            as={`/add-support/${resident_id}`}>
                             <Button text="+ Add new support" />
                         </Link>
 
