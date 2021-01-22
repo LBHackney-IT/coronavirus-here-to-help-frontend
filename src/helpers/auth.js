@@ -18,8 +18,11 @@ export const createLoginUrl = (redirect) =>
 export const pathIsWhitelisted = (path) =>
     AUTH_WHITELIST.includes(path);
 
-export const userIsInValidGroup = (user) =>
+export const userIsInValidGroup = (user) => {
+    if(process.env.NEXT_PUBLIC_REACT_APP_ENV === 'dev') return true;
+
     Object.values(authGroups).some((group) => user.groups.includes(group));
+};
 
 export const serverSideRedirect = (
     res,
@@ -35,6 +38,8 @@ export const authoriseUser = (req) => {
         const token = cookies.get(cookieName);
 
         if (!token) return;
+
+        if(process.env.NEXT_PUBLIC_REACT_APP_ENV === 'dev') return true;
 
         return jsonwebtoken.verify(token, secret);
     } catch (err) {
