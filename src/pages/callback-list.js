@@ -12,7 +12,7 @@ function CallbacksListPage({ callTypes }) {
     const [callHandlers, setCallHandlers] = useState([]);
     const [dropdowns, setDropdowns] = useState({
         callType: 'All',
-        AssignedTo: 'Assigned to all'
+        assignedTo: 'Assigned to all'
     });
 
     const getCallBacks = async () => {
