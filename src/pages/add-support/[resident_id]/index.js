@@ -1,10 +1,10 @@
 import React from "react";
-import Layout from "../components/layout";
-import { Checkbox, RadioButton, Button } from "../components/Form";
-import KeyInformation from "../components/KeyInformation/KeyInformation";
-import CaseNotes from "../components/CaseNotes/CaseNotes";
+import Layout from "../../../components/layout";
+import { Checkbox, RadioButton, Button } from "../../../components/Form";
+import KeyInformation from "../../../components/KeyInformation/KeyInformation";
+import CaseNotes from "../../../components/CaseNotes/CaseNotes";
 import Link from "next/link";
-import { ResidentGateway } from '../gateways/resident';
+import { ResidentGateway } from '../../../gateways/resident';
 
 export default function addSupportPage({resident}) {
 	const spokeToResidentCallOutcomes = [
@@ -528,6 +528,6 @@ addSupportPage.getInitialProps = async ({ query: { resident_id }, req, res }) =>
             resident
         };
     } catch (err) {
-        console.Console(`Error getting resident props with help request ID ${resident_id}: ${err}`);
+        console.log(`Error getting resident props with help request ID ${resident_id}: ${err}`);
     }
 };
