@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { parsePascalToCamelCase, parseCamelToPascalCase } from '../utility/utilityFuncs';
 
 export class DefaultGateway {
     host = 'http://localhost:3001';
