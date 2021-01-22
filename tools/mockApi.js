@@ -160,34 +160,40 @@ server.get('/callback_list', function (req, res) {
     );
 });
 
-server.post("/residents/:residentId", function (req, res, next) {
-  req.params = {};
-  req.body["help_requestId"] = help_requestId;
-  next();
+server.post('/residents/:residentId', function (req, res, next) {
+    req.params = {};
+    req.body['help_requestId'] = help_requestId;
+    next();
 });
 
+server.get('/residents', (req, res) => {
+    const queryObj = req.query;
+    console.log('Finding  resident with postcode: ', queryObj.Postcode);
+    console.log('Finding  resident with First name: ', queryObj.LastName);
+    console.log('Finding  resident with postcode: ', queryObj.LastName);
+    let residents = inMemDb.residents;
 
-server.get("/residents", (req, res) => {
-  const queryObj = req.query;
-  console.log("Finding  resident with postcode: ", queryObj.Postcode);
-  console.log("Finding  resident with First name: ", queryObj.LastName);
-  console.log("Finding  resident with postcode: ", queryObj.LastName);
-  let residents = inMemDb.residents;
+    if (queryObj.Postcode) {
+        residents = residents.filter(
+            (resident) => resident.PostCode.replace(/ /g, '') == queryObj.Postcode
+        );
+    }
+    if (queryObj.LastName) {
+        residents = residents.filter((resident) => resident.LastName == queryObj.LastName);
+    }
+    if (queryObj.FirstName) {
+        residents = residents.filter((resident) => resident.FirstName == queryObj.FirstName);
+    }
+    if (
+        !queryObj.Postcode &&
+        !queryObj.LastName &&
+        !queryObj.FirstName &&
+        req.url != '/residents'
+    ) {
+        residents = [];
+    }
 
-  if(queryObj.Postcode) {
-    residents = residents.filter(resident => resident.postcode.replace(/ /g,'') == queryObj.Postcode) 
-  }
-  if(queryObj.LastName) {
-    residents = residents.filter(resident => resident.last_name == queryObj.LastName)
-  }
-  if(queryObj.FirstName){
-    residents = residents.filter(resident => resident.first_name == queryObj.FirstName)
-  }
-  if(!queryObj.Postcode && !queryObj.LastName && !queryObj.FirstName && req.url != '/residents'){
-    residents = []
-  } 
-
-  res.status(200).send(residents)
+    res.status(200).send(residents);
 });
 
 server.use(router);
