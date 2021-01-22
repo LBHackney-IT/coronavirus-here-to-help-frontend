@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { isoDateToOtherDate } from '../../helpers/utilityFuncs';
 
 const calcInitials = (fullname) =>
     fullname
@@ -53,7 +54,9 @@ export default function CallbacksList({ callbacks }) {
                                 data-cy={`r-${callback.helpRequestId}`}>
                                 <td class="govuk-table__cell">{callback.residentName}</td>
                                 <td class="govuk-table__cell">{callback.address}</td>
-                                <td class="govuk-table__cell">{callback.requestedDate}</td>
+                                <td class="govuk-table__cell">
+                                    {isoDateToOtherDate(callback.requestedDate)}
+                                </td>
                                 <td class="govuk-table__cell">
                                     <span title="Contact Tracing">{callback.type}</span>
                                 </td>

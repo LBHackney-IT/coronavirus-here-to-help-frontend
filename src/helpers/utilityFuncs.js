@@ -37,11 +37,14 @@ const parseCamelToPascalCase = (item) => parseObjectTreeCase(item, camelToPascal
 const objectToQueryAndParseToPascal = (obj) => {
     parseCamelToPascalCase(obj);
     return objectToQuery(obj);
-}
+};
+
+const isoDateToOtherDate = (dateString) => dateString.split('T')[0];
 
 module.exports = {
     objectToQuery,
     objectToQueryAndParseToPascal,
     parsePascalToCamelCase,
-    parseCamelToPascalCase
+    parseCamelToPascalCase,
+    isoDateToOtherDate
 };
