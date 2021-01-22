@@ -137,21 +137,21 @@ function createCallHandler() {
 }
 
 function dataGenerator(residnts = 30, hreqsPerRes = 5, cnotesPerHR = 2, callHandlerQ = 15) {
-    const call_handlers = [];
+    const callHandlers = [];
     const residents = [];
     const helpRequests = [];
     const CaseNotes = [];
     const HelpRequestCalls = [];
 
     for (let ch = 1; ch <= callHandlerQ; ch++) {
-        call_handlers.push(createCallHandler());
+        callHandlers.push(createCallHandler());
     }
 
     for (let r = 1; r <= residnts; r++) {
         residents.push(createResident(r));
         for (let hr = 1; hr <= hreqsPerRes; hr++) {
             let help_request_id = hr + (r - 1) * hreqsPerRes;
-            let help_request = createHelpRequest(help_request_id, r, call_handlers);
+            let help_request = createHelpRequest(help_request_id, r, callHandlers);
             helpRequests.push(help_request);
             for (let cn = 1; cn <= cnotesPerHR; cn++) {
                 let case_note_id =
@@ -180,7 +180,7 @@ function dataGenerator(residnts = 30, hreqsPerRes = 5, cnotesPerHR = 2, callHand
         CaseNotes,
         HelpRequestCalls,
         help_request_calls: HelpRequestCalls,
-        call_handlers
+        callHandlers
     };
 }
 
