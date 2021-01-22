@@ -34,17 +34,9 @@ function parseObjectTreeCase(item, convertCase) {
 const parsePascalToCamelCase = (item) => parseObjectTreeCase(item, pascalToCamel);
 const parseCamelToPascalCase = (item) => parseObjectTreeCase(item, camelToPascal);
 
-const upperFirst = (str) => str[0].toUpperCase() + str.substring(1);
-const snakeToPascalKey = (str) =>
-    str
-        .split('_')
-        .map((sub) => upperFirst(sub))
-        .join('');
-const parseSnakeToPascalCase = (item) => parseObjectTreeCase(item, snakeToPascalKey);
 
 module.exports = {
     objectToQuery,
-    parseSnakeToPascalCase,
     parsePascalToCamelCase,
     parseCamelToPascalCase
 };
