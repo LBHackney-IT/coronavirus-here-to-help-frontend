@@ -9,6 +9,9 @@ executors:
     docker:
       - image: circleci/node:14
     working_directory: ~/project
+  python:
+    docker:
+      - image: circleci/python:3.7
 
 references:
   workspace_root: &workspace_root '~'
@@ -40,7 +43,6 @@ commands:
         type: string
         default: staging
     steps:
-      - *attach_workspace
       - run:
           name: Deploy application
           command: |
@@ -56,26 +58,26 @@ jobs:
       - *attach_workspace
       - checkout
 
-      - run:
-          name: Run linter
-          command: npm run lint
+#      - run:
+#          name: Run linter
+#          command: npm run lint
 
-      - run:
-          name: Run prettier
-          command: npm run prettier:test
+#      - run:
+#          name: Run prettier
+#          command: npm run prettier:test
 
-      - run:
-          name: Run unit tests
-          command: npm run test:unit
+#      - run:
+#          name: Run unit tests
+#          command: npm run test:unit -- --maxWorkers=2
 
   assume-role-staging:
-    executor: node
+    executor: python
     steps:
       - assume-role-and-persist-workspace:
           aws-account: $AWS_ACCOUNT_STAGING
 
   assume-role-production:
-    executor: node
+    executor: python
     steps:
       - assume-role-and-persist-workspace:
           aws-account: $AWS_ACCOUNT_PRODUCTION
@@ -87,9 +89,6 @@ jobs:
       - *attach_workspace
       - checkout
 
-      - assume-role-and-persist-workspace:
-          aws-account: $AWS_ACCOUNT_STAGING
-
       - deploy-lambda:
           stage: staging
 
@@ -99,9 +98,6 @@ jobs:
     steps:
       - *attach_workspace
       - checkout
-
-      - assume-role:
-          aws-account: $AWS_ACCOUNT_PRODUCTION
 
       - deploy-lambda:
           stage: production
@@ -124,7 +120,7 @@ workflows:
             - cypress/install
           executor: cypress/base-14
           attach-workspace: true
-          start: npm run start
+          start: npm run dev
           wait-on: 'http-get://127.0.0.1:3000'
           store_artifacts: true
 
@@ -135,28 +131,26 @@ workflows:
             - test
           filters:
             branches:
-              only: main
+              only: master
 
       - deploy-staging:
-          context: api-assume-role-staging-context
           requires:
             - assume-role-staging
           filters:
             branches:
               only:
-                - main
+                - master
 
-      # - permit-deploy-production:
-      #     type: approval
-      #     requires:
-      #       - deploy-staging
+      - permit-deploy-production:
+          type: approval
+          requires:
+            - deploy-staging
 
-      # - assume-role-production:
-      #     context: api-assume-role-production-context
-      #     requires:
-      #       - permit-deploy-production
+      - assume-role-production:
+          context: api-assume-role-production-context
+          requires:
+            - permit-deploy-production
 
-      # - deploy-production:
-      #     context: api-assume-role-staging-context
-      #     requires:
-      #       - assume-role-production
+      - deploy-production:
+          requires:
+            - assume-role-production

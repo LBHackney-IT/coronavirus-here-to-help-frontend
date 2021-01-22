@@ -1,8 +1,66 @@
 import "../styles/globals.css";
 import "./stylesheets/all.scss";
+import App, { AppContext, AppProps } from 'next/app';
+import React from 'react';
+import {
+  authoriseUser,
+  pathIsWhitelisted,
+  serverSideRedirect,
+  unsafeExtractUser,
+  User,
+  userIsInValidGroup,
+} from '../helpers/auth';
+import { UserContext } from '../contexts/UserContext';
+import { NextPage } from 'next';
+import { AccessDeniedPage } from '../components/AccessDeniedPage';
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
-}
+const CustomApp = ({
+                     Component,
+                     pageProps,
+                     user,
+                     accessDenied,
+                   }) => {
+  if (accessDenied) return <AccessDeniedPage />;
 
-export default MyApp;
+  return (
+      <UserContext.Provider value={{ user }}>
+        <Component {...pageProps} />
+      </UserContext.Provider>
+  );
+};
+
+CustomApp.getInitialProps = async (appContext) => {
+  const {
+    ctx: { req, res, pathname, asPath },
+  } = appContext;
+  const appProps = await App.getInitialProps(appContext);
+  // const currentPath = asPath || '/';
+
+  const user = req && res ? authoriseUser(req) : unsafeExtractUser();
+  const props = { ...appProps, user };
+
+  if (pathIsWhitelisted(pathname)) {
+    return props;
+  }
+
+  if (!user) {
+    const redirect = encodeURIComponent(asPath || '/');
+    const url = `/login?redirect=${redirect}`;
+
+    if (req && res) {
+      serverSideRedirect(res, url);
+    } else {
+      window.location.replace(url);
+    }
+
+    return { accessDenied: true };
+  }
+
+  if (!userIsInValidGroup(user)) {
+    return { accessDenied: true };
+  }
+
+  return props;
+};
+
+export default CustomApp;

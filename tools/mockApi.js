@@ -1,8 +1,5 @@
 const { dataGenerator } = require("./createMockData");
 const jsonServer = require("json-server");
-const randexp = require("randexp").randexp;
-const faker = require("faker");
-const resident = require("./fixtures/resident.json");
 
 const server = jsonServer.create();
 const middlewares = jsonServer.defaults({
@@ -66,7 +63,7 @@ router.render = (req, res) => {
   // Json-Server doesn't have nesting support filtered objects, hence this
   response = getFilteredHelpRequestsWithHelpRequestCalls(req, response);
   // Override the POST responses to return only Id as specified
-  //response = returnOnlyCreatedObjectsIdForPOSTRequests(req, response);
+  response = returnOnlyCreatedObjectsIdForPOSTRequests(req, response);
 
   res.jsonp(response);
 };

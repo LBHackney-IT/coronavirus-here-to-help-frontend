@@ -62,6 +62,7 @@ export default function ReassignCalls() {
                 text="Assign"
                 addClass="govuk-button govuk-!-margin-right-1"
                 onClick={handleAssignClick}
+                data-cy="assign-button"
               />
               <Button
                 text="Cancel"

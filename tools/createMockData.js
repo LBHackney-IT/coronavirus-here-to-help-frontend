@@ -9,6 +9,14 @@ const randomNullableBool = () =>
 const randomArrayItem = (collection) =>
   collection[Math.floor(Math.random() * collection.length)];
 
+function nItems(quantity, f, ...args) {
+  const collection = [];
+  for (let q = quantity; q > 0; q--) collection.push(f(...args));
+  return collection;
+}
+
+const randomInt = (maxN) => Math.floor(Math.random() * maxN + 1)
+
 function createCaseNote(autoincrId, residentId, helpReqId) {
   return {
     id: autoincrId,
@@ -45,8 +53,8 @@ function createResident(autoincrId) {
     address_third_line:
       Math.random() > 0.1 ? "" : randexp(/Hackney(, London)?/),
     consent_to_share: randomNullableBool(),
-    contact_mobile_number: randexp(/07\d{9}/),
-    contact_telephone_number: randexp(/020\d{8}/),
+    contact_mobile_number: nItems(randomInt(2), randexp, /07\d{9}/),
+    contact_telephone_number: nItems(randomInt(2), randexp, /020\d{8}/),
     date_of_birth: faker.date.past(70),
     email_address: faker.internet.email(firstname, lastname),
     gp_surgery_details: faker.random.number(), // got no clue what this is
