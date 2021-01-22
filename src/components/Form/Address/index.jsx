@@ -28,8 +28,8 @@ const Address = ({}) => (
                 <div class="govuk-form-group lbh-form-group">
                     <input
                         class="govuk-input  lbh-input"
-                        id="address_first_line"
-                        name="address_first_line"
+                        id="AddressFirstLine"
+                        name="AddressFirstLine"
                         type="text"
                         readonly="readonly"
                     />
@@ -38,8 +38,8 @@ const Address = ({}) => (
                 <div class="govuk-form-group lbh-form-group">
                     <input
                         class="govuk-input  lbh-input"
-                        id="address_second_line"
-                        name="address_second_line"
+                        id="AddressSecondLine"
+                        name="AddressSecondLine"
                         type="text"
                         readonly="readonly"
                     />
@@ -47,8 +47,8 @@ const Address = ({}) => (
                 <div class="govuk-form-group lbh-form-group">
                     <input
                         class="govuk-input  lbh-input"
-                        id="address_third_line"
-                        name="address_third_line"
+                        id="AddressThirdLine"
+                        name="AddressThirdLine"
                         type="text"
                         readonly="readonly"
                     />
