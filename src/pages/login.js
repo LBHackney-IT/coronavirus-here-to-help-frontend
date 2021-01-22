@@ -11,10 +11,6 @@ const Home = () => {
         return createLoginUrl(redirect);
     }, [router]);
 
-    console.log(router);
-    console.log(router.query);
-
-
     return (
         <Layout>
             <h1>Staff login</h1>
