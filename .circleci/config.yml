@@ -110,6 +110,7 @@ workflows:
           build: npm run build
           post-checkout:
             - run: cp .env.sample .env
+            - run: npm install dotenv -g
 
       - test:
           requires:
