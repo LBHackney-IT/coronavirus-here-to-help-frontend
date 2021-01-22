@@ -22,7 +22,8 @@ export default function ReassignCalls() {
     const getHelpRequest = async () => {
         const gateway = new HelpRequestGateway();
         const helpRequest = await gateway.getHelpRequest(residentId, requestId);
-        setAssignee(helpRequest);
+        const helpRequestAssignee = helpRequest.assignedTo;
+        setAssignee(helpRequestAssignee);
     };
 
     useEffect(getCallHandlers, []);
