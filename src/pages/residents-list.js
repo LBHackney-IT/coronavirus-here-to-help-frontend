@@ -4,29 +4,13 @@ import { Button } from '../components/Form';
 import Layout from '../components/layout';
 import { useState } from 'react';
 import ResidentList from '../components/ResidentsList/ResidentList';
+import { ResidentGateway } from "../gateways/resident";
 
-export default function ResidentsList({ searchPostcode }) {
 
-    const dummyResidentsList = [
-        {
-          first_name: "Bob",
-          last_name: "Hoskins",
-          address_first_line: "Flat 20 Caliban House",
-          address_second_line: "Frankfurt Street",
-          postcode: "N4 5JQ",
-          date_of_birth: '01/10/84',
-        },
-        {
-          first_name: "Mary",
-          last_name: "Johnson",
-          address_first_line: "Markmanor Ave 15",
-          address_second_line: "Url Street",
-          postcode: "E4 7NK",
-          date_of_birth: '09/03/54',
-        },
-      ];
+export default function ResidentsList({res, postcode}) {
+
     
-    const [residents, setResidents] = useState(dummyResidentsList);
+    const [residents, setResidents] = useState(res);
 
     return (
         <Layout>
@@ -36,7 +20,7 @@ export default function ResidentsList({ searchPostcode }) {
             </Link>
             <br />
             <h1 class="govuk-heading-xl" style={{marginBottom: '0.4em'}}>Search results</h1>
-            <h2 class="govuk-heading-m">Help requests matching postcode: </h2>
+            <h2 class="govuk-heading-m">Help requests matching postcode: {postcode}</h2>
             <p class="govuk-body">Displaying {residents.length} record(s)</p>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-half">
@@ -59,3 +43,11 @@ export default function ResidentsList({ searchPostcode }) {
     </Layout>
     )
 }
+ResidentsList.getInitialProps = async ({query}) => {
+    let postcode = query.postcode.replace(/ /g,'')
+    const firstName = query.firstName
+    const lastName = query.lastName 
+    const gateway = new ResidentGateway();
+    const res = await gateway.getResidentsBySearchParams(postcode, firstName, lastName);
+    return {res, postcode};
+  };

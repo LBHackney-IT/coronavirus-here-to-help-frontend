@@ -173,6 +173,29 @@ server.get("/residents/:residentId", (req, res) => {
   res.status(200).send(resident);
 });
 
+server.get("/residents", (req, res) => {
+  const queryObj = req.query;
+  console.log("Finding  resident with postcode: ", queryObj.Postcode);
+  console.log("Finding  resident with First name: ", queryObj.LastName);
+  console.log("Finding  resident with postcode: ", queryObj.LastName);
+  let residents = inMemDb.residents;
+
+  if(queryObj.Postcode) {
+    residents = residents.filter(resident => resident.postcode.replace(/ /g,'') == queryObj.Postcode) 
+  }
+  if(queryObj.LastName) {
+    residents = residents.filter(resident => resident.last_name == queryObj.LastName)
+  }
+  if(queryObj.FirstName){
+    residents = residents.filter(resident => resident.first_name == queryObj.FirstName)
+  }
+  if(!queryObj.Postcode && !queryObj.LastName && !queryObj.FirstName && req.url != '/residents'){
+    residents = []
+  } 
+
+  res.status(200).send(residents)
+});
+
 server.use(router);
 
 server.listen(3001, () => {

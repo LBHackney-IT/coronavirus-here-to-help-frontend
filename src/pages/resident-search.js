@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
 import Link from 'next/link';
 import { Button, Checkbox } from "../components/Form";
 import Layout from '../components/layout';
 
 export default function ResidentSearchPage() {
-
+    const [postcode, setPostcode] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     return (
         <Layout>
         <div>
@@ -21,28 +23,27 @@ export default function ResidentSearchPage() {
                     <div class="govuk-grid-column-one-third">
                     <label class="govuk-label" for="postcode">Postcode</label>
               <div>
-              <input class="govuk-input govuk-input--width-10" id="postcode" name="postcode" type="text" />
+              <input class="govuk-input govuk-input--width-10" id="postcode" name="postcode" type="text" value={postcode} onInput={e => setPostcode(e.target.value)} />
               </div>
                     </div>
                     <div class="govuk-grid-column-one-third">
                     <label class="govuk-label" for="firstName">First name</label>
               <div class="govuk-form-group">
-              <input class="govuk-input govuk-input--width-12" id="firstName" name="firstName" type="text" />
+              <input class="govuk-input govuk-input--width-12" id="firstName" name="firstName" type="text" value={firstName} onInput={e => setFirstName(e.target.value)} />
               </div>
                     </div>
                     <div class="govuk-grid-column-one-third">
                     <label class="govuk-label" for="lastName">Last name</label>
               <div class="govuk-form-group">
-              <input class="govuk-input govuk-input--width-12" id="lastName" name="lastName" type="text" />
+              <input class="govuk-input govuk-input--width-12" id="lastName" name="lastName" type="text" value={lastName} onInput={e => setLastName(e.target.value)}/>
               </div>
                     </div>
                 </div>
                 </div>
-                <Link href="/residents-list">
-                    <Button
+                <Link href={{ pathname: '/residents-list', query: { postcode: postcode , firstName: firstName, lastName:lastName} }}><Button
                         text="Search"
-                    />
-                </Link>
+                    /></Link>
+
               </form>
         </div>
         </Layout>

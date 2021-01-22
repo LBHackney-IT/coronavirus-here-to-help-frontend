@@ -1,9 +1,11 @@
 import React from 'react'
+import Link from 'next/link';
+
 
 export default function ResidentList({ residents }) {
     return (
         <div>
-            <table class="govuk-table  lbh-table">
+            <table class="govuk-table  lbh-table"  data-cy="residents-search-table">
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                     <th scope="col" class="govuk-table__header">Name</th>
@@ -24,7 +26,13 @@ export default function ResidentList({ residents }) {
                                 </td>
                                 <td class="govuk-table__cell">{resident.date_of_birth}</td>
                                 <td class="govuk-table__cell">
-                                    <a data-testid="view-button"  href="/oneresident?empty=true" class="js-cta-btn" id={resident.postcode}>View</a>
+                                <Link
+                                    href="/helpcase-profile/[resident_id]"
+                                    as={`/helpcase-profile/${resident.resident_id}`}
+                                >
+                                    <a href="#">View</a>
+                                </Link>
+                                    {/* <a data-testid="view-button"  href="/oneresident?empty=true" class="js-cta-btn" id={resident.postcode}>View</a> */}
                                 </td>
                             </tr>
                             )
