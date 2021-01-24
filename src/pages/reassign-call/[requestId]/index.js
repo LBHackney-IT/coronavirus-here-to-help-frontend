@@ -41,14 +41,14 @@ export default function ReassignCalls() {
         <Layout>
             <div>
                 <Link href="/callback-list">
-                    <a href="#" class="govuk-back-link" data-cy="back-button">
+                    <a href="#" className="govuk-back-link" data-cy="back-button">
                         Back
                     </a>
                 </Link>
-                <h1 class="govuk-heading-l">Reassign this call</h1>
+                <h1 className="govuk-heading-l">Reassign this call</h1>
                 <form action="/callback-list" method="post">
-                    <h3 class="govuk-heading-m">Select a new call handler</h3>
-                    <div class="govuk-form-group">
+                    <h3 className="govuk-heading-m">Select a new call handler</h3>
+                    <div className="govuk-form-group">
                         <Dropdown
                             dropdownItems={callHandlers}
                             value={assignee}
@@ -58,8 +58,8 @@ export default function ReassignCalls() {
                             data-cy="call-handlers-dropdown"
                         />
                     </div>
-                    <div class="govuk-grid-row" id="btn-bottom-panel">
-                        <div class="govuk-grid-column-one-half">
+                    <div className="govuk-grid-row" id="btn-bottom-panel">
+                        <div className="govuk-grid-column-one-half">
                             <Button
                                 text="Assign"
                                 addClass="govuk-button govuk-!-margin-right-1"

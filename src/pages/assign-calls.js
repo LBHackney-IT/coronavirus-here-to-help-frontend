@@ -14,26 +14,26 @@ export default function AssignCallsPage() {
     <Layout>
       <div>
         <Link href="/">
-            <a href="#" class="govuk-back-link  lbh-back-link">Back</a>
+            <a href="#" className="govuk-back-link  lbh-back-link">Back</a>
         </Link>
 
-        <h1 class="govuk-heading-xl" style={{marginBottom: "20px"}}>Assign calls</h1>
+        <h1 className="govuk-heading-xl" style={{marginBottom: "20px"}}>Assign calls</h1>
 
         <form action="/callback-list" method="post">
-          <div class="govuk-!-margin-bottom-5">
-            <div class="govuk-grid-row">
-              <div class="govuk-grid-column-one-half">
-                <label class="govuk-label">Call types</label>
+          <div className="govuk-!-margin-bottom-5">
+            <div className="govuk-grid-row">
+              <div className="govuk-grid-column-one-half">
+                <label className="govuk-label">Call types</label>
                     <Dropdown dropdownItems={dropdownItems}/>
-                <div class="govuk-hint">Select call help type</div>
+                <div className="govuk-hint">Select call help type</div>
               </div>
               <br />
               <br />
               <br />
               <br />
-              <h3 class="govuk-heading-m" style={{marginRight: '1em', marginLeft: '.2em', marginTop: '2em'}}>Select who is able to make calls today</h3>
+              <h3 className="govuk-heading-m" style={{marginRight: '1em', marginLeft: '.2em', marginTop: '2em'}}>Select who is able to make calls today</h3>
 
-              <div class="govuk-checkboxes  lbh-checkboxes">
+              <div className="govuk-checkboxes  lbh-checkboxes">
               
               {callHandlers.map((callHandler) => {
                     return (
@@ -45,8 +45,8 @@ export default function AssignCallsPage() {
                 </div>
           </div>
 
-          <div class="govuk-grid-row" id="btn-bottom-panel">
-            <div class="govuk-grid-column-one-half">
+          <div className="govuk-grid-row" id="btn-bottom-panel">
+            <div className="govuk-grid-column-one-half">
             <Button
                 text="Assign"
                 addClass="govuk-!-margin-right-1"

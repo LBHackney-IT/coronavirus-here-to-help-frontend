@@ -16,7 +16,7 @@ export default function HelpcaseProfile({ resident_id, resident }) {
             <div>
                 <a
                     href="#"
-                    class="govuk-back-link"
+                    className="govuk-back-link"
                     style={{
                         marginTop: '-40px',
                         display: 'block',
@@ -24,14 +24,14 @@ export default function HelpcaseProfile({ resident_id, resident }) {
                     }}>
                     Back {resident_id}
                 </a>
-                <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-one-quarter-from-desktop sticky-magic">
+                <div className="govuk-grid-row">
+                    <div className="govuk-grid-column-one-quarter-from-desktop sticky-magic">
                         <KeyInformation resident={resident} />
                     </div>
 
-                    <div class="govuk-grid-column-three-quarters-from-desktop">
+                    <div className="govuk-grid-column-three-quarters-from-desktop">
                         <h1
-                            class="govuk-heading-xl"
+                            className="govuk-heading-xl"
                             style={{ marginTop: '0px', marginBottom: '40px' }}
                             data-testid="resident-name_header">
                             {resident.firstName} {resident.lastName}

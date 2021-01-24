@@ -35,27 +35,27 @@ export default function addSupportPage({resident}) {
 		<Layout>
 			<div>
 			<Link href="/">
-                <a href="#" class="govuk-back-link">Back</a>
+                <a href="#" className="govuk-back-link">Back</a>
             </Link>
-				<div class="govuk-grid-row">
-					<div class="govuk-grid-column-one-quarter-from-desktop sticky-magic">
+				<div className="govuk-grid-row">
+					<div className="govuk-grid-column-one-quarter-from-desktop sticky-magic">
 						<KeyInformation resident={resident}/>
 					</div>
 
-					<div class="govuk-grid-column-three-quarters-from-desktop">
+					<div className="govuk-grid-column-three-quarters-from-desktop">
 						<h1
-							class="govuk-heading-xl"
+							className="govuk-heading-xl"
 							style={{ marginTop: "0px", marginBottom: "40px" }}
 						>
 							Name Surname
 						</h1>
 
 						<form action="/oneresident" method="post">
-							<div class="govuk-grid-row">
-								<div class="govuk-grid-column-one-half">
-									<div class="govuk-form-group lbh-form-group">
-										<fieldset class="govuk-fieldset">
-											<legend class="govuk-fieldset__legend">
+							<div className="govuk-grid-row">
+								<div className="govuk-grid-column-one-half">
+									<div className="govuk-form-group lbh-form-group">
+										<fieldset className="govuk-fieldset">
+											<legend className="govuk-fieldset__legend">
 												Call type required
 											</legend>
 											<br />
@@ -68,21 +68,21 @@ export default function addSupportPage({resident}) {
 									</div>
 								</div>
 							</div>
-							<div class="govuk-grid-row">
-								<div class="govuk-grid-column-one-half">
-									<div class="govuk-form-group lbh-form-group">
-										<fieldset class="govuk-fieldset">
-											<legend class="govuk-fieldset__legend">
+							<div className="govuk-grid-row">
+								<div className="govuk-grid-column-one-half">
+									<div className="govuk-form-group lbh-form-group">
+										<fieldset className="govuk-fieldset">
+											<legend className="govuk-fieldset__legend">
 												Did you make a call?
 											</legend>
 											<br />
 											<div
-												class="govuk-radios  lbh-radios govuk-radios--conditional"
+												className="govuk-radios  lbh-radios govuk-radios--conditional"
 												data-module="govuk-radios"
 											>
-												<div class="govuk-radios__item">
+												<div className="govuk-radios__item">
 													<input
-														class="govuk-radios__input"
+														className="govuk-radios__input"
 														id="CallMade"
 														name="CallMade"
 														type="radio"
@@ -91,30 +91,30 @@ export default function addSupportPage({resident}) {
 														aria-expanded="false"
 													/>
 													<label
-														class="govuk-label govuk-radios__label"
-														for="CallMade"
+														className="govuk-label govuk-radios__label"
+														htmlFor="CallMade"
 													>
 														Yes
 													</label>
 												</div>
 												<div
-													class="govuk-radios__conditional govuk-radios__conditional--hidden"
+													className="govuk-radios__conditional govuk-radios__conditional--hidden"
 													id="conditional-CallMade"
 												>
-													<div class="govuk-form-group lbh-form-group">
-														<fieldset class="govuk-fieldset">
-															<legend class="govuk-fieldset__legend">
+													<div className="govuk-form-group lbh-form-group">
+														<fieldset className="govuk-fieldset">
+															<legend className="govuk-fieldset__legend">
 																What was the
 																outcome of the
 																call?
 															</legend>
 															<div
-																class="govuk-radios govuk-radios--inline lbh-radios govuk-radios--conditional"
+																className="govuk-radios govuk-radios--inline lbh-radios govuk-radios--conditional"
 																data-module="govuk-radios"
 															>
-																<div class="govuk-radios__item">
+																<div className="govuk-radios__item">
 																	<input
-																		class="govuk-radios__input"
+																		className="govuk-radios__input"
 																		id="CallDetail"
 																		name="CallDetail"
 																		type="radio"
@@ -123,8 +123,8 @@ export default function addSupportPage({resident}) {
 																		aria-expanded="false"
 																	/>
 																	<label
-																		class="govuk-label govuk-radios__label"
-																		for="CallDetail"
+																		className="govuk-label govuk-radios__label"
+																		htmlFor="CallDetail"
 																	>
 																		Spoke to
 																		a
@@ -132,15 +132,15 @@ export default function addSupportPage({resident}) {
 																	</label>
 																</div>
 																<div
-																	class="govuk-radios__conditional govuk-radios__conditional--hidden"
+																	className="govuk-radios__conditional govuk-radios__conditional--hidden"
 																	id="conditional-CallDetail"
 																>
-																	<div class="govuk-grid-row">
-																		<div class="display-spoke-to-resident">
-																			<div class="govuk-form-group lbh-form-group">
+																	<div className="govuk-grid-row">
+																		<div className="display-spoke-to-resident">
+																			<div className="govuk-form-group lbh-form-group">
 																				<span
 																					id="CallOutcome-hint"
-																					class="govuk-hint  lbh-hint"
+																					className="govuk-hint  lbh-hint"
 																				>
 																					Select
 																					a
@@ -170,13 +170,13 @@ export default function addSupportPage({resident}) {
 																					}
 																				)}
 																			</div>
-																			<div class="display-call-attempted"></div>
+																			<div className="display-call-attempted"></div>
 																		</div>
 																	</div>
 																</div>
-																<div class="govuk-radios__item">
+																<div className="govuk-radios__item">
 																	<input
-																		class="govuk-radios__input"
+																		className="govuk-radios__input"
 																		id="CallDetail-2"
 																		name="CallDetail"
 																		type="radio"
@@ -185,8 +185,8 @@ export default function addSupportPage({resident}) {
 																		aria-expanded="false"
 																	/>
 																	<label
-																		class="govuk-label govuk-radios__label"
-																		for="CallDetail-2"
+																		className="govuk-label govuk-radios__label"
+																		htmlFor="CallDetail-2"
 																	>
 																		Call
 																		attempted/no
@@ -194,14 +194,14 @@ export default function addSupportPage({resident}) {
 																	</label>
 																</div>
 																<div
-																	class="govuk-radios__conditional govuk-radios__conditional--hidden"
+																	className="govuk-radios__conditional govuk-radios__conditional--hidden"
 																	id="conditional-CallDetail-2"
 																>
-																	<div class="display-call-attempted">
-																		<div class="govuk-form-group lbh-form-group">
+																	<div className="display-call-attempted">
+																		<div className="govuk-form-group lbh-form-group">
 																			<span
 																				id="CallOutcome-hint"
-																				class="govuk-hint  lbh-hint"
+																				className="govuk-hint  lbh-hint"
 																			>
 																				Select
 																				a
@@ -236,9 +236,9 @@ export default function addSupportPage({resident}) {
 															</div>
 														</fieldset>
 													</div>
-													<div class="govuk-form-group lbh-form-group">
-														<fieldset class="govuk-fieldset">
-															<legend class="govuk-fieldset__legend">
+													<div className="govuk-form-group lbh-form-group">
+														<fieldset className="govuk-fieldset">
+															<legend className="govuk-fieldset__legend">
 																What type of
 																help was given
 																in the call
@@ -251,9 +251,9 @@ export default function addSupportPage({resident}) {
 															/>
 														</fieldset>
 													</div>
-													<div class="govuk-form-group lbh-form-group">
-														<fieldset class="govuk-fieldset">
-															<legend class="govuk-fieldset__legend">
+													<div className="govuk-form-group lbh-form-group">
+														<fieldset className="govuk-fieldset">
+															<legend className="govuk-fieldset__legend">
 																Who made the
 																initial contact?
 															</legend>
@@ -266,17 +266,17 @@ export default function addSupportPage({resident}) {
 														</fieldset>
 													</div>
 												</div>
-												<div class="govuk-radios__item">
+												<div className="govuk-radios__item">
 													<input
-														class="govuk-radios__input"
+														className="govuk-radios__input"
 														id="CallMade-2"
 														name="CallMade"
 														type="radio"
 														value="no"
 													/>
 													<label
-														class="govuk-label govuk-radios__label"
-														for="CallMade-2"
+														className="govuk-label govuk-radios__label"
+														htmlFor="CallMade-2"
 													>
 														No
 													</label>
@@ -286,11 +286,11 @@ export default function addSupportPage({resident}) {
 									</div>
 								</div>
 							</div>
-							<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+							<hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
 							
 								
 						
-										<h2 class="govuk-heading-l">
+										<h2 className="govuk-heading-l">
 						
 												Resident Bio
 									
@@ -298,20 +298,20 @@ export default function addSupportPage({resident}) {
 									
 									<div
 										id="default-example-content-1"
-										class="govuk-accordion__section-content"
+										className="govuk-accordion__section-content"
 										aria-labelledby="default-example-heading-1"
 									>
-										<div class="govuk-grid-row">
-											<div class="govuk-grid-column-one-half">
-												<fieldset class="govuk-fieldset lbh-fieldset">
-													<legend class="govuk-fieldset__legend">
+										<div className="govuk-grid-row">
+											<div className="govuk-grid-column-one-half">
+												<fieldset className="govuk-fieldset lbh-fieldset">
+													<legend className="govuk-fieldset__legend">
 														First name
 													</legend>
 													<br />
 												</fieldset>
-												<div class="govuk-form-group lbh-form-group">
+												<div className="govuk-form-group lbh-form-group">
 													<input
-														class="govuk-input  lbh-input"
+														className="govuk-input  lbh-input"
 														id="FirstName"
 														name="FirstName"
 														type="text"
@@ -322,10 +322,10 @@ export default function addSupportPage({resident}) {
 													/>
 												</div>
 											</div>
-											<div class="govuk-grid-column-one-half">
-												<fieldset class="govuk-fieldset lbh-fieldset">
+											<div className="govuk-grid-column-one-half">
+												<fieldset className="govuk-fieldset lbh-fieldset">
 													<legend
-														class="govuk-fieldset__legend"
+														className="govuk-fieldset__legend"
 														style={{
 															marginBottom:
 																"30px",
@@ -334,9 +334,9 @@ export default function addSupportPage({resident}) {
 														Last name
 													</legend>
 												</fieldset>
-												<div class="govuk-form-group lbh-form-group">
+												<div className="govuk-form-group lbh-form-group">
 													<input
-														class="govuk-input  lbh-input"
+														className="govuk-input  lbh-input"
 														id="LastName"
 														name="LastName"
 														type="text"
@@ -348,15 +348,15 @@ export default function addSupportPage({resident}) {
 												</div>
 											</div>
 										</div>
-										<div class="govuk-grid-row">
-											<div class="govuk-grid-column-one-half">
-												<h3 class="lbh-heading-h3">
+										<div className="govuk-grid-row">
+											<div className="govuk-grid-column-one-half">
+												<h3 className="lbh-heading-h3">
 													Contact telephone
 												</h3>
 												<br />
-												<div class="govuk-form-group lbh-form-group">
+												<div className="govuk-form-group lbh-form-group">
 													<input
-														class="govuk-input  lbh-input"
+														className="govuk-input  lbh-input"
 														id="ContactTelephoneNumber"
 														name="ContactTelephoneNumber"
 														type="tel"
@@ -367,14 +367,14 @@ export default function addSupportPage({resident}) {
 													/>
 												</div>
 											</div>
-											<div class="govuk-grid-column-one-half">
-												<h3 class="lbh-heading-h3">
+											<div className="govuk-grid-column-one-half">
+												<h3 className="lbh-heading-h3">
 													Contact mobile (Optional)
 												</h3>
 												<br />
-												<div class="govuk-form-group lbh-form-group">
+												<div className="govuk-form-group lbh-form-group">
 													<input
-														class="govuk-input  lbh-input"
+														className="govuk-input  lbh-input"
 														id="ContactMobileNumber"
 														name="ContactMobileNumber"
 														type="tel"
@@ -386,15 +386,15 @@ export default function addSupportPage({resident}) {
 												</div>
 											</div>
 										</div>
-										<div class="govuk-grid-row">
-											<div class="govuk-grid-column-one-half">
-												<h3 class="lbh-heading-h3">
+										<div className="govuk-grid-row">
+											<div className="govuk-grid-column-one-half">
+												<h3 className="lbh-heading-h3">
 													Email address (Optional)
 												</h3>
 												<br />
-												<div class="govuk-form-group lbh-form-group">
+												<div className="govuk-form-group lbh-form-group">
 													<input
-														class="govuk-input  lbh-input"
+														className="govuk-input  lbh-input"
 														id="EmailAddress"
 														name="EmailAddress"
 														type="text"
@@ -405,102 +405,102 @@ export default function addSupportPage({resident}) {
 													/>
 												</div>
 											</div>
-											<div class="govuk-grid-column-one-half"></div>
+											<div className="govuk-grid-column-one-half"></div>
 										</div>
-										<h3 class="lbh-heading-h3">
+										<h3 className="lbh-heading-h3">
 											Date of birth
 										</h3>
-										<div class="govuk-form-group lbh-form-group">
-											<div class="govuk-date-input  lbh-date-input">
-												<div class="govuk-date-input__item">
-													<div class="govuk-form-group">
+										<div className="govuk-form-group lbh-form-group">
+											<div className="govuk-date-input  lbh-date-input">
+												<div className="govuk-date-input__item">
+													<div className="govuk-form-group">
 														<label
-															class="govuk-label govuk-date-input__label"
-															for="DobDay"
+															className="govuk-label govuk-date-input__label"
+															htmlFor="DobDay"
 														>
 															Day
 														</label>
 														<input
-															class="govuk-input govuk-date-input__input govuk-input--width-2 "
+															className="govuk-input govuk-date-input__input govuk-input--width-2 "
 															id="DobDay"
 															name="DobDay"
 															type="text"
 															pattern="[0-9]*"
-															inputmode="numeric"
+															inputMode="numeric"
 														/>
 													</div>
 												</div>
-												<div class="govuk-date-input__item">
-													<div class="govuk-form-group">
+												<div className="govuk-date-input__item">
+													<div className="govuk-form-group">
 														<label
-															class="govuk-label govuk-date-input__label"
-															for="DobMonth"
+															className="govuk-label govuk-date-input__label"
+															htmlFor="DobMonth"
 														>
 															Month
 														</label>
 														<input
-															class="govuk-input govuk-date-input__input govuk-input--width-2 "
+															className="govuk-input govuk-date-input__input govuk-input--width-2 "
 															id="DobMonth"
 															name="DobMonth"
 															type="text"
 															pattern="[0-9]*"
-															inputmode="numeric"
+															inputMode="numeric"
 														/>
 													</div>
 												</div>
-												<div class="govuk-date-input__item">
-													<div class="govuk-form-group">
+												<div className="govuk-date-input__item">
+													<div className="govuk-form-group">
 														<label
-															class="govuk-label govuk-date-input__label"
-															for="DobYear"
+															className="govuk-label govuk-date-input__label"
+															htmlFor="DobYear"
 														>
 															Year
 														</label>
 														<input
-															class="govuk-input govuk-date-input__input govuk-input--width-4 "
+															className="govuk-input govuk-date-input__input govuk-input--width-4 "
 															id="DobYear"
 															name="DobYear"
 															type="text"
 															pattern="[0-9]*"
-															inputmode="numeric"
+															inputMode="numeric"
 														/>
 													</div>
 												</div>
 											</div>
 											<br />
 										</div>
-										<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+										<hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
 										
 							</div>
-							<hr class="govuk-section-break govuk-section-break--m govuk-section-break" />
-							<h2 class="govuk-heading-l">Case notes:</h2>
-							<h3 class="govuk-heading-m">
+							<hr className="govuk-section-break govuk-section-break--m govuk-section-break" />
+							<h2 className="govuk-heading-l">Case notes:</h2>
+							<h3 className="govuk-heading-m">
 								Add a new case note (optional):
 							</h3>
-							<div class="govuk-form-group">
+							<div className="govuk-form-group">
 								<span
 									id="NewCaseNote-hint"
-									class="govuk-hint  lbh-hint"
+									className="govuk-hint  lbh-hint"
 								></span>
 								<textarea
-									class="govuk-textarea  lbh-textarea"
+									className="govuk-textarea  lbh-textarea"
 									id="NewCaseNote"
 									name="NewCaseNote"
 									rows="5"
 									aria-describedby="NewCaseNote-hint"
 								></textarea>
 							</div>
-							<h3 class="govuk-heading-m">Case note history:</h3>
+							<h3 className="govuk-heading-m">Case note history:</h3>
 							<input type="hidden" name="CaseNotes" value="" />
 							<br />
-							<p class="lbh-body-m"></p>
-							<h3 class="govuk-heading-m">
+							<p className="lbh-body-m"></p>
+							<h3 className="govuk-heading-m">
 								Call attempts history:
 							</h3>
 							<br />
-							<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-							<div class="govuk-grid-row" id="btn-bottom-panel">
-								<div class="govuk-grid-column-one-half">
+							<hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+							<div className="govuk-grid-row" id="btn-bottom-panel">
+								<div className="govuk-grid-column-one-half">
 								<Link href="/helpcase-profile/1">
 									<Button text="Update" onClick={() => alert("Updated")} addClass="govuk-!-margin-right-1"/>
 								</Link>

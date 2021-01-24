@@ -25,7 +25,7 @@ export default function CaseNotes() {
 
 	return (
 		<div>
-			<h2 class="govuk-heading-l">Case notes</h2>
+			<h2 className="govuk-heading-l">Case notes</h2>
 			<Dropdown
 				onChange={(value) => onChange(value)}
 				dropdownItems={Object.values(supportTypes)}
@@ -44,13 +44,13 @@ export default function CaseNotes() {
 								className="filter"
 								data-type={supportTypes[index]}
 							>
-								<h4 class="govuk-heading-s" className="filter">
+								<h4 className="govuk-heading-s" className="filter">
 									2020-01-0{Math.floor(Math.random() * 9)} by{" "}
 									{fakeUser}
 								</h4>
 								<p>{supportTypes[index]}: Random Text</p>
 							</div>
-							<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+							<hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
 						</>
 					)
 				);

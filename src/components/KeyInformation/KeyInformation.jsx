@@ -32,7 +32,7 @@ export default function KeyInformation({ resident }) {
         <div hidden={hidden}>
           {numbers?.map((number, index) => {
             return (
-              <p data-testid={`key-information_phone-number_${index}`}>
+              <p data-testid={`key-information_phone-number_${index}`} key={`key-information_phone-number_${index}`}>
                 Phone {index + 1}: {number}
               </p>
             );
@@ -49,7 +49,7 @@ export default function KeyInformation({ resident }) {
             {resident.postCode}
           </p>
           <br />
-          {/* <h3 class="govuk-heading-s">Alternate contact:</h3>
+          {/* <h3 className="govuk-heading-s">Alternate contact:</h3>
         <p>
           Test Test
           <br />
@@ -63,7 +63,7 @@ export default function KeyInformation({ resident }) {
       </div>
 
       <div className={styles["key-information-box"]}>
-        <h3 class="govuk-heading-s">Key information</h3>
+        <h3 className="govuk-heading-s">Key information</h3>
         <div hidden={hidden}>
           <p>
             CEV

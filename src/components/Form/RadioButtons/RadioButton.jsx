@@ -2,20 +2,20 @@ import React from 'react'
 
 export default function RadioButton({ radioButtonItems, name }) {
     return (
-        <div class="govuk-radios govuk-radios--inline">
+        <div className="govuk-radios govuk-radios--inline">
             {radioButtonItems.map((radioButtonItem) => {
                 return (
-                    <div class="govuk-radios__item">
+                    <div className="govuk-radios__item">
                         <input
-                            class="govuk-radios__input"
+                            className="govuk-radios__input"
                             id={radioButtonItem}
                             name={name}
                             type="radio"
                             value={radioButtonItem}
                         />
                         <label
-                            class="govuk-label govuk-radios__label"
-                            for={radioButtonItem}
+                            className="govuk-label govuk-radios__label"
+                            htmlFor={radioButtonItem}
                             style={{marginBottom: "15px"}}
                         >
                             {radioButtonItem}
