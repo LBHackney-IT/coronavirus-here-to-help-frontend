@@ -66,3 +66,5 @@ You can use a `.env.local` file to supply environment config locally. Create a f
 | HACKNEY_JWT_SECRET                        |                                                                     |                                     |
 | RUNTIME_HACKNEY_COOKIE_NAME               |                                                                     | hackneyToken                        |
 | RUNTIME_HOST_ENV                          |                                                                     | dev                                 |
+| HERE_TO_HELP_API_BASE_URL                 | The Base URL for the Here To Help API                               | https://example.com/api/v2          |
+| HERE_TO_HELP_API_KEY                      | The API Key for the Here To Help API                                |                                     |
