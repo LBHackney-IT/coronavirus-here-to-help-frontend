@@ -195,7 +195,7 @@ server.get('/api/v3/help-requests/callbacks', function (req, res) {
         const calls = inMemDb.HelpRequestCalls.filter((hrc) => hrc.HelpRequestId == helpRequest.id);
         const caseNotes = inMemDb.CaseNotes.filter((cn) => cn.HelpRequestId == helpRequest.id);
         const bad_callback = {
-            Id: helpRequest.Id,
+            Id: helpRequest.id,
             ResidentId: helpRequest.ResidentId,
             IsOnBehalf: helpRequest.IsOnBehalf,
             ConsentToCompleteOnBehalf: helpRequest.ConsentToCompleteOnBehalf,
@@ -263,7 +263,7 @@ server.get('/api/v3/help-requests/callbacks', function (req, res) {
     });
     res.jsonp(
         helpRequests.sort(function (a, b) {
-            return new Date(b.RequestedDate) - new Date(a.RequestedDate);
+            return new Date(b.DateTimeRecorded) - new Date(a.DateTimeRecorded);
         })
     );
 });
