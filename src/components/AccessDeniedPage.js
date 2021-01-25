@@ -1,4 +1,4 @@
-import ResidentLayout from './layout';
+import Layout from './layout';
 
 export const AccessDeniedPage = () => {
     return (
