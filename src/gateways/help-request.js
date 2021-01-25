@@ -65,7 +65,7 @@ export class HelpRequestGateway extends DefaultGateway {
 
     async getHelpRequests(residentId) {
         const response = await this.getFromUrl(`resident/${residentId}/helpRequests`);
-        const helpRequests = response.map((x) => ToHelpRequest(x));
+        const helpRequests = response.map(ToHelpRequest);
         return helpRequests;
     }
 
