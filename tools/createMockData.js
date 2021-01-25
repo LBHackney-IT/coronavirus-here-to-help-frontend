@@ -52,7 +52,9 @@ function createResident(autoincrId) {
         ConsentToShare: randomNullableBool(),
         ContactMobileNumber: nItems(randomInt(2), randexp, /07\d{9}/),
         ContactTelephoneNumber: nItems(randomInt(2), randexp, /020\d{8}/),
-        DateOfBirth: faker.date.past(70),
+        DobMonth: Math.floor(Math.random() * (12 - 1) + 1),
+        DobYear: Math.floor(Math.random() * (2000 - 1900) + 1900),
+        DobDay: Math.floor(Math.random() * (31 - 1) + 1),
         EmailAddress: faker.internet.email(firstname, lastname),
         GpSurgeryDetails: faker.random.number(), // got no clue what this is
         IsPharmacistAbleToDeliver: randomNullableBool(),

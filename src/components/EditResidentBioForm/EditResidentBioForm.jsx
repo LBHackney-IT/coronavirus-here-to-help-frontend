@@ -144,7 +144,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  defaultValue={resident.DobMonth}
+                  defaultValue={resident.dobMonth}
                   onChange={(e) => onChange(e.target.id, e.target.value)}
                 />
               </div>

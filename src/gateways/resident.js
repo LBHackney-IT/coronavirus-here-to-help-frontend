@@ -11,7 +11,9 @@ const ToResident = (response) => {
         consentToShare: response.ConsentToShare,
         contactMobileNumber: response.ContactMobileNumber,
         contactTelephoneNumber: response.ContactTelephoneNumber,
-        dateOfBirth: response.DateOfBirth,
+        dobMonth: response.DobMonth,
+        dobDay: response.DobDay,
+        dobYear: response.DobYear,
         emailAddress: response.EmailAddress,
         gpSurgeryDetails: response.GpSurgeryDetails,
         isPharmacistAbleToDeliver: response.IsPharmacistAbleToDeliver,
@@ -50,5 +52,11 @@ export class ResidentGateway extends DefaultGateway {
     async getResident(residentId) {
         const response = await this.getFromUrl(`residents/${residentId}`);
         return ToResident(response);
+    }
+
+    async updateResident(residentId, updatedResident) {
+        console.log('gateway patch resident');
+        console.log(updatedResident);
+        return await this.patchToUrl(`residents/${residentId}`, updatedResident);
     }
 }

@@ -3,11 +3,11 @@ import Layout from '../../../components/layout';
 import KeyInformation from '../../../components/KeyInformation/KeyInformation';
 import { ResidentGateway } from '../../../gateways/resident';
 import { useState } from 'react';
-import { Button, Address } from '../../../components/Form';
+import { Button, Address, RadioButton } from '../../../components/Form';
 import EditResidentBioForm from '../../../components/EditResidentBioForm/EditResidentBioForm';
 import CaseNotes from '../../../components/CaseNotes/CaseNotes';
 
-export default function EditResident({ resident_id, resident }) {
+export default function EditResident({ residentId, resident }) {
     const [updatedResident, setUpdatedResident] = useState(resident);
 
     const handleEditResident = (id, value) => {
@@ -17,6 +17,8 @@ export default function EditResident({ resident_id, resident }) {
 
     const logNewResidentDetails = () => {
         console.log(updatedResident);
+        const gateway = new ResidentGateway();
+        gateway.updateResident(residentId, updatedResident);
     };
 
     return (
@@ -30,35 +32,26 @@ export default function EditResident({ resident_id, resident }) {
                 <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
                 <Address initialResident={resident} onChange={handleEditResident} />
 
-                <hr className="govuk-section-break govuk-section-break--m govuk-section-break" />
-                <h2 className="govuk-heading-l">Case notes:</h2>
-                <h3 className="govuk-heading-m">Add a new case note (optional):</h3>
-                <div className="govuk-form-group">
-                    <span id="NewCaseNote-hint" className="govuk-hint  lbh-hint"></span>
-                    <textarea
-                        className="govuk-textarea  lbh-textarea"
-                        id="NewCaseNote"
-                        name="NewCaseNote"
-                        rows="5"
-                        aria-describedby="NewCaseNote-hint"></textarea>
-                </div>
-                <h3 className="govuk-heading-m">Case note history:</h3>
-                <input type="hidden" name="CaseNotes" value="" />
-                <br />
-                <p className="lbh-body-m"></p>
-                <h3 className="govuk-heading-m">Call attempts history:</h3>
-                <br />
                 <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-                <CaseNotes />
-                <hr className="govuk-section-break govuk-section-break--m govuk-section-break" />
-                <Button
-                    text="Update"
-                    addClass="govuk-!-margin-right-1"
-                    onClick={() => logNewResidentDetails()}
-                />
+                <fieldset className="govuk-fieldset">
+                    <legend className="govuk-fieldset__legend">
+                        Can we share the information you’ve provided with voluntary or community
+                        organisations?
+                    </legend>
+                    <RadioButton radioButtonItems={['Yes', 'No']} name="consentToShare" />
+                </fieldset>
+                <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+
                 <Button
                     text="Cancel"
                     addClass="govuk-button--secondary"
+                    onClick={() => logNewResidentDetails()}
+                />
+                <span> </span>
+
+                <Button
+                    text="Next"
+                    addClass="govuk-!-margin-right-1"
                     onClick={() => logNewResidentDetails()}
                 />
             </div>

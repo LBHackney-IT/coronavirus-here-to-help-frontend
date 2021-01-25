@@ -3,18 +3,24 @@ import { useState } from 'react';
 import Dropdown from '../Dropdown/Dropdown';
 import { AddressesGateway } from '../../../gateways/addresses';
 
-
 export default function Address({ initialResident, onChange }) {
     let [lookupPostcode, setLookupPostcode] = useState('');
     let [addresses, setAddresses] = useState();
     let [resident, setResident] = useState(initialResident);
+    let [dropdownItems, setDropdownItems] = useState([]);
 
     const gateway = new AddressesGateway();
 
     const FindAddresses = async () => {
-        return await gateway.getAddresses(lookupPostcode);
-        
+        const response = await gateway.getAddresses(lookupPostcode);
+        setAddresses(response);
+        setDropdownItems(
+            response?.address.map(
+                (x) => `${x.line1}, ${x.line2}, ${x.line3} ${x.line4}, ${x.postcode}`
+            )
+        );
     };
+
     const setSelectedAddress = (value) => {
         const [addressFirstLine, addressSecondLine, addressThirdLine, postCode] = value.split(', ');
         onChange('addressFirstLine', addressFirstLine);
@@ -29,9 +35,7 @@ export default function Address({ initialResident, onChange }) {
             postCode
         });
     };
-    const dropdownItems = addresses?.address.map(
-        (x) => `${x.line1}, ${x.line2}, ${x.line3} ${x.line4}, ${x.postcode}`
-    );
+
     return (
         <>
             <div className="govuk-grid-row">
@@ -52,14 +56,11 @@ export default function Address({ initialResident, onChange }) {
                         className="govuk-button  lbh-button"
                         data-module="govuk-button"
                         id="address-finder"
-                        onClick={() => setAddresses(FindAddresses())}>
+                        onClick={() => FindAddresses()}>
                         Search
                     </button>
                     {addresses && (
-                        <Dropdown
-                            dropdownItems={dropdownItems}
-                            onChange={(value) => setSelectedAddress(value)}
-                        />
+                        <Dropdown dropdownItems={dropdownItems} onChange={setSelectedAddress} />
                     )}
                 </div>
                 <div className="govuk-grid-column-one-half">
