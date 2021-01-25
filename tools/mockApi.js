@@ -12,6 +12,8 @@ const router = jsonServer.router(inMemDb);
 server.use(
     jsonServer.rewriter({
         '/api/v4/*': '/$1',
+        '/api/v3/*': '/$1',
+        '/help-requests/:helpRequestId': '/helpRequests/$1',
         '/resident/*': '/residents/$1',
         '/residents/:ResidentId': '/residents/:ResidentId?_embed=CaseNotes',
         '/residents/:ResidentId/helpRequests/:HelpRequestId': '/helpRequests/:HelpRequestId',
@@ -89,7 +91,7 @@ function validateObjectProperties(obj, respBody) {
     return true;
 }
 
-server.patch('/api/v3/help-requests/:helpRequestId', function (req, res) {
+server.patch('/helpRequests/:helpRequestId', function (req, res) {
     const bodyObj = { ...req.body }; //add try parse json
     const helpRequestId = req.params.helpRequestId;
     const helpRequest = inMemDb.helpRequests.find((hr) => hr.id == helpRequestId);
@@ -184,7 +186,7 @@ server.get('/callbackList', function (req, res) {
 });
 
 // the bad callbacks endpoint
-server.get('/api/v3/help-requests/callbacks', function (req, res) {
+server.get('/helpRequests/callbacks', function (req, res) {
     let helpRequests = inMemDb.helpRequests; // starting point
 
     // we're simply dumping everything we got regardless of the usefulness,
