@@ -51,13 +51,30 @@ commands:
             sls deploy -s <<parameters.stage>>
 
 jobs:
+  build:
+    executor: node
+    steps:
+      - *attach_workspace
+      - checkout
+      - restore_cache:
+          key: &build-cache-key 'next-build-cache3-{{ arch }}-{{ checksum "package-lock.json" }}'
+      - run: CYPRESS_INSTALL_BINARY=0 npm ci
+      - run: npm run build
+      - save_cache:
+          key: *build-cache-key
+          paths:
+            - ./node_modules
+            - ./build/_next
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - project
+
   test:
     executor: node
 
     steps:
       - *attach_workspace
-      - checkout
-      - run: npm ci
       - run:
           name: Run unit tests
           command: npm run test
@@ -108,18 +125,20 @@ workflows:
   continuous-delivery:
     jobs:
       - cypress/install: # Use Cypress step to install and cache dependencies
-          build: npm run build
           cache-key: &cypress-cache-key 'npm-packages-cache1-{{ arch }}-{{ checksum "package-lock.json" }}'
           post-checkout:
             - run: cp .env.sample .env
 
+      - build
+
       - test:
           requires:
-            - cypress/install
+            - build
 
       - cypress/run:
           cache-key: *cypress-cache-key
           requires:
+            - build
             - cypress/install
           executor: cypress/base-14
           attach-workspace: true
