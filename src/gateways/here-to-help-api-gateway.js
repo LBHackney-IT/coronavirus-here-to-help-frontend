@@ -9,7 +9,7 @@ export class HereToHelpApiGateway {
                 url: `/${pathSegments.join('/')}`,
                 data: body,
                 headers: {
-                    Authorization: process.env.HERE_TO_HELP_API_TOKEN
+                    'x-api-key': process.env.HERE_TO_HELP_API_KEY
                 },
                 validateStatus() {
                     return true;
