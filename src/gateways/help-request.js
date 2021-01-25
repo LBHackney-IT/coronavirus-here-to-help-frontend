@@ -62,6 +62,6 @@ export class HelpRequestGateway extends DefaultGateway {
     }
 
     async postHelpRequest(residentId, requestBody) {
-      return await this.postToUrl(`resident/${residentId}/helpRequest`, requestBody)
+      return await this.postToUrl(`resident/${residentId}/help-requests`, requestBody)
     }
 }

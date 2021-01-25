@@ -20,7 +20,7 @@ server.use(
         '/search/resident?*': '/residents?$1',
         '/residents/:ResidentId/helpRequests/:HelpRequestId/calls*':
             '/helpRequests/$2/help_request_calls$3',
-        'resident/:ResidentId/helpRequest' :  'resident/:ResidentId/helpRequest'
+        'resident/:ResidentId/help-requests' :  'resident/:ResidentId/help-requests'
     })
 );
 
@@ -108,7 +108,7 @@ server.patch('/api/v3/help-requests/:helpRequestId', function (req, res) {
     }
 });
 
-server.post('/api/v3/resident/:ResidentId/helpRequest', function(req, res) {
+server.post('/api/v3/resident/:ResidentId/helpRequests', function(req, res) {
   const bodyObj = { ...req.body }; //add try parse json
   const residentId = req.params.ResidentId
   const resident = inMemDb.helpRequests.find(hr => hr.id == residentId);
