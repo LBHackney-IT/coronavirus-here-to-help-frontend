@@ -12,13 +12,11 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
-require('dotenv').config();
-
 module.exports = (on, config) => {
     // copy any needed variables from process.env to config.env
-    config.env.HACKNEY_JWT_SECRET = process.env.HACKNEY_JWT_SECRET
-    config.env.RUNTIME_HACKNEY_COOKIE_NAME = process.env.RUNTIME_HACKNEY_COOKIE_NAME
+    config.env.HACKNEY_JWT_SECRET = 'sekret';
+    config.env.RUNTIME_HACKNEY_COOKIE_NAME = 'hackneyToken';
 
     // do not forget to return the changed config object!
-    return config
-}
+    return config;
+};
