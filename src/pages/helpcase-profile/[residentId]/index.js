@@ -7,8 +7,9 @@ import Link from 'next/link';
 import { Button } from '../../../components/Form';
 import { useRouter } from 'next/router';
 import { ResidentGateway } from '../../../gateways/resident';
+import { HelpRequestGateway } from '../../../gateways/help-request';
 
-export default function HelpcaseProfile({ resident_id, resident }) {
+export default function HelpcaseProfile({ resident_id, resident, helpRequests }) {
     const router = useRouter();
 
     return (
@@ -37,10 +38,8 @@ export default function HelpcaseProfile({ resident_id, resident }) {
                             {resident.firstName} {resident.lastName}
                         </h1>
 
-                        <SupportTable />
-                        <Link
-                            href="/add-support/[resident_id]"
-                            as={`/add-support/${resident_id}`}>
+                        <SupportTable helpRequests={helpRequests}/>
+                        <Link href="/add-support/[resident_id]" as={`/add-support/${resident_id}`}>
                             <Button text="+ Add new support" />
                         </Link>
 
@@ -59,10 +58,13 @@ HelpcaseProfile.getInitialProps = async ({ query: { residentId }, req, res }) =>
     try {
         const gateway = new ResidentGateway();
         const resident = await gateway.getResident(residentId);
+        const hrGateway = new HelpRequestGateway();
+        const helpRequests = await hrGateway.getHelpRequests(residentId);
 
         return {
             residentId,
-            resident
+            resident,
+            helpRequests
         };
     } catch (err) {
         console.log(`Error getting resident props with help request ID ${residentId}: ${err}`);
