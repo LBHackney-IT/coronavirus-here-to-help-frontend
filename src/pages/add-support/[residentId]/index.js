@@ -57,7 +57,6 @@ export default function addSupportPage({residentId,resident}) {
 		if(value == "The resident called me"){
 			setCallDirection("Inbound")
 		}
-		
 	}
 	const updateCallMadeAndCallOutcomeValues = async value => {
 		setCallOutcome(value)
@@ -69,8 +68,6 @@ export default function addSupportPage({residentId,resident}) {
 		// console.log(value)
 		if(callOutcomeValues.includes(value)) {
 			let newCallOutcomesValues = callOutcomeValues.filter(callOutcomeValue => callOutcomeValue != value)
-			// console.log(`${newCallOutcomesValues}`)
-			// console.log(newCallOutcomesValues)
 			setCallOutcomeValues(newCallOutcomesValues)
 		}
 		else{
@@ -79,14 +76,13 @@ export default function addSupportPage({residentId,resident}) {
 			setCallOutcomeValues(newCallOutcomesValues)
 		}
 	}
-	 console.log(callOutcomeValues)
-	// console.log(CallDirection)
+	
 
 	const handleUpdate = async (e) => {
 
 		let callbackRequired = (followUpRequired == "Yes") ? true : false
 		let initialCallbackCompleted = (followUpRequired == "Yes") ? false : true
-		console.log(helpNeeded)
+		
 		let helpRequestObject = {
 			ResidentId:residentId,
 			CallbackRequired: callbackRequired,
@@ -99,20 +95,10 @@ export default function addSupportPage({residentId,resident}) {
 			HelpRequestId: "help request response",
 			CallType: helpNeeded,
 			CallDirection: CallDirection,
-			CallOutcome: "call outcomes",
+			CallOutcome: callOutcomeValues,
 			CallDateTime: new Date(),
 			CallHandler: "auth - need to figure out"
 		}
-							// {
-		// 	HelpRequestId: "help request response"
-    //   CallType: "what was the initial purpuse of the call"
-    //   CallDirection: "who made thew call today"
-    //   CallOutcome: "call outcomes"
-    //   CallDateTime: "set"
-		// 	CallHandler: "auth"
-		// }
-
-
 
 		// //create help request
 		// const gateway = new HelpRequestGateway();
@@ -232,9 +218,9 @@ export default function addSupportPage({residentId,resident}) {
 																					{noAnswerCallOutcomes.map((noAnswerCallOutcome) => {
 																							return (
 																								<Checkbox 
-																								id={noAnswerCallOutcome} n
-																								ame="noAnswerCallOutcome" 
-																								type="checkbox" v
+																								id={noAnswerCallOutcome}
+																								name="noAnswerCallOutcome" 
+																								type="checkbox"
 																								value={noAnswerCallOutcome} 
 																								label={noAnswerCallOutcome}
 																								onCheckboxChange={onCheckboxChangeUpdate}
