@@ -11,29 +11,29 @@ export default function ResidentSearchPage() {
         <Layout>
             <div>
                 <Link href="/">
-                    <a href="#" class="govuk-back-link  lbh-back-link">
+                    <a href="#" className="govuk-back-link  lbh-back-link">
                         Back
                     </a>
                 </Link>
-                <hr class="govuk-section-break govuk-section-break--s govuk-section-break"></hr>
-                <h1 class="govuk-heading-xl" style={{ marginBottom: '0.1em' }}>
+                <hr className="govuk-section-break govuk-section-break--s govuk-section-break"></hr>
+                <h1 className="govuk-heading-xl" style={{ marginBottom: '0.1em' }}>
                     Resident lookup
                 </h1>
-                <p class="govuk-body">
+                <p className="govuk-body">
                     Search for resident by postcode <strong>or</strong> name to see if weve helped
                     them before.
                 </p>
-                <hr class="govuk-section-break govuk-section-break--m govuk-section-break"></hr>
+                <hr className="govuk-section-break govuk-section-break--m govuk-section-break"></hr>
                 <form action="/listresident">
-                    <div class="govuk-!-margin-bottom-5">
-                        <div class="govuk-grid-row row-margin-top-m">
-                            <div class="govuk-grid-column-one-third">
-                                <label class="govuk-label" for="postcode">
+                    <div className="govuk-!-margin-bottom-5">
+                        <div className="govuk-grid-row row-margin-top-m">
+                            <div className="govuk-grid-column-one-third">
+                                <label className="govuk-label" htmlFor="postcode">
                                     Postcode
                                 </label>
                                 <div>
                                     <input
-                                        class="govuk-input govuk-input--width-10"
+                                        className="govuk-input govuk-input--width-10"
                                         id="postcode"
                                         name="postcode"
                                         type="text"
@@ -42,13 +42,13 @@ export default function ResidentSearchPage() {
                                     />
                                 </div>
                             </div>
-                            <div class="govuk-grid-column-one-third">
-                                <label class="govuk-label" for="firstName">
+                            <div className="govuk-grid-column-one-third">
+                                <label className="govuk-label" htmlFor="firstName">
                                     First name
                                 </label>
-                                <div class="govuk-form-group">
+                                <div className="govuk-form-group">
                                     <input
-                                        class="govuk-input govuk-input--width-12"
+                                        className="govuk-input govuk-input--width-12"
                                         id="firstName"
                                         name="firstName"
                                         type="text"
@@ -57,13 +57,13 @@ export default function ResidentSearchPage() {
                                     />
                                 </div>
                             </div>
-                            <div class="govuk-grid-column-one-third">
-                                <label class="govuk-label" for="lastName">
+                            <div className="govuk-grid-column-one-third">
+                                <label className="govuk-label" htmlFor="lastName">
                                     Last name
                                 </label>
-                                <div class="govuk-form-group">
+                                <div className="govuk-form-group">
                                     <input
-                                        class="govuk-input govuk-input--width-12"
+                                        className="govuk-input govuk-input--width-12"
                                         id="lastName"
                                         name="lastName"
                                         type="text"

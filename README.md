@@ -58,7 +58,7 @@ Check the [Next.js deployment documentation](https://nextjs.org/docs/deployment)
 
 ## 🧬 Configuration
 
-You can use a `.env` file to supply environment config locally. Create a fresh one with `cp .env.sample .env`.
+You can use a `.env.local` file to supply environment config locally. Create a fresh one with `cp .env.sample .env.local`.
 
 | Variable                                  | Description                                                         | Example                             |
 | ----------------------------------------- | ------------------------------------------------------------------- | ----------------------------------- |

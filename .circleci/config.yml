@@ -110,7 +110,6 @@ workflows:
           build: npm run build
           post-checkout:
             - run: cp .env.sample .env
-            - run: npm install dotenv -g
 
       - test:
           requires:
@@ -121,7 +120,9 @@ workflows:
             - cypress/install
           executor: cypress/base-14
           attach-workspace: true
-          start: npm run dev
+          start: |
+            npm install cypress-dotenv -g
+            npm run dev
           wait-on: 'http-get://127.0.0.1:3000'
           store_artifacts: true
 

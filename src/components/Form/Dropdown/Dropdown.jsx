@@ -4,7 +4,7 @@ export default function Dropdown({ onChange, dropdownItems, ...otherProps }) {
   return (
     <div>
       <select
-        class="govuk-select"
+        className="govuk-select"
         onChange={(e) => onChange(e.target.value)}
         {...otherProps}
       >

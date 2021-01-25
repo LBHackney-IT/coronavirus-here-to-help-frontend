@@ -12,16 +12,16 @@ export default function callStarter() {
 		<Layout>
 			<div>
             <Link href="/helpcase-profile/1">
-                <a href="#" class="govuk-back-link">Back</a>
+                <a href="#" className="govuk-back-link">Back</a>
             </Link>
-                <div class="govuk-grid-column-one-quarter-from-desktop sticky-magic">
+                <div className="govuk-grid-column-one-quarter-from-desktop sticky-magic">
                     <KeyInformation resident={{}}/>
                 </div>
 
-				<h2 class="govuk-heading-l">Start a conversation</h2>
+				<h2 className="govuk-heading-l">Start a conversation</h2>
 
-				<fieldset class="govuk-fieldset">
-					<legend class="govuk-fieldset__legend">
+				<fieldset className="govuk-fieldset">
+					<legend className="govuk-fieldset__legend">
 						What would the resident like to do?
 					</legend>
                     <RadioButton radioButtonItems={startConverstationRadioOptions} name="StartConversation" />

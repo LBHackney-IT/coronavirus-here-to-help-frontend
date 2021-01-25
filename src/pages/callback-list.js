@@ -50,24 +50,24 @@ function CallbacksListPage({ callTypes }) {
         <Layout>
             <div>
                 <Link href="/">
-                    <a href="#" class="govuk-back-link">
+                    <a href="#" className="govuk-back-link">
                         Back
                     </a>
                 </Link>
-                <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Callback list</h1>
+                <h1 className="govuk-heading-xl govuk-!-margin-bottom-2">Callback list</h1>
                 <br />
-                <h3 class="govuk-heading-m">Filter by Help Type:</h3>
+                <h3 className="govuk-heading-m">Filter by Help Type:</h3>
 
-                <div class="govuk-!-margin-bottom-5">
-                    <div class="govuk-grid-row">
-                        <div class="govuk-grid-column-one-third">
+                <div className="govuk-!-margin-bottom-5">
+                    <div className="govuk-grid-row">
+                        <div className="govuk-grid-column-one-third">
                             <Dropdown
                                 dropdownItems={callTypes}
                                 onChange={handleCallTypeChange}
                                 data-cy="help-type-dropdown"
                             />
                         </div>
-                        <div class="govuk-grid-column-one-third">
+                        <div className="govuk-grid-column-one-third">
                             <Dropdown
                                 dropdownItems={callHandlers}
                                 onChange={handleCallHandlerChange}
