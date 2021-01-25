@@ -65,7 +65,7 @@ function CallbacksListPage({ callTypes }) {
     return (
         <Layout>
             <div>
-                <Link href="/">
+                <Link href="/dashboard">
                     <a href="#" className="govuk-back-link">
                         Back
                     </a>
