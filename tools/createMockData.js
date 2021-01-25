@@ -91,10 +91,6 @@ function createHelpRequest(autoincrId, ResidentId, callHandlersList) {
     // Callback Required:
     const callbackRequired = Math.random() > 0.5 ? randomNullableBool() : true;
     const id = autoincrId;
-    const CaseNotes =[];
-    for (let index = 0; index < 6; index++) {
-        CaseNotes.push(createCaseNote(index, ResidentId, id))
-    }
 
     return {
         id,
@@ -134,7 +130,6 @@ function createHelpRequest(autoincrId, ResidentId, callHandlersList) {
         WhenIsMedicinesDelivered: Math.random() < 0.2 ? faker.date.weekday() : '',
         RescheduledAt: callbackRequired ? randexp(/((0\d)|(1\d)|(2[0-3])):[0-5]\d/) : '',
         RequestedDate: faker.date.soon(7),
-        CaseNotes
     };
 }
 

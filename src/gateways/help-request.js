@@ -40,7 +40,6 @@ const ToHelpRequest = (hr) => {
         rescheduledAt: hr.RescheduledAt,
         requestedDate: hr.RequestedDate,
         helpRequestCalls: ToCalls(hr.HelpRequestCalls),
-        caseNotes: ToCaseNotes(hr.CaseNotes)
     };
 };
 
@@ -57,17 +56,6 @@ const ToCalls = (calls) => {
     });
 };
 
-const ToCaseNotes = (caseNotes) => {
-    return caseNotes?.map((note) => {
-        return {
-            id: note.Id,
-            caseNote: note.CaseNote,
-            helpRequestId: note.HelpRequestId,
-            residentId: note.ResidentId,
-            createdAt: note.CreatedAt
-        };
-    });
-};
 export class HelpRequestGateway extends DefaultGateway {
     async getHelpRequest(residentId, requestId) {
         const response = await this.getFromUrl(`resident/${residentId}/helpRequests/${requestId}`);
