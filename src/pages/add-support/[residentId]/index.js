@@ -246,7 +246,7 @@ export default function addSupportPage({residentId,resident}) {
 																			aria-expanded="false"
 																		/>
 																		<label class="govuk-label govuk-radios__label" for="CallDetail-2">
-																			No - all attempted
+																			No - call attempted
 																		</label>
 																	</div>
 																	{callOutcome  =="call attempted" && 
@@ -257,12 +257,13 @@ export default function addSupportPage({residentId,resident}) {
 																					{noAnswerCallOutcomes.map((noAnswerCallOutcome) => {
 																							return (
 																								<Checkbox 
-																								id={noAnswerCallOutcome} n
-																								ame="noAnswerCallOutcome" 
-																								type="checkbox" v
-																								alue={noAnswerCallOutcome} 
+																								id={noAnswerCallOutcome} 
+																								name="noAnswerCallOutcome" 
+																								type="checkbox" 
+																								value={noAnswerCallOutcome} 
 																								label={noAnswerCallOutcome}
-																								aria-describedby="CallOutcome-hint">
+																								aria-describedby="CallOutcome-hint"
+																								onCheckboxChange={onCheckboxChangeUpdate}>
 
 																								</Checkbox>
 																							);
