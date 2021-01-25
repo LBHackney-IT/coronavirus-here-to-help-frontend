@@ -28,7 +28,7 @@ export default function EditResident({ resident_id, resident }) {
                 <EditResidentBioForm resident={resident} onChange={handleEditResident} />
 
                 <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-                <Address />
+                <Address initialResident={resident} onChange={handleEditResident} />
 
                 <hr className="govuk-section-break govuk-section-break--m govuk-section-break" />
                 <h2 className="govuk-heading-l">Case notes:</h2>
