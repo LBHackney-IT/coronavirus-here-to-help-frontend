@@ -5,8 +5,8 @@ import authGroupsJson from '../../auth-groups.json';
 const secret = process.env.HACKNEY_JWT_SECRET;
 const cookieName = process.env.HACKNEY_COOKIE_NAME;
 const baseUrl = process.env.APP_URL;
-const environmentKey = process.env.NODE_ENV;
-const authGroups = authGroupsJson[environmentKey];
+const appStage = process.env.APP_STAGE;
+const authGroups = authGroupsJson[appStage];
 const AUTH_WHITELIST = ['/login', '/access-denied'];
 
 export const createLoginUrl = (redirect) =>
