@@ -57,15 +57,12 @@ export default function addSupportPage({residentId,resident}) {
 		if(value == "The resident called me"){
 			setCallDirection("Inbound")
 		}
-		
 	}
 
 	const onCheckboxChangeUpdate = (value) => {
 		if(callOutcomeValues.includes(value)) {
-			const newCallOutcomesValues = callOutcomeValues.filter(callOutcomeValue => callOutcomeValue != value)
+			const newCallOutcomesValues = callOutcomeValues.filter(callOutcomeValue => value != callOutcomeValue )
 			setCallOutcomeValues(newCallOutcomesValues)
-			console.log(value)
-			console.log(`New call outcomes ${newCallOutcomesValues}`)
 		}
 		else{
 			let newCallOutcomesValues = callOutcomeValues;
@@ -73,8 +70,7 @@ export default function addSupportPage({residentId,resident}) {
 			setCallOutcomeValues(newCallOutcomesValues)
 		}
 	}
-	console.log(callOutcomeValues)
-	console.log(CallDirection)
+	
 
 	const handleUpdate = async (e) => {
 		// {
@@ -122,7 +118,7 @@ export default function addSupportPage({residentId,resident}) {
 
 		let callbackRequired = (followUpRequired == "Yes") ? true : false
 		let initialCallbackCompleted = (followUpRequired == "Yes") ? false : true
-		console.log(helpNeeded)
+		
 		let helpRequestObject = {
 			ResidentId:residentId,
 			CallbackRequired: callbackRequired,
@@ -138,20 +134,10 @@ export default function addSupportPage({residentId,resident}) {
 			HelpRequestId: "help request response",
 			CallType: helpNeeded,
 			CallDirection: CallDirection,
-			CallOutcome: "call outcomes",
+			CallOutcome: callOutcomeValues,
 			CallDateTime: new Date(),
 			CallHandler: "auth - need to figure out"
 		}
-							// {
-		// 	HelpRequestId: "help request response"
-    //   CallType: "what was the initial purpuse of the call"
-    //   CallDirection: "who made thew call today"
-    //   CallOutcome: "call outcomes"
-    //   CallDateTime: "set"
-		// 	CallHandler: "auth"
-		// }
-
-
 
 		// //create help request
 		// const gateway = new HelpRequestGateway();
