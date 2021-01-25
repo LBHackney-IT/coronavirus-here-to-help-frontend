@@ -38,7 +38,7 @@ export default function HelpcaseProfile({ resident_id, resident, helpRequests })
                             {resident.firstName} {resident.lastName}
                         </h1>
 
-                        <SupportTable helpRequests={helpRequests}/>
+                        <SupportTable helpRequests={helpRequests} />
                         <Link href="/add-support/[resident_id]" as={`/add-support/${resident_id}`}>
                             <Button text="+ Add new support" />
                         </Link>
@@ -46,7 +46,7 @@ export default function HelpcaseProfile({ resident_id, resident, helpRequests })
                         <hr />
 
                         <br />
-                        <CaseNotes />
+                        <CaseNotes helpRequests={helpRequests} />
                     </div>
                 </div>
             </div>
