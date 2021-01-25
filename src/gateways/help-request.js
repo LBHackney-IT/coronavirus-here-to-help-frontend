@@ -44,7 +44,7 @@ const ToHelpRequest = (hr) => {
 
 export class HelpRequestGateway extends DefaultGateway {
     async getHelpRequest(residentId, requestId) {
-        const response = await this.getFromUrl(`resident/${residentId}/helpRequests/${requestId}`);
+        const response = await this.getFromUrl(`api/v3/help-requests/${requestId}`); //`resident/${residentId}/helpRequests/${requestId}`); will we stick with this url later on?
         const helpRequest = ToHelpRequest(response);
         return helpRequest;
     }
