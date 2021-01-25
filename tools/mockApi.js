@@ -54,6 +54,9 @@ function getFilteredHelpRequestsWithHelpRequestCalls(req, respData) {
             // .replace(/"ResidentId"/g, '"ResidentId"')
             .replace(/"id"/g, '"Id"')
     );
+    try {respData = respData.filter(x => (x.ResidentId==url.split("/")[2]||x.residentId==url.split("/")[2]))}
+    catch{}
+    
     return respData;
 }
 

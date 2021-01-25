@@ -38,8 +38,22 @@ const ToHelpRequest = (hr) => {
         urgentEssentialsAnythingElse: hr.UrgentEssentialsAnythingElse,
         whenIsMedicinesDelivered: hr.WhenIsMedicinesDelivered,
         rescheduledAt: hr.RescheduledAt,
-        requestedDate: hr.RequestedDate
+        requestedDate: hr.RequestedDate,
+        helpRequestCalls: ToCalls(hr.HelpRequestCalls),
     };
+};
+
+const ToCalls = (calls) => {
+    return calls?.map((call) => {
+        return {
+            id: call.Id,
+            helpRequestId: call.HelpRequestId,
+            callType: call.CallType,
+            callDirection: call.CallDirection,
+            callOutcome: call.CallOutcome,
+            callDateTime: call.CallDateTime
+        };
+    });
 };
 
 export class HelpRequestGateway extends DefaultGateway {
@@ -48,6 +62,13 @@ export class HelpRequestGateway extends DefaultGateway {
         const helpRequest = ToHelpRequest(response);
         return helpRequest;
     }
+
+    async getHelpRequests(residentId) {
+        const response = await this.getFromUrl(`resident/${residentId}/helpRequests`);
+        const helpRequests = response.map(ToHelpRequest);
+        return helpRequests;
+    }
+
     async putHelpRequest(residentId, requestId, request_body) {
         const response = await this.putToUrl(
             `resident/${residentId}/helpRequests/${requestId}`,
