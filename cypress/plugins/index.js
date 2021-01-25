@@ -12,7 +12,6 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
-
 module.exports = (on, config) => {
     // copy any needed variables from process.env to config.env
     config.env.HACKNEY_JWT_SECRET = 'sekret';
