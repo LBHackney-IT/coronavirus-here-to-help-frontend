@@ -62,7 +62,7 @@ You can use a `.env.local` file to supply environment config locally. Create a f
 
 | Variable                                  | Description                                                         | Example                             |
 | ----------------------------------------- | ------------------------------------------------------------------- | ----------------------------------- |
-| RUNTIME_APP_URL                           |                                                                     | http://localdev.hackney.gov.uk:3000 |
+| APP_URL                                   |                                                                     | http://localdev.hackney.gov.uk:3000 |
 | HACKNEY_JWT_SECRET                        |                                                                     |                                     |
 | HACKNEY_COOKIE_NAME                       |                                                                     | hackneyToken                        |
 | RUNTIME_HOST_ENV                          |                                                                     | dev                                 |

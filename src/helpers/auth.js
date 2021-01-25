@@ -4,7 +4,7 @@ import authGroupsJson from '../../auth-groups.json';
 
 const secret = process.env.HACKNEY_JWT_SECRET;
 const cookieName = process.env.HACKNEY_COOKIE_NAME;
-const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+const baseUrl = process.env.APP_URL;
 const environmentKey = process.env.NODE_ENV;
 const authGroups = authGroupsJson[environmentKey];
 const AUTH_WHITELIST = ['/login', '/access-denied'];
