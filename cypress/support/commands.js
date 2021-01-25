@@ -15,7 +15,7 @@ Cypress.Commands.add('login', (userData) => {
         userData = defaultUser;
     }
     const jwtSecret = Cypress.env('HACKNEY_JWT_SECRET');
-    const cookieName = Cypress.env('HACKNEY_COOKIE_NAME');
+    const cookieName = Cypress.env('NEXT_PUBLIC_HACKNEY_COOKIE_NAME');
 
     console.error(cookieName);
     console.error(jwtSecret);

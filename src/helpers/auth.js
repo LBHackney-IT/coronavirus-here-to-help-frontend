@@ -3,7 +3,7 @@ import jsonwebtoken from 'jsonwebtoken';
 import authGroupsJson from '../../auth-groups.json';
 
 const secret = process.env.HACKNEY_JWT_SECRET;
-const cookieName = process.env.HACKNEY_COOKIE_NAME;
+const cookieName = process.env.NEXT_PUBLIC_HACKNEY_COOKIE_NAME;
 const baseUrl = process.env.APP_URL;
 const appStage = process.env.APP_STAGE;
 const authGroups = authGroupsJson[appStage];
