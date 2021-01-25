@@ -15,7 +15,7 @@ const ToCallbackList = (callbacks) => {
             helpRequestId: callback.Id,
             address: joinAddressParts(callback),
             requestedDate: isoDateToOtherDate(callback.DateTimeRecorded), //remove this line from the component
-            type: callback.HelpNeeded,
+            callType: callback.HelpNeeded,
             unsuccessfulCallAttempts: unsuccessfulCalls(callback.HelpRequestCalls),
             followUpRequired: callback.CallbackRequired,
             assignedTo: callback.AssignedTo,

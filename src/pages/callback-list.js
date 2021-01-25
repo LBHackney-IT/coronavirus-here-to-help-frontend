@@ -9,6 +9,7 @@ import { CallTypesGateway } from '../gateways/call-types';
 
 function CallbacksListPage({ callTypes }) {
     const [callbacks, setCallbacks] = useState([]);
+    const [subsetCallbacks, setSubsetCallbacks] = useState([]);
     const [callHandlers, setCallHandlers] = useState([]);
     const [dropdowns, setDropdowns] = useState({
         callType: 'All',
@@ -16,14 +17,15 @@ function CallbacksListPage({ callTypes }) {
     });
 
     const getCallBacks = async () => {
-        const queryParams = { ...dropdowns };
-        if (queryParams.callType === 'All') delete queryParams['callType'];
-        if (queryParams.assignedTo === 'Assigned to all') delete queryParams['assignedTo'];
+        // const queryParams = { ...dropdowns };
+        // if (queryParams.callType === 'All') delete queryParams['callType'];
+        // if (queryParams.assignedTo === 'Assigned to all') delete queryParams['assignedTo'];
 
         const gateway = new CallbackGateway();
-        const callbackList = await gateway.getCallback(queryParams);
+        const callbackList = await gateway.getCallback({}); //queryParams);
 
         setCallbacks(callbackList);
+        setSubsetCallbacks(callbackList);
     };
 
     const handleCallHandlerChange = (event) => {
@@ -43,8 +45,22 @@ function CallbacksListPage({ callTypes }) {
         setCallHandlers(callHandlersList);
     };
 
-    useEffect(getCallBacks, [dropdowns]);
+    const filterCallbacks = () => {
+        let collection = callbacks;
+        let queryParams = { ...dropdowns };
+        if (queryParams.callType === 'All') delete queryParams['callType'];
+        if (queryParams.assignedTo === 'Assigned to all') delete queryParams['assignedTo'];
+        if (queryParams.callType === 'CEV') queryParams.callType = 'Shielding';
+
+        for (let param in queryParams)
+            collection = collection.filter((item) => item[param] == queryParams[param]);
+
+        setSubsetCallbacks(collection);
+    };
+
+    useEffect(getCallBacks, []);
     useEffect(getCallHandlers, []);
+    useEffect(filterCallbacks, [dropdowns]);
 
     return (
         <Layout>
@@ -77,7 +93,7 @@ function CallbacksListPage({ callTypes }) {
                     </div>
                 </div>
 
-                <CallbacksList callbacks={callbacks} />
+                <CallbacksList callbacks={subsetCallbacks} />
             </div>
         </Layout>
     );

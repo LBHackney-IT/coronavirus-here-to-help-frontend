@@ -54,11 +54,9 @@ export default function CallbacksList({ callbacks }) {
                                 data-cy={`r-${callback.helpRequestId}`}>
                                 <td className="govuk-table__cell">{callback.residentName}</td>
                                 <td className="govuk-table__cell">{callback.address}</td>
+                                <td className="govuk-table__cell">{callback.requestedDate}</td>
                                 <td className="govuk-table__cell">
-                                    {isoDateToOtherDate(callback.requestedDate)}
-                                </td>
-                                <td className="govuk-table__cell">
-                                    <span title="Contact Tracing">{callback.type}</span>
+                                    <span title="Contact Tracing">{callback.callType}</span>
                                 </td>
                                 <td className="govuk-table__cell ">
                                     {callback.unsuccessfulCallAttempts}
