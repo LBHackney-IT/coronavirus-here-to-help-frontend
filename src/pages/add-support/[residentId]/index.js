@@ -13,6 +13,8 @@ export default function addSupportPage({residentId,resident}) {
 	const [callOutcome, setCallOutcome] = useState("");
 	const [followUpRequired, setFollowupRequired] = useState("")
 	const [helpNeeded, setHelpNeeded] = useState("")
+	const [CallDirection, setCallDirection] = useState("")
+	const [callOutcomeValues, setCallOutcomeValues] = useState([])
 
 	const spokeToResidentCallOutcomes = [
 		"Callback complete",
@@ -47,6 +49,32 @@ export default function addSupportPage({residentId,resident}) {
 		}
 	
 	}
+
+	const CallDirectionFunction = value => {
+		if(value == "I called the resident"){
+			setCallDirection("Outbound")
+		}
+		if(value == "The resident called me"){
+			setCallDirection("Inbound")
+		}
+		
+	}
+
+	const onCheckboxChangeUpdate = (value) => {
+		if(callOutcomeValues.includes(value)) {
+			const newCallOutcomesValues = callOutcomeValues.filter(callOutcomeValue => callOutcomeValue != value)
+			setCallOutcomeValues(newCallOutcomesValues)
+			console.log(value)
+			console.log(`New call outcomes ${newCallOutcomesValues}`)
+		}
+		else{
+			let newCallOutcomesValues = callOutcomeValues;
+			newCallOutcomesValues.push(value)
+			setCallOutcomeValues(newCallOutcomesValues)
+		}
+	}
+	console.log(callOutcomeValues)
+	console.log(CallDirection)
 
 	const handleUpdate = async (e) => {
 		// {
@@ -105,7 +133,16 @@ export default function addSupportPage({residentId,resident}) {
        						noteDate: new Date(),
         					note: "newNote"}}
 
-		// {
+		
+		let callRequestObject = {
+			HelpRequestId: "help request response",
+			CallType: helpNeeded,
+			CallDirection: CallDirection,
+			CallOutcome: "call outcomes",
+			CallDateTime: new Date(),
+			CallHandler: "auth - need to figure out"
+		}
+							// {
 		// 	HelpRequestId: "help request response"
     //   CallType: "what was the initial purpuse of the call"
     //   CallDirection: "who made thew call today"
@@ -200,7 +237,8 @@ export default function addSupportPage({residentId,resident}) {
 																										type="checkbox"
 																										value={spokeToResidentCallOutcome}
 																										label={spokeToResidentCallOutcome}
-																										aria-describedby="CallOutcome-hint">
+																										aria-describedby="CallOutcome-hint"
+																										onCheckboxChange={onCheckboxChangeUpdate}>
 																									</Checkbox>
 																								);
 																						})}
@@ -260,7 +298,7 @@ export default function addSupportPage({residentId,resident}) {
 														<div class="govuk-form-group lbh-form-group">
 														<fieldset class="govuk-fieldset">
 															<legend class="govuk-fieldset__legend mandatoryQuestion"> Who made the call today? </legend>
-															<RadioButton radioButtonItems={whoMadeInitialContact} name="InitialContact"/>
+															<RadioButton radioButtonItems={whoMadeInitialContact} name="InitialContact" onSelectOption={CallDirectionFunction} />
 														</fieldset>
 													</div>
 													</div>
