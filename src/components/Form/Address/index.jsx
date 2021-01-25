@@ -11,9 +11,9 @@ export default function Address({ initialResident, onChange }) {
 
     const gateway = new AddressesGateway();
 
-    const FindAddresses = () => {
-       return await gateway.getAddresses(lookupPostcode);
-    
+    const FindAddresses = async () => {
+        return await gateway.getAddresses(lookupPostcode);
+        
     };
     const setSelectedAddress = (value) => {
         const [addressFirstLine, addressSecondLine, addressThirdLine, postCode] = value.split(', ');
