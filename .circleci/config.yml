@@ -57,18 +57,19 @@ jobs:
     steps:
       - *attach_workspace
       - checkout
+      - run: npm ci
+      - run:
+          name: Run unit tests
+          command: npm run test
 
-#      - run:
-#          name: Run linter
-#          command: npm run lint
+  #      - run:
+  #          name: Run linter
+  #          command: npm run lint
 
-#      - run:
-#          name: Run prettier
-#          command: npm run prettier:test
+  #      - run:
+  #          name: Run prettier
+  #          command: npm run prettier:test
 
-#      - run:
-#          name: Run unit tests
-#          command: npm run test:unit -- --maxWorkers=2
 
   assume-role-staging:
     executor: python
