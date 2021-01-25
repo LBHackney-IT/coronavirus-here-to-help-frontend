@@ -59,66 +59,30 @@ export default function addSupportPage({residentId,resident}) {
 		}
 		
 	}
+	const updateCallMadeAndCallOutcomeValues = async value => {
+		setCallOutcome(value)
+		setCallOutcomeValues([])
+	}
 
 	const onCheckboxChangeUpdate = (value) => {
+		// console.log("call outcome values", callOutcomeValues)
+		// console.log(value)
 		if(callOutcomeValues.includes(value)) {
-			const newCallOutcomesValues = callOutcomeValues.filter(callOutcomeValue => callOutcomeValue != value)
+			let newCallOutcomesValues = callOutcomeValues.filter(callOutcomeValue => callOutcomeValue != value)
+			// console.log(`${newCallOutcomesValues}`)
+			// console.log(newCallOutcomesValues)
 			setCallOutcomeValues(newCallOutcomesValues)
-			console.log(value)
-			console.log(`New call outcomes ${newCallOutcomesValues}`)
 		}
 		else{
-			let newCallOutcomesValues = callOutcomeValues;
-			newCallOutcomesValues.push(value)
+			const newCallOutcomesValues = callOutcomeValues.concat(value)
+			// console.log(`${newCallOutcomesValues}`)
 			setCallOutcomeValues(newCallOutcomesValues)
 		}
 	}
-	console.log(callOutcomeValues)
-	console.log(CallDirection)
+	 console.log(callOutcomeValues)
+	// console.log(CallDirection)
 
 	const handleUpdate = async (e) => {
-		// {
-		// 	ResidentId: "";
-		// 	// AssignedTo: "";
-		// 	// AdviceNotes: "";
-		// 	CallbackRequired: "TRUE if followup required == true FALSE if followup required == FALSE";
-		// 	InitialCallbackCompleted: "TRUE if followup required == false FALSE if followup required == true";
-		// 			// CurrentSupport,
-		// 			// CurrentSupportFeedback,
-		// 	DateTimeRecorded;
-		// 			// GettingInTouchReason,
-		// 	HelpNeeded: "call type required";
-		// 			// HelpWithAccessingFood,
-		// 			// HelpWithAccessingInternet,
-		// 			// HelpWithAccessingMedicine,
-		// 			// MedicineDeliveryHelpNeeded,
-		// 			// HelpWithAccessingOtherEssentials,
-		// 			// HelpWithChildrenAndSchools,
-		// 			// HelpWithDebtAndMoney,
-		// 			// HelpWithDisabilities,
-		// 			// HelpWithHealth,
-		// 			// HelpWithHousing,
-		// 			// HelpWithJobsOrTraining,
-		// 			// HelpWithMentalHealth,
-		// 			// HelpWithSomethingElse,
-		// 			// InitialCallbackCompleted,
-		// 			// IsOnBehalf,
-		// 			// ConsentToCompleteOnBehalf,
-		// 			// OnBehalfFirstName,
-		// 			// OnBehalfLastName,
-		// 			// OnBehalfEmailAddress,
-		// 			// OnBehalfContactNumber,
-		// 			// RecordStatus,
-		// 			// RelationshipWithResident,
-		// 			// UrgentEssentials,
-		// 			// UrgentEssentialsAnythingElse,
-		// 			// WhenIsMedicinesDelivered,
-
-		// 	// RescheduledAt,
-
-		// 	CaseNotes: " case note input value"
-
-		// }
 
 		let callbackRequired = (followUpRequired == "Yes") ? true : false
 		let initialCallbackCompleted = (followUpRequired == "Yes") ? false : true
@@ -128,10 +92,7 @@ export default function addSupportPage({residentId,resident}) {
 			CallbackRequired: callbackRequired,
 			InitialCallbackCompleted: initialCallbackCompleted,
 			DateTimeRecorded: new Date(),
-			HelpNeeded: helpNeeded,
-			CaseNotes: {author: "author",
-       						noteDate: new Date(),
-        					note: "newNote"}}
+			HelpNeeded: helpNeeded}
 
 		
 		let callRequestObject = {
@@ -198,7 +159,7 @@ export default function addSupportPage({residentId,resident}) {
 														name="CallMade"
 														type="radio"
 														value="yes"
-														onChange = { () => {setCallMade(true)}}
+														onChange = { () => { setCallMade(true)}}
 														aria-controls="conditional-CallMade"
 														aria-expanded="false"
 													/>
@@ -217,7 +178,7 @@ export default function addSupportPage({residentId,resident}) {
 																			name="CallDetail"
 																			type="radio"
 																			value="spoke_to_resident"
-																			onChange = {() => {setCallOutcome("spoke to resident")}}
+																			onChange = {() => {updateCallMadeAndCallOutcomeValues("spoke to resident")}}
 																			aria-controls="conditional-CallDetail"
 																			aria-expanded="false"
 																		/>
@@ -255,12 +216,12 @@ export default function addSupportPage({residentId,resident}) {
 																			name="CallDetail"
 																			type="radio"
 																			value="call_attempted"
-																			onChange= { () => {setCallOutcome("call attempted")}}
+																			onChange= { () => {updateCallMadeAndCallOutcomeValues("call attempted")}}
 																			aria-controls="conditional-CallDetail-2"
 																			aria-expanded="false"
 																		/>
 																		<label class="govuk-label govuk-radios__label" for="CallDetail-2">
-																			No - all attempted
+																			No - call attempted
 																		</label>
 																	</div>
 																	{callOutcome  =="call attempted" && 
@@ -274,8 +235,9 @@ export default function addSupportPage({residentId,resident}) {
 																								id={noAnswerCallOutcome} n
 																								ame="noAnswerCallOutcome" 
 																								type="checkbox" v
-																								alue={noAnswerCallOutcome} 
+																								value={noAnswerCallOutcome} 
 																								label={noAnswerCallOutcome}
+																								onCheckboxChange={onCheckboxChangeUpdate}
 																								aria-describedby="CallOutcome-hint">
 
 																								</Checkbox>
@@ -310,7 +272,7 @@ export default function addSupportPage({residentId,resident}) {
 														name="CallMade"
 														type="radio"
 														value="no"
-														onChange = { () => {setCallMade(false)}}
+														onChange = { () => setCallMade(false)}
 													/>
 													<label class="govuk-label govuk-radios__label" for="CallMade-2">No</label>
 												</div>
