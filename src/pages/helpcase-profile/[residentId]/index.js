@@ -8,7 +8,7 @@ import { Button } from '../../../components/Form';
 import { useRouter } from 'next/router';
 import { ResidentGateway } from '../../../gateways/resident';
 
-export default function HelpcaseProfile({ resident_id, resident }) {
+export default function HelpcaseProfile({ residentId, resident }) {
     const router = useRouter();
 
     return (
@@ -22,7 +22,7 @@ export default function HelpcaseProfile({ resident_id, resident }) {
                         display: 'block',
                         borderBottom: 'none'
                     }}>
-                    Back {resident_id}
+                    Back {residentId}
                 </a>
                 <div class="govuk-grid-row">
                     <div class="govuk-grid-column-one-quarter-from-desktop sticky-magic">
@@ -39,8 +39,8 @@ export default function HelpcaseProfile({ resident_id, resident }) {
 
                         <SupportTable />
                         <Link
-                            href="/add-support/[resident_id]"
-                            as={`/add-support/${resident_id}`}>
+                            href="/add-support/[residentId]"
+                            as={`/add-support/${residentId}`}>
                             <Button text="+ Add new support" />
                         </Link>
 

@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function RadioButton({ radioButtonItems, name }) {
+export default function RadioButton({ radioButtonItems, name , optionalClass, onSelectOption}) {
     return (
-        <div class="govuk-radios govuk-radios--inline">
+        <div class={optionalClass}>
             {radioButtonItems.map((radioButtonItem) => {
                 return (
                     <div class="govuk-radios__item">
@@ -12,6 +12,7 @@ export default function RadioButton({ radioButtonItems, name }) {
                             name={name}
                             type="radio"
                             value={radioButtonItem}
+                            onClick = {(e) => onSelectOption(e.target.value)}
                         />
                         <label
                             class="govuk-label govuk-radios__label"

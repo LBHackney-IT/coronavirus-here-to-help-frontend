@@ -19,7 +19,8 @@ server.use(
             '/residents/:ResidentId/helpRequests?_embed=help_request_calls',
         '/search/resident?*': '/residents?$1',
         '/residents/:ResidentId/helpRequests/:HelpRequestId/calls*':
-            '/helpRequests/$2/help_request_calls$3'
+            '/helpRequests/$2/help_request_calls$3',
+        'resident/:ResidentId/helpRequest' :  'resident/:ResidentId/helpRequest'
     })
 );
 
@@ -107,10 +108,17 @@ server.patch('/api/v3/help-requests/:helpRequestId', function (req, res) {
     }
 });
 
+server.post('/api/v3/resident/:ResidentId/helpRequest', function(req, res) {
+  const bodyObj = { ...req.body }; //add try parse json
+  const residentId = req.params.ResidentId
+  const resident = inMemDb.helpRequests.find(hr => hr.id == residentId);
+  console.log(resident)
+  console.log(bodyObj)
+})
 // Mitigating a bug within Json-Server, where foreign key id of nested entity
 // is saved as string it's required to keep to the specification that says
 // that the resident_id should be taken from url
-server.post('/residents/:ResidentId/helpRequests/', function (req, res, next) {
+server.post('/resident/:ResidentId/helpRequest', function (req, res, next) {
     req.url = '/helpRequests';
     const ResidentId = parseInt(req.params.ResidentId);
     req.params = {};
