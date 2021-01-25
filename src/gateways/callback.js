@@ -1,17 +1,23 @@
 import { DefaultGateway } from '../gateways/default-gateway';
-const { objectToQueryAndParseToPascal } = require('../helpers/utilityFuncs');
+const { objectToQueryAndParseToPascal, isoDateToOtherDate } = require('../helpers/utilityFuncs');
+
+const joinNameParts = (obj) => [obj.FirstName, obj.LastName].join(' ');
+const joinAddressParts = (obj) =>
+    [obj.AddressFirstLine, obj.AddressSecondLine, obj.AddressThirdLine].join(', ');
+const unsuccessfulCalls = (collection) =>
+    collection.filter((c) => /refused_to_engage|wrong_number/.test(c.CallOutcome)).length;
 
 const ToCallbackList = (callbacks) => {
     return callbacks?.map((callback) => {
         return {
-            residentName: callback.ResidentName,
+            residentName: joinNameParts(callback),
             residentId: callback.ResidentId,
-            helpRequestId: callback.HelpRequestId,
-            address: callback.Address,
-            requestedDate: callback.RequestedDate,
-            type: callback.Type,
-            unsuccessfulCallAttempts: callback.UnsuccessfulCallAttempts,
-            followUpRequired: callback.FollowUpRequired,
+            helpRequestId: callback.Id,
+            address: joinAddressParts(callback),
+            requestedDate: isoDateToOtherDate(callback.DateTimeRecorded), //remove this line from the component
+            type: callback.HelpNeeded,
+            unsuccessfulCallAttempts: unsuccessfulCalls(callback.HelpRequestCalls),
+            followUpRequired: callback.CallbackRequired,
             assignedTo: callback.AssignedTo,
             rescheduledAt: callback.RescheduledAt
         };
@@ -20,9 +26,7 @@ const ToCallbackList = (callbacks) => {
 
 export class CallbackGateway extends DefaultGateway {
     async getCallback(queryParams) {
-        const response = await this.getFromUrl(
-            `callbackList${objectToQueryAndParseToPascal(queryParams)}`
-        );
+        const response = await this.getFromUrl(`api/v3/help-requests/callbacks`);
         const callbacksList = ToCallbackList(response);
         return callbacksList;
     }
