@@ -6,6 +6,7 @@ const joinAddressParts = (obj) =>
     [obj.AddressFirstLine, obj.AddressSecondLine, obj.AddressThirdLine].join(', ');
 const unsuccessfulCalls = (collection) =>
     collection.filter((c) => /refused_to_engage|wrong_number/.test(c.CallOutcome)).length;
+const replaceIfShielding = (helpType) => helpType !== 'Shielding' ? helpType : 'CEV';
 
 const ToCallbackList = (callbacks) => {
     return callbacks?.map((callback) => {
@@ -15,7 +16,7 @@ const ToCallbackList = (callbacks) => {
             helpRequestId: callback.Id,
             address: joinAddressParts(callback),
             requestedDate: isoDateToOtherDate(callback.DateTimeRecorded), //remove this line from the component
-            callType: callback.HelpNeeded,
+            callType: replaceIfShielding(callback.HelpNeeded),
             unsuccessfulCallAttempts: unsuccessfulCalls(callback.HelpRequestCalls),
             followUpRequired: callback.CallbackRequired,
             assignedTo: callback.AssignedTo,

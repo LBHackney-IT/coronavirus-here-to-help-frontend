@@ -50,7 +50,6 @@ function CallbacksListPage({ callTypes }) {
         let queryParams = { ...dropdowns };
         if (queryParams.callType === 'All') delete queryParams['callType'];
         if (queryParams.assignedTo === 'Assigned to all') delete queryParams['assignedTo'];
-        if (queryParams.callType === 'CEV') queryParams.callType = 'Shielding';
 
         for (let param in queryParams)
             collection = collection.filter((item) => item[param] == queryParams[param]);
