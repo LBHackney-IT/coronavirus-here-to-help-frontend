@@ -138,7 +138,7 @@ workflows:
       - cypress/run:
           cache-key: &cypress-cache-key 'npm-packages-cache1-{{ arch }}-{{ checksum "package-lock.json" }}'
           post-checkout:
-            - run: cp .env.sample .env.local
+            - run: cp .env.sample .env
           executor: cypress/base-14
           start: |
             npm install cypress-dotenv -g
