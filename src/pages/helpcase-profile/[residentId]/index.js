@@ -48,7 +48,7 @@ export default function HelpcaseProfile({ resident_id, resident, helpRequests, c
                         <hr />
 
                         <br />
-                        <CaseNotes caseNotes={caseNotes} />
+                        {/* <CaseNotes caseNotes={caseNotes} /> */}
                     </div>
                 </div>
             </div>
@@ -63,13 +63,13 @@ HelpcaseProfile.getInitialProps = async ({ query: { residentId }, req, res }) =>
         const hrGateway = new HelpRequestGateway();
         const helpRequests = await hrGateway.getHelpRequests(residentId);
         const caseNotesGateway = new CaseNotesGateway();
-        const caseNotes = await caseNotesGateway.getCaseNotes(residentId);
+        // const caseNotes = await caseNotesGateway.getCaseNotes(residentId);
 
         return {
             residentId,
             resident,
             helpRequests,
-            caseNotes
+            // caseNotes
         };
     } catch (err) {
         console.log(`Error getting resident props with help request ID ${residentId}: ${err}`);
