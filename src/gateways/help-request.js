@@ -58,13 +58,13 @@ const ToCalls = (calls) => {
 
 export class HelpRequestGateway extends DefaultGateway {
     async getHelpRequest(residentId, requestId) {
-        const response = await this.getFromUrl(`api/v3/help-requests/${requestId}`); //`resident/${residentId}/helpRequests/${requestId}`); will we stick with this url later on?
+        const response = await this.getFromUrl(`v4/residents/${residentId}/help-requests/${requestId}`); //`resident/${residentId}/helpRequests/${requestId}`); will we stick with this url later on?
         const helpRequest = ToHelpRequest(response);
         return helpRequest;
     }
 
     async getHelpRequests(residentId) {
-        const response = await this.getFromUrl(`resident/${residentId}/helpRequests`);
+        const response = await this.getFromUrl(`v4/residents/${residentId}/help-requests`);
         const helpRequests = response.map(ToHelpRequest);
         return helpRequests;
     }

@@ -2,7 +2,7 @@ import axios from 'axios';
 const { parsePascalToCamelCase, parseCamelToPascalCase } = require('../helpers/utilityFuncs.js');
 
 export class DefaultGateway {
-    host = 'http://localhost:3001';
+    host = process.env.HERE_TO_HELP_API_BASE_URL;
 
     createFullUrl(url) {
         return `${this.host}/${url}`;
@@ -15,6 +15,7 @@ export class DefaultGateway {
 
         const res = await axios.get(url, {
             headers: {
+                'X-API-Key': `${process.env.HERE_TO_HELP_API_KEY}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -26,6 +27,7 @@ export class DefaultGateway {
         parseCamelToPascalCase(body);
         const res = await axios.put(this.createFullUrl(url), body, {
             headers: {
+                'X-API-Key': `${process.env.HERE_TO_HELP_API_KEY}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -34,12 +36,13 @@ export class DefaultGateway {
     }
 
     async patchToUrl(url, body) {
-      parseCamelToPascalCase(body);
-      const res = await axios.patch(this.createFullUrl(url), body, {
-          headers: {
-              'Content-Type': 'application/json'
-          }
-      });
-      return res;
-  }
+        parseCamelToPascalCase(body);
+        const res = await axios.patch(this.createFullUrl(url), body, {
+            headers: {
+                'X-API-Key': `${process.env.HERE_TO_HELP_API_KEY}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        return res;
+    }
 }
