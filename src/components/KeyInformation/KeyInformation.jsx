@@ -4,9 +4,7 @@ import { useState } from "react";
 
 export default function KeyInformation({ resident }) {
   const [hidden, setHidden] = useState(false);
-  const numbers = resident.contactTelephoneNumber?.concat(
-    resident.contactMobileNumber
-  );
+
   const setHiddenValue = () => {
     setHidden(!hidden);
   };
@@ -30,13 +28,12 @@ export default function KeyInformation({ resident }) {
           </h3>
         </div>
         <div hidden={hidden}>
-          {numbers?.map((number, index) => {
-            return (
-              <p data-testid={`key-information_phone-number_${index}`} key={`key-information_phone-number_${index}`}>
-                Phone {index + 1}: {number}
+              <p data-testid={`key-information_phone-number_1`} key={`key-information_phone-number_1`}>
+                Phone 1: {resident.contactTelephoneNumber}
               </p>
-            );
-          })}
+              <p data-testid={`key-information_phone-number_2`} key={`key-information_phone-number_2`}>
+                Phone 1: {resident.contactMobileNumber}
+              </p>
           <br />
           <h3 className="govuk-heading-s">Address</h3>
           <p data-testid="key-information_resident-address">
@@ -65,14 +62,14 @@ export default function KeyInformation({ resident }) {
       <div className={styles["key-information-box"]}>
         <h3 className="govuk-heading-s">Key information</h3>
         <div hidden={hidden}>
-          <p>
+          {/* <p>
             CEV
             <br />
             Positive Covid test at 2 Dec 2020
             <br />
             CEV Contact Tracing ID: SL 99 88 12 A
           </p>
-          <br />
+          <br /> */}
           <div>
             <h3 className="govuk-heading-s">
               Key notes:
