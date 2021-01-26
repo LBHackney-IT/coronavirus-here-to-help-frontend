@@ -57,6 +57,7 @@ jobs:
     steps:
       - *attach_workspace
       - checkout
+      - run: cp .env.sample .env
 #      - restore_cache:
 #          key: *build-cache-key
       - run: CYPRESS_INSTALL_BINARY=0 npm ci
