@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Button, Address } from '../../../components/Form';
 import EditResidentBioForm from '../../../components/EditResidentBioForm/EditResidentBioForm';
 import CaseNotes from '../../../components/CaseNotes/CaseNotes';
+import Banner from '../../../components/Banner';
 
 export default function EditResident({ resident_id, resident }) {
     const [updatedResident, setUpdatedResident] = useState(resident);
@@ -21,6 +22,7 @@ export default function EditResident({ resident_id, resident }) {
 
     return (
         <Layout>
+            <Banner text="This page currently does not update the resident information" />
             <div className="govuk-grid-column-one-quarter-from-desktop">
                 <KeyInformation resident={resident} />
             </div>
@@ -55,11 +57,13 @@ export default function EditResident({ resident_id, resident }) {
                     text="Update"
                     addClass="govuk-!-margin-right-1"
                     onClick={() => logNewResidentDetails()}
+                    disabled={true}
                 />
                 <Button
                     text="Cancel"
                     addClass="govuk-button--secondary"
                     onClick={() => logNewResidentDetails()}
+                    disabled={true}
                 />
             </div>
         </Layout>

@@ -1,11 +1,11 @@
 {
   "staging": {
-    "DEV_TEAM": "development-team-staging"
+    "DEV_TEAM": "inh-users-dev"
   },
   "production": {
-    "DEV_TEAM": "development-team-production"
+    "DEV_TEAM": "inh-users-dev"
   },
   "dev": {
-    "DEV_TEAM": "development-team-staging"
+    "DEV_TEAM": "inh-users-dev"
   }
 }

@@ -107,7 +107,10 @@ function createHelpRequest(autoincrId, ResidentId, callHandlersList) {
         HelpWithAccessingInternet: randomNullableBool(),
         HelpWithAccessingMedicine: randomNullableBool(),
         MedicineDeliveryHelpNeeded: randomNullableBool(),
+        HelpWithCompletingNssForm: randomNullableBool(),
+        HelpWithShieldingGuidance: randomNullableBool(),
         HelpWithAccessingOtherEssentials: randomNullableBool(),
+        HelpWithNoNeedsIdentified: randomNullableBool(),
         HelpWithChildrenAndSchools: randomNullableBool(),
         HelpWithDebtAndMoney: randomNullableBool(),
         HelpWithDisabilities: randomNullableBool(),
@@ -134,7 +137,8 @@ function createHelpRequest(autoincrId, ResidentId, callHandlersList) {
 }
 
 function createCallHandler() {
-    return `${faker.name.firstName()} ${faker.name.lastName()}`;
+    let letters = ["A", "B", "C", "D"];
+    return `Person ` + letters[Math.ceil(Math.random()*4)-1];
 }
 
 function dataGenerator(residnts = 30, hreqsPerRes = 5, cnotesPerHR = 2, callHandlerQ = 15) {

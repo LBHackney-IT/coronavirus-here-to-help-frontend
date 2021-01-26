@@ -55,10 +55,11 @@ CustomApp.getInitialProps = async (appContext) => {
 
     return { accessDenied: true };
   }
-
-  if (!userIsInValidGroup(user)) {
-    return { accessDenied: true };
-  }
+  //
+  // if (!userIsInValidGroup(user)) {
+  //   console.warn('The user is not in the correct google group');
+  //   return { accessDenied: true };
+  // }
 
   return props;
 };

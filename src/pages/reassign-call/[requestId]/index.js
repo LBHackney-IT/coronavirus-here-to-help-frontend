@@ -16,13 +16,15 @@ export default function ReassignCalls() {
     const getCallHandlers = async () => {
         const gateway = new CallHandlerGateway();
         const callhandlerList = await gateway.getCallHandler();
+        callhandlerList.unshift('Not assigned');
         setCallHandlers(callhandlerList);
     };
 
     const getHelpRequest = async () => {
         const gateway = new HelpRequestGateway();
         const helpRequest = await gateway.getHelpRequest(residentId, requestId);
-        const helpRequestAssignee = helpRequest.assignedTo;
+        const helpRequestAssignee =
+            helpRequest.assignedTo != '' ? helpRequest.assignedTo : 'Not assigned';
         setAssignee(helpRequestAssignee);
     };
 
@@ -31,6 +33,7 @@ export default function ReassignCalls() {
 
     const handleAssignClick = async () => {
         const updateObj = { assignedTo: assignee };
+        if (updateObj.assignedTo == 'Not assigned') updateObj.assignedTo = '';
         const gateway = new HelpRequestGateway();
         await gateway.patchHelpRequest(requestId, updateObj);
         //alert("Call handler reassigned"); // could probably have a better notification - disabling alert for the sake of cypress
