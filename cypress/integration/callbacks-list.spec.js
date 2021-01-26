@@ -32,7 +32,7 @@ describe('Callbacks list page filters callbacks correctly', () => {
          });
     });
 
-    it('Upon selecting Call Handlers dropdown value, callbacks get filtered by that value', () => {
+    xit('Upon selecting Call Handlers dropdown value, callbacks get filtered by that value', () => {
         cy.visit(`http://localhost:3000/callback-list`);
         cy.getBySel('call-handlers-dropdown').find('option').eq(4).invoke('val').then((callHandlerVal) => {                         // Step 1: get random CH
             cy.getBySel('callbacks-table').find('tr').find(`td:has(a[title="${callHandlerVal}"])`).its('length').then((size) => {   // Step 2: get the number how many callbacks are assignd to CH from Step 1 in the current unfiltered list
