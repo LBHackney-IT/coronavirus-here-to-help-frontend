@@ -8,6 +8,10 @@ const calcInitials = (fullname) =>
         .map((n) => n[0])
         .join('');
 
+const notAssignedOrValue = (text) => {
+    return text != '' ? text : 'Not assigned';
+};
+
 export default function CallbacksList({ callbacks }) {
     return (
         <>
@@ -54,11 +58,9 @@ export default function CallbacksList({ callbacks }) {
                                 data-cy={`r-${callback.helpRequestId}`}>
                                 <td className="govuk-table__cell">{callback.residentName}</td>
                                 <td className="govuk-table__cell">{callback.address}</td>
+                                <td className="govuk-table__cell">{callback.requestedDate}</td>
                                 <td className="govuk-table__cell">
-                                    {isoDateToOtherDate(callback.requestedDate)}
-                                </td>
-                                <td className="govuk-table__cell">
-                                    <span title="Contact Tracing">{callback.type}</span>
+                                    <span title="Contact Tracing">{callback.callType}</span>
                                 </td>
                                 <td className="govuk-table__cell ">
                                     {callback.unsuccessfulCallAttempts}
@@ -77,8 +79,8 @@ export default function CallbacksList({ callbacks }) {
                                             }
                                         }}
                                         as={`/reassign-call/${callback.helpRequestId}?residentId=${callback.residentId}`}>
-                                        <a href="#" title={callback.assignedTo}>
-                                            {calcInitials(callback.assignedTo)}✎
+                                        <a href="#" title={notAssignedOrValue(callback.assignedTo)}>
+                                            {notAssignedOrValue(calcInitials(callback.assignedTo))}✎
                                         </a>
                                     </Link>
                                 </td>

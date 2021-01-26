@@ -12,6 +12,8 @@ const router = jsonServer.router(inMemDb);
 server.use(
     jsonServer.rewriter({
         '/api/v4/*': '/$1',
+        '/api/v3/*': '/$1',
+        '/help-requests/:helpRequestId': '/helpRequests/$1',
         '/resident/*': '/residents/$1',
         '/residents/:ResidentId': '/residents/:ResidentId?_embed=CaseNotes',
         '/residents/:ResidentId/helpRequests/:HelpRequestId': '/helpRequests/:HelpRequestId',
@@ -87,16 +89,15 @@ router.render = (req, res) => {
 
 server.use(middlewares);
 
-function validateObjectProperties(obj, respBody){
-    for (prop in respBody)
-            if (!obj.hasOwnProperty(prop)) return false;
+function validateObjectProperties(obj, respBody) {
+    for (prop in respBody) if (!obj.hasOwnProperty(prop)) return false;
     return true;
 }
 
-server.patch('/api/v3/help-requests/:helpRequestId', function (req, res) {
+server.patch('/helpRequests/:helpRequestId', function (req, res) {
     const bodyObj = { ...req.body }; //add try parse json
-    const helpRequestId = req.params.helpRequestId
-    const helpRequest = inMemDb.helpRequests.find(hr => hr.id == helpRequestId);
+    const helpRequestId = req.params.helpRequestId;
+    const helpRequest = inMemDb.helpRequests.find((hr) => hr.id == helpRequestId);
     if (helpRequest !== undefined) {
         const isValid = validateObjectProperties(helpRequest, bodyObj);
         if (isValid) {
@@ -144,6 +145,7 @@ const replaceObjectKey = (obj, currentKey, newKey) => {
     delete obj[currentKey];
 };
 
+// This is the ideal one, but for now we have to reuse the bad one
 server.get('/callbackList', function (req, res) {
     const queryObj = req.query;
     let helpRequests = inMemDb.helpRequests; // starting point
@@ -182,6 +184,91 @@ server.get('/callbackList', function (req, res) {
     res.jsonp(
         helpRequests.sort(function (a, b) {
             return new Date(b.RequestedDate) - new Date(a.RequestedDate);
+        })
+    );
+});
+
+// the bad callbacks endpoint
+server.get('/helpRequests/callbacks', function (req, res) {
+    let helpRequests = inMemDb.helpRequests; // starting point
+
+    // we're simply dumping everything we got regardless of the usefulness,
+    // just like in the current API - so no need for filtering
+
+    helpRequests = helpRequests.map((helpRequest) => {
+        const resident = inMemDb.residents.find((r) => r.id == helpRequest.ResidentId);
+        const calls = inMemDb.HelpRequestCalls.filter((hrc) => hrc.HelpRequestId == helpRequest.id);
+        const caseNotes = inMemDb.CaseNotes.filter((cn) => cn.HelpRequestId == helpRequest.id);
+        const bad_callback = {
+            Id: helpRequest.id,
+            ResidentId: helpRequest.ResidentId,
+            IsOnBehalf: helpRequest.IsOnBehalf,
+            ConsentToCompleteOnBehalf: helpRequest.ConsentToCompleteOnBehalf,
+            OnBehalfFirstName: helpRequest.OnBehalfFirstName,
+            OnBehalfLastName: helpRequest.OnBehalfLastName,
+            OnBehalfEmailAddress: helpRequest.OnBehalfEmailAddress,
+            OnBehalfContactNumber: helpRequest.OnBehalfContactNumber,
+            RelationshipWithResident: helpRequest.RelationshipWithResident,
+            PostCode: resident.PostCode,
+            Uprn: resident.Uprn,
+            Ward: resident.Ward,
+            AddressFirstLine: resident.AddressFirstLine,
+            AddressSecondLine: resident.AddressSecondLine,
+            AddressThirdLine: resident.AddressThirdLine,
+            GettingInTouchReason: helpRequest.GettingInTouchReason,
+            HelpWithAccessingFood: helpRequest.HelpWithAccessingFood,
+            HelpWithAccessingSupermarketFood: helpRequest.HelpWithAccessingSupermarketFood,
+            HelpWithCompletingNssForm: helpRequest.HelpWithCompletingNssForm,
+            HelpWithShieldingGuidance: helpRequest.HelpWithShieldingGuidance,
+            HelpWithNoNeedsIdentified: helpRequest.HelpWithNoNeedsIdentified,
+            HelpWithAccessingMedicine: helpRequest.HelpWithAccessingMedicine,
+            HelpWithAccessingOtherEssentials: helpRequest.HelpWithAccessingOtherEssentials,
+            HelpWithDebtAndMoney: helpRequest.HelpWithDebtAndMoney,
+            HelpWithHealth: helpRequest.HelpWithHealth,
+            HelpWithMentalHealth: helpRequest.HelpWithMentalHealth,
+            HelpWithAccessingInternet: helpRequest.HelpWithAccessingInternet,
+            HelpWithHousing: helpRequest.HelpWithHousing,
+            HelpWithJobsOrTraining: helpRequest.HelpWithJobsOrTraining,
+            HelpWithChildrenAndSchools: helpRequest.HelpWithChildrenAndSchools,
+            HelpWithDisabilities: helpRequest.HelpWithDisabilities,
+            HelpWithSomethingElse: helpRequest.HelpWithSomethingElse,
+            MedicineDeliveryHelpNeeded: helpRequest.MedicineDeliveryHelpNeeded,
+            IsPharmacistAbleToDeliver: resident.IsPharmacistAbleToDeliver,
+            WhenIsMedicinesDelivered: helpRequest.WhenIsMedicinesDelivered,
+            NameAddressPharmacist: resident.NameAddressPharmacist,
+            UrgentEssentials: helpRequest.UrgentEssentials,
+            UrgentEssentialsAnythingElse: helpRequest.UrgentEssentialsAnythingElse,
+            CurrentSupport: helpRequest.CurrentSupport,
+            CurrentSupportFeedback: helpRequest.CurrentSupportFeedback,
+            FirstName: resident.FirstName,
+            LastName: resident.LastName,
+            DobMonth: resident.DateOfBirth.getMonth(), //.split('-')[0],
+            DobYear: resident.DateOfBirth.getFullYear(), //.split('-')[1],
+            DobDay: resident.DateOfBirth.getDay(), //.split('-')[2],
+            ContactTelephoneNumber: resident.ContactTelephoneNumber,
+            ContactMobileNumber: resident.ContactMobileNumber,
+            EmailAddress: resident.EmailAddress,
+            GpSurgeryDetails: resident.GpSurgeryDetails,
+            NumberOfChildrenUnder18: resident.NumberOfChildrenUnder18,
+            ConsentToShare: resident.ConsentToShare,
+            DateTimeRecorded: helpRequest.RequestedDate,
+            RecordStatus: helpRequest.RecordStatus,
+            InitialCallbackCompleted: helpRequest.InitialCallbackCompleted,
+            CallbackRequired: helpRequest.CallbackRequired,
+            CaseNotes: caseNotes.join('---'),
+            AdviceNotes: 'string',
+            HelpNeeded: helpRequest.HelpNeeded,
+            NhsNumber: 'string',
+            NhsCtasId: 'string',
+            AssignedTo: helpRequest.AssignedTo,
+            RescheduledAt: helpRequest.RescheduledAt,
+            HelpRequestCalls: calls
+        };
+        return bad_callback;
+    });
+    res.jsonp(
+        helpRequests.sort(function (a, b) {
+            return new Date(b.DateTimeRecorded) - new Date(a.DateTimeRecorded);
         })
     );
 });
