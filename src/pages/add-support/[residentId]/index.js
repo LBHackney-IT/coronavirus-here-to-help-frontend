@@ -11,9 +11,10 @@ import { CaseNotesGateway } from '../../../gateways/case-notes'
 import {unsafeExtractUser} from '../../../helpers/auth';
 
 import {UserContext} from "../../../contexts/UserContext"
+import { useRouter } from "next/router";
 
 export default function addSupportPage({residentId, resident, user}) {
-	const [callMade, setCallMade] = useState(false);
+	const [callMade, setCallMade] = useState(null);
 	const [callOutcome, setCallOutcome] = useState("");
 	const [followUpRequired, setFollowupRequired] = useState("")
 	const [helpNeeded, setHelpNeeded] = useState("")
@@ -27,7 +28,8 @@ export default function addSupportPage({residentId, resident, user}) {
 			CallOutcome: false,
 			CallHandler: false
 	})
-	const [errorsExist, setErrorsExist] = useState(false)
+	const [errorsExist, setErrorsExist] = useState(null)
+	const router = useRouter()
 	const spokeToResidentCallOutcomes = [
 		"Callback complete",
 		"Refused to engage",
@@ -88,7 +90,8 @@ export default function addSupportPage({residentId, resident, user}) {
 			setCallOutcomeValues(newCallOutcomesValues)
 		}
 	}
-	const handleUpdate = async () => {
+	const handleUpdate = async (event) => {
+		event.preventDefault();
 
 		let callbackRequired = (followUpRequired == "Yes") ? true : false
 		let initialCallbackCompleted = (followUpRequired == "Yes") ? false : true
@@ -113,37 +116,43 @@ export default function addSupportPage({residentId, resident, user}) {
 			tempErrors.callOutcomeValues = true
 			setErrors(tempErrors)
 		}
-		if(errors.callbackRequired == false || errors.helpNeeded == false || errors.CallDirection ==false || errors.callOutcomeValues == false){
-			setErrorsExist(true)
-		}
-		let helpRequestObject = {
-			ResidentId: residentId,
-			CallbackRequired: callbackRequired,
-			InitialCallbackCompleted: initialCallbackCompleted,
-			DateTimeRecorded: new Date(),
-			HelpNeeded: helpNeeded
-		}
 
-		let callRequestObject = {
-			CallType: helpNeeded,
-			CallDirection: CallDirection,
-			CallOutcome: callOutcomeValues,
-			CallDateTime: new Date(),
-			CallHandler: user.name
+		 if(!callbackRequired || !helpNeeded|| !CallDirection || callOutcomeValues.length < 1){
+			 setErrorsExist(true)
 		}
-
-		try{
-			let helpRequestGateway = new HelpRequestGateway()
-			let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  JSON.stringify(helpRequestObject));
-			let helpRequestCallGateway = new HelpRequestCallGateway()
+		else {
+			let helpRequestObject = {
+				ResidentId: residentId,
+				CallbackRequired: callbackRequired,
+				InitialCallbackCompleted: initialCallbackCompleted,
+				DateTimeRecorded: new Date(),
+				HelpNeeded: helpNeeded
+			}
 	
-			let helpRequestCallId  = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, JSON.stringify(callRequestObject))
-		
-			let caseNotesGateway = new CaseNotesGateway()
-			let caseNoteId = await caseNotesGateway.postCaseNote(residentId, helpRequestId, JSON.stringify(caseNotes))
-		} catch(err){
-			console.log("Add support error", err)
+			let callRequestObject = {
+				CallType: helpNeeded,
+				CallDirection: CallDirection,
+				CallOutcome: callOutcomeValues,
+				CallDateTime: new Date(),
+				CallHandler: user.name
+			}
+	
+			try{
+				router.push(`/helpcase-profile/${residentId}`)
+				let helpRequestGateway = new HelpRequestGateway()
+				let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  JSON.stringify(helpRequestObject));
+
+				let helpRequestCallGateway = new HelpRequestCallGateway()
+				let helpRequestCallId  = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, JSON.stringify(callRequestObject))
+			
+				// let caseNotesGateway = new CaseNotesGateway()
+				// let caseNoteId = await caseNotesGateway.postCaseNote(residentId, helpRequestId, JSON.stringify(caseNotes))
+
+			} catch(err){
+				console.log("Add support error", err)
+			}
 		}
+
 
 	}
 
@@ -158,8 +167,19 @@ export default function addSupportPage({residentId, resident, user}) {
 					<div class="govuk-grid-column-one-quarter-from-desktop sticky-magic">
 						<KeyInformation resident={resident}/>
 					</div>
-
 					<div class="govuk-grid-column-three-quarters-from-desktop">
+					{errorsExist && <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+							<h2 class="govuk-error-summary__title" id="error-summary-title">
+								There is a problem
+							</h2>
+							<div class="govuk-error-summary__body">
+								<ul class="govuk-list govuk-error-summary__list">
+									<li>
+										<a href="#passport-issued-error">You have not completed the form</a>
+									</li>
+								</ul>
+							</div>
+						</div>}
 						<h1 class="govuk-heading-xl" style={{ marginTop: "0px", marginBottom: "40px" }}> {resident.firstName} {resident.lastName}
 						</h1>
 						<form >
@@ -328,7 +348,7 @@ export default function addSupportPage({residentId, resident, user}) {
 								</div>
 							<div id="btn-bottom-panel">
 								<div class="govuk-grid-column">
-									<Button text="Update" addClass="govuk-!-margin-right-1" onClick={()=> {handleUpdate()}}/>
+									<Button text="Update" addClass="govuk-!-margin-right-1" onClick={(event)=> { handleUpdate(event)}}/>
 								<Link href={backHref}>
 									<Button text="Cancel" addClass="govuk-button--secondary"/>
 								</Link>
