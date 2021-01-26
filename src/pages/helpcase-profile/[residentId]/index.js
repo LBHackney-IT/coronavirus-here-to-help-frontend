@@ -34,14 +34,14 @@ export default function HelpcaseProfile({ residentId }) {
             <Layout>
                 <div>
                     <a
-                        href="#"
+                        href="/callback-list"
                         className="govuk-back-link"
                         style={{
                             marginTop: '-40px',
                             display: 'block',
                             borderBottom: 'none'
                         }}>
-                        Back {residentId}
+                        Back
                     </a>
                     <div className="govuk-grid-row">
                         <div className="govuk-grid-column-one-quarter-from-desktop sticky-magic">
