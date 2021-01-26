@@ -20,6 +20,8 @@ export const userIsInValidGroup = (user) => {
     const userInGroup = Object.values(authGroups).some((group) => user.groups.includes(group));
     if (!userInGroup) {
         console.warn('User does not belong to group.', user, authGroups);
+    } else {
+        console.warn('User does belong to group.', user, authGroups);
     }
     return userInGroup;
 };
