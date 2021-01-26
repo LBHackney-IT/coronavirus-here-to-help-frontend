@@ -2,7 +2,9 @@ import axios from 'axios';
 const { parsePascalToCamelCase, parseCamelToPascalCase } = require('../helpers/utilityFuncs.js');
 
 export class DefaultGateway {
-    host = process.env.HERE_TO_HELP_API_BASE_URL;
+    constructor() {
+        this.host = process.env.HERE_TO_HELP_API_BASE_URL;
+    }
 
     createFullUrl(url) {
         return `${this.host}/${url}`;
