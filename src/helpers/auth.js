@@ -17,7 +17,7 @@ export const pathIsWhitelisted = (path) => AUTH_WHITELIST.includes(path);
 export const userIsInValidGroup = (user) => {
     if (process.env.NODE_ENV !== 'production') return true;
 
-    Object.values(authGroups).some((group) => user.groups.includes(group));
+    return Object.values(authGroups).some((group) => user.groups.includes(group));
 };
 
 export const serverSideRedirect = (res, location) => {
