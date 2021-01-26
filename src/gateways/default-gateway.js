@@ -34,7 +34,7 @@ export class DefaultGateway {
 
     async postToUrl(url, body) {
       parseCamelToPascalCase(body);
-      const res = await axios.put(this.createFullUrl(url), body, {
+      const res = await axios.post(this.createFullUrl(url), body, {
           headers: {
               'Content-Type': 'application/json'
           }

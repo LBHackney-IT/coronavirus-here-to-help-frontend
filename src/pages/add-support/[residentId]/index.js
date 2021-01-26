@@ -55,7 +55,7 @@ export default function addSupportPage({residentId, resident, user}) {
 		"The resident called me",
 	];
 
-	
+
 	const callBackFunction = value => {
 		if(value=='Yes' || value == 'No'){
 			console.log(value)
