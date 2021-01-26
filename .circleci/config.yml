@@ -124,11 +124,6 @@ workflows:
   version: 2
   continuous-delivery:
     jobs:
-      - cypress/install: # Use Cypress step to install and cache dependencies
-          cache-key: &cypress-cache-key 'npm-packages-cache1-{{ arch }}-{{ checksum "package-lock.json" }}'
-          post-checkout:
-            - run: cp .env.sample .env
-
       - build
 
       - test:
@@ -136,10 +131,11 @@ workflows:
             - build
 
       - cypress/run:
-          cache-key: *cypress-cache-key
+          cache-key: &cypress-cache-key 'npm-packages-cache1-{{ arch }}-{{ checksum "package-lock.json" }}'
+          post-checkout:
+            - run: cp .env.sample .env
           requires:
             - build
-            - cypress/install
           executor: cypress/base-14
           attach-workspace: true
           start: |
