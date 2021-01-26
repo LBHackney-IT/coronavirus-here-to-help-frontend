@@ -5,6 +5,10 @@ beforeEach(() => {
 describe('Callbacks list page displays and maps data correctly', () => {
     it('Callbacks are retrieved and mapped to table rows', () => {
         cy.visit(`http://localhost:3000/callback-list`);
+        cy.url().then((url) => {
+            expect(process.env.HERE_TO_HELP_API_BASE_URL).to.equal(url); //should fail, but that's the point - the only way I can log the output in this silly framework
+        })
+        
         cy.getBySel('callbacks-table').find('tbody > tr').its('length').should('be.gte', 0)
     });
     it('Help types are mapped to help case type dropdown options', () => {
