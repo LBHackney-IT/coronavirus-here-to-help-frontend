@@ -2,10 +2,9 @@ import axios from 'axios';
 const { parsePascalToCamelCase, parseCamelToPascalCase } = require('../helpers/utilityFuncs.js');
 
 export class DefaultGateway {
-    host = 'http://localhost:3001';
 
     createFullUrl(url) {
-        return `${this.host}/${url}`;
+        return `/api/proxy/${url}`;
     }
 
     async getFromUrl(url) {

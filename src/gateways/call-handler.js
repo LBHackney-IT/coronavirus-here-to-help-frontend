@@ -2,6 +2,6 @@ import { DefaultGateway } from '../gateways/default-gateway';
 
 export class CallHandlerGateway extends DefaultGateway {
     async getCallHandler() {
-        return process.env.NEXT_PUBLIC_CALL_HANDLERS.split(",");
+        return process.env.NEXT_PUBLIC_CALL_HANDLERS?process.env.NEXT_PUBLIC_CALL_HANDLERS.split(","):[];
     }
 }
