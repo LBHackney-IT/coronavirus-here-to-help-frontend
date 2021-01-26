@@ -320,7 +320,7 @@ export default function addSupportPage({residentId, resident, user}) {
 								</div>
 							</div>
 							
-							<hr class="govuk-section-break govuk-section-break--m govuk-section-break" />
+							{/* <hr class="govuk-section-break govuk-section-break--m govuk-section-break" />
 							<h2 class="govuk-heading-l">Case notes:</h2>
 							<h3 class="govuk-heading-m">
 								Add a new case note (optional):
@@ -335,7 +335,7 @@ export default function addSupportPage({residentId, resident, user}) {
 									onChange = {(e) => {setCaseNotes(e.target.value)}}
 									aria-describedby="NewCaseNote-hint">
 								</textarea>
-							</div>
+							</div> */}
 							<br></br>
 							<div class="govuk-grid-column">
 									<div class="govuk-form-group lbh-form-group">
@@ -355,7 +355,7 @@ export default function addSupportPage({residentId, resident, user}) {
 								</div>
 							</div>
 						</form>
-						<CaseNotes />
+						{/* <CaseNotes /> */}
 					</div>
 				</div>
 			</div>
