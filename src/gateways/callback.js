@@ -15,7 +15,7 @@ const ToCallbackList = (callbacks) => {
             residentId: callback.ResidentId,
             helpRequestId: callback.Id,
             address: joinAddressParts(callback),
-            requestedDate: isoDateToOtherDate(callback.DateTimeRecorded), //remove this line from the component
+            requestedDate: callback.DateTimeRecorded ? isoDateToOtherDate(callback.DateTimeRecorded):"", //remove this line from the component
             callType: replaceIfShielding(callback.HelpNeeded),
             unsuccessfulCallAttempts: unsuccessfulCalls(callback.HelpRequestCalls),
             followUpRequired: callback.CallbackRequired,
@@ -27,7 +27,7 @@ const ToCallbackList = (callbacks) => {
 
 export class CallbackGateway extends DefaultGateway {
     async getCallback(queryParams) {
-        const response = await this.getFromUrl(`api/v3/help-requests/callbacks`);
+        const response = await this.getFromUrl(`v3/help-requests/callbacks`);
         const callbacksList = ToCallbackList(response);
         return callbacksList;
     }

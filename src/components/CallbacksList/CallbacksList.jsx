@@ -79,8 +79,8 @@ export default function CallbacksList({ callbacks }) {
                                             }
                                         }}
                                         as={`/reassign-call/${callback.helpRequestId}?residentId=${callback.residentId}`}>
-                                        <a href="#" title={notAssignedOrValue(callback.assignedTo)}>
-                                            {notAssignedOrValue(calcInitials(callback.assignedTo))}✎
+                                        <a href="#" title={notAssignedOrValue(callback.assignedTo || "")}>
+                                            {notAssignedOrValue(calcInitials(callback.assignedTo || ""))}✎
                                         </a>
                                     </Link>
                                 </td>

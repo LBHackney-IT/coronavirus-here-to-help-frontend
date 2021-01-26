@@ -42,13 +42,13 @@ const ToCaseNotes = (caseNotes) => {
 export class ResidentGateway extends DefaultGateway {
     async getResidentsBySearchParams(postcode, firstName, lastName) {
         const response = await this.getFromUrl(
-            `residents?Postcode=${postcode}&FirstName=${firstName}&LastName=${lastName}`
+            `v4/residents?Postcode=${postcode}&FirstName=${firstName}&LastName=${lastName}`
         );
         const residents = response.map(ToResident);
         return residents;
     }
     async getResident(residentId) {
-        const response = await this.getFromUrl(`residents/${residentId}`);
+        const response = await this.getFromUrl(`v4/residents/${residentId}`);
         return ToResident(response);
     }
 }
