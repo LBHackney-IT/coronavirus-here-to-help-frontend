@@ -87,12 +87,13 @@ function createHelpRequest(autoincrId, ResidentId, callHandlersList) {
         onBehalfContactNumber = randexp(/07\d{9}/);
         relationshipWithResident = faker.lorem.word();
     }
-
+ 
     // Callback Required:
     const callbackRequired = Math.random() > 0.5 ? randomNullableBool() : true;
+    const id = autoincrId;
 
     return {
-        id: autoincrId,
+        id,
         ResidentId: ResidentId, // name change so the relationships would work
         AssignedTo: assignedCallHandler,
         AdviceNotes: faker.lorem.words(),
@@ -128,7 +129,7 @@ function createHelpRequest(autoincrId, ResidentId, callHandlersList) {
         UrgentEssentialsAnythingElse: Math.random() < 0.2 ? faker.lorem.words(5) : '',
         WhenIsMedicinesDelivered: Math.random() < 0.2 ? faker.date.weekday() : '',
         RescheduledAt: callbackRequired ? randexp(/((0\d)|(1\d)|(2[0-3])):[0-5]\d/) : '',
-        RequestedDate: faker.date.soon(7)
+        RequestedDate: faker.date.soon(7),
     };
 }
 

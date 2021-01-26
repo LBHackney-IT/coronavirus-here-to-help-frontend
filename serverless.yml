@@ -35,6 +35,13 @@ functions:
     vpc:
       securityGroupIds: ${self:custom.securityGroups.${self:provider.stage}}
       subnetIds: ${self:custom.subnets.${self:provider.stage}}
+    environment:
+      APP_URL: https://${self:custom.aliases.${self:provider.stage}}
+      APP_STAGE: ${self:provider.stage}
+      RUNTIME_HACKNEY_COOKIE_NAME: hackneyToken
+      HACKNEY_JWT_SECRET: ${ssm:/common/hackney-jwt-secret}
+      HERE_TO_HELP_API_BASE_URL: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/api-base-url}
+      HERE_TO_HELP_API_KEY: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/api-key}
 resources:
   Resources:
     CloudFrontDistribution:
