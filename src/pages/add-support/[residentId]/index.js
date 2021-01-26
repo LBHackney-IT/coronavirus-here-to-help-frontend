@@ -8,10 +8,11 @@ import { HelpRequestCallGateway } from '../../../gateways/help-request-call';
 import { ResidentGateway } from '../../../gateways/resident';
 import { HelpRequestGateway } from '../../../gateways/help-request';
 import { CaseNotesGateway } from '../../../gateways/case-notes'
+import {unsafeExtractUser} from '../../../helpers/auth';
 
 import {UserContext} from "../../../contexts/UserContext"
 
-export default function addSupportPage({residentId,resident}) {
+export default function addSupportPage({residentId, resident, user}) {
 	const [callMade, setCallMade] = useState(false);
 	const [callOutcome, setCallOutcome] = useState("");
 	const [followUpRequired, setFollowupRequired] = useState("")
@@ -19,8 +20,14 @@ export default function addSupportPage({residentId,resident}) {
 	const [CallDirection, setCallDirection] = useState("")
 	const [callOutcomeValues, setCallOutcomeValues] = useState([])
 	const [caseNotes, setCaseNotes]=useState("")
-	const user = useContext(UserContext) 
-
+	const [errors, setErrors] = useState({
+			CallbackRequired: false,
+			HelpNeeded: false,
+			CallDirection: false,
+			CallOutcome: false,
+			CallHandler: false
+	})
+	const [errorsExist, setErrorsExist] = useState(false)
 	const spokeToResidentCallOutcomes = [
 		"Callback complete",
 		"Refused to engage",
@@ -48,7 +55,8 @@ export default function addSupportPage({residentId,resident}) {
 
 	
 	const callBackFunction = value => {
-		if( followUpRequired.includes(value)){
+		if(value=='Yes' || value == 'No'){
+			console.log(value)
 			setFollowupRequired(value)
 		}
 		if(callTypes.includes(value)){
@@ -80,13 +88,36 @@ export default function addSupportPage({residentId,resident}) {
 			setCallOutcomeValues(newCallOutcomesValues)
 		}
 	}
-	const handleUpdate = async (e) => {
+	const handleUpdate = async () => {
 
 		let callbackRequired = (followUpRequired == "Yes") ? true : false
 		let initialCallbackCompleted = (followUpRequired == "Yes") ? false : true
 		
+		if(!callbackRequired) {
+			let tempErrors = errors
+			tempErrors.CallbackRequired = true
+			setErrors(tempErrors)
+		}
+		if(!helpNeeded) {
+			let tempErrors = errors
+			tempErrors.helpNeeded = true
+			setErrors(tempErrors)
+		}
+		if(!CallDirection) {
+			let tempErrors = errors
+			tempErrors.CallDirection = true
+			setErrors(tempErrors)
+		}
+		if(callOutcomeValues.length < 1) {
+			let tempErrors = errors
+			tempErrors.callOutcomeValues = true
+			setErrors(tempErrors)
+		}
+		if(errors.callbackRequired == false || errors.helpNeeded == false || errors.CallDirection ==false || errors.callOutcomeValues == false){
+			setErrorsExist(true)
+		}
 		let helpRequestObject = {
-			ResidentId:residentId,
+			ResidentId: residentId,
 			CallbackRequired: callbackRequired,
 			InitialCallbackCompleted: initialCallbackCompleted,
 			DateTimeRecorded: new Date(),
@@ -98,18 +129,21 @@ export default function addSupportPage({residentId,resident}) {
 			CallDirection: CallDirection,
 			CallOutcome: callOutcomeValues,
 			CallDateTime: new Date(),
-			CallHandler: "some user"
+			CallHandler: user.name
 		}
-			
-		let helpRequestGateway = new HelpRequestGateway()
-		let helpRequestId = await helpRequestGateway.postHelpRequest(residentId, helpRequestObject);
 
-		let helpRequestCallGateway = new HelpRequestCallGateway()
-
-		let helpRequestCallId  = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, callRequestObject)
+		try{
+			let helpRequestGateway = new HelpRequestGateway()
+			let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  JSON.stringify(helpRequestObject));
+			let helpRequestCallGateway = new HelpRequestCallGateway()
 	
-		let caseNotesGateway = new CaseNotesGateway()
-		let caseNoteId = await caseNotesGateway.postCaseNote(residentId, helpRequestId, caseNotes)
+			let helpRequestCallId  = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, JSON.stringify(callRequestObject))
+		
+			let caseNotesGateway = new CaseNotesGateway()
+			let caseNoteId = await caseNotesGateway.postCaseNote(residentId, helpRequestId, JSON.stringify(caseNotes))
+		} catch(err){
+			console.log("Add support error", err)
+		}
 
 	}
 
@@ -128,18 +162,7 @@ export default function addSupportPage({residentId,resident}) {
 					<div class="govuk-grid-column-three-quarters-from-desktop">
 						<h1 class="govuk-heading-xl" style={{ marginTop: "0px", marginBottom: "40px" }}> {resident.firstName} {resident.lastName}
 						</h1>
-						<form onSubmit={() => handleUpdate()}>
-							<div>
-								<div class="govuk-grid-column">
-									<div class="govuk-form-group lbh-form-group">
-										<fieldset class="govuk-fieldset">
-											<legend class="govuk-fieldset__legend mandatoryQuestion"> Call type required</legend>
-											<br />
-											<RadioButton radioButtonItems={callTypes} name="HelpNeeded" onSelectOption = {callBackFunction} />
-										</fieldset>
-									</div>
-								</div>
-							</div>
+						<form >
 							<div>
 								<div class="govuk-grid-column">
 									<div class="govuk-form-group lbh-form-group">
@@ -249,7 +272,7 @@ export default function addSupportPage({residentId,resident}) {
 																<legend class="govuk-fieldset__legend mandatoryQuestion">
 																	What was the initial purpose of the call?
 																</legend>
-																<RadioButton radioButtonItems={callTypes} name="SupportType"/>
+																<RadioButton radioButtonItems={callTypes} name="SupportType"  onSelectOption = {callBackFunction}/>
 															</fieldset>
 														</div>
 														<div class="govuk-form-group lbh-form-group">
@@ -305,9 +328,7 @@ export default function addSupportPage({residentId,resident}) {
 								</div>
 							<div id="btn-bottom-panel">
 								<div class="govuk-grid-column">
-								<Link href={backHref}>
-									<Button text="Update" addClass="govuk-!-margin-right-1" type='submit'/>
-								</Link>
+									<Button text="Update" addClass="govuk-!-margin-right-1" onClick={()=> {handleUpdate()}}/>
 								<Link href={backHref}>
 									<Button text="Cancel" addClass="govuk-button--secondary"/>
 								</Link>
@@ -325,11 +346,14 @@ export default function addSupportPage({residentId,resident}) {
 addSupportPage.getInitialProps = async ({ query: { residentId }, req, res }) => {
     try {
         const gateway = new ResidentGateway();
-        const resident = await gateway.getResident(residentId);
+				const resident = await gateway.getResident(residentId);
+				const user = unsafeExtractUser()
+				console.log(user.name)
 
         return {
             residentId,
-            resident
+						resident,
+						user
         };
     } catch (err) {
         console.log(`Error getting resident props with help request ID ${residentId}: ${err}`);
