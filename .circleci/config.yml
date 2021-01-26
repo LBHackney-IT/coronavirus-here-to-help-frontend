@@ -18,7 +18,7 @@ references:
   attach_workspace: &attach_workspace
     attach_workspace:
       at: *workspace_root
-  build_cache_key: &build-cache-key 'next-build-cache3-{{ arch }}-{{ checksum "package-lock.json" }}'
+#  build_cache_key: &build-cache-key 'next-build-cache3-{{ arch }}-{{ checksum "package-lock.json" }}'
 
 commands:
   assume-role-and-persist-workspace:
@@ -57,15 +57,15 @@ jobs:
     steps:
       - *attach_workspace
       - checkout
-      - restore_cache:
-          key: *build-cache-key
+#      - restore_cache:
+#          key: *build-cache-key
       - run: CYPRESS_INSTALL_BINARY=0 npm ci
       - run: npm run build
-      - save_cache:
-          key: *build-cache-key
-          paths:
-            - ./node_modules
-            - ./build/_next
+#      - save_cache:
+#          key: *build-cache-key
+#          paths:
+#            - ./node_modules
+#            - ./build/_next
       - persist_to_workspace:
           root: *workspace_root
           paths:
@@ -107,20 +107,18 @@ jobs:
     steps:
       - *attach_workspace
       - checkout
-      - restore_cache:
-          key: *build-cache-key
-
+#      - restore_cache:
+#          key: *build-cache-key
       - deploy-lambda:
           stage: staging
 
   deploy-production:
     executor: node
-
     steps:
       - *attach_workspace
       - checkout
-      - restore_cache:
-          key: *build-cache-key
+#      - restore_cache:
+#          key: *build-cache-key
 
       - deploy-lambda:
           stage: production
