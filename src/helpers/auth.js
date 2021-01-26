@@ -32,7 +32,7 @@ export const authoriseUser = (req) => {
 
         if (!token) return;
 
-        if (process.env.NODE_ENV !== 'production') return true;
+        if (process.env.NODE_ENV !== 'production') return jsonwebtoken.decode(token);
 
         return jsonwebtoken.verify(token, secret);
     } catch (err) {
