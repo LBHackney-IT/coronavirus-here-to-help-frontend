@@ -76,7 +76,7 @@ export default function KeyInformation({ resident }) {
           <div>
             <h3 className="govuk-heading-s">
               Key notes:
-              <a href="/editresident#down" className={styles["edit-link-icon"]}>
+              <a href={`/helpcase-profile/${resident.id}/editresident`} className={styles["edit-link-icon"]}>
                 ✎
               </a>
             </h3>
