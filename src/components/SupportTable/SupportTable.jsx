@@ -35,7 +35,8 @@ export default function SupportTable({helpRequests}) {
 							<td className="govuk-table__cell">{helpRequest.callbackRequired && <>Callback</>}</td>
 							<td className="govuk-table__cell">{helpRequest.helpRequestCalls?.length}</td>
 							<td className="govuk-table__cell govuk-table__cell--numeric">
-								<a href="/helpcase-profile/1/call-starter">View</a> {/* Will filter case notes accordingly  */}
+								{/* <a href="/helpcase-profile/1/call-starter">View</a>  */}
+								<a href="#">View</a> 
 							</td>
 						</tr>})}
 					</tbody>
