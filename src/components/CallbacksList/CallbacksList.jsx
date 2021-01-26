@@ -8,8 +8,8 @@ const calcInitials = (fullname) =>
         .map((n) => n[0])
         .join('');
 
-const notAssignedOrValue = (assignee) => {
-    return assignee != '' ? calcInitials(assignee) : 'Not assigned';
+const notAssignedOrValue = (text) => {
+    return text != '' ? text : 'Not assigned';
 };
 
 export default function CallbacksList({ callbacks }) {
@@ -80,7 +80,7 @@ export default function CallbacksList({ callbacks }) {
                                         }}
                                         as={`/reassign-call/${callback.helpRequestId}?residentId=${callback.residentId}`}>
                                         <a href="#" title={notAssignedOrValue(callback.assignedTo)}>
-                                            {notAssignedOrValue(callback.assignedTo)}✎
+                                            {notAssignedOrValue(calcInitials(callback.assignedTo))}✎
                                         </a>
                                     </Link>
                                 </td>
