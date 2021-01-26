@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Layout from "../../../components/layout";
 import { Checkbox, RadioButton, Button } from "../../../components/Form";
 import KeyInformation from "../../../components/KeyInformation/KeyInformation";
 import CaseNotes from "../../../components/CaseNotes/CaseNotes";
 import Link from "next/link";
+import { HelpRequestCallGateway } from '../../../gateways/help-request-call';
 import { ResidentGateway } from '../../../gateways/resident';
 import { HelpRequestGateway } from '../../../gateways/help-request';
+import { CaseNotesGateway } from '../../../gateways/case-notes'
 
+import {UserContext} from "../../../contexts/UserContext"
 
 export default function addSupportPage({residentId,resident}) {
 	const [callMade, setCallMade] = useState(false);
@@ -15,13 +18,15 @@ export default function addSupportPage({residentId,resident}) {
 	const [helpNeeded, setHelpNeeded] = useState("")
 	const [CallDirection, setCallDirection] = useState("")
 	const [callOutcomeValues, setCallOutcomeValues] = useState([])
+	const [caseNotes, setCaseNotes]=useState("")
+	const user = useContext(UserContext) 
 
 	const spokeToResidentCallOutcomes = [
 		"Callback complete",
 		"Refused to engage",
 		"Call rescheduled",
 	];
-	const noAnswerCallOutcomes = [
+	const noAnswerCallOutcomes = [ 
 		"Voicemail left",
 		"Wrong number",
 		"No answer machine",
@@ -40,8 +45,10 @@ export default function addSupportPage({residentId,resident}) {
 		"I called the resident",
 		"The resident called me",
 	];
+
+	
 	const callBackFunction = value => {
-		if( value == "Yes" || value == "No"){
+		if( followUpRequired.includes(value)){
 			setFollowupRequired(value)
 		}
 		if(callTypes.includes(value)){
@@ -49,12 +56,12 @@ export default function addSupportPage({residentId,resident}) {
 		}
 	
 	}
-
+	
 	const CallDirectionFunction = value => {
-		if(value == "I called the resident"){
+		if(value == whoMadeInitialContact[0]){
 			setCallDirection("Outbound")
 		}
-		if(value == "The resident called me"){
+		if(value == whoMadeInitialContact[1]){
 			setCallDirection("Inbound")
 		}
 	}
@@ -64,20 +71,15 @@ export default function addSupportPage({residentId,resident}) {
 	}
 
 	const onCheckboxChangeUpdate = (value) => {
-		// console.log("call outcome values", callOutcomeValues)
-		// console.log(value)
 		if(callOutcomeValues.includes(value)) {
 			let newCallOutcomesValues = callOutcomeValues.filter(callOutcomeValue => callOutcomeValue != value)
 			setCallOutcomeValues(newCallOutcomesValues)
 		}
 		else{
 			const newCallOutcomesValues = callOutcomeValues.concat(value)
-			// console.log(`${newCallOutcomesValues}`)
 			setCallOutcomeValues(newCallOutcomesValues)
 		}
 	}
-	
-
 	const handleUpdate = async (e) => {
 
 		let callbackRequired = (followUpRequired == "Yes") ? true : false
@@ -88,22 +90,29 @@ export default function addSupportPage({residentId,resident}) {
 			CallbackRequired: callbackRequired,
 			InitialCallbackCompleted: initialCallbackCompleted,
 			DateTimeRecorded: new Date(),
-			HelpNeeded: helpNeeded}
+			HelpNeeded: helpNeeded
+		}
 
-		
 		let callRequestObject = {
-			HelpRequestId: "help request response",
 			CallType: helpNeeded,
 			CallDirection: CallDirection,
 			CallOutcome: callOutcomeValues,
 			CallDateTime: new Date(),
-			CallHandler: "auth - need to figure out"
+			CallHandler: "some user"
 		}
+			
+		let helpRequestGateway = new HelpRequestGateway()
+		let helpRequestId = await helpRequestGateway.postHelpRequest(residentId, helpRequestObject);
 
-		// //create help request
-		// const gateway = new HelpRequestGateway();
-    // // await gateway.po(resident.id, request_body);
+		let helpRequestCallGateway = new HelpRequestCallGateway()
+
+		let helpRequestCallId  = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, callRequestObject)
+	
+		let caseNotesGateway = new CaseNotesGateway()
+		let caseNoteId = await caseNotesGateway.postCaseNote(residentId, helpRequestId, caseNotes)
+
 	}
+
 	const backHref = `/helpcase-profile/${residentId}`
 	return (
 		<Layout>
@@ -119,7 +128,7 @@ export default function addSupportPage({residentId,resident}) {
 					<div class="govuk-grid-column-three-quarters-from-desktop">
 						<h1 class="govuk-heading-xl" style={{ marginTop: "0px", marginBottom: "40px" }}> {resident.firstName} {resident.lastName}
 						</h1>
-						<form>
+						<form onSubmit={() => handleUpdate()}>
 							<div>
 								<div class="govuk-grid-column">
 									<div class="govuk-form-group lbh-form-group">
@@ -280,6 +289,7 @@ export default function addSupportPage({residentId,resident}) {
 									id="NewCaseNote"
 									name="NewCaseNote"
 									rows="5"
+									onChange = {(e) => {setCaseNotes(e.target.value)}}
 									aria-describedby="NewCaseNote-hint">
 								</textarea>
 							</div>
@@ -296,7 +306,7 @@ export default function addSupportPage({residentId,resident}) {
 							<div id="btn-bottom-panel">
 								<div class="govuk-grid-column">
 								<Link href={backHref}>
-									<Button text="Update" addClass="govuk-!-margin-right-1" onClick={() =>handleUpdate()}/>
+									<Button text="Update" addClass="govuk-!-margin-right-1" type='submit'/>
 								</Link>
 								<Link href={backHref}>
 									<Button text="Cancel" addClass="govuk-button--secondary"/>
@@ -314,7 +324,6 @@ export default function addSupportPage({residentId,resident}) {
 
 addSupportPage.getInitialProps = async ({ query: { residentId }, req, res }) => {
     try {
-      console.log(`HEEREEEE ${residentId}`)
         const gateway = new ResidentGateway();
         const resident = await gateway.getResident(residentId);
 
