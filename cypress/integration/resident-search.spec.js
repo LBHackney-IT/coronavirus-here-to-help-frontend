@@ -1,19 +1,20 @@
 beforeEach(() => {
     cy.login();
 
-    cy.intercept('/api/proxy/v4/residents?', (req) => {
-        req.reply((res) => {
-            if (
-                req.url.includes('Cydney') ||
-                req.url.includes('Nader') ||
-                req.url.includes('EW6')
-            ) {
-                res.send({ fixture: 'searchResult' });
-            } else {
-                res.send({ statusCode: 200, body: [] });
-            }
-        });
-    });
+    cy.intercept(
+        { pathname: '/api/proxy/v4/residents', query: { FirstName: 'Cydney' } },
+        { fixture: 'searchResult' }
+    );
+    cy.intercept(
+        { pathname: '/api/proxy/v4/residents', query: { LastName: 'Nader' } },
+        { fixture: 'searchResult' }
+    );
+    cy.intercept(
+        { pathname: '/api/proxy/v4/residents', query: { Postcode: 'EW6' } },
+        { fixture: 'searchResult' }
+    );
+
+    cy.intercept({ pathname: '/api/proxy/v4/residents' }, { statusCode: 200, body: [] });
 
     cy.visit(`http://localhost:3000/dashboard`);
 });
