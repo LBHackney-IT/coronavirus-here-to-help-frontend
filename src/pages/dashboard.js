@@ -33,6 +33,7 @@ export default function HomePage() {
                 href="/callback-list"
                 className="govuk-button lbh-button js-cta-btn"
                 data-module="govuk-button"
+                data-testid="view-callback-list_button"
               >
                 Go
               </a>

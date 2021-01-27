@@ -54,7 +54,7 @@ export default function CallbacksList({ callbacks }) {
                         return (
                             <tr
                                 className="govuk-table__row"
-                                key={index}
+                                key={`callbacks-list_row-${index}`}
                                 data-cy={`r-${callback.helpRequestId}`}>
                                 <td className="govuk-table__cell">{callback.residentName}</td>
                                 <td className="govuk-table__cell">{callback.address}</td>
@@ -88,8 +88,9 @@ export default function CallbacksList({ callbacks }) {
                                 <td className="govuk-table__cell">
                                     <Link
                                         href="/helpcase-profile/[residentId]"
-                                        as={`/helpcase-profile/${callback.residentId}`}>
-                                        <a href="#">View</a>
+                                        as={`/helpcase-profile/${callback.residentId}`}
+                                        >
+                                        <a href="#" data-testid={`callbacks-list-view_link-${index}`}>View</a>
                                     </Link>
                                 </td>
                             </tr>
