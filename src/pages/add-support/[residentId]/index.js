@@ -218,7 +218,7 @@ export default function addSupportPage({residentId}) {
 							<div class="govuk-error-summary__body">
 								<ul class="govuk-list govuk-error-summary__list">
 									<li>
-										<a href="#passport-issued-error">You have not completed the form</a>
+										<a href="#">You have not completed the form</a>
 									</li>
 								</ul>
 							</div>
