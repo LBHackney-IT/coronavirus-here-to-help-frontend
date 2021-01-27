@@ -1,13 +1,11 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../../components/layout";
 import { Checkbox, RadioButton, Button } from "../../../components/Form";
 import KeyInformation from "../../../components/KeyInformation/KeyInformation";
-import CaseNotes from "../../../components/CaseNotes/CaseNotes";
 import Link from "next/link";
 import { HelpRequestCallGateway } from '../../../gateways/help-request-call';
 import { ResidentGateway } from '../../../gateways/resident';
 import { HelpRequestGateway } from '../../../gateways/help-request';
-import { CaseNotesGateway } from '../../../gateways/case-notes'
 import {unsafeExtractUser} from '../../../helpers/auth';
 
 import { useRouter } from "next/router";
@@ -17,21 +15,21 @@ export default function addSupportPage({residentId}) {
 	const [callOutcome, setCallOutcome] = useState("");
 	const [followUpRequired, setFollowupRequired] = useState("")
 	const [helpNeeded, setHelpNeeded] = useState("")
-	const [CallDirection, setCallDirection] = useState("")
+	const [callDirection, setCallDirection] = useState("")
 	const [callOutcomeValues, setCallOutcomeValues] = useState("")
-	const [caseNotes, setCaseNotes]=useState("")
 	const [errors, setErrors] = useState({
-			CallbackRequired: false,
-			HelpNeeded: false,
-			CallDirection: false,
-			CallOutcome: false,
-			CallHandler: false
+			CallbackRequired: null,
+			HelpNeeded: null,
+			CallDirection: null,
+			CallOutcome: null,
+			CallHandler: null
 	})
+	const router = useRouter()
 	const [resident, setResident] = useState({})
 	const [user, setUser] = useState({})
 
 	const [errorsExist, setErrorsExist] = useState(null)
-	const onPageLoad = async ( ) => {
+	const retreiveResidentAndUser = async ( ) => {
 		const gateway = new ResidentGateway();
 		const resident = await gateway.getResident(residentId);
 		setResident(resident)
@@ -40,10 +38,9 @@ export default function addSupportPage({residentId}) {
 	}
 
 	useEffect(async () => {
-		await onPageLoad()
+		await retreiveResidentAndUser()
 	}, [])
 
-	const router = useRouter()
 	const spokeToResidentCallOutcomes = [
 		"Callback complete",
 		"Refused to engage",
@@ -116,27 +113,22 @@ export default function addSupportPage({residentId}) {
 
 		let callbackRequired = (followUpRequired == "Yes") ? true : false
 		let initialCallbackCompleted = (followUpRequired == "Yes") ? false : true
-		
-		if(!callbackRequired) {
-			let tempErrors = errors
-			tempErrors.CallbackRequired = true
-			setErrors(tempErrors)
-		}
-		if(!helpNeeded) {
-			let tempErrors = errors
-			tempErrors.helpNeeded = true
-			setErrors(tempErrors)
-		}
-		if(!CallDirection) {
-			let tempErrors = errors
-			tempErrors.CallDirection = true
-			setErrors(tempErrors)
-		}
+
+		const validationFields = [callbackRequired, helpNeeded, callDirection]
+		validationFields.forEach(validationField => {
+			if(!validationField) {
+				let tempErrors = errors
+				tempErrors.validationField = true
+				setErrors(tempErrors)
+			}
+		});
+
 		if(callOutcomeValues.length < 1) {
 			let tempErrors = errors
 			tempErrors.callOutcomeValues = true
 			setErrors(tempErrors)
 		}
+
 		let helpRequestObject = {
 			ResidentId: residentId,
 			CallbackRequired: callbackRequired,
@@ -147,56 +139,48 @@ export default function addSupportPage({residentId}) {
 
 		let callRequestObject = {
 			CallType: helpNeeded,
-			CallDirection: CallDirection,
+			CallDirection: callDirection,
 			CallOutcome: callOutcomeValues,
 			CallDateTime: new Date(),
 			CallHandler: user.name
 		}
-
+		
 		if(callMade==true){
-			if(!callbackRequired || !helpNeeded|| !CallDirection || callOutcomeValues.length < 1 ){
+			if(!callbackRequired || !helpNeeded|| !callDirection || callOutcomeValues.length < 1 ){
 				setErrorsExist(true)
-		 }
-		 else {
-	 
-			 try{
-				 let helpRequestGateway = new HelpRequestGateway()
-				 let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  JSON.stringify(helpRequestObject));
-				 
-				 let helpRequestCallGateway = new HelpRequestCallGateway()
-				 let helpRequestCallId  = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, JSON.stringify(callRequestObject))
-				 router.push(`/helpcase-profile/${residentId}`)
-				 
-				 // let caseNotesGateway = new CaseNotesGateway()
-				 // let caseNoteId = await caseNotesGateway.postCaseNote(residentId, helpRequestId, JSON.stringify(caseNotes))
- 
-			 } catch(err){
-				 console.log("Add support error", err)
-			 }
-		 }
-		}else if(callMade == false){
-			if(!callbackRequired || !helpNeeded){
-				setErrorsExist(true)
-		 }
-		 else {
-			 try{
-				 let helpRequestGateway = new HelpRequestGateway()
-				 let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  JSON.stringify(helpRequestObject));
-				 
-				 router.push(`/helpcase-profile/${residentId}`)
-				 
-				 // let caseNotesGateway = new CaseNotesGateway()
-				 // let caseNoteId = await caseNotesGateway.postCaseNote(residentId, helpRequestId, JSON.stringify(caseNotes))
- 
-			 } catch(err){
-				 console.log("Add support error", err)
-			 }
-		 }
-		} else {
-			setErrorsExist(true)
+			}else {
+				try{
+					let helpRequestGateway = new HelpRequestGateway()
+					let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  JSON.stringify(helpRequestObject));
+					
+					let helpRequestCallGateway = new HelpRequestCallGateway()
+					let helpRequestCallId  = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, JSON.stringify(callRequestObject))
+
+					router.push(`/helpcase-profile/${residentId}`)
+				} catch(err){
+					console.log("Add support error", err)
+				}
+			}
 		}
 
+		if(callMade == false){
+			if(!callbackRequired || !helpNeeded){
+				setErrorsExist(true)
+		 	}else {
+			 try{
+				 let helpRequestGateway = new HelpRequestGateway()
+				 let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  JSON.stringify(helpRequestObject));
+				 
+				 router.push(`/helpcase-profile/${residentId}`)
+				} catch(err){
+				 console.log("Add support error", err)
+				}
+			}
+		} 
 
+		if(!callMade) {
+			setErrorsExist(true)
+		}
 	}
 
 	const backHref = `/helpcase-profile/${residentId}`
