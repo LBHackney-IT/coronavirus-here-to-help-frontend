@@ -39,7 +39,7 @@ export default function HomePage() {
             </td>
           </tr>
 
-          <tr className="govuk-table__row">
+          {/* <tr className="govuk-table__row">
             <th scope="row" className="govuk-table__header">
               Assign calls
             </th>
@@ -52,7 +52,7 @@ export default function HomePage() {
                 Go
               </a>
             </td>
-          </tr>
+          </tr> */}
         </tbody>
       </table>
 

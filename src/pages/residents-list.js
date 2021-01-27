@@ -30,10 +30,10 @@ export default function ResidentsList({res, postcode}) {
                     </Link>
                 </div>
                 <div className="govuk-grid-column-one-half text-align-right">
-                    <Button
+                    {/* <Button
                             text="Add new resident"
                             style={{marginLeft: '15em'}}
-                    />
+                    /> */}
                 </div>
                 <ResidentList residents={residents} />
             </div>
