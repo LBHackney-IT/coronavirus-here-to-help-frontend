@@ -17,7 +17,6 @@ export class DefaultGateway {
                 'Content-Type': 'application/json'
             }
         });
-        //parsePascalToCamelCase(res.data);
         return res.data;
     }
 
@@ -33,13 +32,11 @@ export class DefaultGateway {
     }
 
     async postToUrl(url, body) {
-      parseCamelToPascalCase(body);
       const res = await axios.post(this.createFullUrl(url), body, {
           headers: {
               'Content-Type': 'application/json'
           }
       });
-      parsePascalToCamelCase(res.data);
       return res.data;
     }
 
