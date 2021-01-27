@@ -10,10 +10,9 @@ import { HelpRequestGateway } from '../../../gateways/help-request';
 import { CaseNotesGateway } from '../../../gateways/case-notes'
 import {unsafeExtractUser} from '../../../helpers/auth';
 
-import {UserContext} from "../../../contexts/UserContext"
 import { useRouter } from "next/router";
 
-export default function addSupportPage({residentId, resident, user}) {
+export default function addSupportPage({residentId}) {
 	const [callMade, setCallMade] = useState(null);
 	const [callOutcome, setCallOutcome] = useState("");
 	const [followUpRequired, setFollowupRequired] = useState("")
@@ -28,7 +27,22 @@ export default function addSupportPage({residentId, resident, user}) {
 			CallOutcome: false,
 			CallHandler: false
 	})
+	const [resident, setResident] = useState({})
+	const [user, setUser] = useState({})
+
 	const [errorsExist, setErrorsExist] = useState(null)
+	const onPageLoad = async ( ) => {
+		const gateway = new ResidentGateway();
+		const resident = await gateway.getResident(residentId);
+		setResident(resident)
+		const user = unsafeExtractUser()
+		setUser(user)
+	}
+
+	useEffect(async () => {
+		await onPageLoad()
+	}, [])
+
 	const router = useRouter()
 	const spokeToResidentCallOutcomes = [
 		"Callback complete",
@@ -399,15 +413,8 @@ export default function addSupportPage({residentId, resident, user}) {
 
 addSupportPage.getInitialProps = async ({ query: { residentId }, req, res }) => {
     try {
-        const gateway = new ResidentGateway();
-				const resident = await gateway.getResident(residentId);
-				const user = unsafeExtractUser()
-				console.log(user.name)
-
         return {
             residentId,
-						resident,
-						user
         };
     } catch (err) {
         console.log(`Error getting resident props with help request ID ${residentId}: ${err}`);
