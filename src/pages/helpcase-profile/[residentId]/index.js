@@ -58,7 +58,7 @@ export default function HelpcaseProfile({ residentId }) {
 
                         <SupportTable helpRequests={helpRequests} />
                         <Link href="/add-support/[residentId]" as={`/add-support/${residentId}`}>
-                            <Button data-cy='add-support-button'text="+ Add new support" />
+                            <Button data-testid='add-support-button'text="+ Add new support" />
                         </Link>
 
                             <hr />
