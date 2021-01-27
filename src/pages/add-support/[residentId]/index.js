@@ -97,7 +97,6 @@ export default function addSupportPage({residentId, resident, user}) {
 			}
 		}
 	}
-	console.log(callOutcomeValues)
 	const handleUpdate = async (event) => {
 		event.preventDefault();
 
@@ -124,41 +123,63 @@ export default function addSupportPage({residentId, resident, user}) {
 			tempErrors.callOutcomeValues = true
 			setErrors(tempErrors)
 		}
-
-		 if(!callbackRequired || !helpNeeded|| !CallDirection || callOutcomeValues.length < 1){
-			 setErrorsExist(true)
+		let helpRequestObject = {
+			ResidentId: residentId,
+			CallbackRequired: callbackRequired,
+			InitialCallbackCompleted: initialCallbackCompleted,
+			DateTimeRecorded: new Date(),
+			HelpNeeded: helpNeeded
 		}
-		else {
-			let helpRequestObject = {
-				ResidentId: residentId,
-				CallbackRequired: callbackRequired,
-				InitialCallbackCompleted: initialCallbackCompleted,
-				DateTimeRecorded: new Date(),
-				HelpNeeded: helpNeeded
-			}
-	
-			let callRequestObject = {
-				CallType: helpNeeded,
-				CallDirection: CallDirection,
-				CallOutcome: callOutcomeValues,
-				CallDateTime: new Date(),
-				CallHandler: user.name
-			}
-	
-			try{
-				let helpRequestGateway = new HelpRequestGateway()
-				let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  JSON.stringify(helpRequestObject));
-				
-				let helpRequestCallGateway = new HelpRequestCallGateway()
-				let helpRequestCallId  = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, JSON.stringify(callRequestObject))
-				router.push(`/helpcase-profile/${residentId}`)
-				
-				// let caseNotesGateway = new CaseNotesGateway()
-				// let caseNoteId = await caseNotesGateway.postCaseNote(residentId, helpRequestId, JSON.stringify(caseNotes))
 
-			} catch(err){
-				console.log("Add support error", err)
-			}
+		let callRequestObject = {
+			CallType: helpNeeded,
+			CallDirection: CallDirection,
+			CallOutcome: callOutcomeValues,
+			CallDateTime: new Date(),
+			CallHandler: user.name
+		}
+
+		if(callMade==true){
+			if(!callbackRequired || !helpNeeded|| !CallDirection || callOutcomeValues.length < 1 ){
+				setErrorsExist(true)
+		 }
+		 else {
+	 
+			 try{
+				 let helpRequestGateway = new HelpRequestGateway()
+				 let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  JSON.stringify(helpRequestObject));
+				 
+				 let helpRequestCallGateway = new HelpRequestCallGateway()
+				 let helpRequestCallId  = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, JSON.stringify(callRequestObject))
+				 router.push(`/helpcase-profile/${residentId}`)
+				 
+				 // let caseNotesGateway = new CaseNotesGateway()
+				 // let caseNoteId = await caseNotesGateway.postCaseNote(residentId, helpRequestId, JSON.stringify(caseNotes))
+ 
+			 } catch(err){
+				 console.log("Add support error", err)
+			 }
+		 }
+		}else if(callMade == false){
+			if(!callbackRequired || !helpNeeded){
+				setErrorsExist(true)
+		 }
+		 else {
+			 try{
+				 let helpRequestGateway = new HelpRequestGateway()
+				 let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  JSON.stringify(helpRequestObject));
+				 
+				 router.push(`/helpcase-profile/${residentId}`)
+				 
+				 // let caseNotesGateway = new CaseNotesGateway()
+				 // let caseNoteId = await caseNotesGateway.postCaseNote(residentId, helpRequestId, JSON.stringify(caseNotes))
+ 
+			 } catch(err){
+				 console.log("Add support error", err)
+			 }
+		 }
+		} else {
+			setErrorsExist(true)
 		}
 
 
