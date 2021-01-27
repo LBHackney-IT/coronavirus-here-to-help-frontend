@@ -17,7 +17,6 @@ export class DefaultGateway {
                 'Content-Type': 'application/json'
             }
         });
-        //parsePascalToCamelCase(res.data);
         return res.data;
     }
 

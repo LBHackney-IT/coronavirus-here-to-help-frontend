@@ -1,6 +1,7 @@
 import { DefaultGateway } from '../gateways/default-gateway';
 
-const ToHelpRequest = (hr) => {
+const ToHelpRequestDomain = (hr) => {
+    const helpNeeded = (hr.HelpNeeded == 'Sheilding')? 'CEV' : hr.HelpNeeded
     return {
         id: hr.Id,
         residentId: hr.ResidentId,
@@ -11,7 +12,7 @@ const ToHelpRequest = (hr) => {
         currentSupportFeedback: hr.CurrentSupportFeedback,
         dateTimeRecorded: hr.DateTimeRecorded,
         gettingInTouchReason: hr.GettingInTouchReason,
-        helpNeeded: hr.HelpNeeded,
+        helpNeeded: helpNeeded,
         helpWithAccessingFood: hr.HelpWithAccessingFood,
         helpWithAccessingInternet: hr.HelpWithAccessingInternet,
         helpWithAccessingMedicine: hr.HelpWithAccessingMedicine,
@@ -43,6 +44,8 @@ const ToHelpRequest = (hr) => {
     };
 };
 
+
+
 const ToCalls = (calls) => {
     return calls?.map((call) => {
         return {
@@ -56,16 +59,27 @@ const ToCalls = (calls) => {
     });
 };
 
+const ToPostHelpRequestBody = (hr) => {
+    const helpNeeded = (hr.helpNeeded == 'CEV')? 'Sheilding' : hr.helpNeeded
+    return JSON.stringify({
+        ResidentId: hr.residentId,
+        CallbackRequired: hr.callbackRequired,
+        InitialCallbackCompleted: hr.initialCallbackCompleted,
+        DateTimeRecorded: hr.dateTimeRecorded,
+        HelpNeeded: helpNeeded
+    });
+};
+
 export class HelpRequestGateway extends DefaultGateway {
     async getHelpRequest(residentId, requestId) {
         const response = await this.getFromUrl(`v4/residents/${residentId}/help-requests/${requestId}`); //`resident/${residentId}/helpRequests/${requestId}`); will we stick with this url later on?
-        const helpRequest = ToHelpRequest(response);
+        const helpRequest = ToHelpRequestDomain(response);
         return helpRequest;
     }
 
     async getHelpRequests(residentId) {
         const response = await this.getFromUrl(`v4/residents/${residentId}/help-requests`);
-        const helpRequests = response.map(ToHelpRequest);
+        const helpRequests = response.map(ToHelpRequestDomain);
         return helpRequests;
     }
 
@@ -74,7 +88,7 @@ export class HelpRequestGateway extends DefaultGateway {
             `v4/residents/${residentId}/help-requests/${requestId}`,
             request_body
         );
-        const helpRequest = ToHelpRequest(response);
+        const helpRequest = ToHelpRequestDomain(response);
         return helpRequest;
     }
 
@@ -83,6 +97,6 @@ export class HelpRequestGateway extends DefaultGateway {
     }
 
     async postHelpRequest(residentId, requestBody) {
-      return await this.postToUrl(`v4/residents/${residentId}/help-requests`, requestBody)
+      return await this.postToUrl(`v4/residents/${residentId}/help-requests`, ToPostHelpRequestBody(requestBody))
     }
 }

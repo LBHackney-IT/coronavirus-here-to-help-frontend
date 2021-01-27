@@ -130,19 +130,19 @@ export default function addSupportPage({residentId}) {
 		}
 
 		let helpRequestObject = {
-			ResidentId: residentId,
-			CallbackRequired: callbackRequired,
-			InitialCallbackCompleted: initialCallbackCompleted,
-			DateTimeRecorded: new Date(),
-			HelpNeeded: helpNeeded
+			residentId: residentId,
+			callbackRequired: callbackRequired,
+			initialCallbackCompleted: initialCallbackCompleted,
+			dateTimeRecorded: new Date(),
+			helpNeeded: helpNeeded
 		}
 
 		let callRequestObject = {
-			CallType: helpNeeded,
-			CallDirection: callDirection,
-			CallOutcome: callOutcomeValues,
-			CallDateTime: new Date(),
-			CallHandler: user.name
+			callType: helpNeeded,
+			callDirection: callDirection,
+			callOutcome: callOutcomeValues,
+			callDateTime: new Date(),
+			callHandler: user.name
 		}
 		
 		if(callMade==true){
@@ -151,10 +151,10 @@ export default function addSupportPage({residentId}) {
 			}else {
 				try{
 					let helpRequestGateway = new HelpRequestGateway()
-					let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  JSON.stringify(helpRequestObject));
+					let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  helpRequestObject);
 					
 					let helpRequestCallGateway = new HelpRequestCallGateway()
-					let helpRequestCallId  = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, JSON.stringify(callRequestObject))
+					let helpRequestCallId  = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, callRequestObject)
 
 					router.push(`/helpcase-profile/${residentId}`)
 				} catch(err){
@@ -169,7 +169,7 @@ export default function addSupportPage({residentId}) {
 		 	}else {
 			 try{
 				 let helpRequestGateway = new HelpRequestGateway()
-				 let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  JSON.stringify(helpRequestObject));
+				 let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  helpRequestObject);
 				 
 				 router.push(`/helpcase-profile/${residentId}`)
 				} catch(err){
