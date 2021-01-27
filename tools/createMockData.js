@@ -50,8 +50,8 @@ function createResident(autoincrId) {
         AddressSecondLine: faker.address.streetAddress(),
         AddressThirdLine: Math.random() > 0.1 ? '' : randexp(/Hackney(, London)?/),
         ConsentToShare: randomNullableBool(),
-        ContactMobileNumber: nItems(randomInt(2), randexp, /07\d{9}/),
-        ContactTelephoneNumber: nItems(randomInt(2), randexp, /020\d{8}/),
+        ContactMobileNumber: randexp(/07\d{9}/),
+        ContactTelephoneNumber: randexp(/020\d{8}/),
         DateOfBirth: faker.date.past(70),
         EmailAddress: faker.internet.email(firstname, lastname),
         GpSurgeryDetails: faker.random.number(), // got no clue what this is

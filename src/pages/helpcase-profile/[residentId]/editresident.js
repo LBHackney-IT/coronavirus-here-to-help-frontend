@@ -2,14 +2,15 @@ import React from 'react';
 import Layout from '../../../components/layout';
 import KeyInformation from '../../../components/KeyInformation/KeyInformation';
 import { ResidentGateway } from '../../../gateways/resident';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, Address } from '../../../components/Form';
 import EditResidentBioForm from '../../../components/EditResidentBioForm/EditResidentBioForm';
 import CaseNotes from '../../../components/CaseNotes/CaseNotes';
 import Banner from '../../../components/Banner';
 
-export default function EditResident({ resident_id, resident }) {
-    const [updatedResident, setUpdatedResident] = useState(resident);
+export default function EditResident({ residentId }) {
+    const [resident, setResident] = useState([]);
+    const [updatedResident, setUpdatedResident] = useState([]);
 
     const handleEditResident = (id, value) => {
         setUpdatedResident({ ...updatedResident, [id]: value });
@@ -19,6 +20,21 @@ export default function EditResident({ resident_id, resident }) {
     const logNewResidentDetails = () => {
         console.log(updatedResident);
     };
+
+    const getResident = async () => {
+        try {
+            const gateway = new ResidentGateway();
+            const resident = await gateway.getResident(residentId);
+            // const caseNotesGateway = new CaseNotesGateway();
+            // const caseNotes = await caseNotesGateway.getCaseNotes(residentId);
+
+            setResident(resident);
+        } catch (err) {
+            console.log(`Error getting resident props with help request ID ${residentId}: ${err}`);
+        }
+    };
+
+    useEffect(getResident, []);
 
     return (
         <Layout>
@@ -70,16 +86,6 @@ export default function EditResident({ resident_id, resident }) {
     );
 }
 
-EditResident.getInitialProps = async ({ query: { residentId }, req, res }) => {
-    try {
-        const gateway = new ResidentGateway();
-        const resident = await gateway.getResident(residentId);
-
-        return {
-            residentId,
-            resident
-        };
-    } catch (err) {
-        console.log(`Error getting resident props with help request ID ${residentId}: ${err}`);
-    }
+EditResident.getInitialProps = async ({ query: { residentId } }) => {
+    return { residentId };
 };
