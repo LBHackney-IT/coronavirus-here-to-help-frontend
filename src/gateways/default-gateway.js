@@ -45,7 +45,8 @@ export class DefaultGateway {
 
     async patchToUrl(url, body) {
       parseCamelToPascalCase(body);
-      const res = await axios.patch(this.createFullUrl(url), body, {
+      //Make patches do a post, but add method=patch in the URL
+      const res = await axios.put(this.createFullUrl(url)+"?method=patch", body, {
           headers: {
               'Content-Type': 'application/json'
           }
