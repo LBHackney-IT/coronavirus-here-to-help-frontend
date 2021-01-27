@@ -44,8 +44,7 @@ export class ResidentGateway extends DefaultGateway {
         const response = await this.getFromUrl(
             `v4/residents?Postcode=${postcode}&FirstName=${firstName}&LastName=${lastName}`
         );
-        const residents = response.map(ToResident);
-        return residents;
+        return response.map(ToResident);
     }
     async getResident(residentId) {
         const response = await this.getFromUrl(`v4/residents/${residentId}`);
