@@ -23,20 +23,7 @@ const ToResident = (response) => {
         uprn: response.Uprn,
         ward: response.Ward,
         keyNotes: response.KeyNotes,
-        caseNotes: ToCaseNotes(response.CaseNotes)
     };
-};
-
-const ToCaseNotes = (caseNotes) => {
-    return caseNotes?.map((note) => {
-        return {
-            id: note.Id,
-            caseNote: note.CaseNote,
-            helpRequestId: note.HelpRequestId,
-            residentId: note.ResidentId,
-            createdAt: note.CreatedAt
-        };
-    });
 };
 
 export class ResidentGateway extends DefaultGateway {
