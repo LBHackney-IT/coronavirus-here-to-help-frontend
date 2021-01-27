@@ -5,51 +5,57 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { CallHandlerGateway } from '../../../gateways/call-handler';
 import { HelpRequestGateway } from '../../../gateways/help-request';
+import { NOT_ASSIGNED } from '../../../helpers/constants';
 
 export default function ReassignCalls() {
     const router = useRouter();
     const { requestId, residentId } = router.query;
 
-    const [assignee, setAssignee] = useState({});
+    const [assignee, setAssignee] = useState('');
     const [callHandlers, setCallHandlers] = useState([]);
 
     const getCallHandlers = async () => {
         const gateway = new CallHandlerGateway();
-        const callhandlerList = await gateway.getCallHandler();
-        callhandlerList.unshift('Not assigned');
-        setCallHandlers(callhandlerList);
+        const callHandlerList = await gateway.getCallHandler();
+        callHandlerList.unshift(NOT_ASSIGNED);
+        setCallHandlers(callHandlerList);
     };
 
     const getHelpRequest = async () => {
         const gateway = new HelpRequestGateway();
         const helpRequest = await gateway.getHelpRequest(residentId, requestId);
         const helpRequestAssignee =
-            helpRequest.assignedTo != '' ? helpRequest.assignedTo : 'Not assigned';
+            helpRequest.assignedTo !== '' ? helpRequest.assignedTo : NOT_ASSIGNED;
         setAssignee(helpRequestAssignee);
     };
 
-    useEffect(getCallHandlers, []);
-    useEffect(getHelpRequest, []);
+    const handleOnSubmit = async (event) => {
+        event.preventDefault();
 
-    const handleAssignClick = async () => {
-        const updateObj = { assignedTo: assignee };
-        if (updateObj.assignedTo == 'Not assigned') updateObj.assignedTo = '';
         const gateway = new HelpRequestGateway();
+
+        const updateObj = { assignedTo: assignee === NOT_ASSIGNED ? '' : assignee };
+
         await gateway.patchHelpRequest(requestId, updateObj);
-        //alert("Call handler reassigned"); // could probably have a better notification - disabling alert for the sake of cypress
-        // magic happens that routes back to callbacks list page automatically
+
+        router.back();
     };
+
+    useEffect(() => {
+        getCallHandlers();
+        getHelpRequest();
+    }, []);
 
     return (
         <Layout>
             <div>
                 <Link href="/callback-list">
-                    <a href="#" className="govuk-back-link" data-cy="back-button">
+                    <a className="govuk-back-link" data-cy="back-button">
                         Back
                     </a>
                 </Link>
                 <h1 className="govuk-heading-l">Reassign this call</h1>
-                <form action="/callback-list" method="post">
+                <form onSubmit={handleOnSubmit}>
                     <h3 className="govuk-heading-m">Select a new call handler</h3>
                     <div className="govuk-form-group">
                         <Dropdown
@@ -66,7 +72,6 @@ export default function ReassignCalls() {
                             <Button
                                 text="Assign"
                                 addClass="govuk-button govuk-!-margin-right-1"
-                                onClick={handleAssignClick}
                                 data-cy="assign-button"
                             />
                             <Button
@@ -81,9 +86,3 @@ export default function ReassignCalls() {
         </Layout>
     );
 }
-
-export const getServerSideProps = async () => {
-    return {
-        props: {}
-    };
-};

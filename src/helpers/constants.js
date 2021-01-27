@@ -1,0 +1,1 @@
+export const NOT_ASSIGNED = 'Not assigned';

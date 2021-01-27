@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function SupportTable({helpRequests}) {
 	return (
@@ -36,7 +36,9 @@ export default function SupportTable({helpRequests}) {
 							<td className="govuk-table__cell">{helpRequest.callbackRequired && <>Callback</>}</td>
 							<td className="govuk-table__cell" data-testid="support-requested-table-calls-count">{helpRequest.helpRequestCalls?.length}</td>
 							<td className="govuk-table__cell govuk-table__cell--numeric">
-								<a href="/helpcase-profile/1/call-starter">View</a> 
+								<Link
+									href="/helpcase-profile/[resident_id]/manage-request/[help_request]"
+									as={`/helpcase-profile/${helpRequest.residentId}/manage-request/${helpRequest.id}`}>View</Link>
 							</td>
 						</tr>})}
 					</tbody>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { isoDateToOtherDate } from '../../helpers/utilityFuncs';
+import { NOT_ASSIGNED } from '../../helpers/constants';
 
 const calcInitials = (fullname) =>
     fullname
@@ -9,7 +9,7 @@ const calcInitials = (fullname) =>
         .join('');
 
 const notAssignedOrValue = (text) => {
-    return text != '' ? text : 'Not assigned';
+    return text !== '' ? text : NOT_ASSIGNED;
 };
 
 export default function CallbacksList({ callbacks }) {
