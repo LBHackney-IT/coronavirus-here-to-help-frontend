@@ -13,7 +13,8 @@ const mockedAuthoriseUser = authoriseUser;
 describe('endpoint', () => {
     const req = ({
         method: 'GET',
-        query: { path: ['foo'] }
+        query: { path: ['foo'] },
+        url: ""
     });
 
     const res = ({
