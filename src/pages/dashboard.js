@@ -18,6 +18,7 @@ export default function HomePage() {
                 href="/resident-search"
                 className="govuk-button lbh-button"
                 data-module="govuk-button"
+                data-testid="search-for-residents_button"
               >
                 Go
               </a>
