@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function SupportTable({helpRequests}) {
@@ -35,8 +36,7 @@ export default function SupportTable({helpRequests}) {
 							<td className="govuk-table__cell">{helpRequest.callbackRequired && <>Callback</>}</td>
 							<td className="govuk-table__cell">{helpRequest.helpRequestCalls?.length}</td>
 							<td className="govuk-table__cell govuk-table__cell--numeric">
-								{/* <a href="/helpcase-profile/1/call-starter">View</a>  */}
-								<a href="#">View</a> 
+								<a href="/helpcase-profile/1/call-starter">View</a> 
 							</td>
 						</tr>})}
 					</tbody>

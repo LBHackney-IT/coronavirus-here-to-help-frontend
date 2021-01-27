@@ -17,4 +17,7 @@ export class CaseNotesGateway extends DefaultGateway {
         const response = await this.getFromUrl(`residents/${residentId}/caseNotes`);
         return ToCaseNotes(response);
     }
+    async postCaseNote(residentId, helpRequestId, requestBody){
+        return await  this.postToUrl(`resident/${residentId}/help-requests/${helpRequestId}/caseNotes`, requestBody)
+    }
 }

@@ -1,5 +1,14 @@
-@import "node_modules/govuk-frontend/govuk/all";
+@import 'node_modules/govuk-frontend/govuk/all';
 
 body {
-  font-family: "Open Sans", sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+.mandatoryQuestion::after {
+    content: '*';
+    color: red;
+}
+.mandatoryQuestion {
+    font-weight: 600;
+    font-size: 24px;
+    color: #0b0c0c;
 }
