@@ -79,14 +79,14 @@ function CallbacksListPage({ callTypes }) {
                             <Dropdown
                                 dropdownItems={callTypes}
                                 onChange={handleCallTypeChange}
-                                data-cy="help-type-dropdown"
+                                data-testid="help-type-dropdown"
                             />
                         </div>
                         <div className="govuk-grid-column-one-third">
                             <Dropdown
                                 dropdownItems={callHandlers}
                                 onChange={handleCallHandlerChange}
-                                data-cy="call-handlers-dropdown"
+                                data-testid="call-handlers-dropdown"
                             />
                         </div>
                     </div>

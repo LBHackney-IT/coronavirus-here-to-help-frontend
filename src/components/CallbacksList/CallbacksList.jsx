@@ -19,7 +19,7 @@ export default function CallbacksList({ callbacks }) {
                 Displaying {callbacks.length} record(s)
             </p>
 
-            <table className="govuk-table" data-cy="callbacks-table">
+            <table className="govuk-table" data-testid="callbacks-table">
                 <thead className="govuk-table__head">
                     <tr className="govuk-table__row">
                         <th scope="col" className="govuk-table__header">
@@ -55,11 +55,11 @@ export default function CallbacksList({ callbacks }) {
                             <tr
                                 className="govuk-table__row"
                                 key={`callbacks-list_row-${index}`}
-                                data-cy={`r-${callback.helpRequestId}`}>
+                                data-testid="callbacks-table_row">
                                 <td className="govuk-table__cell">{callback.residentName}</td>
                                 <td className="govuk-table__cell">{callback.address}</td>
                                 <td className="govuk-table__cell">{callback.requestedDate}</td>
-                                <td className="govuk-table__cell">
+                                <td className="govuk-table__cell" data-testid="callbacks-table-call-type">
                                     <span title="Contact Tracing">{callback.callType}</span>
                                 </td>
                                 <td className="govuk-table__cell ">
@@ -79,8 +79,13 @@ export default function CallbacksList({ callbacks }) {
                                             }
                                         }}
                                         as={`/reassign-call/${callback.helpRequestId}?residentId=${callback.residentId}`}>
-                                        <a href="#" title={notAssignedOrValue(callback.assignedTo || "")}>
-                                            {notAssignedOrValue(calcInitials(callback.assignedTo || ""))}✎
+                                        <a
+                                            href="#"
+                                            title={notAssignedOrValue(callback.assignedTo || '')}>
+                                            {notAssignedOrValue(
+                                                calcInitials(callback.assignedTo || '')
+                                            )}
+                                            ✎
                                         </a>
                                     </Link>
                                 </td>
@@ -88,9 +93,12 @@ export default function CallbacksList({ callbacks }) {
                                 <td className="govuk-table__cell">
                                     <Link
                                         href="/helpcase-profile/[residentId]"
-                                        as={`/helpcase-profile/${callback.residentId}`}
-                                        >
-                                        <a href="#" data-testid={`callbacks-list-view_link-${index}`}>View</a>
+                                        as={`/helpcase-profile/${callback.residentId}`}>
+                                        <a
+                                            href="#"
+                                            data-testid={`callbacks-list-view_link-${index}`}>
+                                            View
+                                        </a>
                                     </Link>
                                 </td>
                             </tr>
