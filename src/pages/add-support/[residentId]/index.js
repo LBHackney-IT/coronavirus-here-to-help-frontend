@@ -164,7 +164,7 @@ export default function addSupportPage({residentId}) {
 		}
 
 		if(callMade == false){
-			if(!callbackRequired || !helpNeeded){
+			if(callbackRequired=null || !helpNeeded){
 				setErrorsExist(true)
 		 	}else {
 			 try{
