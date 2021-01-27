@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Button, Checkbox } from '../components/Form';
+import { Button } from '../components/Form';
 import Layout from '../components/layout';
 
 export default function ResidentSearchPage() {
@@ -11,11 +11,11 @@ export default function ResidentSearchPage() {
         <Layout>
             <div>
                 <Link href="/">
-                    <a href="#" className="govuk-back-link  lbh-back-link">
+                    <a className="govuk-back-link  lbh-back-link">
                         Back
                     </a>
                 </Link>
-                <hr className="govuk-section-break govuk-section-break--s govuk-section-break"></hr>
+                <hr className="govuk-section-break govuk-section-break--s govuk-section-break" />
                 <h1 className="govuk-heading-xl" style={{ marginBottom: '0.1em' }}>
                     Resident lookup
                 </h1>
@@ -23,7 +23,7 @@ export default function ResidentSearchPage() {
                     Search for resident by postcode <strong>or</strong> name to see if weve helped
                     them before.
                 </p>
-                <hr className="govuk-section-break govuk-section-break--m govuk-section-break"></hr>
+                <hr className="govuk-section-break govuk-section-break--m govuk-section-break" />
                 <form action="/listresident">
                     <div className="govuk-!-margin-bottom-5">
                         <div className="govuk-grid-row row-margin-top-m">
