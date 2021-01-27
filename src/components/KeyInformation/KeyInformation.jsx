@@ -48,29 +48,13 @@ export default function KeyInformation({ resident }) {
                         {resident.postCode}
                     </p>
                     <br />
-                    {/* <h3 className="govuk-heading-s">Alternate contact:</h3>
-        <p>
-          Test Test
-          <br />
-          Relationship: Carer
-          <br />
-          Phone 1: 039384
-          <br />
-          Phone 2: 071839
-        </p> */}
                 </div>
             </div>
 
             <div className={styles['key-information-box']}>
                 <h3 className="govuk-heading-s">Key information</h3>
                 <div hidden={hidden}>
-                    <p>
-                        CEV
-                        <br />
-                        Positive Covid test at 2 Dec 2020
-                        <br />
-                        CEV Contact Tracing ID: SL 99 88 12 A
-                    </p>
+                    {resident.nhsNumber && (<p>NHS Number: {resident.nhsNumber}</p>)}
                     <br />
                     <div>
                         <h3 className="govuk-heading-s">
@@ -83,7 +67,7 @@ export default function KeyInformation({ resident }) {
                         </h3>
                     </div>
                     <br />
-                    <p>{resident.keyNotes}</p>
+                    <p>{resident.keyNotes || "None"}</p>
                 </div>
             </div>
         </div>
