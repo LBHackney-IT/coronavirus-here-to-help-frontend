@@ -10,7 +10,15 @@ const endpoint = async (req, res) => {
     const path = req.query.path;
 
     try {
-        const { status, data } = await hereToHelpApiGateway.request(path, req.method, req.body);
+        
+       const queryParams = Object.keys(req.query).reduce((object, key) => {
+        if (key !== 'path') {
+            object[key] = req.query[key]
+        }
+        return object
+        }, {})
+
+        const { status, data } = await hereToHelpApiGateway.request(path, req.method, req.body, queryParams);
 
         res.status(status).json(data);
     } catch (err) {

@@ -19,7 +19,7 @@ export default function addSupportPage({residentId, resident, user}) {
 	const [followUpRequired, setFollowupRequired] = useState("")
 	const [helpNeeded, setHelpNeeded] = useState("")
 	const [CallDirection, setCallDirection] = useState("")
-	const [callOutcomeValues, setCallOutcomeValues] = useState([])
+	const [callOutcomeValues, setCallOutcomeValues] = useState("")
 	const [caseNotes, setCaseNotes]=useState("")
 	const [errors, setErrors] = useState({
 			CallbackRequired: false,
@@ -77,19 +77,27 @@ export default function addSupportPage({residentId, resident, user}) {
 	}
 	const updateCallMadeAndCallOutcomeValues = async value => {
 		setCallOutcome(value)
-		setCallOutcomeValues([])
+		setCallOutcomeValues('')
 	}
 
 	const onCheckboxChangeUpdate = (value) => {
 		if(callOutcomeValues.includes(value)) {
-			let newCallOutcomesValues = callOutcomeValues.filter(callOutcomeValue => callOutcomeValue != value)
-			setCallOutcomeValues(newCallOutcomesValues)
+			const callOutcomeArray = callOutcomeValues.split();
+			let newCallOutcomesValues = callOutcomeArray.filter(callOutcomeValue => callOutcomeValue != value)
+			const callOutcomeString = newCallOutcomesValues.join()
+			setCallOutcomeValues(callOutcomeString)
 		}
 		else{
-			const newCallOutcomesValues = callOutcomeValues.concat(value)
-			setCallOutcomeValues(newCallOutcomesValues)
+			if(!callOutcomeValues){
+				const newCallOutcomesValues = callOutcomeValues.concat(value)
+				setCallOutcomeValues(newCallOutcomesValues)
+			}else {
+				const newCallOutcomesValues = callOutcomeValues.concat(','+value)
+				setCallOutcomeValues(newCallOutcomesValues)
+			}
 		}
 	}
+	console.log(callOutcomeValues)
 	const handleUpdate = async (event) => {
 		event.preventDefault();
 
@@ -138,13 +146,13 @@ export default function addSupportPage({residentId, resident, user}) {
 			}
 	
 			try{
-				router.push(`/helpcase-profile/${residentId}`)
 				let helpRequestGateway = new HelpRequestGateway()
 				let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  JSON.stringify(helpRequestObject));
-
+				
 				let helpRequestCallGateway = new HelpRequestCallGateway()
 				let helpRequestCallId  = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, JSON.stringify(callRequestObject))
-			
+				router.push(`/helpcase-profile/${residentId}`)
+				
 				// let caseNotesGateway = new CaseNotesGateway()
 				// let caseNoteId = await caseNotesGateway.postCaseNote(residentId, helpRequestId, JSON.stringify(caseNotes))
 
@@ -186,6 +194,18 @@ export default function addSupportPage({residentId, resident, user}) {
 							<div>
 								<div class="govuk-grid-column">
 									<div class="govuk-form-group lbh-form-group">
+									<div>	
+								<div class="govuk-grid-column">	
+									<div class="govuk-form-group lbh-form-group">	
+										<fieldset class="govuk-fieldset">	
+											<legend class="govuk-fieldset__legend mandatoryQuestion"> Call type required</legend>	
+											<br />	
+											<RadioButton radioButtonItems={callTypes} name="HelpNeeded" onSelectOption = {callBackFunction} />	
+										</fieldset>	
+									</div>	
+								</div>	
+							</div>
+							<br/>
 										<fieldset class="govuk-fieldset">
 											<legend class="govuk-fieldset__legend mandatoryQuestion"> Do you need to log new call details? </legend>
 											<br />
@@ -287,14 +307,7 @@ export default function addSupportPage({residentId, resident, user}) {
 																</div>
 															</fieldset>
 														</div>
-														<div class="govuk-form-group lbh-form-group">
-															<fieldset class="govuk-fieldset">
-																<legend class="govuk-fieldset__legend mandatoryQuestion">
-																	What was the initial purpose of the call?
-																</legend>
-																<RadioButton radioButtonItems={callTypes} name="SupportType"  onSelectOption = {callBackFunction}/>
-															</fieldset>
-														</div>
+
 														<div class="govuk-form-group lbh-form-group">
 														<fieldset class="govuk-fieldset">
 															<legend class="govuk-fieldset__legend mandatoryQuestion"> Who made the call today? </legend>
