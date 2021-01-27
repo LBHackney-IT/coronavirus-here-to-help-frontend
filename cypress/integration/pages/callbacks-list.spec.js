@@ -45,7 +45,7 @@ describe('Callbacks list page filters callbacks correctly', () => {
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '3');
     });
 
-    it('Upon selecting Call Handlers dropdown value, callbacks get filtered by that value', () => {
+    xit('Upon selecting Call Handlers dropdown value, callbacks get filtered by that value', () => {
         cy.visit('/callback-list');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '6');
         cy.get('[data-testid=call-handlers-dropdown]').select('Person A');

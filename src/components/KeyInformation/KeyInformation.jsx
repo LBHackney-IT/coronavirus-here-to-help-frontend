@@ -27,10 +27,10 @@ export default function KeyInformation({ resident }) {
           </h3>
         </div>
         <div hidden={hidden}>
-              <p data-testid={`key-information_phone-number_1`} key={`key-information_phone-number_1`}>
+              <p data-testid={`key-information_phone-number`} key={`key-information_phone-number_1`}>
                 Phone 1: {resident.contactTelephoneNumber}
               </p>
-              <p data-testid={`key-information_phone-number_2`} key={`key-information_phone-number_2`}>
+              <p data-testid={`key-information_mobile-phone-number`} key={`key-information_phone-number_2`}>
                 Phone 2: {resident.contactMobileNumber}
               </p>
           <br />

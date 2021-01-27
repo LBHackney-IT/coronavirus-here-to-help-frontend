@@ -29,12 +29,12 @@ export default function SupportTable({helpRequests}) {
 					</thead>
 					<tbody className="govuk-table__body">
 						{helpRequests.map((helpRequest, index) => {
-						return	<tr className="govuk-table__row" key={`help-request-${index}`}>
-							<td scope="row" className="govuk-table__cell">
+						return	<tr className="govuk-table__row" key={`help-request-${index}`} data-testid="support-requested-table_row">
+							<td scope="row" className="govuk-table__cell" data-testid="support-requested-table-help-needed">
 								{helpRequest.helpNeeded}
 							</td>
 							<td className="govuk-table__cell">{helpRequest.callbackRequired && <>Callback</>}</td>
-							<td className="govuk-table__cell">{helpRequest.helpRequestCalls?.length}</td>
+							<td className="govuk-table__cell" data-testid="support-requested-table-calls-count">{helpRequest.helpRequestCalls?.length}</td>
 							<td className="govuk-table__cell govuk-table__cell--numeric">
 								<a href="/helpcase-profile/1/call-starter">View</a> 
 							</td>
