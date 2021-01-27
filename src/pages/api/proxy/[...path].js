@@ -9,6 +9,9 @@ const endpoint = async (req, res) => {
 
     const path = req.query.path;
 
+    // Allow a URL parameter to switch request method, as PATCH doens't play well with Lambda Next
+    if(req.url.indexOf('?method=patch')!==-1) req.method = 'PATCH';
+
     try {
         
        const queryParams = Object.keys(req.query).reduce((object, key) => {
