@@ -40,7 +40,7 @@ Cypress.Commands.add('setIntercepts', () => {
         fixture: 'residents/3/helpRequests'
     });
 
-    cy.intercept('PUT', `/api/proxy/v3/help-requests/12?method=patch`, {
+    cy.intercept('PATCH', `/api/proxy/v3/help-requests/12`, {
         statusCode: 201
     });
 

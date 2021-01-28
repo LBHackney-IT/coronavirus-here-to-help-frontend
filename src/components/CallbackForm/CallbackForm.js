@@ -142,7 +142,7 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
         <>
             {errorsExist &&
             <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert"
-                 tabIndex="-1" data-module="govuk-error-summary" data-testid="add-support-validation-error">
+                 tabIndex="-1" data-module="govuk-error-summary" data-testid="callback-form-validation-error">
                 <h2 className="govuk-error-summary__title" id="error-summary-title">
                     There is a problem
                 </h2>
@@ -329,9 +329,9 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
                 </div>
                 <div id="btn-bottom-panel">
                     <div class="govuk-grid-column">
-                        <Button text="Update" addClass="govuk-!-margin-right-1" onClick={(event)=> { handleUpdate(event)}}  data-testid="add-support-update_button"/>
+                        <Button text="Update" addClass="govuk-!-margin-right-1" onClick={(event)=> { handleUpdate(event)}}  data-testid="callback-form-update_button"/>
                         <Link href={backHref}>
-                            <Button text="Cancel" addClass="govuk-button--secondary" data-testid="add-support-cancel_button"/>
+                            <Button text="Cancel" addClass="govuk-button--secondary" data-testid="callback-form-cancel_button"/>
                         </Link>
                     </div>
                 </div>

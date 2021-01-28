@@ -35,7 +35,7 @@ export default function SupportTable({helpRequests}) {
 							</td>
 							<td className="govuk-table__cell">{helpRequest.callbackRequired && <>Callback</>}</td>
 							<td className="govuk-table__cell" data-testid="support-requested-table-calls-count">{helpRequest.helpRequestCalls?.length}</td>
-							<td className="govuk-table__cell govuk-table__cell--numeric">
+							<td className="govuk-table__cell govuk-table__cell--numeric"  data-testid={`support-requested-table-view_link-${index}`}>
 								<Link
 									href="/helpcase-profile/[resident_id]/manage-request/[help_request]"
 									as={`/helpcase-profile/${helpRequest.residentId}/manage-request/${helpRequest.id}`}>View</Link>
