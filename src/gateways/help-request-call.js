@@ -1,9 +1,9 @@
 import { DefaultGateway } from '../gateways/default-gateway';
+import {CEV, SHIELDING} from '../helpers/constants';
 
 const ToPostHelpRequestCall = (hr) => {
-  const callType = (hr.callType == 'CEV') ? 'Shielding': hr.callType
   return JSON.stringify({
-      CallType: callType,
+      CallType: (hr.callType == CEV) ? SHIELDING: hr.callType,
 			CallDirection: hr.callDirection,
 			CallOutcome: hr.callOutcomeValues,
 			CallDateTime: hr.callDateTime,

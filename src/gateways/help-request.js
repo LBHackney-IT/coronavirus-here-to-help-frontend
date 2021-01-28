@@ -1,7 +1,7 @@
 import { DefaultGateway } from '../gateways/default-gateway';
+import {CEV, SHIELDING} from '../helpers/constants';
 
 const ToHelpRequestDomain = (hr) => {
-    const helpNeeded = (hr.HelpNeeded == 'Shielding')? 'CEV' : hr.HelpNeeded
     return {
         id: hr.Id,
         residentId: hr.ResidentId,
@@ -12,7 +12,7 @@ const ToHelpRequestDomain = (hr) => {
         currentSupportFeedback: hr.CurrentSupportFeedback,
         dateTimeRecorded: hr.DateTimeRecorded,
         gettingInTouchReason: hr.GettingInTouchReason,
-        helpNeeded: helpNeeded,
+        helpNeeded: (hr.HelpNeeded == SHIELDING)? CEV : hr.HelpNeeded,
         helpWithAccessingFood: hr.HelpWithAccessingFood,
         helpWithAccessingInternet: hr.HelpWithAccessingInternet,
         helpWithAccessingMedicine: hr.HelpWithAccessingMedicine,
@@ -60,13 +60,12 @@ const ToCalls = (calls) => {
 };
 
 const ToPostHelpRequestBody = (hr) => {
-    const helpNeeded = (hr.helpNeeded == 'CEV')? 'Shielding' : hr.helpNeeded
     return JSON.stringify({
         ResidentId: hr.residentId,
         CallbackRequired: hr.callbackRequired,
         InitialCallbackCompleted: hr.initialCallbackCompleted,
         DateTimeRecorded: hr.dateTimeRecorded,
-        HelpNeeded: helpNeeded
+        HelpNeeded: (hr.helpNeeded == CEV)? SHIELDING : hr.helpNeeded
     });
 };
 
