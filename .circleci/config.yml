@@ -140,7 +140,7 @@ workflows:
           executor: cypress/base-14
           start: |
             npm install cypress-dotenv -g
-            npm run dev
+            npm run dev:front
           wait-on: 'http-get://127.0.0.1:3000'
           store_artifacts: true
           no-workspace: true
