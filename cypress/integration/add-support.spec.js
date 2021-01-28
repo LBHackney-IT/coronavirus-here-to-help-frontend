@@ -1,23 +1,6 @@
 beforeEach(() => {
     cy.login();
-
-    cy.intercept('GET', '/api/proxy/v3/help-requests/callbacks', {
-        fixture: 'callbacks'
-    });
-
-    cy.intercept('POST', '/api/proxy/v4/residents/3/help-requests', {
-        statusCode: 201,
-        body: { Id: 1 }
-    });
-
-    cy.intercept('GET', `/api/proxy/v4/residents/3/help-requests`, {
-        fixture: 'helpRequests/resident3'
-    });
-
-    cy.intercept('GET', `/api/proxy/v4/residents/3`, {
-        fixture: 'residents/3'
-    });
-
+    cy.setIntercepts()
     cy.visit(`http://localhost:3000/dashboard`);
 });
 

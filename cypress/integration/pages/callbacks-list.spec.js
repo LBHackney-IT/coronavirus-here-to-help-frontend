@@ -1,9 +1,6 @@
 beforeEach(() => {
     cy.login();
-
-    cy.intercept('GET', '/api/proxy/v3/help-requests/callbacks', {
-        fixture: 'callbacks'
-    });
+    cy.setIntercepts();
 });
 
 describe('Callbacks list page displays and maps data correctly', () => {

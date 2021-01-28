@@ -1,21 +1,6 @@
 beforeEach(() => {
     cy.login();
-
-    cy.intercept(
-        { pathname: '/api/proxy/v4/residents', query: { FirstName: 'Cydney' } },
-        { fixture: 'searchResult' }
-    );
-    cy.intercept(
-        { pathname: '/api/proxy/v4/residents', query: { LastName: 'Nader' } },
-        { fixture: 'searchResult' }
-    );
-    cy.intercept(
-        { pathname: '/api/proxy/v4/residents', query: { Postcode: 'EW6' } },
-        { fixture: 'searchResult' }
-    );
-
-    cy.intercept({ pathname: '/api/proxy/v4/residents' }, { statusCode: 200, body: [] });
-
+    cy.setIntercepts()
     cy.visit(`http://localhost:3000/dashboard`);
 });
 

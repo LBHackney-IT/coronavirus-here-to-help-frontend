@@ -1,44 +1,6 @@
-function navigateToReassignSingleCallPage(f) {
-    return cy.visit(`http://localhost:3000/callback-list`).then(() => {
-        cy.get('[data-testid=call-handlers-dropdown]')
-            .find('option')
-            .eq(4)
-            .invoke('val')
-            .then((callHandlerVal) => {
-                cy.get('[data-testid=callbacks-table]')
-                    .find(`tbody > tr:has(a[title="${callHandlerVal}"])`)
-                    .eq(0)
-                    .find(`td:has(a[title])`)
-                    .find('a')
-                    .click({ force: true });
-                cy.wait(1500);
-                f(callHandlerVal);
-            });
-    });
-}
-
 beforeEach(() => {
     cy.login();
-
-    cy.intercept('GET', '/api/proxy/v3/help-requests/callbacks', {
-        fixture: 'callbacks'
-    });
-
-    cy.intercept('GET', `/api/proxy/v4/residents/3/help-requests/12`, {
-        fixture: 'helpRequests/12'
-    });
-    cy.intercept('GET', `/api/proxy/v4/residents/3/help-requests`, {
-        fixture: 'helpRequests/resident3'
-    });
-
-    cy.intercept('GET', `/api/proxy/v4/residents/3`, {
-        fixture: 'residents/3'
-    });
-
-    cy.intercept('PUT', `/api/proxy/v3/help-requests/12?method=patch`, {
-        statusCode: 201
-    });
-
+    cy.setIntercepts()
     cy.visit('/');
 });
 
