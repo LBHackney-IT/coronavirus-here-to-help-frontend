@@ -10,6 +10,7 @@ const ToHelpRequestDomain = (hr) => {
         callbackRequired: hr.CallbackRequired,
         currentSupport: hr.CurrentSupport,
         currentSupportFeedback: hr.CurrentSupportFeedback,
+        postCode: hr.Postcode,
         dateTimeRecorded: hr.DateTimeRecorded,
         gettingInTouchReason: hr.GettingInTouchReason,
         helpNeeded: (hr.HelpNeeded == SHIELDING)? CEV : hr.HelpNeeded,
