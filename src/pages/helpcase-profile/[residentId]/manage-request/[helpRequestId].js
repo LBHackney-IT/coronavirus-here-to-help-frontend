@@ -31,11 +31,11 @@ export default function addSupportPage({residentId, helpRequestId}) {
 
     const saveFunction = async function(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade) {
         let callRequestObject = {
-            CallType: helpNeeded,
-            CallDirection: callDirection,
-            CallOutcome: callOutcomeValues,
-            CallDateTime: new Date(),
-            CallHandler: user.name
+            callType: helpNeeded,
+            callDirection: callDirection,
+            callOutcome: callOutcomeValues,
+            callDateTime: new Date(),
+            callHandler: user.name
         }
 
         try{
@@ -48,7 +48,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
 
             if(callMade) {
                 let helpRequestCallGateway = new HelpRequestCallGateway();
-                let helpRequestCallId = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, JSON.stringify(callRequestObject));
+                let helpRequestCallId = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, callRequestObject);
             }
 
             router.push(`/helpcase-profile/${residentId}`)
