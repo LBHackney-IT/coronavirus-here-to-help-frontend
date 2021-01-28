@@ -1,6 +1,7 @@
 import { DefaultGateway } from '../gateways/default-gateway';
 
 const ToResident = (response) => {
+    console.log(response)
     return {
         firstName: response.FirstName,
         id: response.Id,
@@ -11,7 +12,7 @@ const ToResident = (response) => {
         consentToShare: response.ConsentToShare,
         contactMobileNumber: response.ContactMobileNumber,
         contactTelephoneNumber: response.ContactTelephoneNumber,
-        dateOfBirth: response.DateOfBirth,
+        dateOfBirth: response.DobDay +'/'+response.DobMonth+'/'+response.DobYear,
         emailAddress: response.EmailAddress,
         gpSurgeryDetails: response.GpSurgeryDetails,
         isPharmacistAbleToDeliver: response.IsPharmacistAbleToDeliver,
