@@ -1,6 +1,4 @@
 import axios from 'axios';
-const { parsePascalToCamelCase, parseCamelToPascalCase } = require('../helpers/utilityFuncs.js');
-
 export class DefaultGateway {
 
     createFullUrl(url) {
@@ -21,13 +19,11 @@ export class DefaultGateway {
     }
 
     async putToUrl(url, body) {
-        parseCamelToPascalCase(body);
         const res = await axios.put(this.createFullUrl(url), body, {
             headers: {
                 'Content-Type': 'application/json'
             }
         });
-        parsePascalToCamelCase(res.data);
         return res.data;
     }
 
@@ -41,7 +37,6 @@ export class DefaultGateway {
     }
 
     async patchToUrl(url, body) {
-      parseCamelToPascalCase(body);
       //Make patches do a post, but add method=patch in the URL
       const res = await axios.put(this.createFullUrl(url)+"?method=patch", body, {
           headers: {

@@ -70,6 +70,12 @@ const ToPostHelpRequestBody = (hr) => {
     });
 };
 
+const ToPatchHelpRequestObject = (hr) => {
+    return JSON.stringify({
+        AssignedTo: hr.assignedTo
+    })
+}
+
 export class HelpRequestGateway extends DefaultGateway {
     async getHelpRequest(residentId, requestId) {
         const response = await this.getFromUrl(`v4/residents/${residentId}/help-requests/${requestId}`); //`resident/${residentId}/helpRequests/${requestId}`); will we stick with this url later on?
@@ -93,10 +99,12 @@ export class HelpRequestGateway extends DefaultGateway {
     }
 
     async patchHelpRequest(helpRequestId, requestBody) {
-        return await this.patchToUrl(`v3/help-requests/${helpRequestId}`, requestBody);
+        return await this.patchToUrl(`v3/help-requests/${helpRequestId}`, ToPatchHelpRequestObject(requestBody));
     }
 
     async postHelpRequest(residentId, requestBody) {
-      return await this.postToUrl(`v4/residents/${residentId}/help-requests`, ToPostHelpRequestBody(requestBody))
+        const response = await this.postToUrl(`v4/residents/${residentId}/help-requests`, ToPostHelpRequestBody(requestBody))
+        const helpRequest = ToHelpRequestDomain(response);
+        return helpRequest;
     }
 }

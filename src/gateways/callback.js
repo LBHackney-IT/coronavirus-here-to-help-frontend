@@ -1,6 +1,6 @@
 import { DefaultGateway } from '../gateways/default-gateway';
-const { objectToQueryAndParseToPascal, isoDateToOtherDate } = require('../helpers/utilityFuncs');
 
+const isoDateToOtherDate = (dateString) => dateString.split('T')[0];
 const joinNameParts = (obj) => [obj.FirstName, obj.LastName].join(' ');
 const joinAddressParts = (obj) =>
     [obj.AddressFirstLine, obj.AddressSecondLine, obj.AddressThirdLine].join(', ');
