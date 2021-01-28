@@ -123,30 +123,17 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
             helpNeeded: helpNeeded
         }
 
-        if(callMade==true){
-            if(followUpRequired==null || !helpNeeded|| !callDirection || callOutcomeValues.length < 1 ){
-                setErrorsExist(true)
-            }else {
-                saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject);
-            }
+        if(callMade==true&&(followUpRequired==null || !helpNeeded|| !callDirection || callOutcomeValues.length < 1 )){
+            setErrorsExist(true)
+        }
+        else if(callMade == false&&(followUpRequired == null || !helpNeeded)) {
+            setErrorsExist(true)
+        }
+        else if(callMade != null) {
+            saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade);
         }
 
-        if(callMade == false){
-            if(followUpRequired == null || !helpNeeded){
-                setErrorsExist(true)
-            }else {
-                try{
-                    let helpRequestGateway = new HelpRequestGateway()
-                    let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  helpRequestObject);
-
-                    router.push(`/helpcase-profile/${residentId}`)
-                } catch(err){
-                    console.log("Add support error", err)
-                }
-            }
-        }
-
-        if(callMade == null) {
+        else {
             setErrorsExist(true)
         }
     }
@@ -155,7 +142,7 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
         <>
             {errorsExist &&
             <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert"
-                 tabIndex="-1" data-module="govuk-error-summary">
+                 tabIndex="-1" data-module="govuk-error-summary" data-testid="callback-form-validation-error">
                 <h2 className="govuk-error-summary__title" id="error-summary-title">
                     There is a problem
                 </h2>
@@ -180,7 +167,7 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
                                         <fieldset class="govuk-fieldset">
                                             <legend class="govuk-fieldset__legend mandatoryQuestion"> Call type required</legend>
                                             <br />
-                                            <RadioButton radioButtonItems={callTypes} name="HelpNeeded" onSelectOption = {callBackFunction} />
+                                            <RadioButton radioButtonItems={callTypes} name="HelpNeeded" onSelectOption = {callBackFunction} data-testid="call-type-radio-button" />
                                         </fieldset>
                                     </div>
                                 </div>
@@ -304,6 +291,7 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
                                             type="radio"
                                             value="no"
                                             onChange = { () => setCallMade(false)}
+                                            data-testid="call-type-no-radio-button"
                                         />
                                         <label class="govuk-label govuk-radios__label" for="CallMade-2">No</label>
                                     </div>
@@ -335,15 +323,15 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
                         <fieldset class="govuk-fieldset">
                             <legend class="govuk-fieldset__legend mandatoryQuestion">Follow-up required?</legend>
                             <br />
-                            <RadioButton radioButtonItems={followupRequired} name="FollowUpRequired" optionalClass = "govuk-radios--inline" onSelectOption = {callBackFunction}/>
+                            <RadioButton radioButtonItems={followupRequired} name="FollowUpRequired" optionalClass = "govuk-radios--inline" onSelectOption = {callBackFunction}  data-testid="followup-required-radio-button"/>
                         </fieldset>
                     </div>
                 </div>
                 <div id="btn-bottom-panel">
                     <div class="govuk-grid-column">
-                        <Button text="Update" addClass="govuk-!-margin-right-1" onClick={(event)=> { handleUpdate(event)}}/>
+                        <Button text="Update" addClass="govuk-!-margin-right-1" onClick={(event)=> { handleUpdate(event)}}  data-testid="callback-form-update_button"/>
                         <Link href={backHref}>
-                            <Button text="Cancel" addClass="govuk-button--secondary"/>
+                            <Button text="Cancel" addClass="govuk-button--secondary" data-testid="callback-form-cancel_button"/>
                         </Link>
                     </div>
                 </div>

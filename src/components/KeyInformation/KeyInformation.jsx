@@ -27,13 +27,13 @@ export default function KeyInformation({ resident }) {
                 </div>
                 <div hidden={hidden}>
                     <p
-                        data-testid={`key-information_phone-number_1`}
-                        key={`key-information_phone-number_1`}>
+                        data-testid={`key-information_phone-number`}
+                        key={`key-information_phone-number`}>
                         Phone 1: {resident.contactTelephoneNumber}
                     </p>
                     <p
-                        data-testid={`key-information_phone-number_2`}
-                        key={`key-information_phone-number_2`}>
+                        data-testid={`key-information_mobile-phone-number`}
+                        key={`key-information_mobile-phone-number`}>
                         Phone 2: {resident.contactMobileNumber}
                     </p>
                     <br />
@@ -54,6 +54,7 @@ export default function KeyInformation({ resident }) {
             <div className={styles['key-information-box']}>
                 <h3 className="govuk-heading-s">Key information</h3>
                 <div hidden={hidden}>
+                    {resident.dateOfBirth && (<p>Date of birth: {resident.dateOfBirth}</p>)}
                     {resident.nhsNumber && (<p>NHS Number: {resident.nhsNumber}</p>)}
                     <br />
                     <div>

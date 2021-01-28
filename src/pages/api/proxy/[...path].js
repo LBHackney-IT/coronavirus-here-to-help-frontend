@@ -7,9 +7,6 @@ const endpoint = async (req, res) => {
     const user = authoriseUser(req);
     if (!user) return res.status(401).json({ error: 'Unauthorised' });
 
-    // Allow a URL parameter to switch request method, as PATCH doens't play well with Lambda Next
-    if (req.url.indexOf('?method=patch') !== -1) req.method = 'PATCH';
-
     try {
         const { path, ...queryParams } = req.query;
 

@@ -71,9 +71,18 @@ const ToPostHelpRequestBody = (hr) => {
 };
 
 const ToPatchHelpRequestObject = (hr) => {
-    return JSON.stringify({
+    let object = {
+        ResidentId: hr.residentId,
+        CallbackRequired: hr.callbackRequired,
+        InitialCallbackCompleted: hr.initialCallbackCompleted,
+        DateTimeRecorded: hr.dateTimeRecorded,
+        HelpNeeded: (hr.helpNeeded == CEV)? SHIELDING : hr.helpNeeded,
         AssignedTo: hr.assignedTo
-    })
+    };
+
+    Object.keys(object).forEach((key) => (object[key] == null) && delete object[key]);
+
+    return JSON.stringify(object)
 }
 
 export class HelpRequestGateway extends DefaultGateway {
@@ -103,8 +112,6 @@ export class HelpRequestGateway extends DefaultGateway {
     }
 
     async postHelpRequest(residentId, requestBody) {
-        const response = await this.postToUrl(`v4/residents/${residentId}/help-requests`, ToPostHelpRequestBody(requestBody))
-        const helpRequest = ToHelpRequestDomain(response);
-        return helpRequest;
+        return await this.postToUrl(`v4/residents/${residentId}/help-requests`, ToPostHelpRequestBody(requestBody));
     }
 }

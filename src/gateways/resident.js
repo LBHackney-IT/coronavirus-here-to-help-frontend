@@ -1,6 +1,7 @@
 import { DefaultGateway } from '../gateways/default-gateway';
 
 const ToResident = (response) => {
+    console.log(response)
     return {
         firstName: response.FirstName,
         id: response.Id,
@@ -11,7 +12,7 @@ const ToResident = (response) => {
         consentToShare: response.ConsentToShare,
         contactMobileNumber: response.ContactMobileNumber,
         contactTelephoneNumber: response.ContactTelephoneNumber,
-        dateOfBirth: response.DateOfBirth,
+        dateOfBirth: response.DobDay +'/'+response.DobMonth+'/'+response.DobYear,
         emailAddress: response.EmailAddress,
         gpSurgeryDetails: response.GpSurgeryDetails,
         isPharmacistAbleToDeliver: response.IsPharmacistAbleToDeliver,
@@ -23,20 +24,7 @@ const ToResident = (response) => {
         uprn: response.Uprn,
         ward: response.Ward,
         keyNotes: response.KeyNotes,
-        caseNotes: ToCaseNotes(response.CaseNotes)
     };
-};
-
-const ToCaseNotes = (caseNotes) => {
-    return caseNotes?.map((note) => {
-        return {
-            id: note.Id,
-            caseNote: note.CaseNote,
-            helpRequestId: note.HelpRequestId,
-            residentId: note.ResidentId,
-            createdAt: note.CreatedAt
-        };
-    });
 };
 
 export class ResidentGateway extends DefaultGateway {

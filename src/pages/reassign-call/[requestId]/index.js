@@ -50,7 +50,7 @@ export default function ReassignCalls() {
         <Layout>
             <div>
                 <Link href="/callback-list">
-                    <a className="govuk-back-link" data-cy="back-button">
+                    <a className="govuk-back-link" data-testid="reassign-call-back_button">
                         Back
                     </a>
                 </Link>
@@ -64,7 +64,7 @@ export default function ReassignCalls() {
                             onChange={(callHandler) => {
                                 setAssignee(callHandler);
                             }}
-                            data-cy="call-handlers-dropdown"
+                            data-testid="reassign-call-handlers-dropdown"
                         />
                     </div>
                     <div className="govuk-grid-row" id="btn-bottom-panel">
@@ -72,12 +72,12 @@ export default function ReassignCalls() {
                             <Button
                                 text="Assign"
                                 addClass="govuk-button govuk-!-margin-right-1"
-                                data-cy="assign-button"
+                                data-testid="reassign-call-assign_button"
                             />
                             <Button
                                 text="Cancel"
                                 addClass="govuk-button--secondary"
-                                data-cy="cancel-button"
+                                data-testid="reassign-call-cancel_button"
                             />
                         </div>
                     </div>
