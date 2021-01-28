@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 export default function CallbackForm({residentId, resident, backHref, saveFunction}) {
     const [callMade, setCallMade] = useState(null);
     const [callOutcome, setCallOutcome] = useState("");
-    const [followUpRequired, setFollowupRequired] = useState("")
+    const [followUpRequired, setFollowupRequired] = useState(null)
     const [helpNeeded, setHelpNeeded] = useState("")
     const [callDirection, setCallDirection] = useState("")
     const [callOutcomeValues, setCallOutcomeValues] = useState("")
@@ -116,15 +116,15 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
         }
 
         let helpRequestObject = {
-            ResidentId: residentId,
-            CallbackRequired: callbackRequired,
-            InitialCallbackCompleted: initialCallbackCompleted,
-            DateTimeRecorded: new Date(),
-            HelpNeeded: helpNeeded
+            residentId: residentId,
+            callbackRequired: callbackRequired,
+            initialCallbackCompleted: initialCallbackCompleted,
+            dateTimeRecorded: new Date(),
+            helpNeeded: helpNeeded
         }
 
         if(callMade==true){
-            if(!callbackRequired || !helpNeeded|| !callDirection || callOutcomeValues.length < 1 ){
+            if(followUpRequired==null || !helpNeeded|| !callDirection || callOutcomeValues.length < 1 ){
                 setErrorsExist(true)
             }else {
                 saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject);
@@ -132,12 +132,12 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
         }
 
         if(callMade == false){
-            if(!callbackRequired || !helpNeeded){
+            if(followUpRequired == null || !helpNeeded){
                 setErrorsExist(true)
             }else {
                 try{
                     let helpRequestGateway = new HelpRequestGateway()
-                    let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  JSON.stringify(helpRequestObject));
+                    let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  helpRequestObject);
 
                     router.push(`/helpcase-profile/${residentId}`)
                 } catch(err){
@@ -146,7 +146,7 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
             }
         }
 
-        if(!callMade) {
+        if(callMade == null) {
             setErrorsExist(true)
         }
     }
