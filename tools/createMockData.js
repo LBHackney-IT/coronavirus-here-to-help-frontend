@@ -66,10 +66,7 @@ function createResident(autoincrId) {
     };
 }
 
-function createHelpRequest(autoincrId, ResidentId, callHandlersList) {
-    // Assigned call handler
-    const assignedCallHandler = randomArrayItem(callHandlersList);
-
+function createHelpRequest(autoincrId, ResidentId, assignedCallHandler) {
     // On behalf:
     let isOnBehalf = randomNullableBool();
     consentToCompleteOnBehalf = null;
@@ -87,22 +84,23 @@ function createHelpRequest(autoincrId, ResidentId, callHandlersList) {
         onBehalfContactNumber = randexp(/07\d{9}/);
         relationshipWithResident = faker.lorem.word();
     }
- 
+
     // Callback Required:
     const callbackRequired = Math.random() > 0.5 ? randomNullableBool() : true;
     const id = autoincrId;
 
     return {
         id,
-        ResidentId: ResidentId, // name change so the relationships would work
+        ResidentId: ResidentId,
         AssignedTo: assignedCallHandler,
         AdviceNotes: faker.lorem.words(),
         CallbackRequired: callbackRequired,
-        CurrentSupport: faker.random.word(), // no idea what this is!
+        CurrentSupport: faker.random.word(),
         CurrentSupportFeedback: faker.lorem.words(5),
         DateTimeRecorded: faker.date.recent(40),
-        GettingInTouchReason: faker.lorem.words(3), // no idea what the values here should be like
-        HelpNeeded: randexp(/Contact Tracing|Shielding|Welfare|Help Request/), //is this correct?
+        GettingInTouchReason: faker.lorem.words(3),
+        HelpNeeded: randexp(/Contact Tracing|Shielding|Welfare|Help Request/),
+        HelpWithAccessingSupermarketFood: randomNullableBool(),
         HelpWithAccessingFood: randomNullableBool(),
         HelpWithAccessingInternet: randomNullableBool(),
         HelpWithAccessingMedicine: randomNullableBool(),
@@ -126,19 +124,21 @@ function createHelpRequest(autoincrId, ResidentId, callHandlersList) {
         OnBehalfLastName: onBehalfLastName,
         OnBehalfEmailAddress: onBehalfEmailAddress,
         OnBehalfContactNumber: onBehalfContactNumber,
-        RecordStatus: Math.random() > 0.2 ? 'MASTER' : 'DUPLICATE', // Do we really have this for Resident & Help Request?
+        //RecordStatus: Math.random() > 0.2 ? 'MASTER' : 'DUPLICATE', // Not in the endpoint
         RelationshipWithResident: relationshipWithResident,
         UrgentEssentials: Math.random() < 0.2 ? faker.lorem.words(5) : '',
         UrgentEssentialsAnythingElse: Math.random() < 0.2 ? faker.lorem.words(5) : '',
         WhenIsMedicinesDelivered: Math.random() < 0.2 ? faker.date.weekday() : '',
-        RescheduledAt: callbackRequired ? randexp(/((0\d)|(1\d)|(2[0-3])):[0-5]\d/) : '',
-        RequestedDate: faker.date.soon(7),
+        //RescheduledAt: callbackRequired ? randexp(/((0\d)|(1\d)|(2[0-3])):[0-5]\d/) : '', // Not in the endpoint
+        //RequestedDate: faker.date.soon(7) // Not in the endpoint Isn't this a DateTime recorded?
+        NhsCtasId: randexp(/[^\W_]{8}/),
+        CaseNotes: nItems(3, faker.lorem.words).join(' | ') // well the rule might be different, but we can edit this later
     };
 }
 
 function createCallHandler() {
-    let letters = ["A", "B", "C", "D"];
-    return `Person ` + letters[Math.ceil(Math.random()*4)-1];
+    let letters = ['A', 'B', 'C', 'D'];
+    return `Person ` + letters[Math.ceil(Math.random() * 4) - 1];
 }
 
 function dataGenerator(residnts = 30, hreqsPerRes = 5, cnotesPerHR = 2, callHandlerQ = 15) {
@@ -156,7 +156,9 @@ function dataGenerator(residnts = 30, hreqsPerRes = 5, cnotesPerHR = 2, callHand
         residents.push(createResident(r));
         for (let hr = 1; hr <= hreqsPerRes; hr++) {
             let help_request_id = hr + (r - 1) * hreqsPerRes;
-            let help_request = createHelpRequest(help_request_id, r, callHandlers);
+            // Assigned call handler
+            let assignedCallHandler = randomArrayItem(callHandlers);
+            let help_request = createHelpRequest(help_request_id, r, assignedCallHandler);
             helpRequests.push(help_request);
             for (let cn = 1; cn <= cnotesPerHR; cn++) {
                 let case_note_id =
@@ -189,4 +191,4 @@ function dataGenerator(residnts = 30, hreqsPerRes = 5, cnotesPerHR = 2, callHand
     };
 }
 
-module.exports = { dataGenerator };
+module.exports = { dataGenerator, createHelpRequest, createCallHandler };
