@@ -29,7 +29,7 @@ export default function addSupportPage({residentId}) {
 		await retreiveResidentAndUser()
 	}, []);
 
-	const saveFunction = async function(helpNeeded, callDirection, callOutcomeValues, helpRequestObject) {
+	const saveFunction = async function(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade) {
 		let callRequestObject = {
 			callType: helpNeeded,
 			callDirection: callDirection,
@@ -38,15 +38,17 @@ export default function addSupportPage({residentId}) {
 			callHandler: user.name
 		}
 
-		try{
-			let helpRequestGateway = new HelpRequestGateway()
-			let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  helpRequestObject);
+		try {
+			let helpRequestGateway = new HelpRequestGateway();
+			let helpRequestId = await helpRequestGateway.postHelpRequest(residentId, helpRequestObject);
 
-			let helpRequestCallGateway = new HelpRequestCallGateway()
-			let helpRequestCallId  = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, callRequestObject)
+			if(callMade) {
+				let helpRequestCallGateway = new HelpRequestCallGateway()
+				let helpRequestCallId = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, callRequestObject)
+			}
 
 			router.push(`/helpcase-profile/${residentId}`)
-		} catch(err){
+		} catch (err) {
 			console.log("Add support error", err)
 		}
 	}
