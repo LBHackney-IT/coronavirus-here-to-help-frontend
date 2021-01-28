@@ -54,6 +54,7 @@ export default function KeyInformation({ resident }) {
             <div className={styles['key-information-box']}>
                 <h3 className="govuk-heading-s">Key information</h3>
                 <div hidden={hidden}>
+                    {resident.dateOfBirth && (<p>Date of birth: {resident.dateOfBirth}</p>)}
                     {resident.nhsNumber && (<p>NHS Number: {resident.nhsNumber}</p>)}
                     <br />
                     <div>
