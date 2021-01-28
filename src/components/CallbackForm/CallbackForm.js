@@ -123,27 +123,14 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
             helpNeeded: helpNeeded
         }
 
-        if(callMade==true){
-            if(followUpRequired==null || !helpNeeded|| !callDirection || callOutcomeValues.length < 1 ){
-                setErrorsExist(true)
-            }else {
-                saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject);
-            }
+        if(callMade==true&&(followUpRequired==null || !helpNeeded|| !callDirection || callOutcomeValues.length < 1 )){
+            setErrorsExist(true)
         }
-
-        if(callMade == false){
-            if(followUpRequired == null || !helpNeeded){
-                setErrorsExist(true)
-            }else {
-                try{
-                    let helpRequestGateway = new HelpRequestGateway()
-                    let helpRequestId = await helpRequestGateway.postHelpRequest(residentId,  helpRequestObject);
-
-                    router.push(`/helpcase-profile/${residentId}`)
-                } catch(err){
-                    console.log("Add support error", err)
-                }
-            }
+        else if(callMade == false&&(followUpRequired == null || !helpNeeded)) {
+            setErrorsExist(true)
+        }
+        else {
+            saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade);
         }
 
         if(callMade == null) {
