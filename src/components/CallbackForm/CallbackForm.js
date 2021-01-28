@@ -129,11 +129,11 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
         else if(callMade == false&&(followUpRequired == null || !helpNeeded)) {
             setErrorsExist(true)
         }
-        else {
+        else if(callMade != null) {
             saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade);
         }
 
-        if(callMade == null) {
+        else {
             setErrorsExist(true)
         }
     }
