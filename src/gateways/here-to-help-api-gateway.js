@@ -1,12 +1,13 @@
 import axios from 'axios';
 
 export class HereToHelpApiGateway {
-    async request(pathSegments, method, body) {
+    async request(pathSegments, method, body, queryParams) {
         try {
             const { status, data } = await axios.request({
                 method,
                 baseURL: process.env.HERE_TO_HELP_API_BASE_URL,
                 url: `/${pathSegments.join('/')}`,
+                params: queryParams,
                 data: body,
                 headers: {
                     'x-api-key': process.env.HERE_TO_HELP_API_KEY,
