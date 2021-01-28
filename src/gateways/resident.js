@@ -18,7 +18,7 @@ const ToResident = (response) => {
         nameAddressPharmacist: response.NameAddressPharmacist,
         nhsNumber: response.NhsNumber,
         numberOfChildrenUnder18: response.NumberOfChildrenUnder18,
-        postCode: response.PostCode,
+        postCode: response.Postcode,
         recordStatus: response.RecordStatus,
         uprn: response.Uprn,
         ward: response.Ward,
