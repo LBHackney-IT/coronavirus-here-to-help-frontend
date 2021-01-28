@@ -71,9 +71,18 @@ const ToPostHelpRequestBody = (hr) => {
 };
 
 const ToPatchHelpRequestObject = (hr) => {
-    return JSON.stringify({
+    let object = {
+        ResidentId: hr.residentId,
+        CallbackRequired: hr.callbackRequired,
+        InitialCallbackCompleted: hr.initialCallbackCompleted,
+        DateTimeRecorded: hr.dateTimeRecorded,
+        HelpNeeded: (hr.helpNeeded == CEV)? SHIELDING : hr.helpNeeded,
         AssignedTo: hr.assignedTo
-    })
+    };
+
+    Object.keys(object).forEach((key) => (object[key] == null) && delete object[key]);
+
+    return JSON.stringify(object)
 }
 
 export class HelpRequestGateway extends DefaultGateway {
