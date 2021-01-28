@@ -27,3 +27,44 @@ Cypress.Commands.add('login', (userData) => {
     cy.wrap(defaultUser).as('defaultUser');
     cy.wrap(userData).as('user');
 });
+
+Cypress.Commands.add('setIntercepts', () => {
+    cy.intercept('GET', '/api/proxy/v3/help-requests/callbacks', {
+        fixture: 'callbacks'
+    });
+
+    cy.intercept('GET', `/api/proxy/v4/residents/3/help-requests/12`, {
+        fixture: 'residents/3/helpRequests/12'
+    });
+    cy.intercept('GET', `/api/proxy/v4/residents/3/help-requests`, {
+        fixture: 'residents/3/helpRequests'
+    });
+
+    cy.intercept('PATCH', `/api/proxy/v3/help-requests/12`, {
+        statusCode: 201
+    });
+
+    cy.intercept(
+        { pathname: '/api/proxy/v4/residents', query: { FirstName: 'Cydney' } },
+        { fixture: 'searchResult' }
+    );
+    cy.intercept(
+        { pathname: '/api/proxy/v4/residents', query: { LastName: 'Nader' } },
+        { fixture: 'searchResult' }
+    );
+    cy.intercept(
+        { pathname: '/api/proxy/v4/residents', query: { Postcode: 'EW6' } },
+        { fixture: 'searchResult' }
+    );
+
+    cy.intercept({ pathname: '/api/proxy/v4/residents' }, { statusCode: 200, body: [] });
+
+    cy.intercept('POST', '/api/proxy/v4/residents/3/help-requests', {
+        statusCode: 201,
+        body: { Id: 1 }
+    });
+
+    cy.intercept('GET', `/api/proxy/v4/residents/3`, {
+        fixture: 'residents/3/resident'
+    });
+});

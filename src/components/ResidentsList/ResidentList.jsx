@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function ResidentList({ residents }) {
     return (
         <div>
-            <table className="govuk-table  lbh-table" data-cy="residents-search-table">
+            <table className="govuk-table  lbh-table" data-testid="residents-search-table">
                 <thead className="govuk-table__head">
                     <tr className="govuk-table__row">
                         <th scope="col" className="govuk-table__header">
