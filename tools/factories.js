@@ -19,11 +19,14 @@ export class HelpRequestCallV4APIEntity {
         return Object.freeze({
             Id,
             HelpRequestId: arg.HelpRequestId || randomInt(),
-            CallType: arg.CallType || randexp(/Contact Tracing|Shielding|Welfare|Help Request/),
-            CallDirection: arg.CallDirection || randexp(/outbound|inbound/),
-            CallOutcome: arg.CallOutcome || randexp(callOutcomeExp),
+            CallType:
+                arg.CallType ||
+                nullOrValue(randexp(/Contact Tracing|Shielding|Welfare|Help Request/)),
+            CallDirection: arg.CallDirection || nullOrValue(randexp(/outbound|inbound/)),
+            CallOutcome: arg.CallOutcome || nullOrValue(randexp(callOutcomeExp)),
             CallDateTime: arg.CallDateTime || faker.date.recent(40),
-            CallHandler: arg.CallHandler || `${faker.name.firstName()} ${faker.name.lastName()}`
+            CallHandler:
+                arg.CallHandler || nullOrValue(`${faker.name.firstName()} ${faker.name.lastName()}`)
         });
     }
 }
@@ -120,16 +123,16 @@ export class ResidentV4APIEntity {
                 arg.AddressThirdLine || Math.random() > 0.1 ? null : randexp(/Hackney(, London)?/),
             Postcode: arg.Postcode || randexp(/[A-Z]{1,2}\d ?\d[A-Z]{2}/),
             Uprn: arg.Uprn || randexp(/1000\d{7}/),
-            Ward: arg.Ward || faker.random.word(),
+            Ward: arg.Ward || nullOrValue(faker.random.word()),
             IsPharmacistAbleToDeliver: arg.IsPharmacistAbleToDeliver || randomNullableBool(),
             NameAddressPharmacist:
                 arg.NameAddressPharmacist ||
-                `${faker.company.companyName()}, ${faker.address.streetAddress()}`,
-            GpSurgeryDetails: arg.GpSurgeryDetails || faker.random.number().toString(),
-            NumberOfChildrenUnder18: arg.NumberOfChildrenUnder18 || randexp(/[0-5]/),
+                nullOrValue(`${faker.company.companyName()}, ${faker.address.streetAddress()}`),
+            GpSurgeryDetails: arg.GpSurgeryDetails || nullOrValue(faker.random.number().toString()),
+            NumberOfChildrenUnder18: arg.NumberOfChildrenUnder18 || nullOrValue(randexp(/[0-5]/)),
             ConsentToShare: arg.ConsentToShare || randomNullableBool(),
             RecordStatus: arg.RecordStatus || Math.random() > 0.2 ? 'MASTER' : 'DUPLICATE',
-            NhsNumber: arg.NhsNumber || randexp(/\d{10}/)
+            NhsNumber: arg.NhsNumber || nullOrValue(randexp(/\d{10}/))
         });
     }
 }
