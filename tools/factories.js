@@ -84,12 +84,7 @@ class HelpRequestV4APIEntity {
                 nullOrValue(randexp(/Contact Tracing|Shielding|Welfare|Help Request/)),
             NhsCtasId: arg.NhsCtasId || nullOrValue(randexp(/[^\W_]{8}/)),
             AssignedTo:
-                arg.AssignedTo || nullOrValue(`${faker.name.firstName()} ${faker.name.lastName()}`),
-            HelpRequestCalls:
-                arg.HelpRequestCalls ||
-                nItems(3, () => {
-                    return new HelpRequestCallV4APIEntity().sample();
-                })
+                arg.AssignedTo || nullOrValue(`${faker.name.firstName()} ${faker.name.lastName()}`)
         });
     }
 }
