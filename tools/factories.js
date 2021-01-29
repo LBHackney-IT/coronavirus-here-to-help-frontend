@@ -1,6 +1,32 @@
+const faker = require('faker');
+faker.locale = 'en';
+const randexp = require('randexp').randexp;
 const randomInt = (maxN = 10) => Math.floor(Math.random() * maxN + 1);
 const randomNullableBool = () => (Math.random() > 0.5 ? true : false);
 const nullOrValue = (val) => (Math.random() > 0.5 ? null : val);
+function nItems(quantity, f, ...args) {
+    const collection = [];
+    for (let q = quantity; q > 0; q--) collection.push(f(...args));
+    return collection;
+}
+
+export class HelpRequestCallV4APIEntity {
+    sample(arg = {}) {
+        const Id = arg.Id || randomInt(100);
+        const callOutcomeExp = faker.random.boolean()
+            ? /((callback_complete|call_rescheduled|no_answer_machine)(,follow_up_requested)?)|follow_up_requested/
+            : /(refused_to_engage|wrong_number)(callback_complete)?/;
+        return Object.freeze({
+            Id,
+            HelpRequestId: arg.HelpRequestId || randomInt(),
+            CallType: arg.CallType || randexp(/Contact Tracing|Shielding|Welfare|Help Request/),
+            CallDirection: arg.CallDirection || randexp(/outbound|inbound/),
+            CallOutcome: arg.CallOutcome || randexp(callOutcomeExp),
+            CallDateTime: arg.CallDateTime || faker.date.recent(40),
+            CallHandler: arg.CallHandler || `${faker.name.firstName()} ${faker.name.lastName()}`
+        });
+    }
+}
 
 export class HelpRequestV4APIEntity {
     sample(arg = {}) {
@@ -63,18 +89,11 @@ export class HelpRequestV4APIEntity {
             NhsCtasId: arg.NhsCtasId || nullOrValue(randexp(/[^\W_]{8}/)),
             AssignedTo:
                 arg.AssignedTo || nullOrValue(`${faker.name.firstName()} ${faker.name.lastName()}`),
-            HelpRequestCalls: [
-                {
-                    Id: 0,
-                    HelpRequestId: 0,
-                    CallType: 'string',
-                    CallDirection: 'string',
-                    CallOutcome: 'string',
-                    CallDateTime: '2021-01-28T14:02:55.772Z',
-                    CallHandler: 'string'
-                }
-            ]
+            HelpRequestCalls:
+                arg.HelpRequestCalls ||
+                nItems(3, () => {
+                    return new HelpRequestCallV4APIEntity().sample();
+                })
         });
     }
 }
-
