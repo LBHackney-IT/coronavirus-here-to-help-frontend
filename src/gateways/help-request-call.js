@@ -5,7 +5,7 @@ const ToPostHelpRequestCall = (hr) => {
   return JSON.stringify({
       CallType: (hr.callType == CEV) ? SHIELDING: hr.callType,
 			CallDirection: hr.callDirection,
-			CallOutcome: hr.callOutcomeValues,
+			CallOutcome: hr.callOutcome,
 			CallDateTime: hr.callDateTime,
 			CallHandler: hr.callHandler
   })
