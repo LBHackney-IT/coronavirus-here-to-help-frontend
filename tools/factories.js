@@ -1,9 +1,9 @@
-import { randomInt, randomNullableBool, nullOrValue, nItems } from './testUtility';
+const { randomInt, randomNullableBool, nullOrValue, nItems } = require('./testUtility');
 const faker = require('faker');
 faker.locale = 'en';
 const randexp = require('randexp').randexp;
 
-export class HelpRequestCallV4APIEntity {
+class HelpRequestCallV4APIEntity {
     sample(arg = {}) {
         const Id = arg.Id || randomInt(100);
         const callOutcomeExp = faker.random.boolean()
@@ -24,7 +24,7 @@ export class HelpRequestCallV4APIEntity {
     }
 }
 
-export class HelpRequestV4APIEntity {
+class HelpRequestV4APIEntity {
     sample(arg = {}) {
         const Id = arg.Id || randomInt();
         const onBehalfFirstName = faker.name.firstName();
@@ -94,7 +94,7 @@ export class HelpRequestV4APIEntity {
     }
 }
 
-export class ResidentV4APIEntity {
+class ResidentV4APIEntity {
     sample(arg = {}) {
         const firstname = arg.FirstName || faker.name.firstName();
         const lastname = arg.LastName || faker.name.lastName();
@@ -129,3 +129,9 @@ export class ResidentV4APIEntity {
         });
     }
 }
+
+module.exports = {
+    ResidentV4APIEntity,
+    HelpRequestV4APIEntity,
+    HelpRequestCallV4APIEntity
+};
