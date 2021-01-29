@@ -1,7 +1,7 @@
 import moxios from 'moxios';
 import { ResidentGateway } from './resident.js';
 
-describe('Case notes gateway', () => {
+describe('Resident gateway', () => {
     const resGateway = new ResidentGateway();
 
     beforeEach(() => {
@@ -12,7 +12,7 @@ describe('Case notes gateway', () => {
         moxios.uninstall();
     });
 
-    it('200 Success "/residents/:residentId"', async () => {
+    it('gets the resident by id and correctly maps the response', async () => {
         // arrange
         const randomId = Math.floor(Math.random() * 20);
         const mockAxiosResponse = 

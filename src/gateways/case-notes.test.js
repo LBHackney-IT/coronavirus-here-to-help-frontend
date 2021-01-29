@@ -12,7 +12,7 @@ describe('Case notes gateway', () => {
         moxios.uninstall();
     });
 
-    it('200 Success "/residents/:residendId/caseNotes"', async () => {
+    it('gets the casenotes for respective resident id and correctly maps the response', async () => {
         // arrange
         const randomId = Math.floor(Math.random() * 20);
         const mockAxiosResponse = [
