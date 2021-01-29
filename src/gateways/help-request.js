@@ -55,7 +55,8 @@ const ToCalls = (calls) => {
             callType: call.CallType,
             callDirection: call.CallDirection,
             callOutcome: call.CallOutcome,
-            callDateTime: call.CallDateTime
+            callDateTime: call.CallDateTime,
+            callHandler: call.CallHandler
         };
     });
 };
