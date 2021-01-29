@@ -97,3 +97,39 @@ export class HelpRequestV4APIEntity {
         });
     }
 }
+
+export class ResidentV4APIEntity {
+    sample(arg = {}) {
+        const firstname = arg.FirstName || faker.name.firstName();
+        const lastname = arg.LastName || faker.name.lastName();
+        const dob = faker.date.past(70);
+        const Id = arg.Id || randomInt();
+        return Object.freeze({
+            Id,
+            FirstName: firstname,
+            LastName: lastname,
+            DobDay: arg.DobDay || dob.getDate().toString(),
+            DobMonth: arg.DobMonth || (dob.getMonth() + 1).toString(),
+            DobYear: arg.DobYear || dob.getFullYear().toString(),
+            ContactTelephoneNumber: arg.ContactTelephoneNumber || randexp(/020\d{8}/),
+            ContactMobileNumber: arg.ContactMobileNumber || randexp(/07\d{9}/),
+            EmailAddress: arg.EmailAddress || faker.internet.email(firstname, lastname),
+            AddressFirstLine: arg.AddressFirstLine || `Flat ${randexp(/[1-9][A-F]?/)}`,
+            AddressSecondLine: arg.AddressSecondLine || faker.address.streetAddress(),
+            AddressThirdLine:
+                arg.AddressThirdLine || Math.random() > 0.1 ? null : randexp(/Hackney(, London)?/),
+            Postcode: arg.Postcode || randexp(/[A-Z]{1,2}\d ?\d[A-Z]{2}/),
+            Uprn: arg.Uprn || randexp(/1000\d{7}/),
+            Ward: arg.Ward || faker.random.word(),
+            IsPharmacistAbleToDeliver: arg.IsPharmacistAbleToDeliver || randomNullableBool(),
+            NameAddressPharmacist:
+                arg.NameAddressPharmacist ||
+                `${faker.company.companyName()}, ${faker.address.streetAddress()}`,
+            GpSurgeryDetails: arg.GpSurgeryDetails || faker.random.number().toString(),
+            NumberOfChildrenUnder18: arg.NumberOfChildrenUnder18 || randexp(/[0-5]/),
+            ConsentToShare: arg.ConsentToShare || randomNullableBool(),
+            RecordStatus: arg.RecordStatus || Math.random() > 0.2 ? 'MASTER' : 'DUPLICATE',
+            NhsNumber: arg.NhsNumber || randexp(/\d{10}/)
+        });
+    }
+}
