@@ -1,18 +1,30 @@
 import { DefaultGateway } from '../gateways/default-gateway';
 import {CEV, SHIELDING, callOutcomes} from '../helpers/constants';
-const TolatestCallOutcome = (helpRequestCalls, helpNeeded) => {
+const TolatestCallOutcome = (helpRequestCalls, callbackRequired, initialCallbackCompleted) => {
+    let latestCallOutcomes
     let latestCallOutcomesArray = []
+    if (callbackRequired == false && initialCallbackCompleted == true){
+        return ""
+    }
     if(helpRequestCalls.length > 0){
-        let latestCallOutcomes = helpRequestCalls.pop()?.CallOutcome
+        latestCallOutcomes = helpRequestCalls.pop()?.CallOutcome
         if(latestCallOutcomes?.includes(",")){
             latestCallOutcomes.split(",").forEach(outcome => {
-                latestCallOutcomesArray.push(" " + callOutcomes[outcome])
+                latestCallOutcomesArray.push(callOutcomes[outcome])
             })
-            return latestCallOutcomesArray.join(",")
+            latestCallOutcomes = latestCallOutcomesArray.join(",")
         }else{
-            return callOutcomes[latestCallOutcomes]
+            latestCallOutcomes = callOutcomes[latestCallOutcomes]
         }
+        if(latestCallOutcomes?.toLowerCase().includes('call rescheduled')){
+            return "Call rescheduled"
+        } else{
+            return "Follow-up required"
+        }
+    }else {
+        return "Call required"
     }
+
 }
 const ToHelpRequestDomain = (hr) => {
     return {
@@ -55,7 +67,7 @@ const ToHelpRequestDomain = (hr) => {
         rescheduledAt: hr.RescheduledAt,
         requestedDate: hr.RequestedDate,
         helpRequestCalls: ToCalls(hr.HelpRequestCalls),
-        latestCallOutcome:TolatestCallOutcome(hr.HelpRequestCalls, hr.HelpNeeded)
+        latestCallOutcome:TolatestCallOutcome(hr.HelpRequestCalls, hr.CallbackRequired, hr.InitialCallbackCompleted)
     };
 };
 

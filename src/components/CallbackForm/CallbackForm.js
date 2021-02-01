@@ -30,7 +30,7 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
     const spokeToResidentCallOutcomes = [
         {name: "Callback comeplete" ,value: "callback_complete"},
         {name: "Refused to engage" ,value: "refused_to_engage"},
-        {name: "Call rescheduled" ,value: "callback_complete"},
+        {name: "Call rescheduled" ,value: "call_rescheduled"},
 
     ];
     const noAnswerCallOutcomes = [
