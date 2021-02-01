@@ -16,7 +16,7 @@ module.exports = (on, config) => {
     // copy any needed variables from process.env to config.env
     config.env.HACKNEY_JWT_SECRET = 'sekret';
     config.env.NEXT_PUBLIC_HACKNEY_COOKIE_NAME = 'hackneyToken';
-    config.env.NEXT_PUBLIC_CALLHANLDERS_NAME = 'Person A,Person B,Person C,Person D';
+    config.env.NEXT_PUBLIC_CALL_HANDLERS = 'Person A,Person B,Person C,Person D';
 
     // do not forget to return the changed config object!
     return config;
