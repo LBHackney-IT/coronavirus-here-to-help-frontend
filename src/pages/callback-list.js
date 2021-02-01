@@ -33,6 +33,7 @@ function CallbacksListPage({ callTypes }) {
     };
 
     const handleCallTypeChange = (event) => {
+        console.log(callTypes)
         setDropdowns({ ...dropdowns, callType: event });
     };
 

@@ -36,7 +36,7 @@ describe('Callbacks list page filters callbacks correctly', () => {
     it('Upon selecting Help Case Type dropdown value, callbacks get filtered by that value', () => {
         cy.visit('/callback-list');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '6');
-        cy.get('[data-testid=help-type-dropdown]').select('Welfare');
+        cy.get('[data-testid=help-type-dropdown]').select('Welfare Call');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
         cy.get('[data-testid=help-type-dropdown]').select('Help Request');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '3');

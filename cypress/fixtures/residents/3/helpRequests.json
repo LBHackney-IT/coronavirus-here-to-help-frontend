@@ -106,7 +106,7 @@
             {
                 "Id": 23,
                 "HelpRequestId": 12,
-                "CallType": "Welfare",
+                "CallType": "Welfare Call",
                 "CallDirection": "outbound",
                 "CallOutcome": "wrong_number",
                 "CallHandler": "Bart Simpson",
@@ -159,7 +159,7 @@
             {
                 "Id": 25,
                 "HelpRequestId": 13,
-                "CallType": "Welfare",
+                "CallType": "Welfare Call",
                 "CallDirection": "inbound",
                 "CallOutcome": "wrong_number,callback_complete",
                 "CallHandler": "Homer Simpson",
@@ -168,7 +168,7 @@
             {
                 "Id": 26,
                 "HelpRequestId": 13,
-                "CallType": "Welfare",
+                "CallType": "Welfare Call",
                 "CallDirection": "outbound",
                 "CallOutcome": "wrong_number",
                 "CallHandler": "Bart Simpson",
@@ -186,7 +186,7 @@
         "CurrentSupportFeedback": "laboriosam omnis eius velit et",
         "DateTimeRecorded": "2021-01-07T04:45:58.379Z",
         "GettingInTouchReason": "est dolor dolores",
-        "HelpNeeded": "Welfare",
+        "HelpNeeded": "Welfare Call",
         "HelpWithAccessingFood": false,
         "HelpWithAccessingInternet": null,
         "HelpWithAccessingMedicine": false,
