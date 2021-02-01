@@ -9,6 +9,7 @@ describe;
 context('When you view a helpcase profile', () => {
     it('it allows you to naviagte to the manage request page', () => {
         cy.url().should('match', /\/helpcase-profile\/\d+$/);
+        cy.wait(1000)
         cy.get('[data-testid=support-requested-table-view_link-0]')
             .contains('View')
             .click({ force: true });

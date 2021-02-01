@@ -9,12 +9,12 @@ export default function SupportTable({helpRequests}) {
 			<div className="govuk-tabs" data-module="govuk-tabs">
 				<ul className="govuk-tabs__list">
 					<li className="govuk-tabs__list-item govuk-tabs__list-item--selected">
-						<a className="govuk-tabs__tab" href="#past-day">
+						<a className="govuk-tabs__tab" data-testid='support-requested-tab' href="#past-day">
 							Support Requested
 						</a>
 					</li>
 					<li className="govuk-tabs__list-item">
-						<a className="govuk-tabs__tab" href="#past-week">
+						<a className="govuk-tabs__tab" data-testid='support-received-tab' href="#past-week">
 							Support Received
 						</a>
 					</li>
@@ -30,8 +30,9 @@ export default function SupportTable({helpRequests}) {
 							</tr>
 						</thead>
 						<tbody className="govuk-table__body">
-							{helpRequests.map((hr) => {
+							{helpRequests.map((hr, index) => {
 								let latestCallOutcome 
+								let callAttempts = 0
 								if(hr.callbackRequired == true){
 									if(hr.helpRequestCalls.length > 0){
 										let latestCallOutcomeArray = []
@@ -54,11 +55,11 @@ export default function SupportTable({helpRequests}) {
 									else{
 										latestCallOutcome = 'Followup required'
 									}
-									return (	<tr className="govuk-table__row">
-									<td className="govuk-table__cell">{hr.helpNeeded}</td>
+									return (	<tr className="govuk-table__row" data-testid="support-requested-table_row">
+									<td className="govuk-table__cell" data-testid="support-requested-table-help-needed">{hr.helpNeeded}</td>
 									<td className="govuk-table__cell">{latestCallOutcome}</td>
-									<td className="govuk-table__cell">{hr.calls}</td>
-									<td className="govuk-table__cell"><Link
+									<td className="govuk-table__cell" data-testid="support-requested-table-calls-count">{hr.helpRequestCalls?.length}</td>
+									<td className="govuk-table__cell" data-testid={`support-requested-table-view_link-${index}`}><Link
 												href="/helpcase-profile/[resident_id]/manage-request/[help_request]"
 												as={`/helpcase-profile/${hr.residentId}/manage-request/${hr.id}`}>View</Link></td>
 								</tr>)
@@ -77,7 +78,7 @@ export default function SupportTable({helpRequests}) {
 							</tr>
 						</thead>
 						<tbody className="govuk-table__body">
-							{helpRequests.map((hr) => {
+							{helpRequests.map((hr, index) => {
 								hr.totalCompletedCalls = 0
 								if(hr.callbackRequired == false){
 									if(hr.helpRequestCalls){
@@ -87,9 +88,9 @@ export default function SupportTable({helpRequests}) {
 											}
 										});
 									}
-									return (	<tr className="govuk-table__row">
-									<td className="govuk-table__cell">{hr.helpNeeded}</td>
-									<td className="govuk-table__cell">{hr.totalCompletedCalls}</td>
+									return (<tr className="govuk-table__row" data-testid="support-received-table_row">
+									<td className="govuk-table__cell" data-testid="support-received-table-help-needed">{hr.helpNeeded}</td>
+									<td className="govuk-table__cell" data-testid="support-received-table-calls-count" >{hr.totalCompletedCalls}</td>
 									<td className="govuk-table__cell"><Link
 												href="/helpcase-profile/[resident_id]/manage-request/[help_request]"
 												as={`/helpcase-profile/${hr.residentId}/manage-request/${hr.id}`}>View</Link></td>
