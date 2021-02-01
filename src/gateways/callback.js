@@ -21,7 +21,7 @@ const ToCallbackList = (callbacks) => {
             unsuccessfulCallAttempts: unsuccessfulCalls(callback.HelpRequestCalls),
             followUpRequired: callback.CallbackRequired,
             assignedTo: callback.AssignedTo,
-            rescheduledAt: callback.RescheduledAt
+            rescheduledAt: callback.RescheduledAt,
         };
     });
 };

@@ -1,6 +1,31 @@
 import { DefaultGateway } from '../gateways/default-gateway';
-import {CEV, SHIELDING} from '../helpers/constants';
+import {CEV, SHIELDING, callOutcomes} from '../helpers/constants';
+const TolatestCallOutcome = (helpRequestCalls, callbackRequired, initialCallbackCompleted) => {
+    let latestCallOutcomes
+    let latestCallOutcomesArray = []
+    if (callbackRequired == false && initialCallbackCompleted == true){
+        return ""
+    }
+    if(helpRequestCalls.length > 0){
+        latestCallOutcomes = helpRequestCalls.pop()?.CallOutcome
+        if(latestCallOutcomes?.includes(",")){
+            latestCallOutcomes.split(",").forEach(outcome => {
+                latestCallOutcomesArray.push(callOutcomes[outcome])
+            })
+            latestCallOutcomes = latestCallOutcomesArray.join(",")
+        }else{
+            latestCallOutcomes = callOutcomes[latestCallOutcomes]
+        }
+        if(latestCallOutcomes?.toLowerCase().includes('call rescheduled')){
+            return "Call rescheduled"
+        } else{
+            return "Follow-up required"
+        }
+    }else {
+        return "Call required"
+    }
 
+}
 const ToHelpRequestDomain = (hr) => {
     return {
         id: hr.Id,
@@ -42,6 +67,7 @@ const ToHelpRequestDomain = (hr) => {
         rescheduledAt: hr.RescheduledAt,
         requestedDate: hr.RequestedDate,
         helpRequestCalls: ToCalls(hr.HelpRequestCalls),
+        latestCallOutcome:TolatestCallOutcome(hr.HelpRequestCalls, hr.CallbackRequired, hr.InitialCallbackCompleted)
     };
 };
 

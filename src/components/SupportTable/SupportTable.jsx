@@ -1,49 +1,86 @@
+import { isLocalURL } from "next/dist/next-server/lib/router/router";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { callOutcomes, CEV } from "../../helpers/constants";
 
 export default function SupportTable({helpRequests}) {
+
 	return (
-		<div className="govuk-tabs" data-module="govuk-tabs">
-			<h2 className="govuk-tabs__title govuk-heading-l">Contents</h2>
-			<ul className="govuk-tabs__list">
-				<li className="govuk-tabs__list-item govuk-tabs__list-item--selected">
-					<a className="govuk-tabs__tab" href="#past-day">
-						Support Requested
-					</a>
-				</li>
-				<li className="govuk-tabs__list-item govuk-tabs__list-item--selected">
-					<a className="govuk-tabs__tab" href="#past-week">
-						Support Received
-					</a>
-				</li>
-			</ul>
-			<div className="govuk-tabs__panel" id="past-day">
-				<table className="govuk-table">
-					<thead className="govuk-table_header">
-						<tr className="govuk-table__row">
-							<th className="govuk-table__header">Type</th>
-							<th className="govuk-table__header">Action required</th>
-							<th className="govuk-table__header">Call Attempts</th>
-							<th className="govuk-table__header"></th>
-						</tr>
-					</thead>
-					<tbody className="govuk-table__body">
-						{helpRequests.map((helpRequest, index) => {
-						return	<tr className="govuk-table__row" key={`help-request-${index}`} data-testid="support-requested-table_row">
-							<td scope="row" className="govuk-table__cell" data-testid="support-requested-table-help-needed">
-								{helpRequest.helpNeeded}
-							</td>
-							<td className="govuk-table__cell">{helpRequest.callbackRequired && <>Callback</>}</td>
-							<td className="govuk-table__cell" data-testid="support-requested-table-calls-count">{helpRequest.helpRequestCalls?.length}</td>
-							<td className="govuk-table__cell govuk-table__cell--numeric"  data-testid={`support-requested-table-view_link-${index}`}>
-								<Link
-									href="/helpcase-profile/[resident_id]/manage-request/[help_request]"
-									as={`/helpcase-profile/${helpRequest.residentId}/manage-request/${helpRequest.id}`}>View</Link>
-							</td>
-						</tr>})}
-					</tbody>
-				</table>
+		<>
+			<div className="govuk-tabs" data-module="govuk-tabs">
+				<ul className="govuk-tabs__list">
+					<li className="govuk-tabs__list-item govuk-tabs__list-item--selected">
+						<a className="govuk-tabs__tab" data-testid='support-requested-tab' href="#past-day">
+							Support Requested
+						</a>
+					</li>
+					<li className="govuk-tabs__list-item">
+						<a className="govuk-tabs__tab" data-testid='support-received-tab' href="#past-week">
+							Support Received
+						</a>
+					</li>
+				</ul>
+				<div className="govuk-tabs__panel" id="past-day">
+					<table className="govuk-table">
+						<thead className="govuk-table__head">
+							<tr className="govuk-table__row">
+								<th scope="col" className="govuk-table__header">Type</th>
+								<th scope="col" className="govuk-table__header">Action required</th>
+								<th scope="col" className="govuk-table__header">Call attempts</th>
+								<th scope="col" className="govuk-table__header"></th>
+							</tr>
+						</thead>
+						<tbody className="govuk-table__body">
+							{helpRequests.map((hr, index) => {
+								if(hr.callbackRequired == true){
+									return (	<tr className="govuk-table__row" data-testid="support-requested-table_row">
+									<td className="govuk-table__cell" data-testid="support-requested-table-help-needed">{hr.helpNeeded}</td>
+									<td className="govuk-table__cell">{hr.latestCallOutcome}</td>
+									<td className="govuk-table__cell" data-testid="support-requested-table-calls-count">{hr.helpRequestCalls?.length}</td>
+									<td className="govuk-table__cell" data-testid={`support-requested-table-view_link-${index}`}><Link
+												href="/helpcase-profile/[resident_id]/manage-request/[help_request]"
+												as={`/helpcase-profile/${hr.residentId}/manage-request/${hr.id}`}>View</Link></td>
+								</tr>)
+								}
+							})} 
+						</tbody>
+					</table>
+				</div>
+				<div className="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-week">
+					<table className="govuk-table">
+						<thead className="govuk-table__head">
+							<tr className="govuk-table__row">
+								<th scope="col" className="govuk-table__header">Type</th>
+								<th scope="col" className="govuk-table__header">Total completed calls</th>
+								<th scope="col" className="govuk-table__header"></th>
+							</tr>
+						</thead>
+						<tbody className="govuk-table__body">
+							{helpRequests.map((hr, index) => {
+								hr.totalCompletedCalls = 0
+								if(hr.callbackRequired == false){
+									if(hr.helpRequestCalls){
+										hr.helpRequestCalls.forEach(call => {
+											if(call.callOutcome && call.callOutcome.toLowerCase().includes('callback_complete')){
+												hr.totalCompletedCalls += 1
+											}
+										});
+									}
+									return (<tr className="govuk-table__row" data-testid="support-received-table_row">
+									<td className="govuk-table__cell" data-testid="support-received-table-help-needed">{hr.helpNeeded}</td>
+									<td className="govuk-table__cell" data-testid="support-received-table-calls-count" >{hr.totalCompletedCalls}</td>
+									<td className="govuk-table__cell"><Link
+												href="/helpcase-profile/[resident_id]/manage-request/[help_request]"
+												as={`/helpcase-profile/${hr.residentId}/manage-request/${hr.id}`}>View</Link></td>
+								</tr>)
+								}
+							})} 
+						</tbody>
+					</table>
+
+				</div>
+
 			</div>
-		</div>
+		</>
+	
 	);
 }

@@ -22,7 +22,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
         const resident = await gateway.getResident(residentId);
         setResident(resident)
         const user = unsafeExtractUser()
-        setUser(user)
+        setUser(user) 
     }
 
     useEffect(async () => {
@@ -64,7 +64,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
                     <a href="#" className="govuk-back-link">Back</a>
                 </Link>
                 <div className="govuk-grid-row">
-                    <div className="govuk-grid-column-one-quarter-from-desktop sticky-magic">
+                    <div className="govuk-grid-column-one-quarter-from-desktop">
                         <KeyInformation resident={resident}/>
                     </div>
                     <div className="govuk-grid-column-three-quarters-from-desktop">
