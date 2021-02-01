@@ -26,6 +26,12 @@ describe('View helpcase profile page', () => {
         cy.get('[data-testid=support-requested-table_row]').should('have.length', 5);
         cy.get('[data-testid=support-requested-table-help-needed]').first().should('contain', "Help Request");
         cy.get('[data-testid=support-requested-table-calls-count]').first().should('contain', "2");
+    });
 
+    it('displays a call history', () => {
+        cy.visit(`http://localhost:3000/helpcase-profile/3`);
+        cy.get('[data-testid=call-history-entry]').should('have.length', 7);
+        cy.get('[data-testid=call-history-entry]').first().should('contain', "2021-01-26 15:12 by Bart Simpson");
+        cy.get('[data-testid=call-history-entry]').first().should('contain', "outbound Welfare: Wrong number");
     });
 });
