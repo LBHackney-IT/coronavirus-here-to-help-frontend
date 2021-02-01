@@ -125,8 +125,22 @@ class ResidentV4APIEntity {
     }
 }
 
+class CaseNote_Speculative_V4APIEntity {
+    sample(arg = {}) {
+        const Id = arg.Id || randomInt();
+        return Object.freeze({
+            Id,
+            CaseNote: arg.CaseNote || faker.lorem.words(3),
+            HelpRequestId: arg.HelpRequestId || randomInt(),
+            ResidentId: arg.ResidentId || randomInt(),
+            CreatedAt: arg.CreatedAt || faker.date.recent(40)
+        });
+    }
+}
+
 module.exports = {
     ResidentV4APIEntity,
     HelpRequestV4APIEntity,
-    HelpRequestCallV4APIEntity
+    HelpRequestCallV4APIEntity,
+    CaseNote_Speculative_V4APIEntity
 };
