@@ -138,9 +138,22 @@ class CaseNote_Speculative_V4APIEntity {
     }
 }
 
+class CaseNote_FrontEnd_RequestBody {
+    sample(arg = {}) {
+        return Object.freeze({
+            //id, // this is not something in the front-end's control
+            caseNote: arg.caseNote || faker.lorem.words(3),
+            helpRequestId: arg.helpRequestId || randomInt(),
+            residentId: arg.residentId || randomInt()
+            //createdAt: arg.CreatedAt || faker.date.recent(0) // I assume this is set on the back end?
+        });
+    }
+}
+
 module.exports = {
     ResidentV4APIEntity,
     HelpRequestV4APIEntity,
     HelpRequestCallV4APIEntity,
-    CaseNote_Speculative_V4APIEntity
+    CaseNote_Speculative_V4APIEntity,
+    CaseNote_FrontEnd_RequestBody
 };
