@@ -34,7 +34,7 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
 
     ];
     const noAnswerCallOutcomes = [
-        {name: "Voicemail left" ,value: "voicemail_left"},
+        {name: "Voicemail left" ,value: "voicemail"},
         {name: "Wrong number" , value: "wrong_number"},
         {name: "No answer machine" ,value: "no_answer_machine"},
     ];
