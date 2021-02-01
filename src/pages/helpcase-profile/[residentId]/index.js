@@ -7,6 +7,7 @@ import { Button } from '../../../components/Form';
 import { useRouter } from 'next/router';
 import { ResidentGateway } from '../../../gateways/resident';
 import { HelpRequestGateway } from '../../../gateways/help-request';
+import CallHistory from '../../../components/CallHistory/CallHistory';
 import { useState, useEffect } from 'react';
 export default function HelpcaseProfile({ residentId }) {
     const [resident, setResident] = useState([]);
@@ -35,6 +36,10 @@ export default function HelpcaseProfile({ residentId }) {
 
     useEffectAsync(getResidentAndHelpRequests, []);
 
+
+    const calls = [].concat
+        .apply([], helpRequests.map(helpRequest => helpRequest.helpRequestCalls))
+        .sort((a,b) => new Date(b.callDateTime) - new Date(a.callDateTime))
 
     return (
         resident && (
@@ -70,6 +75,7 @@ export default function HelpcaseProfile({ residentId }) {
                             <hr />
 
                             <br />
+                            <CallHistory calls={calls}  />
                             {/* <CaseNotes caseNotes={caseNotes} /> */}
                         </div>
                     </div>

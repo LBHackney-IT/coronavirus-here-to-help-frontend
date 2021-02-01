@@ -318,7 +318,7 @@
                 "HelpRequestId": 65,
                 "CallType": "Help Request",
                 "CallDirection": "inbound",
-                "CallOutcome": "follow_up_requested",
+                "CallOutcome": "callback_complete",
                 "CallDateTime": "2021-01-09T14:31:02.589Z"
             }
         ]
