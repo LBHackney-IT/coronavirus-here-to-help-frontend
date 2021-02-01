@@ -29,7 +29,7 @@ describe('View helpcase profile page', () => {
 
         cy.get('[data-testid=support-received-tab]').click({force: true})
         cy.get('[data-testid=support-received-table_row]').should('have.length', 1);
-        cy.get('[data-testid=support-received-table-help-needed]').first().should('contain', "Welfare");
+        cy.get('[data-testid=support-received-table-help-needed]').first().should('contain', "Welfare Call");
         cy.get('[data-testid=support-received-table-calls-count]').first().should('contain', "1");
     });
 
@@ -37,6 +37,6 @@ describe('View helpcase profile page', () => {
         cy.visit(`http://localhost:3000/helpcase-profile/3`);
         cy.get('[data-testid=call-history-entry]').should('have.length', 9);
         cy.get('[data-testid=call-history-entry]').first().should('contain', "2021-01-26 15:12 by Bart Simpson");
-        cy.get('[data-testid=call-history-entry]').first().should('contain', "outbound Welfare: Wrong number");
+        cy.get('[data-testid=call-history-entry]').first().should('contain', "outbound Welfare Call: Wrong number");
     });
 });

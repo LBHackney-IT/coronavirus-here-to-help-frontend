@@ -65,7 +65,7 @@
             {
                 "id": 23,
                 "HelpRequestId": 12,
-                "CallType": "Welfare",
+                "CallType": "Welfare Call",
                 "CallDirection": "outbound",
                 "CallOutcome": "refused_to_engage",
                 "CallDateTime": "2020-12-23T02:50:50.807Z"
@@ -73,7 +73,7 @@
             {
                 "id": 24,
                 "HelpRequestId": 12,
-                "CallType": "Welfare",
+                "CallType": "Welfare Call",
                 "CallDirection": "outbound",
                 "CallOutcome": "refused_to_engage",
                 "CallDateTime": "2021-01-15T11:18:31.236Z"
@@ -380,7 +380,7 @@
         "CallbackRequired": null,
         "CaseNotes": "[object Object]---[object Object]",
         "AdviceNotes": "string",
-        "HelpNeeded": "Welfare",
+        "HelpNeeded": "Welfare Call",
         "NhsNumber": "string",
         "NhsCtasId": "string",
         "AssignedTo": "Person D",
@@ -470,7 +470,7 @@
             {
                 "id": 283,
                 "HelpRequestId": 142,
-                "CallType": "Welfare",
+                "CallType": "Welfare Call",
                 "CallDirection": "inbound",
                 "CallOutcome": "refused_to_engage",
                 "CallDateTime": "2021-01-19T19:19:28.162Z"
@@ -478,7 +478,7 @@
             {
                 "id": 284,
                 "HelpRequestId": 142,
-                "CallType": "Welfare",
+                "CallType": "Welfare Call",
                 "CallDirection": "outbound",
                 "CallOutcome": "refused_to_engagecallback_complete",
                 "CallDateTime": "2021-01-02T17:20:48.848Z"

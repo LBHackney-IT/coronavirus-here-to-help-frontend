@@ -43,7 +43,7 @@
         {
             "Id": 23,
             "HelpRequestId": 12,
-            "CallType": "Welfare",
+            "CallType": "Welfare Call",
             "CallDirection": "outbound",
             "CallOutcome": "callback_complete",
             "CallDateTime": "2021-01-26T15:12:25.562Z"
