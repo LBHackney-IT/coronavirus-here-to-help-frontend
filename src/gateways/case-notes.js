@@ -8,7 +8,8 @@ export class CaseNotesGateway extends DefaultGateway {
     }
     async postCaseNote(residentId, helpRequestId, requestBody) {
         return await this.postToUrl(
-            `resident/${residentId}/help-requests/${helpRequestId}/caseNotes`,
+            // added an "s" to "resident"!!! As far as I'm aware this API endpoint doesn't exist yet, so it should be fine, but putting this message here just in case...
+            `residents/${residentId}/help-requests/${helpRequestId}/caseNotes`,
             requestBody
         );
     }

@@ -1,6 +1,6 @@
 import moxios from 'moxios';
 import { CaseNotesGateway } from './case-notes.js';
-import { getMultipleCaseNotesRequestV4_Speculative } from '../../tools/mockResponses';
+import { getMultipleCaseNotesV4_Speculative } from '../../tools/mockResponses';
 import InboundMapper from '../mappers/inboundMapper';
 
 describe('Case notes gateway', () => {
@@ -29,7 +29,7 @@ describe('Case notes gateway', () => {
         await csGateway.getCaseNotes(randomId);
 
         // assert
-        let request = moxios.requests.mostRecent();
+        const request = moxios.requests.mostRecent();
         expect(request.config.method).toEqual('get');
         expect(request.url).toMatch(urlExp); // tests url & route param at the same time
 
@@ -39,7 +39,7 @@ describe('Case notes gateway', () => {
 
     it("getCaseNotes method calls the inbound mapper's ToCaseNotes method with expected paramters", async (done) => {
         // arrange
-        const mockAxiosResponse = getMultipleCaseNotesRequestV4_Speculative();
+        const mockAxiosResponse = getMultipleCaseNotesV4_Speculative();
         moxios.stubRequest(/residents\/\d+\/caseNotes$/, {
             status: 200,
             response: mockAxiosResponse

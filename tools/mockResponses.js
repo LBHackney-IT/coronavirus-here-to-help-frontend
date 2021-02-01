@@ -26,7 +26,7 @@ const getMultipleHelpRequestsV4 = (overrideRandomFields = {}) => {
     return nItems(3, getSingleHelpRequestV4, overrideRandomFields);
 };
 
-const getMultipleCaseNotesRequestV4_Speculative = (overrideRandomFields = {}) => {
+const getMultipleCaseNotesV4_Speculative = (overrideRandomFields = {}) => {
     const createCaseNote = new CaseNote_Speculative_V4APIEntity().sample;
     return nItems(3, createCaseNote, overrideRandomFields);
 };
@@ -36,5 +36,5 @@ module.exports = {
     getMultipleResidentsV4,
     getSingleHelpRequestV4,
     getMultipleHelpRequestsV4,
-    getMultipleCaseNotesRequestV4_Speculative
+    getMultipleCaseNotesV4_Speculative
 };
