@@ -6,7 +6,7 @@ export class CallTypesGateway extends DefaultGateway {
             "All",
             "Help Request",
             "CEV",
-            "Welfare",
+            "Welfare Call",
             "Contact Tracing",
         ];
     }

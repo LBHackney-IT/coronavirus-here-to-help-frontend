@@ -106,7 +106,7 @@
             {
                 "Id": 23,
                 "HelpRequestId": 12,
-                "CallType": "Welfare",
+                "CallType": "Welfare Call",
                 "CallDirection": "outbound",
                 "CallOutcome": "wrong_number",
                 "CallHandler": "Bart Simpson",
@@ -119,7 +119,7 @@
         "ResidentId": 3,
         "AssignedTo": "Person A",
         "AdviceNotes": "est reiciendis et",
-        "CallbackRequired": null,
+        "CallbackRequired": true,
         "CurrentSupport": "User-centric",
         "CurrentSupportFeedback": "cumque rem sequi quam aliquam",
         "DateTimeRecorded": "2021-01-08T00:21:55.847Z",
@@ -159,7 +159,7 @@
             {
                 "Id": 25,
                 "HelpRequestId": 13,
-                "CallType": "Welfare",
+                "CallType": "Welfare Call",
                 "CallDirection": "inbound",
                 "CallOutcome": "wrong_number,callback_complete",
                 "CallHandler": "Homer Simpson",
@@ -168,7 +168,7 @@
             {
                 "Id": 26,
                 "HelpRequestId": 13,
-                "CallType": "Welfare",
+                "CallType": "Welfare Call",
                 "CallDirection": "outbound",
                 "CallOutcome": "wrong_number",
                 "CallHandler": "Bart Simpson",
@@ -181,12 +181,12 @@
         "ResidentId": 3,
         "AssignedTo": "Person B",
         "AdviceNotes": "dolores distinctio molestias",
-        "CallbackRequired": null,
+        "CallbackRequired": false,
         "CurrentSupport": "Liechtenstein",
         "CurrentSupportFeedback": "laboriosam omnis eius velit et",
         "DateTimeRecorded": "2021-01-07T04:45:58.379Z",
         "GettingInTouchReason": "est dolor dolores",
-        "HelpNeeded": "Welfare",
+        "HelpNeeded": "Welfare Call",
         "HelpWithAccessingFood": false,
         "HelpWithAccessingInternet": null,
         "HelpWithAccessingMedicine": false,
@@ -217,7 +217,24 @@
         "WhenIsMedicinesDelivered": "",
         "RescheduledAt": "",
         "RequestedDate": "2021-01-30T10:23:55.751Z",
-        "HelpRequestCalls": []
+        "HelpRequestCalls": [
+            {
+                "Id": 27,
+                "HelpRequestId": 14,
+                "CallType": "Shielding",
+                "CallDirection": "inbound",
+                "CallOutcome": "wrong_number",
+                "CallDateTime": "2021-01-18T20:48:40.253Z"
+            },
+            {
+                "Id": 28,
+                "HelpRequestId": 14,
+                "CallType": "Shielding",
+                "CallDirection": "outbound",
+                "CallOutcome": "wrong_number,callback_complete",
+                "CallDateTime": "2021-01-05T09:52:55.258Z"
+            }
+        ]
     },
     {
         "Id": 15,

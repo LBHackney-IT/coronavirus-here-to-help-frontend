@@ -14,7 +14,7 @@ export default function AssignCallsPage() {
     const [selectedCallHandlers, setSelectedCallHandlers] = useState([]);
     const [selectedCallType, setSelectedCallType] = useState("All");
 
-    const callTypes = ["All", "Help Request", "CEV", "Welfare", "Contact Tracing"];
+    const callTypes = ["All", "Help Request", "CEV", "Welfare Call", "Contact Tracing"];
 
     const getCallHandlers = async () => {
       const gateway = new CallHandlerGateway();
