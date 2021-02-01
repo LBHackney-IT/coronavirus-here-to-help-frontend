@@ -14,55 +14,26 @@ describe('Case notes gateway', () => {
         moxios.uninstall();
     });
 
-    it('gets the casenotes for respective resident id and correctly maps the response', async () => {
+    it('getCaseNotes method makes GET axios call to a correct url, with correct route parameter', async (done) => {
         // arrange
-        const randomId = Math.floor(Math.random() * 20);
-        const mockAxiosResponse = [
-            {
-                Id: 1,
-                CaseNote: 'repudiandae eos est',
-                HelpRequestId: 16,
-                ResidentId: randomId,
-                CreatedAt: '2020-12-25T16:15:41.325Z'
-            },
-            {
-                Id: 2,
-                CaseNote: 'vero qui voluptas',
-                HelpRequestId: 16,
-                ResidentId: randomId,
-                CreatedAt: '2021-01-20T05:06:34.567Z'
-            }
-        ];
-
-        const expectedResponse = [
-            {
-                id: 1,
-                caseNote: 'repudiandae eos est',
-                helpRequestId: 16,
-                residentId: randomId,
-                createdAt: '2020-12-25T16:15:41.325Z'
-            },
-            {
-                id: 2,
-                caseNote: 'vero qui voluptas',
-                helpRequestId: 16,
-                residentId: randomId,
-                createdAt: '2021-01-20T05:06:34.567Z'
-            }
-        ];
-
+        const randomId = Math.floor(Math.random() * 20); // random path parameter to be checked for later
         const urlExp = new RegExp('/residents/' + randomId + '/caseNotes$');
 
-        moxios.stubRequest(urlExp, {
+        // dummy set up, so axios wouldn't timeout waiting for a response
+        moxios.stubRequest(/.+/, {
             status: 200,
-            response: mockAxiosResponse
+            response: [] // return value is irrelevant for this test, [] so it wouldn't distract from what the test is doing
         });
 
         // act
-        const gatewayResponse = await csGateway.getCaseNotes(randomId);
+        await csGateway.getCaseNotes(randomId);
 
         // assert
-        expect(gatewayResponse).toMatchObject(expectedResponse);
+        let request = moxios.requests.mostRecent();
+        expect(request.config.method).toEqual('get');
+        expect(request.url).toMatch(urlExp); // tests url & route param at the same time
+
+        // clean up
         done();
     });
 
@@ -81,12 +52,12 @@ describe('Case notes gateway', () => {
         // act
         await csGateway.getCaseNotes(0);
 
-        // cleanup
-        InboundMapper.ToCaseNotes = tempRealFunctionPointer;
-
         // assert
         expect(toCaseNotesSpy).toHaveBeenCalledTimes(1);
         expect(toCaseNotesSpy).toHaveBeenCalledWith(mockAxiosResponse);
+
+        // clean up
+        InboundMapper.ToCaseNotes = tempRealFunctionPointer;
         done(); //precautionary step to sure the code is sync (to avoid the side effects noise in between tests of modifying the global instances)
     });
 });
