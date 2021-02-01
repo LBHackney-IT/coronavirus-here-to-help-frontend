@@ -16,7 +16,9 @@ export default function HomePage() {
                             <a
                                 href="/resident-search"
                                 className="govuk-button lbh-button"
-                                data-module="govuk-button">
+                                data-module="govuk-button"
+                                data-testid="search-for-residents_button"
+                                >
                                 Go
                             </a>
                         </td>
@@ -30,7 +32,9 @@ export default function HomePage() {
                             <a
                                 href="/callback-list"
                                 className="govuk-button lbh-button js-cta-btn"
-                                data-module="govuk-button">
+                                data-module="govuk-button"
+                                data-testid="view-callback-list_button"
+                                >
                                 Go
                             </a>
                         </td>

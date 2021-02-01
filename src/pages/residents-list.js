@@ -35,7 +35,7 @@ export default function ResidentsList({ firstName, lastName, postcode }) {
                 <h1 className="govuk-heading-xl" style={{ marginBottom: '0.4em' }}>
                     Search results
                 </h1>
-                <p className="govuk-body">Displaying {residents.length} record(s)</p>
+                <p className="govuk-body" data-testid="resident-search-result-count">Displaying {residents.length} record(s)</p>
                 <div className="govuk-grid-row">
                     <div className="govuk-grid-column-one-half">
                         <Link href="/resident-search">

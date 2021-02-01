@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "run-p dev:front dev:api",
-    "dev:front": "next dev",
+    "dev": "next dev",
     "dev:api": "node tools/mockApi.js",
     "build": "next build",
     "start": "next start",
@@ -48,6 +47,7 @@
     "jest": "^26.6.3",
     "jest-dom": "^4.0.0",
     "json-server": "^0.16.3",
+    "moxios": "^0.4.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "randexp": "^0.5.3"
