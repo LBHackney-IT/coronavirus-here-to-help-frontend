@@ -1,5 +1,7 @@
 import moxios from 'moxios';
 import { ResidentGateway } from './resident.js';
+import InboundMapper from '../mappers/inboundMapper';
+import { getSingleResidentV4 } from '../../tools/mockResponses';
 
 describe('Resident gateway', () => {
     const resGateway = new ResidentGateway();
@@ -29,6 +31,31 @@ describe('Resident gateway', () => {
         const request = moxios.requests.mostRecent();
         expect(request.config.method).toEqual('get');
         expect(request.url).toMatch(urlExp);
+        done();
+    });
+
+    it("getResident method calls the inbound mapper's ToResident method with expected paramters", async (done) => {
+        // arrange
+        const mockAxiosResponse = getSingleResidentV4();
+
+        moxios.stubRequest(/v4\/residents\/\d+$/, {
+            status: 200,
+            response: mockAxiosResponse
+        });
+
+        const toResidentSpy = jest.fn();
+        const tempRealFunctionPointer = InboundMapper.ToResident;
+        InboundMapper.ToResident = toResidentSpy;
+
+        // act
+        await resGateway.getResident(10);
+        const request = moxios.requests.mostRecent();
+
+        // assert
+        expect(toResidentSpy).toHaveBeenCalledTimes(1);
+        expect(toResidentSpy).toHaveBeenCalledWith(mockAxiosResponse);
+
+        InboundMapper.ToResident = tempRealFunctionPointer;
         done();
     });
 });
