@@ -2,7 +2,8 @@ const { nItems } = require('./testUtility');
 const {
     ResidentV4APIEntity,
     HelpRequestV4APIEntity,
-    HelpRequestCallV4APIEntity
+    HelpRequestCallV4APIEntity,
+    CaseNote_Speculative_V4APIEntity
 } = require('./factories');
 
 const getSingleResidentV4 = (overrideRandomFields = {}) => {
@@ -25,9 +26,15 @@ const getMultipleHelpRequestsV4 = (overrideRandomFields = {}) => {
     return nItems(3, getSingleHelpRequestV4, overrideRandomFields);
 };
 
+const getMultipleCaseNotesRequestV4_Speculative = (overrideRandomFields = {}) => {
+    const createCaseNote = new CaseNote_Speculative_V4APIEntity().sample;
+    return nItems(3, createCaseNote, overrideRandomFields);
+};
+
 module.exports = {
     getSingleResidentV4,
     getMultipleResidentsV4,
     getSingleHelpRequestV4,
-    getMultipleHelpRequestsV4
+    getMultipleHelpRequestsV4,
+    getMultipleCaseNotesRequestV4_Speculative
 };
