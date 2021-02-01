@@ -1,6 +1,19 @@
 import { DefaultGateway } from '../gateways/default-gateway';
-import {CEV, SHIELDING} from '../helpers/constants';
-
+import {CEV, SHIELDING, callOutcomes} from '../helpers/constants';
+const TolatestCallOutcome = (helpRequestCalls, helpNeeded) => {
+    let latestCallOutcomesArray = []
+    if(helpRequestCalls.length > 0){
+        let latestCallOutcomes = helpRequestCalls.pop()?.CallOutcome
+        if(latestCallOutcomes?.includes(",")){
+            latestCallOutcomes.split(",").forEach(outcome => {
+                latestCallOutcomesArray.push(" " + callOutcomes[outcome])
+            })
+            return latestCallOutcomesArray.join(",")
+        }else{
+            return callOutcomes[latestCallOutcomes]
+        }
+    }
+}
 const ToHelpRequestDomain = (hr) => {
     return {
         id: hr.Id,
@@ -42,6 +55,7 @@ const ToHelpRequestDomain = (hr) => {
         rescheduledAt: hr.RescheduledAt,
         requestedDate: hr.RequestedDate,
         helpRequestCalls: ToCalls(hr.HelpRequestCalls),
+        latestCallOutcome:TolatestCallOutcome(hr.HelpRequestCalls, hr.HelpNeeded)
     };
 };
 

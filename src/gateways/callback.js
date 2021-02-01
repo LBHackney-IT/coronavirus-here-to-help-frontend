@@ -1,5 +1,5 @@
 import { DefaultGateway } from '../gateways/default-gateway';
-import {CEV, SHIELDING} from '../helpers/constants';
+import {CEV, SHIELDING, callOutcomes} from '../helpers/constants';
 
 const isoDateToOtherDate = (dateString) => dateString.split('T')[0];
 const joinNameParts = (obj) => [obj.FirstName, obj.LastName].join(' ');
@@ -21,7 +21,7 @@ const ToCallbackList = (callbacks) => {
             unsuccessfulCallAttempts: unsuccessfulCalls(callback.HelpRequestCalls),
             followUpRequired: callback.CallbackRequired,
             assignedTo: callback.AssignedTo,
-            rescheduledAt: callback.RescheduledAt
+            rescheduledAt: callback.RescheduledAt,
         };
     });
 };

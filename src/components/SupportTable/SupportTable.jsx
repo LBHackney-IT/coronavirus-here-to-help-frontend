@@ -31,33 +31,10 @@ export default function SupportTable({helpRequests}) {
 						</thead>
 						<tbody className="govuk-table__body">
 							{helpRequests.map((hr, index) => {
-								let latestCallOutcome 
-								let callAttempts = 0
 								if(hr.callbackRequired == true){
-									if(hr.helpRequestCalls.length > 0){
-										let latestCallOutcomeArray = []
-										if(hr.helpRequestCalls[hr.helpRequestCalls.length-1].callOutcome && hr.helpRequestCalls[hr.helpRequestCalls.length-1].callOutcome.includes(",")){
-											let callOutcomesList = hr.helpRequestCalls[hr.helpRequestCalls.length-1].callOutcome.split(",")
-											callOutcomesList.forEach(callOutcome => {
-												if(callOutcomes[callOutcome]){
-													latestCallOutcomeArray.push(" "+callOutcomes[callOutcome]) 
-												}else {
-													latestCallOutcomeArray.push(callOutcome) 
-												}
-											})
-										}else {
-											latestCallOutcomeArray = [callOutcomes[hr.helpRequestCalls[hr.helpRequestCalls.length-1].callOutcome]] || [hr.helpRequestCalls[hr.helpRequestCalls.length-1].callOutcome]
-										}
-										latestCallOutcome = latestCallOutcomeArray.join(",")
-									}else if(hr.helpNeeded.toLowerCase() == 'contact tracing' || hr.helpNeeded == CEV){
-										latestCallOutcome = 'Call required'
-									}
-									else{
-										latestCallOutcome = 'Followup required'
-									}
 									return (	<tr className="govuk-table__row" data-testid="support-requested-table_row">
 									<td className="govuk-table__cell" data-testid="support-requested-table-help-needed">{hr.helpNeeded}</td>
-									<td className="govuk-table__cell">{latestCallOutcome}</td>
+									<td className="govuk-table__cell">{hr.latestCallOutcome}</td>
 									<td className="govuk-table__cell" data-testid="support-requested-table-calls-count">{hr.helpRequestCalls?.length}</td>
 									<td className="govuk-table__cell" data-testid={`support-requested-table-view_link-${index}`}><Link
 												href="/helpcase-profile/[resident_id]/manage-request/[help_request]"
