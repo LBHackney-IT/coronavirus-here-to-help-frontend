@@ -1,5 +1,7 @@
 import moxios from 'moxios';
 import { CaseNotesGateway } from './case-notes.js';
+import { getMultipleCaseNotesRequestV4_Speculative } from '../../tools/mockResponses';
+import InboundMapper from '../mappers/inboundMapper';
 
 describe('Case notes gateway', () => {
     const csGateway = new CaseNotesGateway();
@@ -61,5 +63,30 @@ describe('Case notes gateway', () => {
 
         // assert
         expect(gatewayResponse).toMatchObject(expectedResponse);
+        done();
+    });
+
+    it("getCaseNotes method calls the inbound mapper's ToCaseNotes method with expected paramters", async (done) => {
+        // arrange
+        const mockAxiosResponse = getMultipleCaseNotesRequestV4_Speculative();
+        moxios.stubRequest(/residents\/\d+\/caseNotes$/, {
+            status: 200,
+            response: mockAxiosResponse
+        });
+
+        const toCaseNotesSpy = jest.fn();
+        const tempRealFunctionPointer = InboundMapper.ToCaseNotes;
+        InboundMapper.ToCaseNotes = toCaseNotesSpy;
+
+        // act
+        await csGateway.getCaseNotes(0);
+
+        // cleanup
+        InboundMapper.ToCaseNotes = tempRealFunctionPointer;
+
+        // assert
+        expect(toCaseNotesSpy).toHaveBeenCalledTimes(1);
+        expect(toCaseNotesSpy).toHaveBeenCalledWith(mockAxiosResponse);
+        done(); //precautionary step to sure the code is sync (to avoid the side effects noise in between tests of modifying the global instances)
     });
 });
