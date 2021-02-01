@@ -1,7 +1,6 @@
 import { DefaultGateway } from '../gateways/default-gateway';
 
 const ToResident = (response) => {
-    console.log(response)
     return {
         firstName: response.FirstName,
         id: response.Id,

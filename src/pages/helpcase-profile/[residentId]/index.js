@@ -27,7 +27,14 @@ export default function HelpcaseProfile({ residentId }) {
             console.log(`Error getting resident props with help request ID ${residentId}: ${err}`);
         }
     };
-    useEffect(getResidentAndHelpRequests, []);
+    function useEffectAsync(effect, inputs) {
+        useEffect(() => {
+            effect();
+        }, inputs);
+    }
+
+    useEffectAsync(getResidentAndHelpRequests, []);
+
 
     return (
         resident && (
@@ -44,14 +51,13 @@ export default function HelpcaseProfile({ residentId }) {
                         Back
                     </a>
                     <div className="govuk-grid-row">
-                        <div className="govuk-grid-column-one-quarter-from-desktop sticky-magic">
+                        <div className="govuk-grid-column-one-quarter-from-desktop">
                             <KeyInformation resident={resident} />
                         </div>
 
                         <div className="govuk-grid-column-three-quarters-from-desktop">
                             <h1
                                 className="govuk-heading-xl"
-                                style={{ marginTop: '0px', marginBottom: '40px' }}
                                 data-testid="resident-name_header">
                                 {resident.firstName} {resident.lastName}
                             </h1>
