@@ -1,6 +1,6 @@
 import { DefaultGateway } from '../gateways/default-gateway';
 import {CEV, SHIELDING, callOutcomes} from '../helpers/constants';
-const TolatestCallOutcome = (helpRequestCalls, callbackRequired, initialCallbackCompleted) => {
+const ToUpcomingAction = (helpRequestCalls, callbackRequired, initialCallbackCompleted) => {
     let latestCallOutcomes
     let latestCallOutcomesArray = []
     if (callbackRequired == false && initialCallbackCompleted == true){
@@ -67,7 +67,7 @@ const ToHelpRequestDomain = (hr) => {
         rescheduledAt: hr.RescheduledAt,
         requestedDate: hr.RequestedDate,
         helpRequestCalls: ToCalls(hr.HelpRequestCalls),
-        latestCallOutcome:TolatestCallOutcome(hr.HelpRequestCalls, hr.CallbackRequired, hr.InitialCallbackCompleted)
+        upcomingCallOutcome:ToUpcomingAction(hr.HelpRequestCalls, hr.CallbackRequired, hr.InitialCallbackCompleted)
     };
 };
 
