@@ -14,8 +14,7 @@ describe('Help request gateway', () => {
     });
 
     it('getHelpRequests method makes GET axios call to a correct url, with correct route parameter', async (done) => {
-        const randomId = Math.floor(Math.random() * 20);
-        const urlExp = new RegExp('v4/residents/' + randomId);
+        const urlExp = new RegExp('v4/residents/13');
         
         moxios.stubRequest(/.+/, {
             status: 200,
@@ -23,7 +22,7 @@ describe('Help request gateway', () => {
         });
 
         // act
-        await hrGateway.getHelpRequests(randomId);
+        await hrGateway.getHelpRequests(13);
 
         // assert
         const request = moxios.requests.mostRecent();

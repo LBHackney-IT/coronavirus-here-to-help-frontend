@@ -15,9 +15,7 @@ describe('Resident gateway', () => {
     });
 
     it('getResident method makes GET axios call to a correct url, with correct route parameter', async (done) => {
-        // arrange
-        const randomId = Math.floor(Math.random() * 20);
-        const urlExp = new RegExp('v4/residents/' + randomId);
+        const urlExp = new RegExp('v4/residents/10' );
         
         moxios.stubRequest(/.+/, {
             status: 200,
@@ -25,7 +23,7 @@ describe('Resident gateway', () => {
         });
 
         // act
-        await resGateway.getResident(randomId);
+        await resGateway.getResident(10);
 
         // assert
         const request = moxios.requests.mostRecent();
