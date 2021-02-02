@@ -165,61 +165,53 @@ export default function AssignCallsPage() {
                 </h1>
 
                 <div className="govuk-!-margin-bottom-5">
-                    <div className="govuk-grid-row">
-                        <div className="govuk-grid-column-one-half">
-                            <label className="govuk-label">Call types</label>
-                            <Dropdown
-                                dropdownItems={callTypes}
-                                onChange={(type) => {
-                                    setSelectedCallType(type);
-                                }}
-                                data-testid="assign-call-type_dropdown"
-                            />
-                            <div className="govuk-hint">Select call help type</div>
-                        </div>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <h3
-                            className="govuk-heading-m"
-                            style={{ marginRight: '1em', marginLeft: '.2em', marginTop: '2em' }}>
-                            Assign to
-                        </h3>
-                        <div className="govuk-checkboxes  lbh-checkboxes">
-                            <Checkbox
-                                key="unassigned-cases-checkbox"
-                                label="Unassigned cases"
-                                value="unassigned"
-                                onCheckboxChange={updateSelectedAssignment}
-                                data-testid="assign-call-unassigned-checkbox"
-                            />
-                            <Checkbox
-                                key="assigned-cases-checkbox"
-                                label="Assigned cases"
-                                value="assigned"
-                                onCheckboxChange={updateSelectedAssignment}
-                            />
-                        </div>
-                        <h3
-                            className="govuk-heading-m"
-                            style={{ marginRight: '1em', marginLeft: '.2em', marginTop: '2em' }}>
-                            Select who is able to make calls today
-                        </h3>
+                    <label className="govuk-label">Call types</label>
+                    <Dropdown
+                        dropdownItems={callTypes}
+                        onChange={(type) => {
+                            setSelectedCallType(type);
+                        }}
+                        data-testid="assign-call-type_dropdown"
+                    />
+                    <div className="govuk-hint">Select call help type</div>
+                    <h3
+                        className="govuk-heading-m"
+                        style={{ marginRight: '1em', marginLeft: '.2em', marginTop: '2em' }}>
+                        Assign to
+                    </h3>
+                    <div className="govuk-checkboxes  lbh-checkboxes">
+                        <Checkbox
+                            key="unassigned-cases-checkbox"
+                            label="Unassigned cases"
+                            value="unassigned"
+                            onCheckboxChange={updateSelectedAssignment}
+                            data-testid="assign-call-unassigned-checkbox"
+                        />
+                        <Checkbox
+                            key="assigned-cases-checkbox"
+                            label="Assigned cases"
+                            value="assigned"
+                            onCheckboxChange={updateSelectedAssignment}
+                        />
+                    </div>
+                    <h3
+                        className="govuk-heading-m"
+                        style={{ marginRight: '1em', marginLeft: '.2em', marginTop: '2em' }}>
+                        Select who is able to make calls today
+                    </h3>
 
-                        <div className="govuk-checkboxes  lbh-checkboxes">
-                            {callHandlers.map((callHandler) => {
-                                return (
-                                    <Checkbox
-                                        key={callHandler}
-                                        label={callHandler}
-                                        value={callHandler}
-                                        onCheckboxChange={updateSelectedCallHandlers}
-                                        data-testid="assign-call-handler-checkbox"
-                                    />
-                                );
-                            })}
-                        </div>
+                    <div className="govuk-checkboxes  lbh-checkboxes">
+                        {callHandlers.map((callHandler) => {
+                            return (
+                                <Checkbox
+                                    key={callHandler}
+                                    label={callHandler}
+                                    value={callHandler}
+                                    onCheckboxChange={updateSelectedCallHandlers}
+                                    data-testid="assign-call-handler-checkbox"
+                                />
+                            );
+                        })}
                     </div>
                 </div>
 
