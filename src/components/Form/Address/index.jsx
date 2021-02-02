@@ -16,20 +16,25 @@ export default function Address({ initialResident, onChange }) {
     };
     const setSelectedAddress = (value) => {
         const [addressFirstLine, addressSecondLine, addressThirdLine, postCode] = value.split(', ');
-        onChange('addressFirstLine', addressFirstLine);
-        onChange('addressSecondLine', addressSecondLine);
-        onChange('addressThirdLine', addressThirdLine);
-        onChange('postCode', postCode);
-        setResident({
+
+        onChange("addressFirstLine", addressFirstLine);
+        onChange("addressSecondLine", addressSecondLine);
+        onChange("addressThirdLine", addressThirdLine);
+        onChange("postcode", postCode);
+
+        const newResident = {
             ...resident,
             addressFirstLine,
             addressSecondLine,
             addressThirdLine,
             postCode
-        });
-    };
+        }
 
-    console.log("Resident",resident);
+        resident = newResident;
+        setResident(newResident);
+    };
+    useEffect(() => {
+    }, [resident])
 
     const dropdownItems = addresses?.address.map(
         (x) => `${x.line1}, ${x.line2}, ${x.line3} ${x.line4}, ${x.postcode}`
@@ -60,7 +65,7 @@ export default function Address({ initialResident, onChange }) {
                     {addresses && (
                         <Dropdown
                             dropdownItems={dropdownItems}
-                            onChange={(value) => setResident(value)}
+                            onChange={(value) => setSelectedAddress(value)}
                         />
                     )}
                 </div>
@@ -70,10 +75,10 @@ export default function Address({ initialResident, onChange }) {
                     <div className="govuk-form-group lbh-form-group">
                         <input
                             className="govuk-input  lbh-input"
-                            id="AddressFirstLine"
-                            name="AddressFirstLine"
+                            id="addressFirstLine"
+                            name="addressFirstLine"
                             type="text"
-                            defaultValue={resident?.addressFirstLine}
+                            defaultValue={resident.addressFirstLine ? resident.addressFirstLine : initialResident?.addressFirstLine}
                             onChange={(e) => onChange(e.target.id, e.target.value)}
                         />
                     </div>
@@ -81,20 +86,20 @@ export default function Address({ initialResident, onChange }) {
                     <div className="govuk-form-group lbh-form-group">
                         <input
                             className="govuk-input  lbh-input"
-                            id="AddressSecondLine"
-                            name="AddressSecondLine"
+                            id="addressSecondLine"
+                            name="addressSecondLine"
                             type="text"
-                            defaultValue={resident?.addressSecondLine}
+                            defaultValue={resident.addressSecondLine ? resident.addressSecondLine : initialResident?.addressSecondLine}
                             onChange={(e) => onChange(e.target.id, e.target.value)}
                         />
                     </div>
                     <div className="govuk-form-group lbh-form-group">
                         <input
                             className="govuk-input  lbh-input"
-                            id="AddressThirdLine"
-                            name="AddressThirdLine"
+                            id="addressThirdLine"
+                            name="addressThirdLine"
                             type="text"
-                            value={resident?.addressThirdLine}
+                            defaultValue={resident.addressThirdLine ? resident.addressThirdLine : initialResident?.addressThirdLine}
                             onChange={(e) => onChange(e.target.id, e.target.value)}
                         />
                     </div>
@@ -104,7 +109,7 @@ export default function Address({ initialResident, onChange }) {
                             id="postcode"
                             name="postcode"
                             type="text"
-                            defaultValue={resident?.postCode}
+                            defaultValue={resident.postCode ? resident.postCode : initialResident?.postCode}
                             onChange={(e) => onChange(e.target.id, e.target.value)}
                         />
                     </div>

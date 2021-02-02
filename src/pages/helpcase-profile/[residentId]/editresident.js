@@ -15,13 +15,19 @@ export default function EditResident({ residentId }) {
 
     const handleEditResident = (id, value) => {
         setUpdatedResident({ ...updatedResident, [id]: value });
+        console.log("updated resident",updatedResident)
     };
 
     const saveResident = () => {
         const residentGateway = new ResidentGateway();
         residentGateway.setResident(residentId, updatedResident);
         setResident(updatedResident);
+        console.log("this is the saved resident", updatedResident);
+        console.log("resident", resident);
     };
+
+    useEffect(() => {
+    }, [resident])
 
     const getResident = async () => {
         try {
