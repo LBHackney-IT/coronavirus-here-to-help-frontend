@@ -81,6 +81,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
                     </div>
                     <div className="govuk-grid-column-three-quarters-from-desktop">
                         <CallbackForm residentId={residentId} resident={resident} backHref={backHref} saveFunction={saveFunction} />
+                        <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
                         <CallHistory calls={calls}  />
                     </div>
                 </div>
