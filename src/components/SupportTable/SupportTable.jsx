@@ -1,6 +1,4 @@
-import { isLocalURL } from "next/dist/next-server/lib/router/router";
 import Link from "next/link";
-import { callOutcomes, CEV } from "../../helpers/constants";
 
 export default function SupportTable({helpRequests}) {
 
@@ -55,16 +53,8 @@ export default function SupportTable({helpRequests}) {
 							</tr>
 						</thead>
 						<tbody className="govuk-table__body">
-							{helpRequests.map((hr, index) => {
-								hr.totalCompletedCalls = 0
+							{helpRequests.map((hr) => {
 								if(hr.callbackRequired == false){
-									if(hr.helpRequestCalls){
-										hr.helpRequestCalls.forEach(call => {
-											if(call.callOutcome && call.callOutcome.toLowerCase().includes('callback_complete')){
-												hr.totalCompletedCalls += 1
-											}
-										});
-									}
 									return (<tr className="govuk-table__row" data-testid="support-received-table_row">
 									<td className="govuk-table__cell" data-testid="support-received-table-help-needed">{hr.helpNeeded}</td>
 									<td className="govuk-table__cell" data-testid="support-received-table-calls-count" >{hr.totalCompletedCalls}</td>
