@@ -66,9 +66,9 @@ export default function KeyInformation({ resident }) {
                                 ✎
                             </a>
                         </h3>
+                        {resident.keyNotes || "None"}
                     </div>
                     <br />
-                    <p>{resident.keyNotes || "None"}</p>
                 </div>
             </div>
         </div>
