@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useState } from 'react';
 import Dropdown from '../Dropdown/Dropdown';
 import { AddressesGateway } from '../../../gateways/addresses';
@@ -6,14 +6,13 @@ import { AddressesGateway } from '../../../gateways/addresses';
 
 export default function Address({ initialResident, onChange }) {
     let [lookupPostcode, setLookupPostcode] = useState('');
-    let [addresses, setAddresses] = useState();
+    let [addresses, setAddresses] = useState({"address": []});
     let [resident, setResident] = useState(initialResident);
 
     const gateway = new AddressesGateway();
 
     const FindAddresses = async () => {
-        return await gateway.getAddresses(lookupPostcode);
-        
+        setAddresses(await gateway.getAddresses(lookupPostcode));
     };
     const setSelectedAddress = (value) => {
         const [addressFirstLine, addressSecondLine, addressThirdLine, postCode] = value.split(', ');
@@ -29,6 +28,9 @@ export default function Address({ initialResident, onChange }) {
             postCode
         });
     };
+
+    console.log("Resident",resident);
+
     const dropdownItems = addresses?.address.map(
         (x) => `${x.line1}, ${x.line2}, ${x.line3} ${x.line4}, ${x.postcode}`
     );
@@ -52,13 +54,13 @@ export default function Address({ initialResident, onChange }) {
                         className="govuk-button  lbh-button"
                         data-module="govuk-button"
                         id="address-finder"
-                        onClick={() => setAddresses(FindAddresses())}>
+                        onClick={() => FindAddresses()}>
                         Search
                     </button>
                     {addresses && (
                         <Dropdown
                             dropdownItems={dropdownItems}
-                            onChange={(value) => setSelectedAddress(value)}
+                            onChange={(value) => setResident(value)}
                         />
                     )}
                 </div>
@@ -71,8 +73,8 @@ export default function Address({ initialResident, onChange }) {
                             id="AddressFirstLine"
                             name="AddressFirstLine"
                             type="text"
-                            readOnly={true}
-                            value={resident?.addressFirstLine}
+                            defaultValue={resident?.addressFirstLine}
+                            onChange={(e) => onChange(e.target.id, e.target.value)}
                         />
                     </div>
 
@@ -82,8 +84,8 @@ export default function Address({ initialResident, onChange }) {
                             id="AddressSecondLine"
                             name="AddressSecondLine"
                             type="text"
-                            readOnly={true}
                             defaultValue={resident?.addressSecondLine}
+                            onChange={(e) => onChange(e.target.id, e.target.value)}
                         />
                     </div>
                     <div className="govuk-form-group lbh-form-group">
@@ -92,8 +94,8 @@ export default function Address({ initialResident, onChange }) {
                             id="AddressThirdLine"
                             name="AddressThirdLine"
                             type="text"
-                            readOnly={true}
-                            defaultValue={resident?.addressThirdLine}
+                            value={resident?.addressThirdLine}
+                            onChange={(e) => onChange(e.target.id, e.target.value)}
                         />
                     </div>
                     <div className="govuk-form-group lbh-form-group">
@@ -102,8 +104,8 @@ export default function Address({ initialResident, onChange }) {
                             id="postcode"
                             name="postcode"
                             type="text"
-                            readOnly={true}
                             defaultValue={resident?.postCode}
+                            onChange={(e) => onChange(e.target.id, e.target.value)}
                         />
                     </div>
                 </div>

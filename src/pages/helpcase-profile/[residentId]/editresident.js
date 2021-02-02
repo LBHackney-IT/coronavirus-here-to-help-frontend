@@ -7,6 +7,7 @@ import { Button, Address } from '../../../components/Form';
 import EditResidentBioForm from '../../../components/EditResidentBioForm/EditResidentBioForm';
 import CaseNotes from '../../../components/CaseNotes/CaseNotes';
 import Banner from '../../../components/Banner';
+import Link from 'next/link';
 
 export default function EditResident({ residentId }) {
     const [resident, setResident] = useState([]);
@@ -17,7 +18,7 @@ export default function EditResident({ residentId }) {
         console.log(updatedResident, value);
     };
 
-    const logNewResidentDetails = () => {
+    const saveResident = () => {
         console.log(updatedResident);
     };
 
@@ -72,15 +73,17 @@ export default function EditResident({ residentId }) {
                 <Button
                     text="Update"
                     addClass="govuk-!-margin-right-1"
-                    onClick={() => logNewResidentDetails()}
-                    disabled={true}
+                    onClick={() => saveResident()}
                 />
-                <Button
-                    text="Cancel"
-                    addClass="govuk-button--secondary"
-                    onClick={() => logNewResidentDetails()}
-                    disabled={true}
-                />
+                <Link
+                    href="/helpcase-profile/[residentId]"
+                    as={`/helpcase-profile/${residentId}`}
+                >
+                    <Button
+                        text="Cancel"
+                        addClass="govuk-button--secondary"
+                    />
+                </Link>
             </div>
         </Layout>
     );
