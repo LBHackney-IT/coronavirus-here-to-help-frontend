@@ -6,7 +6,7 @@ const ToUpcomingAction = (helpRequestCalls, callbackRequired, initialCallbackCom
     if (callbackRequired == false && initialCallbackCompleted == true){
         return ""
     }
-    if(helpRequestCalls.length > 0){
+    if(helpRequestCalls?.length > 0){
         latestCallOutcomes = helpRequestCalls.pop()?.CallOutcome
         if(latestCallOutcomes?.includes(",")){
             latestCallOutcomes.split(",").forEach(outcome => {

@@ -15,10 +15,10 @@ export default function addSupportPage({residentId, helpRequestId}) {
 
     const [resident, setResident] = useState({})
     const [user, setUser] = useState({})
-    const [helpRequest, setHelpRequest] = useState({})
+    const [calls, setCalls] = useState([])
 
     const router = useRouter()
-
+    
     const retreiveResidentAndUser = async ( ) => {
         const gateway = new ResidentGateway();
         const resident = await gateway.getResident(residentId);
@@ -29,8 +29,8 @@ export default function addSupportPage({residentId, helpRequestId}) {
 
     const retreiveHelpRequest = async ( ) => {
         const gateway = new HelpRequestGateway();
-        const helpRequest = await gateway.getHelpRequest(residentId, helpRequestId);
-        setHelpRequest(helpRequest)
+        const response = await gateway.getHelpRequest(residentId, helpRequestId);
+        setCalls(response.helpRequestCalls.sort((a,b) => new Date(b.callDateTime) - new Date(a.callDateTime)))
     }
 
     useEffect(async () => {
@@ -81,7 +81,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
                     </div>
                     <div className="govuk-grid-column-three-quarters-from-desktop">
                         <CallbackForm residentId={residentId} resident={resident} backHref={backHref} saveFunction={saveFunction} />
-                        <CallHistory calls={helpRequest.helpRequestCalls}  />
+                        <CallHistory calls={calls}  />
                     </div>
                 </div>
             </div>
