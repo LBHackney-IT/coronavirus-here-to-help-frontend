@@ -28,32 +28,15 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
     const [errorsExist, setErrorsExist] = useState(null)
 
     const spokeToResidentCallOutcomes = [
-        {
-            label: "Callback complete",
-            value: "callback_complete"
-        },
-        {
-            label: "Refused to engage",
-            value: "refused_to_engage"
-        },
-        {
-            label: "Call rescheduled",
-            value: "call_rescheduled"
-        }
+        {name: "Callback comeplete" ,value: "callback_complete"},
+        {name: "Refused to engage" ,value: "refused_to_engage"},
+        {name: "Call rescheduled" ,value: "call_rescheduled"},
+
     ];
     const noAnswerCallOutcomes = [
-        {
-            label: "Voicemail left",
-            value: "voicemail"
-        },
-        {
-            label: "Wrong number",
-            value: "wrong_number"
-        },
-        {
-            label: "No answer machine",
-            value: "no_answer_machine"
-        }
+        {name: "Voicemail left" ,value: "voicemail"},
+        {name: "Wrong number" , value: "wrong_number"},
+        {name: "No answer machine" ,value: "no_answer_machine"},
     ];
     const callTypes = [
         "Contact Tracing",
@@ -236,11 +219,11 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
                                                                     {spokeToResidentCallOutcomes.map((spokeToResidentCallOutcome) => {
                                                                         return (
                                                                             <Checkbox
-                                                                                id={spokeToResidentCallOutcome.value}
+                                                                                id={spokeToResidentCallOutcome.name}
                                                                                 name="spokeToResidentCallOutcome"
                                                                                 type="checkbox"
                                                                                 value={spokeToResidentCallOutcome.value}
-                                                                                label={spokeToResidentCallOutcome.label}
+                                                                                label={spokeToResidentCallOutcome.name}
                                                                                 aria-describedby="CallOutcome-hint"
                                                                                 onCheckboxChange={onCheckboxChangeUpdate}>
                                                                             </Checkbox>
@@ -275,11 +258,11 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
                                                                 {noAnswerCallOutcomes.map((noAnswerCallOutcome) => {
                                                                     return (
                                                                         <Checkbox
-                                                                            id={noAnswerCallOutcome.value}
+                                                                            id={noAnswerCallOutcome.name}
                                                                             name="noAnswerCallOutcome"
                                                                             type="checkbox"
                                                                             value={noAnswerCallOutcome.value}
-                                                                            label={noAnswerCallOutcome.label}
+                                                                            label={noAnswerCallOutcome.name}
                                                                             onCheckboxChange={onCheckboxChangeUpdate}
                                                                             aria-describedby="CallOutcome-hint">
                                                                         </Checkbox>

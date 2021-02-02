@@ -6,7 +6,7 @@ const joinNameParts = (obj) => [obj.FirstName, obj.LastName].join(' ');
 const joinAddressParts = (obj) =>
     [obj.AddressFirstLine, obj.AddressSecondLine, obj.AddressThirdLine].join(', ');
 const unsuccessfulCalls = (collection) =>
-    collection.filter((c) => /refused_to_engage|wrong_number/.test(c.CallOutcome)).length;
+    collection.filter((c) => /no_answer_machine|voicemail/.test(c.CallOutcome)).length;
 const replaceIfShielding = (helpType) => helpType !== SHIELDING ? helpType : CEV;
 
 const ToCallbackList = (callbacks) => {
@@ -21,7 +21,7 @@ const ToCallbackList = (callbacks) => {
             unsuccessfulCallAttempts: unsuccessfulCalls(callback.HelpRequestCalls),
             followUpRequired: callback.CallbackRequired,
             assignedTo: callback.AssignedTo,
-            rescheduledAt: callback.RescheduledAt
+            rescheduledAt: callback.RescheduledAt,
         };
     });
 };

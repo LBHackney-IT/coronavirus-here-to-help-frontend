@@ -46,7 +46,8 @@
                 "HelpRequestId": 11,
                 "CallType": "Contact Tracing",
                 "CallDirection": "inbound",
-                "CallOutcome": "follow_up_requested",
+                "CallOutcome": "callback_complete",
+                "CallHandler": "Bart Simpson",
                 "CallDateTime": "2021-01-18T08:22:31.274Z"
             },
             {
@@ -54,7 +55,8 @@
                 "HelpRequestId": 11,
                 "CallType": "Contact Tracing",
                 "CallDirection": "inbound",
-                "CallOutcome": "follow_up_requested",
+                "CallOutcome": "callback_complete",
+                "CallHandler": "Bart Simpson",
                 "CallDateTime": "2021-01-23T18:16:35.195Z"
             }
         ]
@@ -104,18 +106,11 @@
             {
                 "Id": 23,
                 "HelpRequestId": 12,
-                "CallType": "Welfare",
+                "CallType": "Welfare Call",
                 "CallDirection": "outbound",
-                "CallOutcome": "follow_up_requested",
+                "CallOutcome": "wrong_number",
+                "CallHandler": "Bart Simpson",
                 "CallDateTime": "2021-01-26T15:12:25.562Z"
-            },
-            {
-                "Id": 24,
-                "HelpRequestId": 12,
-                "CallType": "Shielding",
-                "CallDirection": "outbound",
-                "CallOutcome": "follow_up_requested",
-                "CallDateTime": "2021-01-11T08:04:28.136Z"
             }
         ]
     },
@@ -124,7 +119,7 @@
         "ResidentId": 3,
         "AssignedTo": "Person A",
         "AdviceNotes": "est reiciendis et",
-        "CallbackRequired": null,
+        "CallbackRequired": true,
         "CurrentSupport": "User-centric",
         "CurrentSupportFeedback": "cumque rem sequi quam aliquam",
         "DateTimeRecorded": "2021-01-08T00:21:55.847Z",
@@ -164,17 +159,19 @@
             {
                 "Id": 25,
                 "HelpRequestId": 13,
-                "CallType": "Welfare",
+                "CallType": "Welfare Call",
                 "CallDirection": "inbound",
-                "CallOutcome": "wrong_numbercallback_complete",
+                "CallOutcome": "wrong_number,callback_complete",
+                "CallHandler": "Homer Simpson",
                 "CallDateTime": "2020-12-23T06:51:24.613Z"
             },
             {
                 "Id": 26,
                 "HelpRequestId": 13,
-                "CallType": "Welfare",
+                "CallType": "Welfare Call",
                 "CallDirection": "outbound",
                 "CallOutcome": "wrong_number",
+                "CallHandler": "Bart Simpson",
                 "CallDateTime": "2021-01-04T23:26:15.066Z"
             }
         ]
@@ -184,12 +181,12 @@
         "ResidentId": 3,
         "AssignedTo": "Person B",
         "AdviceNotes": "dolores distinctio molestias",
-        "CallbackRequired": null,
+        "CallbackRequired": false,
         "CurrentSupport": "Liechtenstein",
         "CurrentSupportFeedback": "laboriosam omnis eius velit et",
         "DateTimeRecorded": "2021-01-07T04:45:58.379Z",
         "GettingInTouchReason": "est dolor dolores",
-        "HelpNeeded": "Welfare",
+        "HelpNeeded": "Welfare Call",
         "HelpWithAccessingFood": false,
         "HelpWithAccessingInternet": null,
         "HelpWithAccessingMedicine": false,
@@ -234,7 +231,7 @@
                 "HelpRequestId": 14,
                 "CallType": "Shielding",
                 "CallDirection": "outbound",
-                "CallOutcome": "wrong_numbercallback_complete",
+                "CallOutcome": "wrong_number,callback_complete",
                 "CallDateTime": "2021-01-05T09:52:55.258Z"
             }
         ]
@@ -286,7 +283,8 @@
                 "HelpRequestId": 15,
                 "CallType": "Help Request",
                 "CallDirection": "inbound",
-                "CallOutcome": "follow_up_requested",
+                "CallOutcome": "callback_complete",
+                "CallHandler": "Lisa Simpson",
                 "CallDateTime": "2021-01-07T01:26:00.007Z"
             },
             {
@@ -294,7 +292,8 @@
                 "HelpRequestId": 15,
                 "CallType": "Contact Tracing",
                 "CallDirection": "outbound",
-                "CallOutcome": "follow_up_requested",
+                "CallOutcome": "callback_complete",
+                "CallHandler": "Lisa Simpson",
                 "CallDateTime": "2021-01-15T11:32:17.750Z"
             }
         ]

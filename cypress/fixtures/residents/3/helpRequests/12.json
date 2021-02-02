@@ -43,9 +43,9 @@
         {
             "Id": 23,
             "HelpRequestId": 12,
-            "CallType": "Welfare",
+            "CallType": "Welfare Call",
             "CallDirection": "outbound",
-            "CallOutcome": "follow_up_requested",
+            "CallOutcome": "callback_complete",
             "CallDateTime": "2021-01-26T15:12:25.562Z"
         },
         {
@@ -53,7 +53,7 @@
             "HelpRequestId": 12,
             "CallType": "Shielding",
             "CallDirection": "outbound",
-            "CallOutcome": "follow_up_requested",
+            "CallOutcome": "callback_complete",
             "CallDateTime": "2021-01-11T08:04:28.136Z"
         }
     ]

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from 'react';
 import { Button, Checkbox, Dropdown } from "../components/Form";
 
-const callTypes = ["All", "Help Request", "CEV", "Welfare", "Shielding"];
+const callTypes = ["All", "Help Request", "CEV", "Welfare Call", "Shielding"];
 const callHandlers = ["Annalyvia", "Ryan", "Ben", "Liudvikas", "Kat", "Marten", "John"]
 
 export default function AssignCallsPage() {
