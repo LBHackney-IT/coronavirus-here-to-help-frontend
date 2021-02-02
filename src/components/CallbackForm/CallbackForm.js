@@ -41,7 +41,7 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
     const callTypes = [
         "Contact Tracing",
         "CEV",
-        "Welfare",
+        "Welfare Call",
         "Help Request",
     ];
     const followupRequired = [
