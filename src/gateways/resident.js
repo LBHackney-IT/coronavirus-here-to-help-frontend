@@ -20,6 +20,30 @@ const ToResident = (response) => {
     };
 };
 
+const ToPatchResidentObject = (response) => {
+    let object = {
+        ResidentId: response.Id,
+        FirstName: response.firstName,
+        LastName: response.lastName,
+        DobDay: response.dobDay,
+        DobMonth: response.dobMonth,
+        DobYear: response.dobYear,
+        ContactTelephoneNumber: response.contactTelephoneNumber,
+        ContactMobileNumber: response.contactMobileNumber,
+        EmailAddress: response.emailAddress,
+        AddressFirstLine: response.addressFirstLine,
+        AddressSecondLine: response.addressSecondLine,
+        AddressThirdLine: response.addressThirdLine,
+        PostCode: response.postcode,
+        uprn: response.Uprn,
+        nhsNumber: response.NhsNumber,
+    }
+
+    Object.keys(object).forEach((key) => (object[key] == null) && delete object[key]);
+
+    return JSON.stringify(object);
+}
+
 export class ResidentGateway extends DefaultGateway {
     async getResidentsBySearchParams(postcode, firstName, lastName) {
         const response = await this.getFromUrl(
@@ -31,4 +55,8 @@ export class ResidentGateway extends DefaultGateway {
         const response = await this.getFromUrl(`v4/residents/${residentId}`);
         return ToResident(response);
     }
+    async setResident(residentId, requestBody) {
+        return await this.patchToUrl(`v4/residents/${residentId}`, ToPatchResidentObject(requestBody));
+    }
+
 }
