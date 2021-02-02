@@ -7,6 +7,7 @@ import { CallHandlerGateway } from '../gateways/call-handler';
 import { CallbackGateway } from '../gateways/callback';
 import { HelpRequestGateway } from '../gateways/help-request';
 import { useRouter } from 'next/router';
+import { callTypes } from '../helpers/constants';
 
 export default function AssignCallsPage() {
     const router = useRouter();
@@ -15,8 +16,6 @@ export default function AssignCallsPage() {
     const [selectedCallType, setSelectedCallType] = useState('All');
     const [selectedAssignment, setSelectedAssignment] = useState([]);
     const [errorsExist, setErrorsExist] = useState(null);
-
-    const callTypes = ['All', 'Help Request', 'CEV', 'Welfare Call', 'Contact Tracing'];
 
     const callbackGateway = new CallbackGateway();
     const gateway = new HelpRequestGateway();
@@ -79,9 +78,9 @@ export default function AssignCallsPage() {
                 }
             });
 
-            if (selectedAssignment == 'unassigned') {
+            if (selectedAssignment == 'unassigned' && unassignedCallbacks.length > 0) {
                 assignCases(unassignedCallbacks, assignmentCount);
-            } else if (selectedAssignment == 'assigned') {
+            } else if (selectedAssignment == 'assigned' && assignedCallbacks.length > 0) {
                 let toBeReassigned = [];
                 const averageCaseCount = assignedCallbacks.length / selectedCallHandlers.length;
                 assignedCallbacks.forEach((callback) => {
@@ -108,8 +107,12 @@ export default function AssignCallsPage() {
                         toBeReassigned.push(callback);
                     }
                 });
-                let newAssignmentCount = assignCases(toBeReassigned, assignmentCount);
-                assignCases(unassignedCallbacks, newAssignmentCount);
+                if (toBeReassigned > 0) {
+                    let newAssignmentCount = assignCases(toBeReassigned, assignmentCount);
+                }
+                if (unassignedCallbacks > 0) {
+                    assignCases(unassignedCallbacks, newAssignmentCount || assignmentCount);
+                }
             }
 
             router.push('/callback-list');
@@ -151,14 +154,12 @@ export default function AssignCallsPage() {
                 </div>
             )}
             <div>
-                <Link href="/">
-                    <a
-                        href="#"
-                        className="govuk-back-link  lbh-back-link"
-                        data-testid="assign-call-back_button">
-                        Back
-                    </a>
-                </Link>
+                <a
+                    href="/dashboard"
+                    className="govuk-back-link  lbh-back-link"
+                    data-testid="assign-call-back_button">
+                    Back
+                </a>
 
                 <h1 className="govuk-heading-xl" style={{ marginBottom: '20px' }}>
                     Assign calls
@@ -185,13 +186,13 @@ export default function AssignCallsPage() {
                             label="Unassigned cases"
                             value="unassigned"
                             onCheckboxChange={updateSelectedAssignment}
-                            data-testid="assign-call-unassigned-checkbox"
                         />
                         <Checkbox
                             key="assigned-cases-checkbox"
                             label="Assigned cases"
                             value="assigned"
                             onCheckboxChange={updateSelectedAssignment}
+                            data-testid="assign-call-assigned-checkbox"
                         />
                     </div>
                     <h3
@@ -225,7 +226,7 @@ export default function AssignCallsPage() {
                             }}
                             data-testid="assign-call-assign_button"
                         />
-                        <Link href="/">
+                        <Link href="/dashboard">
                             <Button
                                 text="Cancel"
                                 addClass="govuk-button--secondary"
