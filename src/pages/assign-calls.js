@@ -107,10 +107,11 @@ export default function AssignCallsPage() {
                         toBeReassigned.push(callback);
                     }
                 });
-                if (toBeReassigned > 0) {
-                    let newAssignmentCount = assignCases(toBeReassigned, assignmentCount);
+                let newAssignmentCount;
+                if (toBeReassigned.length > 0) {
+                    newAssignmentCount = assignCases(toBeReassigned, assignmentCount);
                 }
-                if (unassignedCallbacks > 0) {
+                if (unassignedCallbacks.length > 0) {
                     assignCases(unassignedCallbacks, newAssignmentCount || assignmentCount);
                 }
             }
