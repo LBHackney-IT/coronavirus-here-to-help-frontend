@@ -46,7 +46,8 @@ export default function HomePage() {
                             <a
                                 href="/assign-calls"
                                 className="govuk-button lbh-button js-cta-btn"
-                                data-module="govuk-button">
+                                data-module="govuk-button"
+                                data-testid="assign-calls_button">
                                 Go
                             </a>
                         </td>

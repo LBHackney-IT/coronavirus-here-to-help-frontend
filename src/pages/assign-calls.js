@@ -14,6 +14,7 @@ export default function AssignCallsPage() {
     const [selectedCallHandlers, setSelectedCallHandlers] = useState([]);
     const [selectedCallType, setSelectedCallType] = useState('All');
     const [selectedAssignment, setSelectedAssignment] = useState([]);
+    const [errorsExist, setErrorsExist] = useState(null);
 
     const callTypes = ['All', 'Help Request', 'CEV', 'Welfare Call', 'Contact Tracing'];
 
@@ -42,70 +43,77 @@ export default function AssignCallsPage() {
     };
 
     const assignCases = (cases, assignmentCount) => {
-      cases.forEach(async (callback) => {
-        const [sortedHandlers] = Object.entries(assignmentCount).sort(
-            ([, v1], [, v2]) => v1 - v2
-        );
-        assignmentCount[sortedHandlers[0]] += 1;
+        cases.forEach(async (callback) => {
+            const [sortedHandlers] = Object.entries(assignmentCount).sort(
+                ([, v1], [, v2]) => v1 - v2
+            );
+            assignmentCount[sortedHandlers[0]] += 1;
 
-        const updateObj = { assignedTo: sortedHandlers[0] };
-        await gateway.patchHelpRequest(callback.helpRequestId, updateObj);
-      });
-      return assignmentCount;
-    }
+            const updateObj = { assignedTo: sortedHandlers[0] };
+            await gateway.patchHelpRequest(callback.helpRequestId, updateObj);
+        });
+        return assignmentCount;
+    };
 
     const handleAssign = async (event) => {
-        let callbacks = await callbackGateway.getCallback({});
-        if (selectedCallType != 'All') {
-            callbacks = callbacks.filter((callback) => callback.callType == selectedCallType);
-        }
-
-        let assignmentCount = {};
-        selectedCallHandlers.forEach(
-            (handler) => (assignmentCount = { ...assignmentCount, [handler]: 0 })
-        );
-
-        let unassignedCallbacks = [];
-        let assignedCallbacks = [];
-        callbacks.forEach((callback) => {
-          if (callback.assignedTo == null || !callback.assignedTo) {
-              unassignedCallbacks.push(callback);
-          } else {
-            assignedCallbacks.push(callback);
-          }
-         });
-
-        if (selectedAssignment == 'unassigned') {
-          assignCases(unassignedCallbacks, assignmentCount)
-        }
-        else if(selectedAssignment == 'assigned') {
-          let toBeReassigned = [];
-          const averageCaseCount = assignedCallbacks.length / selectedCallHandlers.length
-          assignedCallbacks.forEach(callback => {
-            if (selectedCallHandlers.includes(callback.assignedTo) && assignmentCount[callback.assignedTo] < averageCaseCount){
-              assignmentCount[callback.assignedTo] += 1;
-            }
-            else {
-              toBeReassigned.push(callback)
-            }
-        });
-          assignCases(toBeReassigned, assignmentCount)
+        if (selectedAssignment.length == 0 || selectedCallHandlers.length == 0) {
+            setErrorsExist(true);
         } else {
-          let toBeReassigned = [];
-          const averageCaseCount = callbacks.length / selectedCallHandlers.length
-          assignedCallbacks.forEach(callback => {
-            if (selectedCallHandlers.includes(callback.assignedTo) && assignmentCount[callback.assignedTo] < averageCaseCount){
-              assignmentCount[callback.assignedTo] += 1;
+            let callbacks = await callbackGateway.getCallback({});
+            if (selectedCallType != 'All') {
+                callbacks = callbacks.filter((callback) => callback.callType == selectedCallType);
             }
-            else {
-              toBeReassigned.push(callback)
-            }
-        });
-        let newAssignmentCount = assignCases(toBeReassigned, assignmentCount)
-        assignCases(unassignedCallbacks, newAssignmentCount)
-      }
 
-        router.push('/callback-list');
+            let assignmentCount = {};
+            selectedCallHandlers.forEach(
+                (handler) => (assignmentCount = { ...assignmentCount, [handler]: 0 })
+            );
+
+            let unassignedCallbacks = [];
+            let assignedCallbacks = [];
+            callbacks.forEach((callback) => {
+                if (callback.assignedTo == null || !callback.assignedTo) {
+                    unassignedCallbacks.push(callback);
+                } else {
+                    assignedCallbacks.push(callback);
+                }
+            });
+
+            if (selectedAssignment == 'unassigned') {
+                assignCases(unassignedCallbacks, assignmentCount);
+            } else if (selectedAssignment == 'assigned') {
+                let toBeReassigned = [];
+                const averageCaseCount = assignedCallbacks.length / selectedCallHandlers.length;
+                assignedCallbacks.forEach((callback) => {
+                    if (
+                        selectedCallHandlers.includes(callback.assignedTo) &&
+                        assignmentCount[callback.assignedTo] < averageCaseCount
+                    ) {
+                        assignmentCount[callback.assignedTo] += 1;
+                    } else {
+                        toBeReassigned.push(callback);
+                    }
+                });
+                assignCases(toBeReassigned, assignmentCount);
+            } else {
+                let toBeReassigned = [];
+                const averageCaseCount = callbacks.length / selectedCallHandlers.length;
+                assignedCallbacks.forEach((callback) => {
+                    if (
+                        selectedCallHandlers.includes(callback.assignedTo) &&
+                        assignmentCount[callback.assignedTo] < averageCaseCount
+                    ) {
+                        assignmentCount[callback.assignedTo] += 1;
+                    } else {
+                        toBeReassigned.push(callback);
+                    }
+                });
+                let newAssignmentCount = assignCases(toBeReassigned, assignmentCount);
+                assignCases(unassignedCallbacks, newAssignmentCount);
+            }
+
+            router.push('/callback-list');
+        }
     };
 
     const updateSelectedAssignment = (value) => {
@@ -122,9 +130,32 @@ export default function AssignCallsPage() {
 
     return (
         <Layout>
+            {errorsExist && (
+                <div
+                    className="govuk-error-summary"
+                    aria-labelledby="error-summary-title"
+                    role="alert"
+                    tabIndex="-1"
+                    data-module="govuk-error-summary"
+                    data-testid="assign-call-validation-error">
+                    <h2 className="govuk-error-summary__title" id="error-summary-title">
+                        There is a problem
+                    </h2>
+                    <div className="govuk-error-summary__body">
+                        <ul className="govuk-list govuk-error-summary__list">
+                            <li>
+                                <a href="#">You have not completed all the fields</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            )}
             <div>
                 <Link href="/">
-                    <a href="#" className="govuk-back-link  lbh-back-link">
+                    <a
+                        href="#"
+                        className="govuk-back-link  lbh-back-link"
+                        data-testid="assign-call-back_button">
                         Back
                     </a>
                 </Link>
@@ -142,6 +173,7 @@ export default function AssignCallsPage() {
                                 onChange={(type) => {
                                     setSelectedCallType(type);
                                 }}
+                                data-testid="assign-call-type_dropdown"
                             />
                             <div className="govuk-hint">Select call help type</div>
                         </div>
@@ -160,6 +192,7 @@ export default function AssignCallsPage() {
                                 label="Unassigned cases"
                                 value="unassigned"
                                 onCheckboxChange={updateSelectedAssignment}
+                                data-testid="assign-call-unassigned-checkbox"
                             />
                             <Checkbox
                                 key="assigned-cases-checkbox"
@@ -182,6 +215,7 @@ export default function AssignCallsPage() {
                                         label={callHandler}
                                         value={callHandler}
                                         onCheckboxChange={updateSelectedCallHandlers}
+                                        data-testid="assign-call-handler-checkbox"
                                     />
                                 );
                             })}
@@ -197,9 +231,14 @@ export default function AssignCallsPage() {
                             onClick={(event) => {
                                 handleAssign(event);
                             }}
+                            data-testid="assign-call-assign_button"
                         />
                         <Link href="/">
-                            <Button text="Cancel" addClass="govuk-button--secondary" />
+                            <Button
+                                text="Cancel"
+                                addClass="govuk-button--secondary"
+                                data-testid="assign-call-cancel_button"
+                            />
                         </Link>
                     </div>
                 </div>
