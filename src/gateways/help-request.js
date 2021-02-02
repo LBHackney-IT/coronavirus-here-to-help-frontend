@@ -1,31 +1,6 @@
 import { DefaultGateway } from '../gateways/default-gateway';
-import {CEV, SHIELDING, callOutcomes} from '../helpers/constants';
-const ToUpcomingAction = (helpRequestCalls, callbackRequired, initialCallbackCompleted) => {
-    let latestCallOutcomes
-    let latestCallOutcomesArray = []
-    if (callbackRequired == false && initialCallbackCompleted == true){
-        return ""
-    }
-    if(helpRequestCalls?.length > 0){
-        latestCallOutcomes = helpRequestCalls.pop()?.CallOutcome
-        if(latestCallOutcomes?.includes(",")){
-            latestCallOutcomes.split(",").forEach(outcome => {
-                latestCallOutcomesArray.push(callOutcomes[outcome])
-            })
-            latestCallOutcomes = latestCallOutcomesArray.join(",")
-        }else{
-            latestCallOutcomes = callOutcomes[latestCallOutcomes]
-        }
-        if(latestCallOutcomes?.toLowerCase().includes('call rescheduled')){
-            return "Call rescheduled"
-        } else{
-            return "Follow-up required"
-        }
-    }else {
-        return "Call required"
-    }
+import {CEV, SHIELDING} from '../helpers/constants';
 
-}
 const ToHelpRequestDomain = (hr) => {
     return {
         id: hr.Id,
@@ -67,10 +42,35 @@ const ToHelpRequestDomain = (hr) => {
         rescheduledAt: hr.RescheduledAt,
         requestedDate: hr.RequestedDate,
         helpRequestCalls: ToCalls(hr.HelpRequestCalls),
-        upcomingCallOutcome:ToUpcomingAction(hr.HelpRequestCalls, hr.CallbackRequired, hr.InitialCallbackCompleted)
+        upcomingCallOutcome:ToUpcomingAction(hr.HelpRequestCalls, hr.CallbackRequired, hr.InitialCallbackCompleted),
+        totalCompletedCalls: ToTotalCompletedCalls(hr.HelpRequestCalls)
     };
 };
 
+const ToUpcomingAction = (helpRequestCalls, callbackRequired, initialCallbackCompleted) => {
+
+    if (callbackRequired == false && initialCallbackCompleted == true)  return "" ;
+
+    if(helpRequestCalls.length == 0) return "Call required";
+   
+    if(helpRequestCalls.pop()?.CallOutcome?.includes('call_rescheduled')) return "Call rescheduled";
+
+    return "Follow-up required";
+
+}
+
+const ToTotalCompletedCalls = (helpRequestCalls) => {
+    let totalCompletedCalls = 0
+    if(helpRequestCalls.length > 0){
+        helpRequestCalls.forEach(call => {
+            if(call.CallOutcome?.includes('callback_complete')){
+                console.log(call)
+                totalCompletedCalls += 1
+            }
+        });
+    }
+    return totalCompletedCalls
+}
 
 
 const ToCalls = (calls) => {
