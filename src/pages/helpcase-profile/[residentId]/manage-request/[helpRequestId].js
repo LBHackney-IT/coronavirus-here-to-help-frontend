@@ -8,15 +8,17 @@ import React, { useEffect, useState } from "react";
 import {HelpRequestGateway} from "../../../../gateways/help-request";
 import {HelpRequestCallGateway} from "../../../../gateways/help-request-call";
 import {useRouter} from "next/router";
+import CallHistory from '../../../../components/CallHistory/CallHistory';
 
 export default function addSupportPage({residentId, helpRequestId}) {
     const backHref = `/helpcase-profile/${residentId}`;
 
     const [resident, setResident] = useState({})
     const [user, setUser] = useState({})
+    const [calls, setCalls] = useState([])
 
     const router = useRouter()
-
+    
     const retreiveResidentAndUser = async ( ) => {
         const gateway = new ResidentGateway();
         const resident = await gateway.getResident(residentId);
@@ -25,8 +27,18 @@ export default function addSupportPage({residentId, helpRequestId}) {
         setUser(user) 
     }
 
+    const retreiveHelpRequest = async ( ) => {
+        const gateway = new HelpRequestGateway();
+        const response = await gateway.getHelpRequest(residentId, helpRequestId);
+        setCalls(response.helpRequestCalls.sort((a,b) => new Date(b.callDateTime) - new Date(a.callDateTime)))
+    }
+
     useEffect(async () => {
         await retreiveResidentAndUser()
+    }, []);
+
+    useEffect(async () => {
+        await retreiveHelpRequest()
     }, []);
 
     const saveFunction = async function(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade) {
@@ -69,6 +81,8 @@ export default function addSupportPage({residentId, helpRequestId}) {
                     </div>
                     <div className="govuk-grid-column-three-quarters-from-desktop">
                         <CallbackForm residentId={residentId} resident={resident} backHref={backHref} saveFunction={saveFunction} />
+                        <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+                        <CallHistory calls={calls}  />
                     </div>
                 </div>
             </div>
