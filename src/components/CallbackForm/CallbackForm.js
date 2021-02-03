@@ -157,9 +157,11 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             </div>}
             <h1 className="govuk-heading-xl"
                 style={{marginTop: "0px", marginBottom: "40px"}}> {resident.firstName} {resident.lastName}
-                <span class="govuk-caption-l">
-                    <strong>CTAS ID:</strong> {helpRequest.nhsCtasId || "Not found"}
-                </span>
+                {helpRequest ? (
+                  <span class="govuk-caption-l">
+                      <strong>CTAS ID:</strong> {helpRequest.nhsCtasId || "Not found"}
+                  </span>
+                ) : ('')}
             </h1>
             <form >
                 <div>

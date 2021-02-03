@@ -61,6 +61,7 @@
         "NhsCtasId": "string",
         "AssignedTo": "Person B",
         "RescheduledAt": "",
+        "NhsCtasId": "123abc",
         "HelpRequestCalls": [
             {
                 "id": 23,
@@ -142,6 +143,7 @@
         "NhsCtasId": "string",
         "AssignedTo": "Person A",
         "RescheduledAt": "",
+        "NhsCtasId": "123abc",
         "HelpRequestCalls": [
             {
                 "id": 205,
@@ -223,6 +225,7 @@
         "NhsCtasId": "string",
         "AssignedTo": "Person B",
         "RescheduledAt": "",
+        "NhsCtasId": "123abc",
         "HelpRequestCalls": [
             {
                 "id": 69,
@@ -304,6 +307,7 @@
         "NhsCtasId": "string",
         "AssignedTo": "Person B",
         "RescheduledAt": "04:44",
+        "NhsCtasId": "123abc",
         "HelpRequestCalls": [
             {
                 "id": 129,
@@ -385,6 +389,7 @@
         "NhsCtasId": "string",
         "AssignedTo": "Person D",
         "RescheduledAt": "",
+        "NhsCtasId": "123abc",
         "HelpRequestCalls": [
             {
                 "id": 297,
@@ -466,6 +471,7 @@
         "NhsCtasId": "string",
         "AssignedTo": "Person A",
         "RescheduledAt": "",
+        "NhsCtasId": "123abc",
         "HelpRequestCalls": [
             {
                 "id": 283,

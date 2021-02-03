@@ -39,6 +39,7 @@
     "WhenIsMedicinesDelivered": "",
     "RescheduledAt": "05:24",
     "RequestedDate": "2021-01-30T05:15:50.027Z",
+    "NhsCtasId": "123abc",
     "HelpRequestCalls": [
         {
             "Id": 23,
