@@ -2,10 +2,10 @@ import { DefaultGateway } from '../gateways/default-gateway';
 
 export class AddressesGateway extends DefaultGateway {
     async getAddresses(postcode) {
-        //     const response = await this.getFromUrl(`v4/residents/${residentId}`);
-        //     return ToResident(response);
-        // }
-        
+        console.log("addresses gw")
+        const response = await this.getFromUrl(`addresses/something`);
+        return response;
+
         return {
             address: [
                 {

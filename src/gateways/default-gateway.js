@@ -6,6 +6,7 @@ export class DefaultGateway {
     }
 
     async getFromUrl(url) {
+        console.log("getFromUrl")
         url = this.createFullUrl(url);
 
         console.log(url);
