@@ -36,6 +36,7 @@ const ToHelpRequestDomain = (hr) => {
         onBehalfContactNumber: hr.OnBehalfContactNumber,
         recordStatus: hr.RecordStatus,
         relationshipWithResident: hr.RelationshipWithResident,
+        nhsCtasId: hr.NhsCtasId,
         urgentEssentials: hr.UrgentEssentials,
         urgentEssentialsAnythingElse: hr.UrgentEssentialsAnythingElse,
         whenIsMedicinesDelivered: hr.WhenIsMedicinesDelivered,
