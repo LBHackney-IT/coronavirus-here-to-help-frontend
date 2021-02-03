@@ -21,8 +21,8 @@ export default function CaseNotes({ caseNotes }) {
                                 id={`case-note-${i}`}
                                 className={`filter ${styles['case-notes-box']}`}
                                 data-testid="case-note-entry">
-                                <h4 className="govuk-heading-s" className="filter">
-                                    <strong>{caseNote.formattedDate} by {caseNote.author}</strong>
+                                <h4 className="govuk-heading-s">
+                                    {caseNote.formattedDate} by {caseNote.author}
                                 </h4>
                                 <p>{caseNote.helpNeeded}: {caseNote.note}</p>
                             </div>
