@@ -16,20 +16,22 @@ export default function addSupportPage({residentId, helpRequestId}) {
     const [resident, setResident] = useState({})
     const [user, setUser] = useState({})
     const [calls, setCalls] = useState([])
+    const [helpRequest, setHelpRequest] = useState([])
 
     const router = useRouter()
-    
+
     const retreiveResidentAndUser = async ( ) => {
         const gateway = new ResidentGateway();
         const resident = await gateway.getResident(residentId);
         setResident(resident)
         const user = unsafeExtractUser()
-        setUser(user) 
+        setUser(user)
     }
 
     const retreiveHelpRequest = async ( ) => {
         const gateway = new HelpRequestGateway();
         const response = await gateway.getHelpRequest(residentId, helpRequestId);
+        setHelpRequest(response);
         setCalls(response.helpRequestCalls.sort((a,b) => new Date(b.callDateTime) - new Date(a.callDateTime)))
     }
 
@@ -80,7 +82,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
                         <KeyInformation resident={resident}/>
                     </div>
                     <div className="govuk-grid-column-three-quarters-from-desktop">
-                        <CallbackForm residentId={residentId} resident={resident} backHref={backHref} saveFunction={saveFunction} />
+                        <CallbackForm residentId={residentId} resident={resident} helpRequest={helpRequest} backHref={backHref} saveFunction={saveFunction} />
                         <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
                         <CallHistory calls={calls}  />
                     </div>

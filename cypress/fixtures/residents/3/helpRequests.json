@@ -40,6 +40,7 @@
         "WhenIsMedicinesDelivered": "",
         "RescheduledAt": "05:24",
         "RequestedDate": "2021-01-30T05:15:50.027Z",
+        "NhsCtasId": "123abc",
         "HelpRequestCalls": [
             {
                 "Id": 23,
@@ -94,6 +95,7 @@
         "RescheduledAt": "04:40",
         "RequestedDate": "2021-02-03T05:09:47.123Z",
         "CaseNotes": "[{\"author\":\"Professor Umbridge\",\"noteDate\":\"Thu, 10 Sep 2020 16:56:06 GMT\",\"note\":\"*** CREATED ***\"}]",
+        "NhsCtasId": "123abc",
         "HelpRequestCalls": [
             {
                 "Id": 21,
@@ -156,6 +158,7 @@
         "WhenIsMedicinesDelivered": "",
         "RescheduledAt": "",
         "RequestedDate": "2021-02-02T02:55:04.767Z",
+        "NhsCtasId": "123abc",
         "HelpRequestCalls": [
             {
                 "Id": 25,
@@ -219,6 +222,7 @@
         "RescheduledAt": "",
         "RequestedDate": "2021-01-30T10:23:55.751Z",
         "CaseNotes": "[{\"author\":\"Harry Potter\",\"noteDate\":\"Thu, 8 Sep 2020 16:56:06 GMT\",\"note\":\"*** CREATED ***\"}, {\"author\":\"Ronald Weasley\",\"noteDate\":\"Thu, 6 Sep 2020 16:56:06 GMT\",\"note\":\"*** CREATED ***\"}]",
+        "NhsCtasId": "123abc",
         "HelpRequestCalls": [
             {
                 "Id": 27,
@@ -280,6 +284,7 @@
         "RescheduledAt": "05:38",
         "RequestedDate": "2021-01-31T09:13:21.053Z",
         "CaseNotes": "[{\"author\":\"Bilbo Baggins\",\"noteDate\":\"Thu, 7 Sep 2020 16:56:06 GMT\",\"note\":\"*** CREATED ***\"}]",
+        "NhsCtasId": "123abc",
         "HelpRequestCalls": [
             {
                 "Id": 29,
