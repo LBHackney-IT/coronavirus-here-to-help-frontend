@@ -2,6 +2,10 @@ import { DefaultGateway } from '../gateways/default-gateway';
 
 export class AddressesGateway extends DefaultGateway {
     async getAddresses(postcode) {
+        //     const response = await this.getFromUrl(`v4/residents/${residentId}`);
+        //     return ToResident(response);
+        // }
+        
         return {
             address: [
                 {
@@ -11,7 +15,7 @@ export class AddressesGateway extends DefaultGateway {
                     line4: ' LONDON',
                     town: 'LONDON',
                     postcode: 'E8 1DY',
-                    UPRN: 123456789,
+                    UPRN: '123456789',
                     addressKey: '12345679',
                     usrn: 123456789,
                     addressStatus: 'Approved',
