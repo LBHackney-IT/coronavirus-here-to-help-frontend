@@ -24,8 +24,8 @@ describe('View helpcase profile page', () => {
     it('displays support requested and support recieved', () => {
         cy.visit(`http://localhost:3000/helpcase-profile/3`);
         cy.get('[data-testid=support-requested-table_row]').should('have.length', 4);
-        cy.get('[data-testid=support-requested-table-help-needed]').first().should('contain', "Help Request");
-        cy.get('[data-testid=support-requested-table-calls-count]').first().should('contain', "2");
+        cy.get('[data-testid=support-requested-table-help-needed]').first().should('contain', "Contact Tracing");
+        cy.get('[data-testid=support-requested-table-calls-count]').first().should('contain', "1");
 
         cy.get('[data-testid=support-received-tab]').click({force: true})
         cy.get('[data-testid=support-received-table_row]').should('have.length', 1);
@@ -41,7 +41,7 @@ describe('View helpcase profile page', () => {
     });
     it('displays case notes ordered by date', () => {
         cy.visit(`http://localhost:3000/helpcase-profile/3`);
-        cy.get('[data-testid=case-note-entry]').should('have.length', 5);
+        cy.get('[data-testid=case-note-entry]').should('have.length', 4);
         cy.get('[data-testid=case-note-entry]').first().should('contain', "2020-09-10 17:56 by Professor Umbridge");
         cy.get('[data-testid=case-note-entry]').first().should('contain', "Help Request: *** CREATED ***");
         cy.get('[data-testid=case-note-entry]').last().should('contain', "2020-09-06 17:56 by Ronald Weasley");

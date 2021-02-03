@@ -160,13 +160,13 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
             </h1>
             <form >
                 <div>
-                    <div class="govuk-grid-column">
-                        <div class="govuk-form-group lbh-form-group">
+                    <div className="govuk-grid-column">
+                        <div className="govuk-form-group lbh-form-group">
                             <div>
-                                <div class="govuk-grid-column">
-                                    <div class="govuk-form-group lbh-form-group">
-                                        <fieldset class="govuk-fieldset">
-                                            <legend class="govuk-fieldset__legend mandatoryQuestion"> Call type required</legend>
+                                <div className="govuk-grid-column">
+                                    <div className="govuk-form-group lbh-form-group">
+                                        <fieldset className="govuk-fieldset">
+                                            <legend className="govuk-fieldset__legend mandatoryQuestion"> Call type required</legend>
                                             <br />
                                             <RadioButton radioButtonItems={callTypes} name="HelpNeeded" onSelectOption = {callBackFunction} data-testid="call-type-radio-button" />
                                         </fieldset>
@@ -174,13 +174,13 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
                                 </div>
                             </div>
                             <br/>
-                            <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend mandatoryQuestion"> Do you need to log new call details? </legend>
+                            <fieldset className="govuk-fieldset">
+                                <legend className="govuk-fieldset__legend mandatoryQuestion"> Do you need to log new call details? </legend>
                                 <br />
-                                <div class="govuk-radios  lbh-radios govuk-radios--conditional" data-module="govuk-radios">
-                                    <div class="govuk-radios__item">
+                                <div className="govuk-radios  lbh-radios govuk-radios--conditional" data-module="govuk-radios">
+                                    <div className="govuk-radios__item">
                                         <input
-                                            class="govuk-radios__input"
+                                            className="govuk-radios__input"
                                             id="CallMade"
                                             name="CallMade"
                                             type="radio"
@@ -189,17 +189,17 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
                                             aria-controls="conditional-CallMade"
                                             aria-expanded="false"
                                         />
-                                        <label class="govuk-label govuk-radios__label" for="CallMade"> Yes </label>
+                                        <label className="govuk-label govuk-radios__label" htmlFor="CallMade"> Yes </label>
                                     </div>
                                     {callMade &&
-                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-CallMade">
-                                        <div class="govuk-form-group lbh-form-group">
-                                            <fieldset class="govuk-fieldset">
-                                                <legend class="govuk-fieldset__legend mandatoryQuestion">Did you speak to a resident?</legend>
-                                                <div class="govuk-radios govuk-radios--inline lbh-radios govuk-radios--conditional" data-module="govuk-radios">
-                                                    <div class="govuk-radios__item">
+                                    <div className="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-CallMade">
+                                        <div className="govuk-form-group lbh-form-group">
+                                            <fieldset className="govuk-fieldset">
+                                                <legend className="govuk-fieldset__legend mandatoryQuestion">Did you speak to a resident?</legend>
+                                                <div className="govuk-radios govuk-radios--inline lbh-radios govuk-radios--conditional" data-module="govuk-radios">
+                                                    <div className="govuk-radios__item">
                                                         <input
-                                                            class="govuk-radios__input"
+                                                            className="govuk-radios__input"
                                                             id="CallDetail"
                                                             name="CallDetail"
                                                             type="radio"
@@ -208,14 +208,14 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
                                                             aria-controls="conditional-CallDetail"
                                                             aria-expanded="false"
                                                         />
-                                                        <label class="govuk-label govuk-radios__label" for="CallDetail">Yes - spoke to resident</label>
+                                                        <label className="govuk-label govuk-radios__label" htmlFor="CallDetail">Yes - spoke to resident</label>
                                                     </div>
                                                     {callOutcome =="spoke to resident" &&
-                                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-CallDetail">
+                                                    <div className="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-CallDetail">
                                                         <div>
-                                                            <div class="display-spoke-to-resident">
-                                                                <div class="govuk-form-group lbh-form-group">
-                                                                    <span id="CallOutcome-hint" class="govuk-hint  lbh-hint">Select a call outcome</span>
+                                                            <div className="display-spoke-to-resident">
+                                                                <div className="govuk-form-group lbh-form-group">
+                                                                    <span id="CallOutcome-hint" className="govuk-hint  lbh-hint">Select a call outcome</span>
                                                                     {spokeToResidentCallOutcomes.map((spokeToResidentCallOutcome) => {
                                                                         return (
                                                                             <Checkbox
@@ -230,14 +230,14 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
                                                                         );
                                                                     })}
                                                                 </div>
-                                                                <div class="display-call-attempted"></div>
+                                                                <div className="display-call-attempted"></div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     }
-                                                    <div class="govuk-radios__item">
+                                                    <div className="govuk-radios__item">
                                                         <input
-                                                            class="govuk-radios__input"
+                                                            className="govuk-radios__input"
                                                             id="CallDetail-2"
                                                             name="CallDetail"
                                                             type="radio"
@@ -246,15 +246,15 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
                                                             aria-controls="conditional-CallDetail-2"
                                                             aria-expanded="false"
                                                         />
-                                                        <label class="govuk-label govuk-radios__label" for="CallDetail-2">
+                                                        <label className="govuk-label govuk-radios__label" htmlFor="CallDetail-2">
                                                             No - call attempted
                                                         </label>
                                                     </div>
                                                     {callOutcome  =="call attempted" &&
-                                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-CallDetail-2">
-                                                        <div class="display-call-attempted">
-                                                            <div class="govuk-form-group lbh-form-group">
-                                                                <span id="CallOutcome-hint" class="govuk-hint  lbh-hint"> Select a call outcome </span>
+                                                    <div className="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-CallDetail-2">
+                                                        <div className="display-call-attempted">
+                                                            <div className="govuk-form-group lbh-form-group">
+                                                                <span id="CallOutcome-hint" className="govuk-hint  lbh-hint"> Select a call outcome </span>
                                                                 {noAnswerCallOutcomes.map((noAnswerCallOutcome) => {
                                                                     return (
                                                                         <Checkbox
@@ -275,17 +275,17 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
                                             </fieldset>
                                         </div>
 
-                                        <div class="govuk-form-group lbh-form-group">
-                                            <fieldset class="govuk-fieldset">
-                                                <legend class="govuk-fieldset__legend mandatoryQuestion"> Who made the call today? </legend>
+                                        <div className="govuk-form-group lbh-form-group">
+                                            <fieldset className="govuk-fieldset">
+                                                <legend className="govuk-fieldset__legend mandatoryQuestion"> Who made the call today? </legend>
                                                 <RadioButton radioButtonItems={whoMadeInitialContact} name="InitialContact" onSelectOption={CallDirectionFunction} />
                                             </fieldset>
                                         </div>
                                     </div>
                                     }
-                                    <div class="govuk-radios__item">
+                                    <div className="govuk-radios__item">
                                         <input
-                                            class="govuk-radios__input"
+                                            className="govuk-radios__input"
                                             id="CallMade-2"
                                             name="CallMade"
                                             type="radio"
@@ -293,7 +293,7 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
                                             onChange = { () => setCallMade(false)}
                                             data-testid="call-type-no-radio-button"
                                         />
-                                        <label class="govuk-label govuk-radios__label" for="CallMade-2">No</label>
+                                        <label className="govuk-label govuk-radios__label" htmlFor="CallMade-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -301,15 +301,15 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
                     </div>
                 </div>
 
-                {/* <hr class="govuk-section-break govuk-section-break--m govuk-section-break" />
-                <h2 class="govuk-heading-l">Case notes:</h2>
-                <h3 class="govuk-heading-m">
+                {/* <hr className="govuk-section-break govuk-section-break--m govuk-section-break" />
+                <h2 className="govuk-heading-l">Case notes:</h2>
+                <h3 className="govuk-heading-m">
                     Add a new case note (optional):
                 </h3>
-                <div class="govuk-form-group">
-                    <span id="NewCaseNote-hint" class="govuk-hint  lbh-hint"></span>
+                <div className="govuk-form-group">
+                    <span id="NewCaseNote-hint" className="govuk-hint  lbh-hint"></span>
                     <textarea
-                        class="govuk-textarea  lbh-textarea"
+                        className="govuk-textarea  lbh-textarea"
                         id="NewCaseNote"
                         name="NewCaseNote"
                         rows="5"
@@ -318,17 +318,17 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
                     </textarea>
                 </div> */}
                 <br></br>
-                <div class="govuk-grid-column">
-                    <div class="govuk-form-group lbh-form-group">
-                        <fieldset class="govuk-fieldset">
-                            <legend class="govuk-fieldset__legend mandatoryQuestion">Follow-up required?</legend>
+                <div className="govuk-grid-column">
+                    <div className="govuk-form-group lbh-form-group">
+                        <fieldset className="govuk-fieldset">
+                            <legend className="govuk-fieldset__legend mandatoryQuestion">Follow-up required?</legend>
                             <br />
                             <RadioButton radioButtonItems={followupRequired} name="FollowUpRequired" optionalClass = "govuk-radios--inline" onSelectOption = {callBackFunction}  data-testid="followup-required-radio-button"/>
                         </fieldset>
                     </div>
                 </div>
                 <div id="btn-bottom-panel">
-                    <div class="govuk-grid-column">
+                    <div className="govuk-grid-column">
                         <Button text="Update" addClass="govuk-!-margin-right-1" onClick={(event)=> { handleUpdate(event)}}  data-testid="callback-form-update_button"/>
                         <Link href={backHref}>
                             <Button text="Cancel" addClass="govuk-button--secondary" data-testid="callback-form-cancel_button"/>

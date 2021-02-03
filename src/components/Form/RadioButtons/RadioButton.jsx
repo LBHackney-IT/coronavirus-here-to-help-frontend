@@ -7,7 +7,7 @@ export default function RadioButton({ radioButtonItems, name , optionalClass, on
         } 
     }
     return (
-        <div class={optionalClass}>
+        <div className={optionalClass}>
             {radioButtonItems.map((radioButtonItem) => {
                 return (
                     <div className="govuk-radios__item">

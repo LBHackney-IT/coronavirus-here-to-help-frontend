@@ -14,4 +14,5 @@ export const callOutcomes = {
   wrong_number: "Wrong number",
   no_answer_machine: "No answer machine" }
 
-  export const helpTypes = [ALL, WELFARE_CALL, HELP_REQUEST, CONTACT_TRACING, CEV]
+export const helpTypes = [ALL, WELFARE_CALL, HELP_REQUEST, CONTACT_TRACING, CEV]
+export const callTypes = ['All', 'Help Request', 'CEV', 'Welfare Call', 'Contact Tracing'];
