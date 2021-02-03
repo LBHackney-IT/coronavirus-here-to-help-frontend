@@ -34,8 +34,8 @@ const ToPatchResidentObject = (response) => {
         AddressFirstLine: response.addressFirstLine,
         AddressSecondLine: response.addressSecondLine,
         AddressThirdLine: response.addressThirdLine,
-        PostCode: response.postcode,
-        uprn: response.Uprn,
+        PostCode: response.postCode,
+        Uprn: response.uprn,
         nhsNumber: response.NhsNumber,
     }
 
@@ -56,6 +56,7 @@ export class ResidentGateway extends DefaultGateway {
         return ToResident(response);
     }
     async setResident(residentId, requestBody) {
+        console.log("request body", ToPatchResidentObject(requestBody));
         return await this.patchToUrl(`v4/residents/${residentId}`, ToPatchResidentObject(requestBody));
     }
 
