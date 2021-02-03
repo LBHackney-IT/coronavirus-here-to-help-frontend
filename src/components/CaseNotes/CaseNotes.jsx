@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { helpTypes } from "../../helpers/constants"
 import Dropdown from "../../components/Form/Dropdown/Dropdown";
-import styles from '../CallHistory/CallHistory.module.scss';
+import styles from '../CaseNotes/CaseNotes.module.scss';
 
 export default function CaseNotes({ caseNotes }) {
     const [filterBy, setFilterBy] = useState("All")
@@ -19,7 +19,7 @@ export default function CaseNotes({ caseNotes }) {
                             <div
                                 key={i}
                                 id={`case-note-${i}`}
-                                className={`filter ${styles['call-history-box']}`}
+                                className={`filter ${styles['case-notes-box']}`}
                                 data-testid="case-note-entry">
                                 <h4 className="govuk-heading-s" className="filter">
                                     <strong>{caseNote.formattedDate} by {caseNote.author}</strong>
