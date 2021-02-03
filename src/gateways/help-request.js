@@ -44,7 +44,8 @@ const ToHelpRequestDomain = (hr) => {
         requestedDate: hr.RequestedDate,
         helpRequestCalls: ToCalls(hr.HelpRequestCalls),
         upcomingCallOutcome:ToUpcomingAction(hr.HelpRequestCalls, hr.CallbackRequired, hr.InitialCallbackCompleted),
-        totalCompletedCalls: ToTotalCompletedCalls(hr.HelpRequestCalls)
+        totalCompletedCalls: ToTotalCompletedCalls(hr.HelpRequestCalls), 
+        caseNotes: hr.CaseNotes
     };
 };
 
