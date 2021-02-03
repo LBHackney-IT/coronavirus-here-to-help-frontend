@@ -49,7 +49,7 @@ describe('View helpcase profile page', () => {
     })
     it('displays filtered case notes ordered by date', () => {
         cy.visit(`http://localhost:3000/helpcase-profile/3`);
-        cy.get('[data-testid=select-dropdown]').select("Welfare Call")
+        cy.get('[data-testid=select-dropdown]').select("Welfare Call", {force: true})
         cy.get('[data-testid=case-note-entry]').should('have.length', 2);
         cy.get('[data-testid=case-note-entry]').first().should('contain', "2020-09-08 17:56 by Harry Potter");
         cy.get('[data-testid=case-note-entry]').first().should('contain', "Welfare Call: *** CREATED ***");
