@@ -8,10 +8,17 @@ export default function CaseNotes({ caseNotes }) {
     const hanleOnChange = (selectedCaseNoteType) => {
         setFilterBy(selectedCaseNoteType)
     }
+    console.log(caseNotes["All"].length > 0)
     return (
         <div>
             <h2 className="govuk-heading-l">Case notes</h2>
-            <Dropdown  onChange={(e) => hanleOnChange(e)} dropdownItems ={helpTypes}></Dropdown>
+            { caseNotes["All"].length == 0 && 
+                <>
+                    <div className ={ styles['case-notes-box']}>No previous case notes</div>
+                    <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+                </>}
+                {caseNotes.All.length > 0 && <Dropdown  onChange={(e) => hanleOnChange(e)} dropdownItems ={helpTypes}></Dropdown>}
+
             {caseNotes[filterBy]?.map((caseNote, i) => {
                 if(caseNote){
                     return (

@@ -16,6 +16,11 @@ export default function CaseNotes({ calls }) {
     return (
         <div>
             <h2 className="govuk-heading-l">Call history</h2>
+            {calls.length < 1 &&
+             <>
+                <div className={styles['call-history-box'] }>No previous calls</div>
+                <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+             </>}
             {calls?.map((call, index) => {
                 return (
                     <>
