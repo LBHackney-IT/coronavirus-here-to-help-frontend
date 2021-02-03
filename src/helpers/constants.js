@@ -9,3 +9,5 @@ export const callOutcomes = {
   voicemail: "Voicemail left" ,
   wrong_number: "Wrong number",
   no_answer_machine: "No answer machine" }
+
+export const callTypes = ['All', 'Help Request', 'CEV', 'Welfare Call', 'Contact Tracing'];

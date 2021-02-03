@@ -24,8 +24,8 @@ describe('View helpcase profile page', () => {
     it('displays support requested and support recieved', () => {
         cy.visit(`http://localhost:3000/helpcase-profile/3`);
         cy.get('[data-testid=support-requested-table_row]').should('have.length', 4);
-        cy.get('[data-testid=support-requested-table-help-needed]').first().should('contain', "Help Request");
-        cy.get('[data-testid=support-requested-table-calls-count]').first().should('contain', "2");
+        cy.get('[data-testid=support-requested-table-help-needed]').first().should('contain', "Contact Tracing");
+        cy.get('[data-testid=support-requested-table-calls-count]').first().should('contain', "1");
 
         cy.get('[data-testid=support-received-tab]').click({force: true})
         cy.get('[data-testid=support-received-table_row]').should('have.length', 1);

@@ -46,7 +46,8 @@
             "CallType": "Welfare Call",
             "CallDirection": "outbound",
             "CallOutcome": "callback_complete",
-            "CallDateTime": "2021-01-26T15:12:25.562Z"
+            "CallDateTime": "2021-01-26T15:12:25.562Z",
+            "CallHandler": "handler"
         },
         {
             "Id": 24,
@@ -54,7 +55,8 @@
             "CallType": "Shielding",
             "CallDirection": "outbound",
             "CallOutcome": "callback_complete",
-            "CallDateTime": "2021-01-11T08:04:28.136Z"
+            "CallDateTime": "2021-01-11T08:04:28.136Z",
+            "CallHandler": "handler"
         }
     ]
 }
