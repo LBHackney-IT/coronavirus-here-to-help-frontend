@@ -1,12 +1,11 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import Dropdown from '../Dropdown/Dropdown';
 import { AddressesGateway } from '../../../gateways/addresses';
 
-
 export default function Address({ initialResident, onChange }) {
     let [lookupPostcode, setLookupPostcode] = useState('');
-    let [addresses, setAddresses] = useState({"address": []});
+    let [addresses, setAddresses] = useState({ address: [] });
     let [resident, setResident] = useState(initialResident);
 
     const gateway = new AddressesGateway();
@@ -23,13 +22,21 @@ export default function Address({ initialResident, onChange }) {
             addressSecondLine,
             addressThirdLine,
             postCode
-        }
+        };
+
+        const uprn = addresses.address.filter(
+            (address) =>
+                address.line1 == addressFirstLine &&
+                address.line2 == addressSecondLine &&
+                `${address.line3} ${address.line4}` == addressThirdLine &&
+                address.postcode == postCode
+        )[0].UPRN;
+        onChange({ addressFirstLine, addressSecondLine, addressThirdLine, postCode, uprn });
 
         resident = newResident;
         setResident(newResident);
     };
-    useEffect(() => {
-    }, [resident])
+    useEffect(() => {}, [resident]);
 
     const dropdownItems = addresses?.address.map(
         (x) => `${x.line1}, ${x.line2}, ${x.line3} ${x.line4}, ${x.postcode}`
@@ -73,8 +80,12 @@ export default function Address({ initialResident, onChange }) {
                             id="addressFirstLine"
                             name="addressFirstLine"
                             type="text"
-                            value={resident.addressFirstLine ? resident.addressFirstLine : initialResident?.addressFirstLine}
-                            onChange={(e) => {onChange(e.target.id, e.target.value); resident.addressFirstLine = e.target.value; }}
+                            value={
+                                resident.addressFirstLine
+                                    ? resident.addressFirstLine
+                                    : initialResident?.addressFirstLine
+                            }
+                            // onChange={(e) => {onChange(e.target.id, e.target.value); resident.addressFirstLine = e.target.value; }}
                         />
                     </div>
 
@@ -84,8 +95,12 @@ export default function Address({ initialResident, onChange }) {
                             id="addressSecondLine"
                             name="addressSecondLine"
                             type="text"
-                            value={resident.addressSecondLine ? resident.addressSecondLine : initialResident?.addressSecondLine}
-                            onChange={(e) => {onChange(e.target.id, e.target.value); resident.addressSecondLine = e.target.value; }}
+                            value={
+                                resident.addressSecondLine
+                                    ? resident.addressSecondLine
+                                    : initialResident?.addressSecondLine
+                            }
+                            // onChange={(e) => {onChange(e.target.id, e.target.value); resident.addressSecondLine = e.target.value; }}
                         />
                     </div>
                     <div className="govuk-form-group lbh-form-group">
@@ -94,8 +109,12 @@ export default function Address({ initialResident, onChange }) {
                             id="addressThirdLine"
                             name="addressThirdLine"
                             type="text"
-                            value={resident.addressThirdLine ? resident.addressThirdLine : initialResident?.addressThirdLine}
-                            onChange={(e) => {onChange(e.target.id, e.target.value); resident.addressThirdLine = e.target.value; }}
+                            value={
+                                resident.addressThirdLine
+                                    ? resident.addressThirdLine
+                                    : initialResident?.addressThirdLine
+                            }
+                            // onChange={(e) => {onChange(e.target.id, e.target.value); resident.addressThirdLine = e.target.value; }}
                         />
                     </div>
                     <div className="govuk-form-group lbh-form-group">
@@ -104,8 +123,10 @@ export default function Address({ initialResident, onChange }) {
                             id="postcode"
                             name="postcode"
                             type="text"
-                            value={resident.postCode ? resident.postCode : initialResident?.postCode}
-                            onChange={(e) => {onChange(e.target.id, e.target.value); resident.postCode = e.target.value; }}
+                            value={
+                                resident.postCode ? resident.postCode : initialResident?.postCode
+                            }
+                            // onChange={(e) => {onChange(e.target.id, e.target.value); resident.postCode = e.target.value; }}
                         />
                     </div>
                 </div>

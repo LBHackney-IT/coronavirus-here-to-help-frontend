@@ -11,20 +11,27 @@ import Link from 'next/link';
 
 export default function EditResident({ residentId }) {
     const [resident, setResident] = useState([]);
-    const [updatedResident, setUpdatedResident] = useState([]);
+    const [updatedResident, setUpdatedResident] = useState({});
 
-    const handleEditResident = (id, value) => {
-        setUpdatedResident({ ...updatedResident, [id]: value });
-        console.log("updated resident",updatedResident)
+    const handleEditResident = async (id, value) => {
+        setUpdatedResident({ ...updatedResident, [id]: value })
+        console.log("updated resident", updatedResident);
+    };
+
+    const handleEditAddress = async (object) => {
+        setUpdatedResident({ ...updatedResident, ...object })
+        console.log("updated resident", updatedResident);
+        setResident(...resident, ...object);
     };
 
     const saveResident = () => {
         const residentGateway = new ResidentGateway();
         residentGateway.setResident(residentId, updatedResident);
+        console.log("resident", updatedResident);
     };
 
     useEffect(() => {
-    }, [resident])
+    }, [resident]);
 
     const getResident = async () => {
         try {
@@ -51,7 +58,7 @@ export default function EditResident({ residentId }) {
                 <EditResidentBioForm resident={resident} onChange={handleEditResident} />
 
                 <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-                <Address initialResident={resident} onChange={handleEditResident} />
+                <Address initialResident={resident} onChange={handleEditAddress} />
 
                 <hr className="govuk-section-break govuk-section-break--m govuk-section-break" />
                 <h2 className="govuk-heading-l">Case notes:</h2>
