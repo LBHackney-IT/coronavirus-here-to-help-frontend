@@ -9,7 +9,7 @@ import {unsafeExtractUser} from '../../helpers/auth';
 
 import { useRouter } from "next/router";
 
-export default function CallbackForm({residentId, resident, backHref, saveFunction}) {
+export default function CallbackForm({residentId, resident, helpRequest, backHref, saveFunction}) {
     const [callMade, setCallMade] = useState(null);
     const [callOutcome, setCallOutcome] = useState("");
     const [followUpRequired, setFollowupRequired] = useState(null)
@@ -157,6 +157,11 @@ export default function CallbackForm({residentId, resident, backHref, saveFuncti
             </div>}
             <h1 className="govuk-heading-xl"
                 style={{marginTop: "0px", marginBottom: "40px"}}> {resident.firstName} {resident.lastName}
+                {helpRequest ? (
+                  <span class="govuk-caption-l">
+                      <strong>CTAS ID:</strong> {helpRequest.nhsCtasId || "Not found"}
+                  </span>
+                ) : ('')}
             </h1>
             <form >
                 <div>
