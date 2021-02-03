@@ -21,7 +21,6 @@ export default function EditResident({ residentId }) {
     const handleEditAddress = async (object) => {
         setUpdatedResident({ ...updatedResident, ...object })
         console.log("updated resident", updatedResident);
-        setResident(...resident, ...object);
     };
 
     const saveResident = () => {

@@ -4,7 +4,6 @@ import { AddressesGateway } from '../../../../gateways/addresses-api-gateway';
 const addressesGateway = new AddressesGateway();
 
 const endpoint = async (req, res) => {
-    console.log("proxy")
     const user = authoriseUser(req);
     if (!user) return res.status(401).json({ error: 'Unauthorised' });
 

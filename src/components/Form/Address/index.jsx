@@ -5,7 +5,7 @@ import { AddressesGateway } from '../../../gateways/addresses';
 
 export default function Address({ initialResident, onChange }) {
     let [lookupPostcode, setLookupPostcode] = useState('');
-    let [addresses, setAddresses] = useState({ address: [] });
+    let [addresses, setAddresses] = useState([]);
     let [resident, setResident] = useState(initialResident);
 
     const gateway = new AddressesGateway();
@@ -24,13 +24,13 @@ export default function Address({ initialResident, onChange }) {
             postCode
         };
 
-        const uprn = addresses.address.filter(
+        const uprn = addresses.filter(
             (address) =>
-                address.line1 == addressFirstLine &&
-                address.line2 == addressSecondLine &&
-                `${address.line3} ${address.line4}` == addressThirdLine &&
-                address.postcode == postCode
-        )[0].UPRN;
+                address.addressFirstLine == addressFirstLine &&
+                address.addressSecondLine == addressSecondLine &&
+                address.addressThirdLine == addressThirdLine &&
+                address.postCode == postCode
+        )[0].uprn;
         onChange({ addressFirstLine, addressSecondLine, addressThirdLine, postCode, uprn });
 
         resident = newResident;
@@ -38,8 +38,8 @@ export default function Address({ initialResident, onChange }) {
     };
     useEffect(() => {}, [resident]);
 
-    const dropdownItems = addresses?.address.map(
-        (x) => `${x.line1}, ${x.line2}, ${x.line3} ${x.line4}, ${x.postcode}`
+    const dropdownItems = addresses?.map(
+        (x) => `${x.addressFirstLine}, ${x.addressSecondLine}, ${x.addressThirdLine}, ${x.postCode}`
     );
     return (
         <>
@@ -64,7 +64,7 @@ export default function Address({ initialResident, onChange }) {
                         onClick={() => FindAddresses()}>
                         Search
                     </button>
-                    {addresses && (
+                    {(addresses.length > 0) && (
                         <Dropdown
                             dropdownItems={dropdownItems}
                             onChange={(value) => setSelectedAddress(value)}
@@ -85,7 +85,6 @@ export default function Address({ initialResident, onChange }) {
                                     ? resident.addressFirstLine
                                     : initialResident?.addressFirstLine
                             }
-                            // onChange={(e) => {onChange(e.target.id, e.target.value); resident.addressFirstLine = e.target.value; }}
                         />
                     </div>
 
@@ -100,7 +99,6 @@ export default function Address({ initialResident, onChange }) {
                                     ? resident.addressSecondLine
                                     : initialResident?.addressSecondLine
                             }
-                            // onChange={(e) => {onChange(e.target.id, e.target.value); resident.addressSecondLine = e.target.value; }}
                         />
                     </div>
                     <div className="govuk-form-group lbh-form-group">
@@ -114,7 +112,6 @@ export default function Address({ initialResident, onChange }) {
                                     ? resident.addressThirdLine
                                     : initialResident?.addressThirdLine
                             }
-                            // onChange={(e) => {onChange(e.target.id, e.target.value); resident.addressThirdLine = e.target.value; }}
                         />
                     </div>
                     <div className="govuk-form-group lbh-form-group">
@@ -126,7 +123,6 @@ export default function Address({ initialResident, onChange }) {
                             value={
                                 resident.postCode ? resident.postCode : initialResident?.postCode
                             }
-                            // onChange={(e) => {onChange(e.target.id, e.target.value); resident.postCode = e.target.value; }}
                         />
                     </div>
                 </div>
