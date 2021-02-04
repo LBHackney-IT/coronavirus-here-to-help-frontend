@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { helpTypes } from "../../helpers/constants"
 import Dropdown from "../../components/Form/Dropdown/Dropdown";
 import styles from '../CaseNotes/CaseNotes.module.scss';
 
 export default function CaseNotes({ caseNotes }) {
-    const [filterBy, setFilterBy] = useState("All")
+    const [filterBy, setFilterBy] = useState("")
+    useEffect(()=>{
+        if(caseNotes.manageCaseNotePage){
+            setFilterBy(caseNotes.helpNeeded)
+        }else{
+            setFilterBy("All")
+        }
+    },[])
     const hanleOnChange = (selectedCaseNoteType) => {
         setFilterBy(selectedCaseNoteType)
     }
     return (
         <div>
             <h2 className="govuk-heading-l">Case notes</h2>
-            { caseNotes["All"].length == 0 && 
+            { caseNotes[filterBy]?.length == 0 && 
                 <>
                     <div className ={ styles['case-notes-box']}>No previous case notes</div>
                     <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />

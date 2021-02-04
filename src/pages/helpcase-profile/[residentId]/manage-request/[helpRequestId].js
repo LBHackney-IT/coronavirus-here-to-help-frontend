@@ -9,6 +9,8 @@ import {HelpRequestGateway} from "../../../../gateways/help-request";
 import {HelpRequestCallGateway} from "../../../../gateways/help-request-call";
 import {useRouter} from "next/router";
 import CallHistory from '../../../../components/CallHistory/CallHistory';
+import CaseNotes from '../../../../components/CaseNotes/CaseNotes';
+import { helpTypes } from "../../../../helpers/constants";
 
 export default function addSupportPage({residentId, helpRequestId}) {
     const backHref = `/helpcase-profile/${residentId}`;
@@ -17,6 +19,13 @@ export default function addSupportPage({residentId, helpRequestId}) {
     const [user, setUser] = useState({})
     const [calls, setCalls] = useState([])
     const [helpRequest, setHelpRequest] = useState([])
+    const [caseNotes, setCaseNotes] = useState({
+        "All":[],
+        "Welfare Call":[],
+        "Help Requesst":[],
+        "Contact Tracing":[],
+        "CEV":[]
+    })
 
     const router = useRouter()
 
@@ -29,10 +38,31 @@ export default function addSupportPage({residentId, helpRequestId}) {
     }
 
     const retreiveHelpRequest = async ( ) => {
-        const gateway = new HelpRequestGateway();
-        const response = await gateway.getHelpRequest(residentId, helpRequestId);
-        setHelpRequest(response);
-        setCalls(response.helpRequestCalls.sort((a,b) => new Date(b.callDateTime) - new Date(a.callDateTime)))
+        try {
+            const gateway = new HelpRequestGateway();
+            const response = await gateway.getHelpRequest(residentId, helpRequestId);
+            let categorisedCaseNotes = {"All":[],
+                                        "Welfare Call":[],
+                                        "Help Request":[],
+                                        "Contact Tracing":[],
+                                        "CEV":[]}
+            if(!response.caseNotes) return
+            response.caseNotes.forEach(caseNote => {
+                caseNote.manageCaseNotePage = true
+                categorisedCaseNotes[caseNote.helpNeeded].push(caseNote)
+                categorisedCaseNotes['All'].push(caseNote)
+            });
+        
+            helpTypes.forEach(helpType => {
+                categorisedCaseNotes[helpType].sort((a, b) => new Date(b.noteDate) - new Date(a.noteDate))
+            });
+            console.log(categorisedCaseNotes)
+            setCaseNotes(categorisedCaseNotes)
+            setHelpRequest(response);
+            setCalls(response.helpRequestCalls.sort((a,b) => new Date(b.callDateTime) - new Date(a.callDateTime)))
+        } catch (err) {
+            console.log(`Error getting resident props with help request ID ${residentId}: ${err}`);
+        }
     }
 
     useEffect(async () => {
@@ -85,6 +115,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
                         <CallbackForm residentId={residentId} resident={resident} helpRequest={helpRequest} backHref={backHref} saveFunction={saveFunction} />
                         <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
                         <CallHistory calls={calls}  />
+                        <CaseNotes caseNotes={caseNotes}/>
                     </div>
                 </div>
             </div>

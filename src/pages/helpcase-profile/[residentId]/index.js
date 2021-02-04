@@ -36,7 +36,6 @@ export default function HelpcaseProfile({ residentId }) {
             helpRequests.forEach(hr => {
                 if(!hr.caseNotes) return
                 hr.caseNotes.forEach(caseNote => {
-                    console.log("case note", caseNote)
                     categorisedCaseNotes[caseNote.helpNeeded].push(caseNote)
                     categorisedCaseNotes['All'].push(caseNote)
                 });
