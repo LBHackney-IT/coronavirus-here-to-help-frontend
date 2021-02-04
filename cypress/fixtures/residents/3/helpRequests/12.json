@@ -40,6 +40,7 @@
     "RescheduledAt": "05:24",
     "RequestedDate": "2021-01-30T05:15:50.027Z",
     "NhsCtasId": "123abc",
+    "CaseNotes": "Professor Umbridge : Thu, 10 Sep 2020 08:53:18 GMT ------------ *** CREATED *** ------ ",
     "HelpRequestCalls": [
         {
             "Id": 23,

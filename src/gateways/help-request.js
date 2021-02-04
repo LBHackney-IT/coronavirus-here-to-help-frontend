@@ -1,5 +1,6 @@
 import { DefaultGateway } from '../gateways/default-gateway';
 import {CEV, SHIELDING} from '../helpers/constants';
+import {isJSON, getDate, getNote, getAuthor, formatDate, getNonJsonCasenotesArray} from '../helpers/case_notes_helper'
 
 const ToHelpRequestDomain = (hr) => {
     return {
@@ -45,9 +46,39 @@ const ToHelpRequestDomain = (hr) => {
         helpRequestCalls: ToCalls(hr.HelpRequestCalls),
         upcomingCallOutcome:ToUpcomingAction(hr.HelpRequestCalls, hr.CallbackRequired, hr.InitialCallbackCompleted),
         totalCompletedCalls: ToTotalCompletedCalls(hr.HelpRequestCalls), 
-        caseNotes: hr.CaseNotes
+        caseNotes: ToStandardisiedCaseNotesArray(hr.CaseNotes, (hr.HelpNeeded == SHIELDING)? CEV : hr.HelpNeeded)
     };
 };
+const ToStandardisiedCaseNotesArray = (caseNotes, helpNeeded) => {
+    if(!caseNotes) return []
+    let standardisiedCaseNotesArray = []
+    if(isJSON(caseNotes)){
+        let caseNoteObject = JSON.parse(caseNotes)
+        if(caseNoteObject.length > 0){
+            caseNoteObject.forEach(note => {
+                note.formattedDate = formatDate(note.noteDate)
+                note.helpNeeded = helpNeeded
+                standardisiedCaseNotesArray.push(note)
+            });
+        }
+    }
+    else if(!isJSON(caseNotes)){
+        let nonJsonCaseNotesArray = getNonJsonCasenotesArray(caseNotes)
+        nonJsonCaseNotesArray.forEach(nonJsonCaseNote => {
+            if (nonJsonCaseNote) {
+                let caseNoteObject = {"author": getAuthor(nonJsonCaseNote),
+                                            "formattedDate": formatDate(getDate(nonJsonCaseNote)),
+                                            "note": getNote(nonJsonCaseNote),
+                                            "helpNeeded": helpNeeded,
+                                            "noteDate": getDate(nonJsonCaseNote)
+                                            }
+                standardisiedCaseNotesArray.push(caseNoteObject)
+
+            }
+        });
+    }
+    return standardisiedCaseNotesArray
+}
 
 const ToUpcomingAction = (helpRequestCalls, callbackRequired, initialCallbackCompleted) => {
 
