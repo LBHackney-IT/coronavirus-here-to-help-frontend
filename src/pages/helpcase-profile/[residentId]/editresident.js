@@ -5,7 +5,6 @@ import { ResidentGateway } from '../../../gateways/resident';
 import { useState, useEffect } from 'react';
 import { Button, Address } from '../../../components/Form';
 import EditResidentBioForm from '../../../components/EditResidentBioForm/EditResidentBioForm';
-import CaseNotes from '../../../components/CaseNotes/CaseNotes';
 import Banner from '../../../components/Banner';
 import Link from 'next/link';
 
@@ -91,28 +90,7 @@ export default function EditResident({ residentId }) {
 
                 <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
                 <Address initialResident={resident} onChange={handleEditAddress} />
-
-                <hr className="govuk-section-break govuk-section-break--m govuk-section-break" />
-                <h2 className="govuk-heading-l">Case notes:</h2>
-                <h3 className="govuk-heading-m">Add a new case note (optional):</h3>
-                <div className="govuk-form-group">
-                    <span id="NewCaseNote-hint" className="govuk-hint  lbh-hint"></span>
-                    <textarea
-                        className="govuk-textarea  lbh-textarea"
-                        id="NewCaseNote"
-                        name="NewCaseNote"
-                        rows="5"
-                        aria-describedby="NewCaseNote-hint"></textarea>
-                </div>
-                <h3 className="govuk-heading-m">Case note history:</h3>
-                <input type="hidden" name="CaseNotes" value="" />
-                <br />
-                <p className="lbh-body-m"></p>
-                <h3 className="govuk-heading-m">Call attempts history:</h3>
-                <br />
                 <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-                <CaseNotes />
-                <hr className="govuk-section-break govuk-section-break--m govuk-section-break" />
                 <Button
                     text="Update"
                     addClass="govuk-!-margin-right-1"
