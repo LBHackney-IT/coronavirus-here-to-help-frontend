@@ -24,7 +24,8 @@ export default function addSupportPage({residentId, helpRequestId}) {
         "Welfare Call":[],
         "Help Requesst":[],
         "Contact Tracing":[],
-        "CEV":[]
+        "CEV":[],
+        "helpType": null
     })
 
     const router = useRouter()
@@ -56,7 +57,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
             helpTypes.forEach(helpType => {
                 categorisedCaseNotes[helpType].sort((a, b) => new Date(b.noteDate) - new Date(a.noteDate))
             });
-            console.log(categorisedCaseNotes)
+            categorisedCaseNotes.helpType = response.helpNeeded
             setCaseNotes(categorisedCaseNotes)
             setHelpRequest(response);
             setCalls(response.helpRequestCalls.sort((a,b) => new Date(b.callDateTime) - new Date(a.callDateTime)))

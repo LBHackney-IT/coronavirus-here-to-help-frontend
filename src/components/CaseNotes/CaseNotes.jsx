@@ -6,26 +6,27 @@ import styles from '../CaseNotes/CaseNotes.module.scss';
 export default function CaseNotes({ caseNotes }) {
     const [filterBy, setFilterBy] = useState("")
     useEffect(()=>{
-        if(caseNotes?.manageCaseNotePage){
-            setFilterBy(caseNotes.helpNeeded)
+        if(caseNotes?.helpType){
+            setFilterBy(caseNotes.helpType)
         }else{
             setFilterBy("All")
         }
-    },[])
+    },[caseNotes])
     const hanleOnChange = (selectedCaseNoteType) => {
         setFilterBy(selectedCaseNoteType)
     }
     return (
         <div>
             <h2 className="govuk-heading-l">Case notes</h2>
-            {caseNotes && caseNotes[filterBy]?.length == 0 && 
+
+                {caseNotes && !caseNotes.helpType && <Dropdown  onChange={(e) => hanleOnChange(e)} dropdownItems ={helpTypes}></Dropdown>}
+                {caseNotes && caseNotes[filterBy]?.length == 0 && 
                 <>
                     <div className ={ styles['case-notes-box']}>No previous case notes</div>
                     <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
                 </>}
-                { caseNotes && caseNotes.All.length > 0 && <Dropdown  onChange={(e) => hanleOnChange(e)} dropdownItems ={helpTypes}></Dropdown>}
 
-            { caseNotes && caseNotes[filterBy]?.map((caseNote, i) => {
+            { caseNotes &&caseNotes[filterBy]?.map((caseNote, i) => {
                 return (
                     <>
                         <div
