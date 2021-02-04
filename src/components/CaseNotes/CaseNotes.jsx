@@ -19,7 +19,7 @@ export default function CaseNotes({ caseNotes }) {
         <div>
             <h2 className="govuk-heading-l">Case notes</h2>
 
-                {caseNotes && !caseNotes.helpType && <Dropdown  onChange={(e) => hanleOnChange(e)} dropdownItems ={helpTypes}></Dropdown>}
+                {caseNotes && !caseNotes.helpType && caseNotes[filterBy]?.length > 0 &&<Dropdown  onChange={(e) => hanleOnChange(e)} dropdownItems ={helpTypes}></Dropdown>}
                 {caseNotes && caseNotes[filterBy]?.length == 0 && 
                 <>
                     <div className ={ styles['case-notes-box']}>No previous case notes</div>
