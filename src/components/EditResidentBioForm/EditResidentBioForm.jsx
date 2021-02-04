@@ -23,7 +23,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                   marginBottom: "20px"
                 }}
                 defaultValue={resident.firstName}
-                onChange={(e) => onChange(e.target.id, e.target.value)}
+                onKeyUp={(e) => onChange(e.target.id, e.target.value)}
                 data-testid="first-name-input"
               />
             </div>
@@ -49,7 +49,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                   marginBottom: "20px"
                 }}
                 defaultValue={resident.lastName}
-                onChange={(e) => onChange(e.target.id, e.target.value)}
+                onKeyUp={(e) => onChange(e.target.id, e.target.value)}
                 data-testid="last-name-input"
               />
             </div>
@@ -69,7 +69,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                   marginBottom: "20px"
                 }}
                 defaultValue={resident.contactTelephoneNumber}
-                onChange={(e) => onChange(e.target.id, e.target.value)}
+                onKeyUp={(e) => onChange(e.target.id, e.target.value)}
                 data-testid="contact-telephone-input"
               />
             </div>
@@ -128,7 +128,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                   pattern="[0-9]*"
                   inputMode="numeric"
                   defaultValue={resident.dobDay}
-                  onChange={(e) => onChange(e.target.id, e.target.value)}
+                  onKeyUp={(e) => onChange(e.target.id, e.target.value)}
                   data-testid="dobDay-input"
                 />
               </div>
@@ -149,7 +149,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                   pattern="[0-9]*"
                   inputMode="numeric"
                   defaultValue={resident.dobMonth}
-                  onChange={(e) => onChange(e.target.id, e.target.value)}
+                  onKeyUp={(e) => onChange(e.target.id, e.target.value)}
                   data-testid="dobMonth-input"
                 />
               </div>
@@ -170,7 +170,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                   pattern="[0-9]*"
                   inputMode="numeric"
                   defaultValue={resident.dobYear}
-                  onChange={(e) => onChange(e.target.id, e.target.value)}
+                  onKeyUp={(e) => onChange(e.target.id, e.target.value)}
                   data-testid="dobYear-input"
                 />
               </div>

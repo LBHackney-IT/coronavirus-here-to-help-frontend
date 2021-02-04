@@ -15,40 +15,34 @@ export default function EditResident({ residentId }) {
     const [errorsExist, setErrorsExist] = useState(false);
 
     const handleEditResident = async (id, value) => {
-        setUpdatedResident({ ...updatedResident, [id]: value })
-        console.log("updated resident", updatedResident);
+        setUpdatedResident({ ...updatedResident, [id]: value });
+        console.log('first name', updatedResident);
     };
 
     const handleEditAddress = async (object) => {
-        setUpdatedResident({ ...updatedResident, ...object })
-        console.log("updated resident", updatedResident);
+        setUpdatedResident({ ...updatedResident, ...object });
+        console.log('updated resident', updatedResident);
     };
-
-    const checkForErrors = () => {
-        console.log("first name", updatedResident.firstName);
-        if(updatedResident.firstName == "" || updatedResident.lastName == ""){
-            setErrorsExist(true)
-            return true
-        }
-        setErrorsExist(false);
-        return false
-    }
 
     const saveResident = () => {
-        console.log("first name", updatedResident.firstName);
-        console.log("updated resident", updatedResident);
-        //updatedResident.firstName == resident.firstName || !updatedResident.firstName
-        if(updatedResident.firstName == "" || updatedResident.lastName == ""){
-            setErrorsExist(true)
-            return
-        } 
+        console.log('first name', updatedResident.firstName);
+        console.log('updated resident', updatedResident);
+        if (
+            Object.keys(updatedResident).some(
+                (k) =>
+                    (updatedResident[k] == '' && k != 'mobileTelephoneNumber') ||
+                    k != 'emailAddress'
+            )
+        ) {
+            setErrorsExist(true);
+            return;
+        }
         const residentGateway = new ResidentGateway();
         residentGateway.setResident(residentId, updatedResident);
-        console.log("resident", updatedResident);
+        console.log('resident', updatedResident);
     };
 
-    useEffect(() => {
-    }, [resident]);
+    useEffect(() => {}, [resident]);
 
     const getResident = async () => {
         try {
@@ -67,25 +61,33 @@ export default function EditResident({ residentId }) {
 
     return (
         <Layout>
-            {errorsExist &&
-            <div className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert"
-                 tabIndex="-1" data-module="govuk-error-summary" data-testid="edit-resident-form-validation-error">
-                <h2 className="govuk-error-summary__title" id="error-summary-title">
-                    There is a problem
-                </h2>
-                <div className="govuk-error-summary__body">
-                    <ul className="govuk-list govuk-error-summary__list">
-                        <li>
-                            <a href="#">Some required fields are empty</a>
-                        </li>
-                    </ul>
+            {errorsExist && (
+                <div
+                    className="govuk-error-summary"
+                    aria-labelledby="error-summary-title"
+                    role="alert"
+                    tabIndex="-1"
+                    data-module="govuk-error-summary"
+                    data-testid="edit-resident-form-validation-error">
+                    <h2 className="govuk-error-summary__title" id="error-summary-title">
+                        There is a problem
+                    </h2>
+                    <div className="govuk-error-summary__body">
+                        <ul className="govuk-list govuk-error-summary__list">
+                            <li>
+                                <a href="#">Some required fields are empty</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>}
+            )}
             <div className="govuk-grid-column-one-quarter-from-desktop">
                 <KeyInformation resident={resident} />
             </div>
             <div className="govuk-grid-column-three-quarters-from-desktop">
-                {residentId && <EditResidentBioForm resident={resident} onChange={handleEditResident} />}
+                {residentId && (
+                    <EditResidentBioForm resident={resident} onChange={handleEditResident} />
+                )}
 
                 <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
                 <Address initialResident={resident} onChange={handleEditAddress} />
@@ -117,14 +119,8 @@ export default function EditResident({ residentId }) {
                     onClick={() => saveResident()}
                     data-testid="edit-resident-form-update-button"
                 />
-                <Link
-                    href="/helpcase-profile/[residentId]"
-                    as={`/helpcase-profile/${residentId}`}
-                >
-                    <Button
-                        text="Cancel"
-                        addClass="govuk-button--secondary"
-                    />
+                <Link href="/helpcase-profile/[residentId]" as={`/helpcase-profile/${residentId}`}>
+                    <Button text="Cancel" addClass="govuk-button--secondary" />
                 </Link>
             </div>
         </Layout>

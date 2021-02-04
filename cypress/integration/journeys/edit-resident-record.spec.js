@@ -15,31 +15,43 @@ context('When you view a helpcase profile', () => {
 });
 
 context('When required fields are not filled in', () => {
-    it('it displays validation error', () => {
+    it('displays validation error when first name is missing', () => {
         cy.get('[data-testid=edit-resident-bio-button]').click({ force: true });
         cy.get('[data-testid=first-name-input]').clear();
         cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
         cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible')
+    });
 
+    it('displays validation error when last name is missing', () => {
         cy.get('[data-testid=edit-resident-bio-button]').click({ force: true });
         cy.get('[data-testid=last-name-input]').clear();
         cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
         cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible')
+    });
 
-        // cy.get('[data-testid=edit-resident-bio-button]').click({ force: true });
-        // cy.get('[data-testid=contact-telephone-input]').clear();
-        // cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
-        // cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible')
+    it('displays validation error when contact telephone number is missing', () => {
+        cy.get('[data-testid=edit-resident-bio-button]').click({ force: true });
+        cy.get('[data-testid=contact-telephone-input]').clear();
+        cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
+        cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible')
+    });
 
+    it('displays validation error when date of birth is missing', () => {
+        cy.get('[data-testid=edit-resident-bio-button]').click({ force: true });
+        cy.get('[data-testid=dobDay-input]').clear({ force: true });
+        cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
+        cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible')
+        cy.get('[data-testid=dobDay-input]').type("12", {force: true});
 
+        cy.get('[data-testid=edit-resident-bio-button]').click({ force: true });
+        cy.get('[data-testid=dobMonth-input]').clear({ force: true });
+        cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
+        cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible');
+        cy.get('[data-testid=dobMonth-input]').type("12", {force: true});
 
-
-        // cy.get('[data-testid=call-type-radio-button]').first().click({ force: true });
-        // cy.get('[data-testid=callback-form-update_button]').click({ force: true });
-        // cy.get('[data-testid=callback-form-validation-error]').should('be.visible');
-
-        // cy.get('[data-testid=call-type-no-radio-button]').click({ force: true });
-        // cy.get('[data-testid=callback-form-update_button]').click({ force: true });
-        // cy.get('[data-testid=callback-form-validation-error]').should('be.visible');
+        cy.get('[data-testid=edit-resident-bio-button]').click({ force: true });
+        cy.get('[data-testid=dobYear-input]').clear({ force: true });
+        cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
+        cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible')
     });
 });
