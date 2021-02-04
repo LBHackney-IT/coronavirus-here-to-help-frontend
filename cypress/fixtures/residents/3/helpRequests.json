@@ -94,7 +94,7 @@
         "WhenIsMedicinesDelivered": "",
         "RescheduledAt": "04:40",
         "RequestedDate": "2021-02-03T05:09:47.123Z",
-        "CaseNotes": "[{\"author\":\"Professor Umbridge\",\"noteDate\":\"Thu, 10 Sep 2020 16:56:06 GMT\",\"note\":\"*** CREATED ***\"}]",
+        "CaseNotes": "Professor Umbridge : Thu, 10 Sep 2020 08:53:18 GMT ------------ *** CREATED *** ------ ",
         "NhsCtasId": "123abc",
         "HelpRequestCalls": [
             {

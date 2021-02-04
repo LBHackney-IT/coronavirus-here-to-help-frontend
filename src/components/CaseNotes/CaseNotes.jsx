@@ -8,7 +8,6 @@ export default function CaseNotes({ caseNotes }) {
     const hanleOnChange = (selectedCaseNoteType) => {
         setFilterBy(selectedCaseNoteType)
     }
-    console.log(caseNotes["All"].length > 0)
     return (
         <div>
             <h2 className="govuk-heading-l">Case notes</h2>

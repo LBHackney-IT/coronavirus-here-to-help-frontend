@@ -23,3 +23,19 @@ export const formatDate = (date) => {
 
   return [year, month, day].join('-') + time;
 }
+
+export const getAuthor = (text) => {
+  return text.slice(0 ,text.indexOf(" : "))
+}
+
+export const getDate = (text) => {
+  return text.slice(text.indexOf(" : ") + 3, text.indexOf("GMT"))
+}
+
+export const getNote = (text) => {
+  return text.slice(text.indexOf("GMT") + 16)
+}
+export const getNonJsonCasenotesArray = (text) =>{
+  let separators = ["------\r\n\r\n\r\n", "------\n\n\n"];
+  return text.split(new RegExp(separators.join("|"), "g"));
+}
