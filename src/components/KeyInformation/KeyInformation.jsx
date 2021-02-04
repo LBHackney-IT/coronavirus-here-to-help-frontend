@@ -19,6 +19,7 @@ export default function KeyInformation({ resident }) {
                     <h3 className="govuk-heading-s">
                         Contact details
                         <a
+                            data-testid="edit-resident-bio-button"
                             href={`/helpcase-profile/${resident.id}/editresident`}
                             className={styles['edit-link-icon']}>
                             ✎
