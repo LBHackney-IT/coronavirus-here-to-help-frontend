@@ -9,7 +9,7 @@ import {unsafeExtractUser} from '../../helpers/auth';
 
 import { useRouter } from "next/router";
 
-export default function CallbackForm({residentId, resident, helpRequest, backHref, saveFunction}) {
+export default function CallbackForm({residentId, resident, helpRequest, backHref, saveFunction, editableCaseNotes}) {
     const [callMade, setCallMade] = useState(null);
     const [callOutcome, setCallOutcome] = useState("");
     const [followUpRequired, setFollowupRequired] = useState(null)
@@ -307,7 +307,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                 </div>
                 <hr className="govuk-section-break govuk-section-break--m govuk-section-break" />
                 <h2 className="govuk-heading-l">Case notes:</h2>
-                <h3 className="govuk-heading-m">
+                {editableCaseNotes && <><h3 className="govuk-heading-m">
                     Add a new case note (optional):
                 </h3>
                 <div className="govuk-form-group">
@@ -320,7 +320,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                         onChange = {(e) => {setCaseNote(e.target.value)}}
                         aria-describedby="NewCaseNote-hint">
                     </textarea>
-                </div>
+                </div></>}
                 <br></br>
                 <div className="govuk-grid-column">
                     <div className="govuk-form-group lbh-form-group">
