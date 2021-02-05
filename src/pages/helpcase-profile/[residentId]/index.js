@@ -10,7 +10,6 @@ import CallHistory from '../../../components/CallHistory/CallHistory';
 import CaseNotes  from "../../../components/CaseNotes/CaseNotes";
 import { useState, useEffect } from 'react';
 import { helpTypes } from "../../../helpers/constants";
-import { isJSON, formatDate, getAuthor, getDate, getNote, getNonJsonCasenotesArray } from "../../../helpers/case_notes_helper";
 
 export default function HelpcaseProfile({ residentId }) {
     const [resident, setResident] = useState([]);
@@ -36,37 +35,11 @@ export default function HelpcaseProfile({ residentId }) {
                                         "CEV":[]}
             helpRequests.forEach(hr => {
                 if(!hr.caseNotes) return
-                if(isJSON(hr.caseNotes)){
-                    let caseNoteObject = JSON.parse(hr.caseNotes)
-                    if(caseNoteObject.length > 1){
-                        caseNoteObject.forEach(note => {
-                            note.formattedDate = formatDate(note.noteDate)
-                            note.helpNeeded = hr.helpNeeded
-                            categorisedCaseNotes[hr.helpNeeded].push(note)
-                            categorisedCaseNotes['All'].push(note)
-                        });
-                    }else{
-                        caseNoteObject[0].formattedDate = formatDate(caseNoteObject[0].noteDate)
-                        caseNoteObject[0].helpNeeded = hr.helpNeeded
-                        categorisedCaseNotes[hr.helpNeeded].push(caseNoteObject[0])
-                        categorisedCaseNotes['All'].push(caseNoteObject[0])
-                    }
-                }
-                else if(!isJSON(hr.caseNotes)){
-                    let nonJsonCaseNotesArray = getNonJsonCasenotesArray(hr.caseNotes)
-                    nonJsonCaseNotesArray.forEach(nonJsonCaseNote => {
-                        if (nonJsonCaseNote) {
-                            let caseNoteObject = {"author": getAuthor(nonJsonCaseNote),
-                                                        "formattedDate": formatDate(getDate(nonJsonCaseNote)),
-                                                        "note": getNote(nonJsonCaseNote),
-                                                        "helpNeeded":hr.helpNeeded,
-                                                        "noteDate": getDate(nonJsonCaseNote)
-                                                        }
-                            categorisedCaseNotes[hr.helpNeeded].push(caseNoteObject) 
-                            categorisedCaseNotes.All.push(caseNoteObject)
-                        }
-                    });
-                }
+                hr.caseNotes.forEach(caseNote => {
+                    categorisedCaseNotes[caseNote.helpNeeded].push(caseNote)
+                    categorisedCaseNotes['All'].push(caseNote)
+                });
+            
                 helpTypes.forEach(helpType => {
                     categorisedCaseNotes[helpType].sort((a, b) => new Date(b.noteDate) - new Date(a.noteDate))
                 });
