@@ -130,7 +130,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                 callOutcomeValues.length > 1 &&
                 callDirection != null &&
                 helpNeeded != null) ||
-            (callMade == false && helpNeeded < 1 && followUpRequired != null) ||
+            (callMade == false && helpNeeded && followUpRequired != null) ||
             (followUpRequired != null && caseNote !="")
         ) {
             saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote);
