@@ -62,7 +62,7 @@ describe('Case notes gateway', () => {
         done(); //precautionary step to sure the code is sync (to avoid the side effects noise in between tests of modifying the global instances)
     });
 
-    it('postCaseNote method makes POST axios call to a correct url, with correct route parameters & body', async (done) => {
+    it('createCaseNote method makes POST axios call to a correct url, with correct route parameters & body', async (done) => {
         // arrange
         const randomResidentId = Math.floor(Math.random() * 20);
         const randomHelpRequestId = Math.floor(Math.random() * 20);
@@ -76,11 +76,11 @@ describe('Case notes gateway', () => {
             response: 0 // assuming endpoint only return's object id, though the value here is irrelevant
         });
         const urlExp = new RegExp(
-            `residents/${randomResidentId}/help-requests/${randomHelpRequestId}/caseNotes$`
+            `v4/residents/${randomResidentId}/help-requests/${randomHelpRequestId}/case-notes$`
         );
 
         // act
-        await csGateway.postCaseNote(randomResidentId, randomHelpRequestId, mockDomainCaseNoteBody);
+        await csGateway.createCaseNote(randomResidentId, randomHelpRequestId, mockDomainCaseNoteBody);
 
         // assert
         let request = moxios.requests.mostRecent();
