@@ -38,6 +38,7 @@ const ToHelpRequestDomain = (hr) => {
         recordStatus: hr.RecordStatus,
         relationshipWithResident: hr.RelationshipWithResident,
         nhsCtasId: hr.NhsCtasId,
+        metadata: hr.Metadata ?  JSON.parse(hr.Metadata) : {},
         urgentEssentials: hr.UrgentEssentials,
         urgentEssentialsAnythingElse: hr.UrgentEssentialsAnythingElse,
         whenIsMedicinesDelivered: hr.WhenIsMedicinesDelivered,
@@ -45,7 +46,7 @@ const ToHelpRequestDomain = (hr) => {
         requestedDate: hr.RequestedDate,
         helpRequestCalls: ToCalls(hr.HelpRequestCalls),
         upcomingCallOutcome:ToUpcomingAction(hr.HelpRequestCalls, hr.CallbackRequired, hr.InitialCallbackCompleted),
-        totalCompletedCalls: ToTotalCompletedCalls(hr.HelpRequestCalls), 
+        totalCompletedCalls: ToTotalCompletedCalls(hr.HelpRequestCalls),
         caseNotes: ToStandardisiedCaseNotesArray(hr.CaseNotes, (hr.HelpNeeded == SHIELDING)? CEV : hr.HelpNeeded)
     };
 };
@@ -85,7 +86,7 @@ const ToUpcomingAction = (helpRequestCalls, callbackRequired, initialCallbackCom
     if (callbackRequired == false && initialCallbackCompleted == true)  return "" ;
 
     if(helpRequestCalls.length == 0) return "Call required";
-   
+
     if(helpRequestCalls.pop()?.CallOutcome?.includes('call_rescheduled')) return "Call rescheduled";
 
     return "Follow-up required";
