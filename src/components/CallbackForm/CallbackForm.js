@@ -16,6 +16,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
     const [helpNeeded, setHelpNeeded] = useState("")
     const [callDirection, setCallDirection] = useState("")
     const [callOutcomeValues, setCallOutcomeValues] = useState("")
+    const [caseNote, setCaseNote] = useState("")
     const [errors, setErrors] = useState({
         CallbackRequired: null,
         HelpNeeded: null,
@@ -124,18 +125,17 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             helpNeeded: helpNeeded
         }
 
-        if(callMade==true&&(followUpRequired==null || !helpNeeded|| !callDirection || callOutcomeValues.length < 1 )){
-            setErrorsExist(true)
-        }
-        else if(callMade == false&&(followUpRequired == null || !helpNeeded)) {
-            setErrorsExist(true)
-        }
-        else if(callMade != null) {
-            saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade);
-        }
-
-        else {
-            setErrorsExist(true)
+        if (
+            (callMade == true &&
+                callOutcomeValues.length > 1 &&
+                callDirection != null &&
+                helpNeeded != null) ||
+            (callMade == false && helpNeeded < 1 && followUpRequired != null) ||
+            (followUpRequired != null && caseNote !="")
+        ) {
+            saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote);
+        } else {
+            setErrorsExist(true);
         }
     }
 
@@ -305,8 +305,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                         </div>
                     </div>
                 </div>
-
-                {/* <hr className="govuk-section-break govuk-section-break--m govuk-section-break" />
+                <hr className="govuk-section-break govuk-section-break--m govuk-section-break" />
                 <h2 className="govuk-heading-l">Case notes:</h2>
                 <h3 className="govuk-heading-m">
                     Add a new case note (optional):
@@ -318,10 +317,10 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                         id="NewCaseNote"
                         name="NewCaseNote"
                         rows="5"
-                        onChange = {(e) => {setCaseNotes(e.target.value)}}
+                        onChange = {(e) => {setCaseNote(e.target.value)}}
                         aria-describedby="NewCaseNote-hint">
                     </textarea>
-                </div> */}
+                </div>
                 <br></br>
                 <div className="govuk-grid-column">
                     <div className="govuk-form-group lbh-form-group">
