@@ -26,6 +26,17 @@ context('When you view a helpcase profile', () => {
     });
 });
 
+context('When viewing a single help request', () => {
+  it('it displays help request metadata', () => {
+    cy.get('[data-testid=support-requested-table-view_link-0]')
+        .contains('View')
+        .click({ force: true });
+    cy.get('.govuk-caption-l').should('have.length', 2);
+    cy.get('.govuk-caption-l').first().should('contain', "CTAS ID: 123abc");
+    cy.get('.govuk-caption-l').last().should('contain', "Date tested: 02/02/2020");
+  });
+});
+
 context('When required fields are not filled in', () => {
     it('it displays validation error', () => {
         cy.get('[data-testid=support-requested-table-view_link-0]')
