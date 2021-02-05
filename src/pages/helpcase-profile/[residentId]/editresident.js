@@ -7,6 +7,7 @@ import { Button, Address } from '../../../components/Form';
 import EditResidentBioForm from '../../../components/EditResidentBioForm/EditResidentBioForm';
 import Banner from '../../../components/Banner';
 import Link from 'next/link';
+import Router from 'next/router';
 
 export default function EditResident({ residentId }) {
     const [resident, setResident] = useState([]);
@@ -35,6 +36,7 @@ export default function EditResident({ residentId }) {
         else{
             const residentGateway = new ResidentGateway();
             residentGateway.setResident(residentId, updatedResident);
+            Router.back()
         }
     };
 
