@@ -80,7 +80,7 @@ export default function HelpcaseProfile({ residentId }) {
                     </a>
                     <div className="govuk-grid-row">
                         <div className="govuk-grid-column-one-quarter-from-desktop">
-                            <KeyInformation resident={resident} />
+                           {resident.id && <KeyInformation resident={resident} />}
                         </div>
 
                         <div className="govuk-grid-column-three-quarters-from-desktop">

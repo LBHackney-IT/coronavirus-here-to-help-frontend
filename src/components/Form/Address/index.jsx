@@ -1,37 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import Dropdown from '../Dropdown/Dropdown';
 import { AddressesGateway } from '../../../gateways/addresses';
 
-
 export default function Address({ initialResident, onChange }) {
     let [lookupPostcode, setLookupPostcode] = useState('');
-    let [addresses, setAddresses] = useState();
+    let [addresses, setAddresses] = useState([]);
     let [resident, setResident] = useState(initialResident);
 
     const gateway = new AddressesGateway();
 
     const FindAddresses = async () => {
-        return await gateway.getAddresses(lookupPostcode);
-        
+        setAddresses(await gateway.getAddresses(lookupPostcode));
     };
     const setSelectedAddress = (value) => {
         const [addressFirstLine, addressSecondLine, addressThirdLine, postCode] = value.split(', ');
-        onChange('addressFirstLine', addressFirstLine);
-        onChange('addressSecondLine', addressSecondLine);
-        onChange('addressThirdLine', addressThirdLine);
-        onChange('postCode', postCode);
-        setResident({
+
+        const newResident = {
             ...resident,
             addressFirstLine,
             addressSecondLine,
             addressThirdLine,
             postCode
-        });
+        };
+
+        const uprn = addresses.filter(
+            (address) =>
+                address.addressFirstLine == addressFirstLine &&
+                address.addressSecondLine == addressSecondLine &&
+                address.addressThirdLine == addressThirdLine &&
+                address.postCode == postCode
+        )[0].uprn;
+        onChange({ addressFirstLine, addressSecondLine, addressThirdLine, postCode, uprn });
+
+        resident = newResident;
+        setResident(newResident);
     };
-    const dropdownItems = addresses?.address.map(
-        (x) => `${x.line1}, ${x.line2}, ${x.line3} ${x.line4}, ${x.postcode}`
-    );
+    useEffect(() => {}, [resident]);
+
+    const dropdownItems =['Select an address'].concat(addresses?.map(
+        (x) => `${x.addressFirstLine}, ${x.addressSecondLine}, ${x.addressThirdLine}, ${x.postCode}`
+    ));
     return (
         <>
             <div className="govuk-grid-row">
@@ -45,6 +54,7 @@ export default function Address({ initialResident, onChange }) {
                             name="lookup_postcode"
                             type="text"
                             onChange={(e) => setLookupPostcode(e.target.value)}
+                            data-testid="postcode-input"
                         />
                     </div>
                     <button
@@ -52,13 +62,16 @@ export default function Address({ initialResident, onChange }) {
                         className="govuk-button  lbh-button"
                         data-module="govuk-button"
                         id="address-finder"
-                        onClick={() => setAddresses(FindAddresses())}>
+                        onClick={() => FindAddresses()}
+                        data-testid="address-search"
+                        >
                         Search
                     </button>
-                    {addresses && (
+                    {(addresses.length > 0) && (
                         <Dropdown
                             dropdownItems={dropdownItems}
                             onChange={(value) => setSelectedAddress(value)}
+                            data-testid="address-dropdown"
                         />
                     )}
                 </div>
@@ -68,32 +81,44 @@ export default function Address({ initialResident, onChange }) {
                     <div className="govuk-form-group lbh-form-group">
                         <input
                             className="govuk-input  lbh-input"
-                            id="AddressFirstLine"
-                            name="AddressFirstLine"
+                            id="addressFirstLine"
+                            name="addressFirstLine"
                             type="text"
-                            readOnly={true}
-                            value={resident?.addressFirstLine}
+                            value={
+                                resident.addressFirstLine
+                                    ? resident.addressFirstLine
+                                    : initialResident?.addressFirstLine
+                            }
+                            data-testid="first-line-address-value"
                         />
                     </div>
 
                     <div className="govuk-form-group lbh-form-group">
                         <input
                             className="govuk-input  lbh-input"
-                            id="AddressSecondLine"
-                            name="AddressSecondLine"
+                            id="addressSecondLine"
+                            name="addressSecondLine"
                             type="text"
-                            readOnly={true}
-                            defaultValue={resident?.addressSecondLine}
+                            value={
+                                resident.addressSecondLine
+                                    ? resident.addressSecondLine
+                                    : initialResident?.addressSecondLine
+                            }
+                            data-testid="second-line-address-value"
                         />
                     </div>
                     <div className="govuk-form-group lbh-form-group">
                         <input
                             className="govuk-input  lbh-input"
-                            id="AddressThirdLine"
-                            name="AddressThirdLine"
+                            id="addressThirdLine"
+                            name="addressThirdLine"
                             type="text"
-                            readOnly={true}
-                            defaultValue={resident?.addressThirdLine}
+                            value={
+                                resident.addressThirdLine
+                                    ? resident.addressThirdLine
+                                    : initialResident?.addressThirdLine
+                            }
+                            data-testid="third-line-address-value"
                         />
                     </div>
                     <div className="govuk-form-group lbh-form-group">
@@ -102,8 +127,10 @@ export default function Address({ initialResident, onChange }) {
                             id="postcode"
                             name="postcode"
                             type="text"
-                            readOnly={true}
-                            defaultValue={resident?.postCode}
+                            value={
+                                resident.postCode ? resident.postCode : initialResident?.postCode
+                            }
+                            data-testid="postcode-address-value"
                         />
                     </div>
                 </div>

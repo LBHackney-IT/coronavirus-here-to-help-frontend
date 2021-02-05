@@ -43,6 +43,8 @@ functions:
       HACKNEY_JWT_SECRET: ${ssm:/common/hackney-jwt-secret}
       HERE_TO_HELP_API_BASE_URL: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/api-base-url}
       HERE_TO_HELP_API_KEY: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/api-key}
+      ADDRESSES_API_URL: ${ssm:/hth/addresses-api/${self:provider.stage}/url}
+      ADDRESSES_API_TOKEN: ${ssm:/hth/addresses-api/${self:provider.stage}/api-token}
 resources:
   Resources:
     CloudFrontDistribution:
