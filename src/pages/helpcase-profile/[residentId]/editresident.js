@@ -15,30 +15,27 @@ export default function EditResident({ residentId }) {
 
     const handleEditResident = async (id, value) => {
         setUpdatedResident({ ...updatedResident, [id]: value });
-        console.log('first name', updatedResident);
     };
 
     const handleEditAddress = async (object) => {
         setUpdatedResident({ ...updatedResident, ...object });
-        console.log('updated resident', updatedResident);
     };
 
     const saveResident = () => {
-        console.log('first name', updatedResident.firstName);
-        console.log('updated resident', updatedResident);
         if (
             Object.keys(updatedResident).some(
                 (k) =>
-                    (updatedResident[k] == '' && k != 'mobileTelephoneNumber') ||
-                    k != 'emailAddress'
+                    (updatedResident[k] == '')
             )
         ) {
             setErrorsExist(true);
+            
             return;
         }
-        const residentGateway = new ResidentGateway();
-        residentGateway.setResident(residentId, updatedResident);
-        console.log('resident', updatedResident);
+        else{
+            const residentGateway = new ResidentGateway();
+            residentGateway.setResident(residentId, updatedResident);
+        }
     };
 
     useEffect(() => {}, [resident]);
@@ -60,7 +57,7 @@ export default function EditResident({ residentId }) {
 
     return (
         <Layout>
-            {errorsExist && (
+            { errorsExist && (
                 <div
                     className="govuk-error-summary"
                     aria-labelledby="error-summary-title"
