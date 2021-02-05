@@ -38,9 +38,9 @@ export default function Address({ initialResident, onChange }) {
     };
     useEffect(() => {}, [resident]);
 
-    const dropdownItems = addresses?.map(
+    const dropdownItems =['Select an address'].concat(addresses?.map(
         (x) => `${x.addressFirstLine}, ${x.addressSecondLine}, ${x.addressThirdLine}, ${x.postCode}`
-    );
+    ));
     return (
         <>
             <div className="govuk-grid-row">
@@ -54,6 +54,7 @@ export default function Address({ initialResident, onChange }) {
                             name="lookup_postcode"
                             type="text"
                             onChange={(e) => setLookupPostcode(e.target.value)}
+                            data-testid="postcode-input"
                         />
                     </div>
                     <button
@@ -61,13 +62,16 @@ export default function Address({ initialResident, onChange }) {
                         className="govuk-button  lbh-button"
                         data-module="govuk-button"
                         id="address-finder"
-                        onClick={() => FindAddresses()}>
+                        onClick={() => FindAddresses()}
+                        data-testid="address-search"
+                        >
                         Search
                     </button>
                     {(addresses.length > 0) && (
                         <Dropdown
                             dropdownItems={dropdownItems}
                             onChange={(value) => setSelectedAddress(value)}
+                            data-testid="address-dropdown"
                         />
                     )}
                 </div>
@@ -85,6 +89,7 @@ export default function Address({ initialResident, onChange }) {
                                     ? resident.addressFirstLine
                                     : initialResident?.addressFirstLine
                             }
+                            data-testid="first-line-address-value"
                         />
                     </div>
 
@@ -99,6 +104,7 @@ export default function Address({ initialResident, onChange }) {
                                     ? resident.addressSecondLine
                                     : initialResident?.addressSecondLine
                             }
+                            data-testid="second-line-address-value"
                         />
                     </div>
                     <div className="govuk-form-group lbh-form-group">
@@ -112,6 +118,7 @@ export default function Address({ initialResident, onChange }) {
                                     ? resident.addressThirdLine
                                     : initialResident?.addressThirdLine
                             }
+                            data-testid="third-line-address-value"
                         />
                     </div>
                     <div className="govuk-form-group lbh-form-group">
@@ -123,6 +130,7 @@ export default function Address({ initialResident, onChange }) {
                             value={
                                 resident.postCode ? resident.postCode : initialResident?.postCode
                             }
+                            data-testid="postcode-address-value"
                         />
                     </div>
                 </div>

@@ -54,4 +54,20 @@ context('When required fields are not filled in', () => {
         cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
         cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible')
     });
+
+    context('When an address search is made by postcode', (done) => {
+        it('it populates the address field when an address is selected from the dropdown', () => {        
+            cy.get('[data-testid=edit-resident-bio-button]').click({ force: true });
+    
+            cy.get('[data-testid=postcode-input]').type("E8 1DY", { force: true });
+            cy.get('[data-testid=address-search]').click({ force: true });
+            cy.get('[data-testid=address-dropdown]').select('Somewhere, over the rainbow, HACKNEY, E8 1DY', { force: true })
+    
+            cy.get('[data-testid=first-line-address-value]').should('have.value', "Somewhere")
+            cy.get('[data-testid=second-line-address-value]').should('have.value', "over the rainbow")
+            cy.get('[data-testid=third-line-address-value]').should('have.value', "HACKNEY")
+            cy.get('[data-testid=postcode-address-value]').should('have.value', "E8 1DY")
+    
+        });
+    });
 });
