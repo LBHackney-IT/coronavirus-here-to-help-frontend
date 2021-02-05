@@ -64,7 +64,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                 className="govuk-input  lbh-input"
                 id="contactTelephoneNumber"
                 name="contactTelephoneNumber"
-                type="tel"
+                type="number"
                 style={{
                   marginBottom: "20px"
                 }}
@@ -82,7 +82,7 @@ export default function EditResidentBioForm({resident, onChange}) {
                 className="govuk-input  lbh-input"
                 id="contactMobileNumber"
                 name="contactMobileNumber"
-                type="tel"
+                type="number"
                 style={{
                   marginBottom: "20px"
                 }}
@@ -125,7 +125,8 @@ export default function EditResidentBioForm({resident, onChange}) {
                   id="dobDay"
                   name="dobDay"
                   type="text"
-                  pattern="[0-9]*"
+                  pattern="\d*"
+                  maxLength="2"
                   inputMode="numeric"
                   defaultValue={resident.dobDay}
                   onKeyUp={(e) => onChange(e.target.id, e.target.value)}
@@ -146,7 +147,8 @@ export default function EditResidentBioForm({resident, onChange}) {
                   id="dobMonth"
                   name="dobMonth"
                   type="text"
-                  pattern="[0-9]*"
+                  pattern="\d*"
+                  maxLength="2"
                   inputMode="numeric"
                   defaultValue={resident.dobMonth}
                   onKeyUp={(e) => onChange(e.target.id, e.target.value)}
@@ -167,7 +169,8 @@ export default function EditResidentBioForm({resident, onChange}) {
                   id="dobYear"
                   name="dobYear"
                   type="text"
-                  pattern="[0-9]*"
+                  pattern="\d*"
+                  maxLength="4"
                   inputMode="numeric"
                   defaultValue={resident.dobYear}
                   onKeyUp={(e) => onChange(e.target.id, e.target.value)}
