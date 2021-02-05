@@ -24,6 +24,16 @@ context('When you view a helpcase profile', () => {
         cy.get('[data-testid=call-history-entry]').first().should('contain', "2021-01-26 15:12 by handler");
         cy.get('[data-testid=call-history-entry]').first().should('contain', "outbound Welfare Call: Callback complete");
     });
+    it('it displays the case notes', () => {
+        cy.url().should('match', /\/helpcase-profile\/\d+$/);
+        cy.get('[data-testid=support-requested-table-view_link-0]')
+            .contains('View')
+            .click({ force: true });
+        cy.get('[data-testid=case-note-entry]').should('have.length', 1);
+        cy.get('[data-testid=case-note-entry]').first().should('contain', "020-09-10 08:53 by Professor Umbridge");
+        cy.get('[data-testid=case-note-entry]').first().should('contain', "Contact Tracing:");
+        cy.get('[data-testid=case-note-entry]').first().should('contain', "CREATED");
+    });
 });
 
 context('When viewing a single help request', () => {
