@@ -2,10 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { helpTypes } from "../../helpers/constants"
 import Dropdown from "../../components/Form/Dropdown/Dropdown";
 import styles from '../CaseNotes/CaseNotes.module.scss';
+import { useRouter } from "next/router";
 
 export default function CaseNotes({ caseNotes }) {
     const [filterBy, setFilterBy] = useState("")
+    const [displayDropdown, setDisplayDropDown] = useState(true)
+    const router = useRouter()
     useEffect(()=>{
+
+        if(router.pathname.includes('manage-request')){
+            setDisplayDropDown(false)
+          } 
+
         if(caseNotes?.helpType){
             setFilterBy(caseNotes.helpType)
         }else{
@@ -19,7 +27,7 @@ export default function CaseNotes({ caseNotes }) {
         <div>
             <h2 className="govuk-heading-l">Case notes</h2>
 
-                {caseNotes && !caseNotes.helpType && caseNotes[filterBy]?.length > 0 &&<Dropdown  onChange={(e) => hanleOnChange(e)} dropdownItems ={helpTypes}></Dropdown>}
+                {caseNotes && !caseNotes.helpType && displayDropdown&&<Dropdown  onChange={(e) => hanleOnChange(e)} dropdownItems ={helpTypes}></Dropdown>}
                 {caseNotes && caseNotes[filterBy]?.length == 0 && 
                 <>
                     <div className ={ styles['case-notes-box']}>No previous case notes</div>
