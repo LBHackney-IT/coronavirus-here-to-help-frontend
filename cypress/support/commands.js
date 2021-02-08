@@ -29,6 +29,14 @@ Cypress.Commands.add('login', (userData) => {
 });
 
 Cypress.Commands.add('setIntercepts', () => {
+    cy.intercept('GET', '/api/proxy/v4/residents/3/case-notes', {
+        fixture: 'residents/3/residentCaseNotes'
+    });
+
+    cy.intercept('GET', '/api/proxy/v4/residents/3/help-requests/12/case-notes', {
+        fixture: 'residents/3/helpRequestCaseNotes'
+    });
+
     cy.intercept('GET', '/api/proxy/v3/help-requests/callbacks', {
         fixture: 'callbacks'
     });
@@ -36,6 +44,7 @@ Cypress.Commands.add('setIntercepts', () => {
     cy.intercept('GET', `/api/proxy/v4/residents/3/help-requests/12`, {
         fixture: 'residents/3/helpRequests/12'
     });
+
     cy.intercept('GET', `/api/proxy/v4/residents/3/help-requests`, {
         fixture: 'residents/3/helpRequests'
     });

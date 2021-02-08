@@ -34,6 +34,7 @@ export class ResidentGateway extends DefaultGateway {
     }
     async getResident(residentId) {
         const response = await this.getFromUrl(`v4/residents/${residentId}`);
+
         return InboundMapper.ToResident(response);
     }
     async setResident(residentId, requestBody) {
