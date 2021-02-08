@@ -5,7 +5,7 @@ const ToRequest = (caseNote) => {
     return {CaseNote: JSON.stringify({
         note: caseNote.caseNote,
         author: caseNote.author,
-        noteDate: caseNote.caseDate,
+        noteDate: caseNote.noteDate,
         helpNeeded:caseNote.helpNeeded
     })};
 };

@@ -12,7 +12,6 @@ import {useRouter} from "next/router";
 import CallHistory from '../../../../components/CallHistory/CallHistory';
 import CaseNotes from '../../../../components/CaseNotes/CaseNotes';
 import { helpTypes } from "../../../../helpers/constants";
-import { CaseNotesGateway } from "../../../../gateways/case-notes";
 
 export default function addSupportPage({residentId, helpRequestId}) {
     const backHref = `/helpcase-profile/${residentId}`;
@@ -112,7 +111,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
                 const caseNoteObject = {
                     caseNote,
                     author: user.name,
-                    noteDate: Date.now,
+                    noteDate: new Date().toGMTString(),
                     helpNeeded: helpRequest.helpNeeded
                 };      
                 await caseNotesGateway.createCaseNote(helpRequestId, residentId, caseNoteObject);
