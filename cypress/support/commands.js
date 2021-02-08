@@ -73,7 +73,7 @@ Cypress.Commands.add('setIntercepts', () => {
         fixture: 'residents/3/resident'
     });
 
-    cy.intercept('GET', '/api/proxy/v4/residents/3/help-requests/12/case-notes', {
+    cy.intercept('GET', '/api/proxy/v4/residents/3/help-requests/12/case-notes'), {
         fixture: 'residents/3/helpRequestCaseNotes'
-    });
+    };
 });

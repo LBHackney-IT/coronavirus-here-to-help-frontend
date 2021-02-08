@@ -1,8 +1,12 @@
-[
-  {
-    "Id": 1,
-    "HelpRequestId": 12,
-    "ResidentId": 3,
-    "CaseNote": "Professor Umbridge : Thu, 10 Sep 2020 08:53:18 GMT ------------ *** CREATED *** ------ "
-  }
-]
+{
+  "CaseNotes":
+  [
+    {
+      "Id": 1,
+      "HelpRequestId": 12,
+      "ResidentId": 3,
+      "CaseNote": "Professor Umbridge : Thu, 10 Sep 2020 08:53:18 GMT ------------ *** CREATED *** ------ "
+    } 
+  ]
+
+}

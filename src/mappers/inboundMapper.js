@@ -1,7 +1,7 @@
 import { getNonJsonCasenotesArray,getAuthor,getNote,getDate,isJSON, formatDate } from "../helpers/case_notes_helper";
 class InboundMapper {
     static ToCaseNotes = (caseNotes) => {
-        return caseNotes?.map((note) => {
+        return caseNotes["CaseNotes"]?.map((note) => {
             return {
                 id: note.Id,
                 caseNote: ToStandardisiedCaseNotesArray(note.CaseNote),
@@ -43,20 +43,29 @@ const ToStandardisiedCaseNotesArray = (caseNotes) => {
                 standardisiedCaseNotesArray.push(note)
             });
         }
+        else{
+            caseNoteObject.formattedDate = formatDate(caseNoteObject.noteDate)
+            standardisiedCaseNotesArray.push(caseNoteObject)
+        }
     }
     else if(!isJSON(caseNotes)){
         let nonJsonCaseNotesArray = getNonJsonCasenotesArray(caseNotes)
-        nonJsonCaseNotesArray.forEach(nonJsonCaseNote => {
-            if (nonJsonCaseNote) {
-                let caseNoteObject = {"author": getAuthor(nonJsonCaseNote),
+        if(nonJsonCaseNotesArray){
+            nonJsonCaseNotesArray.forEach(nonJsonCaseNote => {
+                if (nonJsonCaseNote) {
+                    let caseNoteObject = {  "author": getAuthor(nonJsonCaseNote),
                                             "formattedDate": formatDate(getDate(nonJsonCaseNote)),
                                             "note": getNote(nonJsonCaseNote),
                                             "noteDate": getDate(nonJsonCaseNote)
-                                            }
-                standardisiedCaseNotesArray.push(caseNoteObject)
-
-            }
-        });
+                                        }
+                    standardisiedCaseNotesArray.push(caseNoteObject)
+    
+                }
+            });
+        }
+        else{
+            standardisiedCaseNotesArray.push(caseNotes)
+        }
     }
     return standardisiedCaseNotesArray
 }
