@@ -17,3 +17,11 @@ export const callOutcomes = {
 
 export const helpTypes = [ALL, WELFARE_CALL, HELP_REQUEST, CONTACT_TRACING, CEV];
 export const callTypes = ['All', 'Help Request', 'CEV', 'Welfare Call', 'Contact Tracing'];
+
+export const cevHelpTypes = {
+    voluntarySectorFoodAccess: 'Accessing food via voluntary sector',
+    prioritySupermarketFoodDelivery: 'Accessing food via priority supermarket delivery',
+    supportCompletingNSSForm: 'Support completing NSS form',
+    generalCEVGuidance: 'General guidance about Shielding',
+    noNeedsIdentified: 'No needs identified'
+};
