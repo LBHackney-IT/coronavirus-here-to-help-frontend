@@ -7,11 +7,11 @@ import {unsafeExtractUser} from "../../../../helpers/auth";
 import React, { useEffect, useState } from "react";
 import {HelpRequestGateway} from "../../../../gateways/help-request";
 import {HelpRequestCallGateway} from "../../../../gateways/help-request-call";
+import {CaseNotesGateway} from "../../../../gateways/case-notes";
 import {useRouter} from "next/router";
 import CallHistory from '../../../../components/CallHistory/CallHistory';
 import CaseNotes from '../../../../components/CaseNotes/CaseNotes';
 import { helpTypes } from "../../../../helpers/constants";
-import { CaseNotesGateway } from "../../../../gateways/case-notes";
 
 export default function addSupportPage({residentId, helpRequestId}) {
     const backHref = `/helpcase-profile/${residentId}`;
@@ -82,8 +82,8 @@ export default function addSupportPage({residentId, helpRequestId}) {
         await retreiveHelpRequest()
     }, []);
 
-    const saveFunction = async function(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade) {
-        let callRequestObject = {
+    const saveFunction = async function(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote) {
+        const callRequestObject = {
             callType: helpNeeded,
             callDirection: callDirection,
             callOutcome: callOutcomeValues,
@@ -93,17 +93,29 @@ export default function addSupportPage({residentId, helpRequestId}) {
 
         try{
 
-            let helpRequestGateway = new HelpRequestGateway();
+            const helpRequestGateway = new HelpRequestGateway();
 
-            helpRequestObject["residentId"] = residentId;
-
-            await helpRequestGateway.patchHelpRequest(helpRequestId,  helpRequestObject);
-
-            if(callMade) {
-                let helpRequestCallGateway = new HelpRequestCallGateway();
-                let helpRequestCallId = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, callRequestObject);
+            let patchHelpRequest = {
+                callbackRequired: helpRequestObject.callbackRequired
             }
 
+            await helpRequestGateway.patchHelpRequest(helpRequestId, patchHelpRequest);
+
+            if(callMade) {
+                const helpRequestCallGateway = new HelpRequestCallGateway();
+                const helpRequestCallId = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, callRequestObject);
+            }
+
+            if (caseNote && caseNote != "") {
+                const caseNotesGateway = new CaseNotesGateway();
+                const caseNoteObject = {
+                    caseNote,
+                    author: user.name,
+                    noteDate: new Date().toGMTString(),
+                    helpNeeded: helpRequest.helpNeeded
+                };      
+                await caseNotesGateway.createCaseNote(helpRequestId, residentId, caseNoteObject);
+            }
             router.push(`/helpcase-profile/${residentId}`)
         } catch(err){
             console.log("Add support error", err)
@@ -121,7 +133,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
                         <KeyInformation resident={resident}/>
                     </div>
                     <div className="govuk-grid-column-three-quarters-from-desktop">
-                        <CallbackForm residentId={residentId} resident={resident} helpRequest={helpRequest} backHref={backHref} saveFunction={saveFunction} />
+                        <CallbackForm residentId={residentId} resident={resident} helpRequest={helpRequest} backHref={backHref} saveFunction={saveFunction} editableCaseNotes={true} />
                         <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
                         <CallHistory calls={calls}  />
                         <CaseNotes caseNotes={caseNotes}/>
