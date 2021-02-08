@@ -40,5 +40,8 @@ export class ResidentGateway extends DefaultGateway {
         console.log("request body", ToPatchResidentObject(requestBody));
         return await this.patchToUrl(`v4/residents/${residentId}`, ToPatchResidentObject(requestBody));
     }
+    async postResident(requestBody) {
+        return await this.postToUrl(`v4/residents/`, ToPatchResidentObject(requestBody));
+    }
 
 }
