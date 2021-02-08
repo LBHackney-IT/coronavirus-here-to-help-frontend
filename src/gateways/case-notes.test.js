@@ -54,7 +54,7 @@ describe('Case notes gateway', () => {
                     [
                         {
                             author: "Bilbo Baggins", 
-                            formattedDate: "2020-09-07 17:56", 
+                            formattedDate: "2020-09-07 16:56", 
                             note: "*** CREATED ***", 
                             noteDate: "Thu, 7 Sep 2020 16:56:06 GMT"
                         }
@@ -99,7 +99,7 @@ describe('Case notes gateway', () => {
                     [
                         {
                             author: "Bilbo Baggins", 
-                            formattedDate: "2020-09-07 17:56", 
+                            formattedDate: "2020-09-07 16:56", 
                             note: "*** CREATED ***", 
                             noteDate: "Thu, 7 Sep 2020 16:56:06 GMT"
                         }
