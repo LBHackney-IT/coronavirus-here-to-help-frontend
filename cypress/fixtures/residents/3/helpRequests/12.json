@@ -40,6 +40,7 @@
     "RescheduledAt": "05:24",
     "RequestedDate": "2021-01-30T05:15:50.027Z",
     "NhsCtasId": "123abc",
+    "Metadata": "{\"date_tested\": \"02/02/2020\"}",
     "HelpRequestCalls": [
         {
             "Id": 23,

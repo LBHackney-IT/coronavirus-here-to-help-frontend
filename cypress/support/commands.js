@@ -76,4 +76,12 @@ Cypress.Commands.add('setIntercepts', () => {
     cy.intercept('GET', `/api/proxy/v4/residents/3`, {
         fixture: 'residents/3/resident'
     });
+
+    cy.intercept('PATCH', `/api/proxy/v4/residents/3`, {
+        statusCode: 201
+    });
+
+    cy.intercept('GET', `/api/proxy/addresses/*`, {
+        fixture: 'addresses'
+    });
 });

@@ -25,6 +25,24 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
     })
     const router = useRouter()
 
+    const metadata =  helpRequest && helpRequest.metadata ? (
+      Object.entries(helpRequest.metadata).map(([key,value])=>{
+        key = key.replace(/_/g, ' ');
+        const upcaseKey = key.charAt(0).toUpperCase() + key.slice(1);
+        return (
+          <span class="govuk-caption-l">
+            <strong>{upcaseKey}:</strong> {value}
+          </span>
+        );
+      })
+    ) : ('');
+
+    const nhsCtasId = helpRequest ? (
+      <span class="govuk-caption-l">
+          <strong>CTAS ID:</strong> {helpRequest.nhsCtasId || "Not found"}
+      </span>
+    ) : ('');
+
     const [errorsExist, setErrorsExist] = useState(null)
 
     const spokeToResidentCallOutcomes = [
@@ -157,11 +175,8 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             </div>}
             <h1 className="govuk-heading-xl"
                 style={{marginTop: "0px", marginBottom: "40px"}}> {resident.firstName} {resident.lastName}
-                {helpRequest ? (
-                  <span class="govuk-caption-l">
-                      <strong>CTAS ID:</strong> {helpRequest.nhsCtasId || "Not found"}
-                  </span>
-                ) : ('')}
+                {nhsCtasId}
+                {metadata}
             </h1>
             <form >
                 <div>
