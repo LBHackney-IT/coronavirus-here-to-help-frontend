@@ -1,24 +1,22 @@
-{
-  "CaseNotes":
-  [
-    {
-      "Id": 3,
-      "HelpRequestId": 12,
-      "ResidentId": 1,
-      "CaseNote": "Professor Umbridge : Thu, 10 Sep 2020 08:53:18 GMT ------------ *** CREATED *** ------ "
-    },
-    {
-      "Id": 3,
-      "HelpRequestId": 14,
-      "ResidentId": 1,
-      "CaseNote":  "[{\"author\":\"Harry Potter\",\"noteDate\":\"Thu, 8 Sep 2020 16:56:06 GMT\",\"note\":\"*** CREATED ***\"}, {\"author\":\"Ronald Weasley\",\"noteDate\":\"Thu, 6 Sep 2020 16:56:06 GMT\",\"note\":\"*** CREATED ***\"}]"
-    },
-    {
-      "Id": 3,
-      "HelpRequestId": 15,
-      "ResidentId": 1,
-      "CaseNote": "{\"author\":\"Bilbo Baggins\",\"noteDate\":\"Thu, 7 Sep 2020 16:56:06 GMT\",\"note\":\"*** CREATED ***\"}"
-    }
-  ]
-}
+[
+  {
+    "Id": 3,
+    "HelpRequestId": 12,
+    "ResidentId": 1,
+    "CaseNote": "Professor Umbridge : Thu, 10 Sep 2020 08:53:18 GMT ------------ *** CREATED *** ------ "
+  },
+  {
+    "Id": 3,
+    "HelpRequestId": 14,
+    "ResidentId": 1,
+    "CaseNote":  "[{\"author\":\"Harry Potter\",\"noteDate\":\"Thu, 8 Sep 2020 16:56:06 GMT\",\"note\":\"*** CREATED ***\"}, {\"author\":\"Ronald Weasley\",\"noteDate\":\"Thu, 6 Sep 2020 16:56:06 GMT\",\"note\":\"*** CREATED ***\"}]"
+  },
+  {
+    "Id": 3,
+    "HelpRequestId": 15,
+    "ResidentId": 1,
+    "CaseNote": "{\"author\":\"Bilbo Baggins\",\"noteDate\":\"Thu, 7 Sep 2020 16:56:06 GMT\",\"note\":\"*** CREATED ***\"}"
+  }
+]
+
 

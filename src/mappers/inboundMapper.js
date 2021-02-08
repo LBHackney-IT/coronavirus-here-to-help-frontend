@@ -1,7 +1,7 @@
 import { getNonJsonCasenotesArray,getAuthor,getNote,getDate,isJSON, formatDate } from "../helpers/case_notes_helper";
 class InboundMapper {
     static ToCaseNotes = (caseNotes) => {
-        return caseNotes["CaseNotes"]?.map((note) => {
+        return caseNotes?.map((note) => {
             return {
                 id: note.Id,
                 caseNote: ToStandardisiedCaseNotesArray(note.CaseNote),
