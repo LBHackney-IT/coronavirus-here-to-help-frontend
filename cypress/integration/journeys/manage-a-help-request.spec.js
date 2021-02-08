@@ -24,7 +24,7 @@ context('When you view a helpcase profile', () => {
         cy.get('[data-testid=call-history-entry]').first().should('contain', "2021-01-26 15:12 by handler");
         cy.get('[data-testid=call-history-entry]').first().should('contain', "outbound Welfare Call: Callback complete");
     });
-    it('it displays the case notes', () => {
+    it.only('it displays the case notes', () => {
         cy.url().should('match', /\/helpcase-profile\/\d+$/);
         cy.get('[data-testid=support-requested-table-view_link-0]')
             .contains('View')
