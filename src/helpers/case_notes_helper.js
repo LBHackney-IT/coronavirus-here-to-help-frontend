@@ -21,6 +21,7 @@ export const formatDate = (date) => {
   if (day.length < 2) 
       day = '0' + day;
 
+  if(isNaN(d.getTime()))  return "";
   return [year, month, day].join('-') + time;
 }
 

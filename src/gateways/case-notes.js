@@ -10,8 +10,14 @@ const ToRequest = (caseNote) => {
     })};
 };
 export class CaseNotesGateway extends DefaultGateway {
-    async getCaseNotes(residentId) {
-        const response = await this.getFromUrl(`residents/${residentId}/caseNotes`);
+    async getResidentCaseNotes(residentId) {
+        const response = await this.getFromUrl(`v4/residents/${residentId}/case-notes`);
+        console.log("residentCaseNoteResponse", response)
+        return InboundMapper.ToCaseNotes(response);
+    }
+    async getHelpRequestCaseNotes(residentId, helpRequestId) {
+        const response = await this.getFromUrl(`v4/residents/${residentId}/help-requests/${helpRequestId}/case-notes`);
+          console.log("helpRequestCaseNoteResponse",response)
         return InboundMapper.ToCaseNotes(response);
     }
     async createCaseNote(residentId, helpRequestId, caseNoteObject) {

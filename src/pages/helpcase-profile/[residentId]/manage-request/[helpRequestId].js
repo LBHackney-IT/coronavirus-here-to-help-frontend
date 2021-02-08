@@ -12,6 +12,7 @@ import {useRouter} from "next/router";
 import CallHistory from '../../../../components/CallHistory/CallHistory';
 import CaseNotes from '../../../../components/CaseNotes/CaseNotes';
 import { helpTypes } from "../../../../helpers/constants";
+import { CaseNotesGateway } from "../../../../gateways/case-notes";
 
 export default function addSupportPage({residentId, helpRequestId}) {
     const backHref = `/helpcase-profile/${residentId}`;
@@ -43,21 +44,28 @@ export default function addSupportPage({residentId, helpRequestId}) {
         try {
             const gateway = new HelpRequestGateway();
             const response = await gateway.getHelpRequest(residentId, helpRequestId);
+
+            const caseNotesGateway = new CaseNotesGateway();
+            const helpRequestCaseNotes = await caseNotesGateway.getHelpRequestCaseNotes(residentId, helpRequestId)
+
             let categorisedCaseNotes = {"All":[],
                                         "Welfare Call":[],
                                         "Help Request":[],
                                         "Contact Tracing":[],
                                         "CEV":[]}
-            if(!response.caseNotes) return
-            response.caseNotes.forEach(caseNote => {
-                caseNote.manageCaseNotePage = true
-                categorisedCaseNotes[caseNote.helpNeeded].push(caseNote)
-                categorisedCaseNotes['All'].push(caseNote)
+            if(!helpRequestCaseNotes) return
+            helpRequestCaseNotes.forEach(helpRequestCaseNote => {
+                helpRequestCaseNote.caseNote.forEach(note => {
+                    note.helpNeeded = response.helpNeeded
+                    categorisedCaseNotes[note.helpNeeded].push(note)
+                    categorisedCaseNotes['All'].push(note)
+                });
+            
+                helpTypes.forEach(helpType => {
+                    categorisedCaseNotes[helpType].sort((a, b) => new Date(b.noteDate) - new Date(a.noteDate))
+                }); 
             });
-        
-            helpTypes.forEach(helpType => {
-                categorisedCaseNotes[helpType].sort((a, b) => new Date(b.noteDate) - new Date(a.noteDate))
-            });
+
             categorisedCaseNotes.helpType = response.helpNeeded
             setCaseNotes(categorisedCaseNotes)
             setHelpRequest(response);
