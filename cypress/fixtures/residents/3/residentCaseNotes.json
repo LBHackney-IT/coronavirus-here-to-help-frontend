@@ -18,12 +18,6 @@
       "HelpRequestId": 15,
       "ResidentId": 1,
       "CaseNote": "{\"author\":\"Bilbo Baggins\",\"noteDate\":\"Thu, 7 Sep 2020 16:56:06 GMT\",\"note\":\"*** CREATED ***\"}"
-    },
-    {
-      "Id": 3,
-      "HelpRequestId": 15,
-      "ResidentId": 1,
-      "CaseNote": "[2021-02-05] automated vm left [2021-02-05] we got halfway through the form and the case resident worried about the virus requested a reschedule [2021-02-06] spoke to case - she asked for call back on tuesday. i advised her could only resched for 24 hours and she said that would be ok. she confirmed that she was self isolating. did not sound upset - see previous notes resched for tomorrow - a jones t2 ccw 8011779 [2021-02-06] jack jack t3suppt2 ext â€“ 57606 call attempt â€“ 4 of 10 line rang through to voicemail, left voicemail as per script. [2021-02-05]"
     }
   ]
 }

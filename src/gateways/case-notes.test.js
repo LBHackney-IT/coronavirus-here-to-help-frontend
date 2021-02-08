@@ -38,14 +38,16 @@ describe('Case notes gateway', () => {
 
     it("getResidentCaseNotes method calls the inbound mapper's ToCaseNotes method with expected paramters and return the corrext response", async (done) => {
 
-        const mockAxiosResponse = {"CaseNotes":[
+        const mockAxiosResponse = {
+            "CaseNotes":[
             {
               "Id": residentId,
               "HelpRequestId": 15,
               "ResidentId": residentId,
               "CaseNote": "[{\"author\":\"Bilbo Baggins\",\"noteDate\":\"Thu, 7 Sep 2020 16:56:06 GMT\",\"note\":\"*** CREATED ***\"}]"
             }
-        ]}
+        ]
+    }
         let expectedResponse = [
             {
                 caseNote: 
@@ -83,14 +85,14 @@ describe('Case notes gateway', () => {
         let helpRequestId = 15
         let getHelpRequestCaseNotesUrl = new RegExp(`/v4/residents/${residentId}/help-requests/${helpRequestId}/case-notes`)
 
-        const mockAxiosResponse = [
+        const mockAxiosResponse =  {"CaseNotes": [
             {
               "Id": residentId,
               "HelpRequestId": helpRequestId,
               "ResidentId": residentId,
               "CaseNote": "[{\"author\":\"Bilbo Baggins\",\"noteDate\":\"Thu, 7 Sep 2020 16:56:06 GMT\",\"note\":\"*** CREATED ***\"}]"
             }
-        ]
+        ]}
         let expectedResponse = [
             {
                 caseNote: 
