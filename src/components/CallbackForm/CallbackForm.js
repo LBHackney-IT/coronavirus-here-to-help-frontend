@@ -41,41 +41,13 @@ export default function CallbackForm({
     const router = useRouter();
 
     const onCEVHelpNeedsCheckboxChange = (cevHelpItem) => {
-        if (cevHelpItem === cevHelpTypes.foodAccessVoluntarySector)
-            setCEVHelpNeeds({
-                ...cevHelpNeeds,
-                foodAccessVoluntarySector: !cevHelpNeeds.foodAccessVoluntarySector
-            });
-
-        if (cevHelpItem === cevHelpTypes.prioritySupermarketFoodDelivery)
-            setCEVHelpNeeds({
-                ...cevHelpNeeds,
-                prioritySupermarketFoodDelivery: !cevHelpNeeds.prioritySupermarketFoodDelivery
-            });
-
-        if (cevHelpItem === cevHelpTypes.supportCompletingNSSForm)
-            setCEVHelpNeeds({
-                ...cevHelpNeeds,
-                supportCompletingNSSForm: !cevHelpNeeds.supportCompletingNSSForm
-            });
-
-        if (cevHelpItem === cevHelpTypes.generalCEVGuidance)
-            setCEVHelpNeeds({
-                ...cevHelpNeeds,
-                generalCEVGuidance: !cevHelpNeeds.generalCEVGuidance
-            });
-
-        if (cevHelpItem === cevHelpTypes.otherNeeds)
-            setCEVHelpNeeds({
-                ...cevHelpNeeds,
-                otherNeeds: !cevHelpNeeds.otherNeeds
-            });
-
-        if (cevHelpItem === cevHelpTypes.noNeedsIdentified)
-            setCEVHelpNeeds({
-                ...cevHelpNeeds,
-                noNeedsIdentified: !cevHelpNeeds.noNeedsIdentified
-            });
+        Object.entries(cevHelpTypes).map(([key, cevTextVal]) => {
+            if (cevHelpItem === cevTextVal) {
+                let cevHelpNeedsCopy = { ...cevHelpNeeds };
+                cevHelpNeedsCopy[key] = !cevHelpNeedsCopy[key];
+                setCEVHelpNeeds(cevHelpNeedsCopy);
+            }
+        });
     };
 
     const metadata =
