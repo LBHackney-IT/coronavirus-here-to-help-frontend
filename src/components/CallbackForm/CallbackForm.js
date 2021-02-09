@@ -131,12 +131,7 @@ export default function CallbackForm({
 
     const validateCEVNeedsFieldset = () => {
         // at least 1 checkbox has to be selected
-        return (
-            helpNeeded !== 'CEV' ||
-            Object.entries(cevHelpNeeds)
-                .map(([_, value]) => value)
-                .filter((n) => n).length > 0
-        );
+        return helpNeeded !== 'CEV' || Object.values(cevHelpNeeds).includes(true);
     };
 
     const handleUpdate = async (event) => {
