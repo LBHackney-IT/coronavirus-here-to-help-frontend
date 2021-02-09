@@ -41,6 +41,7 @@ Cypress.Commands.add('setIntercepts', () => {
     cy.intercept('GET', `/api/proxy/v4/residents/3/help-requests/12`, {
         fixture: 'residents/3/helpRequests/12'
     });
+
     cy.intercept('GET', `/api/proxy/v4/residents/3/help-requests`, {
         fixture: 'residents/3/helpRequests'
     });
