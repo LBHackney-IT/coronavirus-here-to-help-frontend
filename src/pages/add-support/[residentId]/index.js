@@ -7,6 +7,7 @@ import {unsafeExtractUser} from "../../../helpers/auth";
 import React, { useEffect, useState } from "react";
 import {HelpRequestGateway} from "../../../gateways/help-request";
 import {HelpRequestCallGateway} from "../../../gateways/help-request-call";
+import {CaseNotesGateway} from "../../../gateways/case-notes";
 import {useRouter} from "next/router";
 
 export default function addSupportPage({residentId}) {

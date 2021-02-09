@@ -42,7 +42,7 @@ export default function HelpcaseProfile({ residentId }) {
                 caseNote.caseNote.forEach(note => {
                     let helpNeeded = helpRequests.filter(hr => hr.id == caseNote.helpRequestId)[0].helpNeeded
                     note.helpNeeded = helpNeeded
-                    categorisedCaseNotes[note.helpNeeded].push(note)
+                    if (note.helpNeeded) categorisedCaseNotes[note.helpNeeded].push(note)
                     categorisedCaseNotes['All'].push(note)
                 });
 

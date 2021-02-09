@@ -149,7 +149,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                 callDirection != null &&
                 helpNeeded != null) ||
             (callMade == false && helpNeeded && followUpRequired != null) ||
-            (followUpRequired != null && caseNote !="")
+            (followUpRequired != null && caseNote !="" && helpNeeded != null && helpNeeded != "")
         ) {
             saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote);
         } else {
