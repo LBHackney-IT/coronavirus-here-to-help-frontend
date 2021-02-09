@@ -6,6 +6,7 @@ import { HelpRequestCallGateway } from '../../gateways/help-request-call';
 import { ResidentGateway } from '../../gateways/resident';
 import { HelpRequestGateway } from '../../gateways/help-request';
 import { unsafeExtractUser } from '../../helpers/auth';
+import { cevHelpTypes } from '../../helpers/constants';
 
 import { useRouter } from 'next/router';
 
@@ -22,6 +23,14 @@ export default function CallbackForm({
     const [helpNeeded, setHelpNeeded] = useState('');
     const [callDirection, setCallDirection] = useState('');
     const [callOutcomeValues, setCallOutcomeValues] = useState('');
+    const [cevHelpNeeds, setCEVHelpNeeds] = useState({
+        foodAccessVoluntarySector: null,
+        prioritySupermarketFoodDelivery: null,
+        supportCompletingNSSForm: null,
+        generalCEVGuidance: null,
+        otherNeeds: null,
+        noNeedsIdentified: null
+    });
     const [errors, setErrors] = useState({
         CallbackRequired: null,
         HelpNeeded: null,
@@ -30,6 +39,14 @@ export default function CallbackForm({
         CallHandler: null
     });
     const router = useRouter();
+
+    const onCEVHelpNeedsCheckboxChange = (cevHelpItem) => {
+        if (cevHelpItem === cevHelpTypes.foodAccessVoluntarySector)
+            setCEVHelpNeeds({
+                ...cevHelpNeeds,
+                foodAccessVoluntarySector: !cevHelpNeeds.foodAccessVoluntarySector
+            });
+    };
 
     const metadata =
         helpRequest && helpRequest.metadata
@@ -206,6 +223,21 @@ export default function CallbackForm({
                                     </div>
                                 </div>
                             </div>
+                            <br />
+                            <fieldset className="govuk-fieldset">
+                                <legend className="govuk-fieldset__legend mandatoryQuestion">
+                                    Help needed because of coronavirus
+                                </legend>
+                                <span id="cev-help-needs-hint" className="form-hint">
+                                    Select all that apply
+                                </span>
+                                <Checkbox
+                                    value={cevHelpTypes.foodAccessVoluntarySector}
+                                    label={cevHelpTypes.foodAccessVoluntarySector}
+                                    checked={cevHelpNeeds.foodAccessVoluntarySector}
+                                    aria-describedby="cev-help-needs-hint"
+                                    onCheckboxChange={onCEVHelpNeedsCheckboxChange}></Checkbox>
+                            </fieldset>
                             <br />
                             <fieldset className="govuk-fieldset">
                                 <legend className="govuk-fieldset__legend mandatoryQuestion">
