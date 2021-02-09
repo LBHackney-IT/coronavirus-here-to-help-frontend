@@ -263,42 +263,19 @@ export default function CallbackForm({
                                     className="govuk-hint govuk-!-margin-bottom-6">
                                     Select all that apply
                                 </span>
-                                <Checkbox
-                                    value={cevHelpTypes.foodAccessVoluntarySector}
-                                    label={cevHelpTypes.foodAccessVoluntarySector}
-                                    checked={cevHelpNeeds.foodAccessVoluntarySector}
-                                    aria-describedby="cev-help-needs-hint"
-                                    onCheckboxChange={onCEVHelpNeedsCheckboxChange}></Checkbox>
-                                <Checkbox
-                                    value={cevHelpTypes.prioritySupermarketFoodDelivery}
-                                    label={cevHelpTypes.prioritySupermarketFoodDelivery}
-                                    checked={cevHelpNeeds.prioritySupermarketFoodDelivery}
-                                    aria-describedby="cev-help-needs-hint"
-                                    onCheckboxChange={onCEVHelpNeedsCheckboxChange}></Checkbox>
-                                <Checkbox
-                                    value={cevHelpTypes.supportCompletingNSSForm}
-                                    label={cevHelpTypes.supportCompletingNSSForm}
-                                    checked={cevHelpNeeds.supportCompletingNSSForm}
-                                    aria-describedby="cev-help-needs-hint"
-                                    onCheckboxChange={onCEVHelpNeedsCheckboxChange}></Checkbox>
-                                <Checkbox
-                                    value={cevHelpTypes.generalCEVGuidance}
-                                    label={cevHelpTypes.generalCEVGuidance}
-                                    checked={cevHelpNeeds.generalCEVGuidance}
-                                    aria-describedby="cev-help-needs-hint"
-                                    onCheckboxChange={onCEVHelpNeedsCheckboxChange}></Checkbox>
-                                <Checkbox
-                                    value={cevHelpTypes.otherNeeds}
-                                    label={cevHelpTypes.otherNeeds}
-                                    checked={cevHelpNeeds.otherNeeds}
-                                    aria-describedby="cev-help-needs-hint"
-                                    onCheckboxChange={onCEVHelpNeedsCheckboxChange}></Checkbox>
-                                <Checkbox
-                                    value={cevHelpTypes.noNeedsIdentified}
-                                    label={cevHelpTypes.noNeedsIdentified}
-                                    checked={cevHelpNeeds.noNeedsIdentified}
-                                    aria-describedby="cev-help-needs-hint"
-                                    onCheckboxChange={onCEVHelpNeedsCheckboxChange}></Checkbox>
+                                {Object.keys(cevHelpTypes).map((key, index) => {
+                                    return (
+                                        <Checkbox
+                                            key={index}
+                                            value={cevHelpTypes[key]}
+                                            label={cevHelpTypes[key]}
+                                            checked={cevHelpNeeds[key]}
+                                            aria-describedby="cev-help-needs-hint"
+                                            onCheckboxChange={
+                                                onCEVHelpNeedsCheckboxChange
+                                            }></Checkbox>
+                                    );
+                                })}
                             </fieldset>
                             <br />
                             <fieldset className="govuk-fieldset">
