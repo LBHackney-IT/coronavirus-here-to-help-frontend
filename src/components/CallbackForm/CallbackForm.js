@@ -128,6 +128,17 @@ export default function CallbackForm({
             }
         }
     };
+
+    const validateCEVNeedsFieldset = () => {
+        // at least 1 checkbox has to be selected
+        return (
+            helpNeeded !== 'CEV' ||
+            Object.entries(cevHelpNeeds)
+                .map(([_, value]) => value)
+                .filter((n) => n).length > 0
+        );
+    };
+
     const handleUpdate = async (event) => {
         event.preventDefault();
 
@@ -157,7 +168,10 @@ export default function CallbackForm({
             helpNeeded: helpNeeded
         };
 
-        if (
+        // jeez, this looks sooo fragile
+        if (!validateCEVNeedsFieldset()) {
+            setErrorsExist(true);
+        } else if (
             callMade == true &&
             (followUpRequired == null ||
                 !helpNeeded ||
