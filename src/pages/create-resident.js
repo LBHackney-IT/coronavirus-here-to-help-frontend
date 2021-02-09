@@ -20,7 +20,7 @@ export default function CreateResident({}) {
         setResident({ ...resident, ...object });
     };
 
-    const saveResident = () => {
+    const saveResident = async () => {
         if (
             Object.keys(resident).some(
                 (k) =>
@@ -32,10 +32,10 @@ export default function CreateResident({}) {
             return;
         }
         else{
-            console.log("saving resident:", resident);
             const residentGateway = new ResidentGateway();
-            residentGateway.postResident(resident);
-            // Router.back()
+            const newResident = await residentGateway.postResident(resident);
+            console.log("resident response", newResident);
+            router.push(`/helpcase-profile/${newResident.Id}`)
         }
     };
     
@@ -69,7 +69,7 @@ export default function CreateResident({}) {
                 <EditResidentBioForm resident={resident} onChange={handleCreateResident}/>
                 <Address initialResident={resident} onChange={handleCreateAddress} />
                 <Button
-                    text="Update"
+                    text="Save"
                     addClass="govuk-!-margin-right-1"
                     onClick={() => saveResident()}
                     data-testid="edit-resident-form-update-button"
