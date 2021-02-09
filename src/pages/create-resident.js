@@ -22,11 +22,8 @@ export default function CreateResident({}) {
 
     const saveResident = async () => {
         if (
-            Object.keys(resident).some(
-                (k) =>
-                    (resident[k] == '')
-            )
-        ) {
+            !Object.values(resident).some(x => (x !== null && x !== '')))
+        {
             setErrorsExist(true);
             
             return;
