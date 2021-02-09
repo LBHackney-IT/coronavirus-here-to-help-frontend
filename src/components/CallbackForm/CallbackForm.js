@@ -240,29 +240,31 @@ export default function CallbackForm({
                                 </div>
                             </div>
                             <br />
-                            <fieldset className="govuk-fieldset">
-                                <legend className="govuk-fieldset__legend mandatoryQuestion">
-                                    Help needed because of coronavirus
-                                </legend>
-                                <span
-                                    id="cev-help-needs-hint"
-                                    className="govuk-hint govuk-!-margin-bottom-6">
-                                    Select all that apply
-                                </span>
-                                {Object.keys(cevHelpTypes).map((key, index) => {
-                                    return (
-                                        <Checkbox
-                                            key={index}
-                                            value={cevHelpTypes[key]}
-                                            label={cevHelpTypes[key]}
-                                            checked={cevHelpNeeds[key]}
-                                            aria-describedby="cev-help-needs-hint"
-                                            onCheckboxChange={
-                                                onCEVHelpNeedsCheckboxChange
-                                            }></Checkbox>
-                                    );
-                                })}
-                            </fieldset>
+                            {helpNeeded === 'CEV' && (
+                                <fieldset className="govuk-fieldset">
+                                    <legend className="govuk-fieldset__legend mandatoryQuestion">
+                                        Help needed because of coronavirus
+                                    </legend>
+                                    <span
+                                        id="cev-help-needs-hint"
+                                        className="govuk-hint govuk-!-margin-bottom-6">
+                                        Select all that apply
+                                    </span>
+                                    {Object.keys(cevHelpTypes).map((key, index) => {
+                                        return (
+                                            <Checkbox
+                                                key={index}
+                                                value={cevHelpTypes[key]}
+                                                label={cevHelpTypes[key]}
+                                                checked={cevHelpNeeds[key]}
+                                                aria-describedby="cev-help-needs-hint"
+                                                onCheckboxChange={
+                                                    onCEVHelpNeedsCheckboxChange
+                                                }></Checkbox>
+                                        );
+                                    })}
+                                </fieldset>
+                            )}
                             <br />
                             <fieldset className="govuk-fieldset">
                                 <legend className="govuk-fieldset__legend mandatoryQuestion">
