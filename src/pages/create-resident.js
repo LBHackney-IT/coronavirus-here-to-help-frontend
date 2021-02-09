@@ -67,7 +67,9 @@ export default function CreateResident({}) {
                 </a>
 
                 <EditResidentBioForm resident={resident} onChange={handleCreateResident}/>
+                <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
                 <Address initialResident={resident} onChange={handleCreateAddress} />
+                <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
                 <Button
                     text="Save"
                     addClass="govuk-!-margin-right-1"
