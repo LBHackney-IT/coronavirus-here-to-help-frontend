@@ -23,5 +23,6 @@ export const cevHelpTypes = {
     prioritySupermarketFoodDelivery: 'Accessing food via priority supermarket delivery',
     supportCompletingNSSForm: 'Support completing NSS form',
     generalCEVGuidance: 'General guidance about Shielding',
+    otherNeeds: 'Other needs',
     noNeedsIdentified: 'No needs identified'
 };
