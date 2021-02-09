@@ -40,3 +40,10 @@ export const getNonJsonCasenotesArray = (text) =>{
   let separators = ["------\r\n\r\n\r\n", "------\n\n\n"];
   return text.split(new RegExp(separators.join("|"), "g"));
 }
+
+export const getPowerBICaseNotesArray = (text) => {
+  const array = text.split('[');
+  return array.map(x => {
+    const [noteDate, note] = x.split(']')
+    return {noteDate: new Date(noteDate), note}}).filter(x => x.note)
+} 

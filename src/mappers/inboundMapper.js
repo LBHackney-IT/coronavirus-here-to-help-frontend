@@ -1,4 +1,4 @@
-import { getNonJsonCasenotesArray,getAuthor,getNote,getDate,isJSON, formatDate } from "../helpers/case_notes_helper";
+import { getNonJsonCasenotesArray,getAuthor,getNote,getDate,isJSON, formatDate, getPowerBICaseNotesArray } from "../helpers/case_notes_helper";
 class InboundMapper {
     static ToCaseNotes = (caseNotes) => {
         return caseNotes?.map((note) => {
@@ -49,24 +49,40 @@ const ToStandardisiedCaseNotesArray = (caseNotes) => {
         }
     }
     else if(!isJSON(caseNotes)){
-        let nonJsonCaseNotesArray = getNonJsonCasenotesArray(caseNotes)
-        if(nonJsonCaseNotesArray){
-            nonJsonCaseNotesArray.forEach(nonJsonCaseNote => {
-                if (nonJsonCaseNote) {
-                    let caseNoteObject = {  "author": getAuthor(nonJsonCaseNote),
-                                            "formattedDate": formatDate(getDate(nonJsonCaseNote)),
-                                            "note": getNote(nonJsonCaseNote),
-                                            "noteDate": getDate(nonJsonCaseNote)
-                                        }
+        if(/^\[\d{4}\-\d{2}\-\d{2}\]/.test(caseNotes)){
+            const powerBICaseNotesArray = getPowerBICaseNotesArray(caseNotes);
+            if (powerBICaseNotesArray) {
+                powerBICaseNotesArray.forEach(caseNote => {
+                    const caseNoteObject = {
+                        "author": "PowerBI",
+                        "formattedDate": formatDate(caseNote.noteDate),
+                        "note": caseNote.note,
+                        "noteDate": caseNote.noteDate,
+                    }
                     standardisiedCaseNotesArray.push(caseNoteObject)
-    
-                }
-            });
+                })
+            }
+        }
+        else {
+            let nonJsonCaseNotesArray = getNonJsonCasenotesArray(caseNotes)
+            if(nonJsonCaseNotesArray){
+                nonJsonCaseNotesArray.forEach(nonJsonCaseNote => {
+                    if (nonJsonCaseNote) {
+                        let caseNoteObject = {  "author": getAuthor(nonJsonCaseNote),
+                                                "formattedDate": formatDate(getDate(nonJsonCaseNote)),
+                                                "note": getNote(nonJsonCaseNote),
+                                                "noteDate": getDate(nonJsonCaseNote)
+                                            }
+                        standardisiedCaseNotesArray.push(caseNoteObject)
+        
+                    }
+                });
+            }
+        }
         }
         else{
             standardisiedCaseNotesArray.push(caseNotes)
         }
-    }
     return standardisiedCaseNotesArray
 }
 
