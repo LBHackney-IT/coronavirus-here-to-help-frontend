@@ -39,14 +39,15 @@ export default function ResidentsList({ firstName, lastName, postcode }) {
                 <div className="govuk-grid-row">
                     <div className="govuk-grid-column-one-half">
                         <Link href="/resident-search">
-                            <Button text="New search" addClass="govuk-button--secondary" />
+                            <Button text="New search" addClass="govuk-button--secondary"/>
+                        </Link>
+                    </div>
+                    <div className="govuk-grid-column-one-quarter">
+                        <Link href="/create-resident">
+                            <Button text="Add new resident" addClass="govuk-button" data-testid="add-new-resident-button"/>
                         </Link>
                     </div>
                     <div className="govuk-grid-column-one-half text-align-right">
-                        {/* <Button
-                            text="Add new resident"
-                            style={{marginLeft: '15em'}}
-                    /> */}
                     </div>
                     <ResidentList residents={residents} />
                 </div>
