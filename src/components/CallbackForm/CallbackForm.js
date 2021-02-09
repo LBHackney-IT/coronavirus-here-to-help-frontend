@@ -241,7 +241,7 @@ export default function CallbackForm({
                             </div>
                             <br />
                             {helpNeeded === 'CEV' && (
-                                <fieldset className="govuk-fieldset">
+                                <fieldset className="govuk-fieldset govuk-!-margin-bottom-7">
                                     <legend className="govuk-fieldset__legend mandatoryQuestion">
                                         Help needed because of coronavirus
                                     </legend>
@@ -265,7 +265,6 @@ export default function CallbackForm({
                                     })}
                                 </fieldset>
                             )}
-                            <br />
                             <fieldset className="govuk-fieldset">
                                 <legend className="govuk-fieldset__legend mandatoryQuestion">
                                     {' '}
