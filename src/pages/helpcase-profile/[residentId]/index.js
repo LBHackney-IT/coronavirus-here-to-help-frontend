@@ -10,6 +10,7 @@ import CallHistory from '../../../components/CallHistory/CallHistory';
 import CaseNotes  from "../../../components/CaseNotes/CaseNotes";
 import { useState, useEffect } from 'react';
 import { helpTypes } from "../../../helpers/constants";
+import CaseNotesGateway from '../../../gateways/case-notes';
 
 export default function HelpcaseProfile({ residentId }) {
     const [resident, setResident] = useState([]);
@@ -28,18 +29,23 @@ export default function HelpcaseProfile({ residentId }) {
             const resident = await gateway.getResident(residentId);
             const hrGateway = new HelpRequestGateway();
             const helpRequests = await hrGateway.getHelpRequests(residentId);
+            const caseNotesGateway = new CaseNotesGateway();
+            const residentCaseNotes = await caseNotesGateway.getResidentCaseNotes(residentId)
             let categorisedCaseNotes = {"All":[],
                                         "Welfare Call":[],
                                         "Help Request":[],
                                         "Contact Tracing":[],
                                         "CEV":[]}
-            helpRequests.forEach(hr => {
-                if(!hr.caseNotes) return
-                hr.caseNotes.forEach(caseNote => {
-                    categorisedCaseNotes[caseNote.helpNeeded].push(caseNote)
-                    categorisedCaseNotes['All'].push(caseNote)
+
+            residentCaseNotes.forEach(caseNote => {
+                if(!caseNote) return
+                caseNote.caseNote.forEach(note => {
+                    let helpNeeded = helpRequests.filter(hr => hr.id == caseNote.helpRequestId)[0].helpNeeded
+                    note.helpNeeded = helpNeeded
+                    if (note.helpNeeded) categorisedCaseNotes[note.helpNeeded].push(note)
+                    categorisedCaseNotes['All'].push(note)
                 });
-            
+
                 helpTypes.forEach(helpType => {
                     categorisedCaseNotes[helpType].sort((a, b) => new Date(b.noteDate) - new Date(a.noteDate))
                 });

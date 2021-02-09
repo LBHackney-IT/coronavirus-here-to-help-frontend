@@ -7,6 +7,7 @@ import {unsafeExtractUser} from "../../../helpers/auth";
 import React, { useEffect, useState } from "react";
 import {HelpRequestGateway} from "../../../gateways/help-request";
 import {HelpRequestCallGateway} from "../../../gateways/help-request-call";
+import {CaseNotesGateway} from "../../../gateways/case-notes";
 import {useRouter} from "next/router";
 
 export default function addSupportPage({residentId}) {
@@ -29,7 +30,7 @@ export default function addSupportPage({residentId}) {
 		await retreiveResidentAndUser()
 	}, []);
 
-	const saveFunction = async function(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade) {
+	const saveFunction = async function(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote) {
 		let callRequestObject = {
 			callType: helpNeeded,
 			callDirection: callDirection,
@@ -46,7 +47,17 @@ export default function addSupportPage({residentId}) {
 				let helpRequestCallGateway = new HelpRequestCallGateway()
 				let helpRequestCallId = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, callRequestObject)
 			}
-
+			if (caseNote && caseNote != "") {
+				const caseNotesGateway = new CaseNotesGateway();
+				const caseNoteObject = {
+						caseNote,
+						author: user.name,
+						noteDate: new Date().toGMTString(),
+						helpNeeded: helpNeeded
+				};      
+				await caseNotesGateway.createCaseNote(helpRequestId, residentId, caseNoteObject);
+			}
+			
 			router.push(`/helpcase-profile/${residentId}`)
 		} catch (err) {
 			console.log("Add support error", err)
@@ -64,7 +75,7 @@ export default function addSupportPage({residentId}) {
 						<KeyInformation resident={resident}/>
 					</div>
 					<div className="govuk-grid-column-three-quarters-from-desktop">
-						<CallbackForm residentId={residentId} resident={resident} backHref={backHref} saveFunction={saveFunction} />
+						<CallbackForm residentId={residentId} resident={resident} backHref={backHref} saveFunction={saveFunction} editableCaseNotes={true}  />
 					</div>
 				</div>
 			</div>
