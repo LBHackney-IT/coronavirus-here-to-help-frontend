@@ -258,7 +258,9 @@ export default function CallbackForm({
                                 <legend className="govuk-fieldset__legend mandatoryQuestion">
                                     Help needed because of coronavirus
                                 </legend>
-                                <span id="cev-help-needs-hint" className="form-hint">
+                                <span
+                                    id="cev-help-needs-hint"
+                                    className="govuk-hint govuk-!-margin-bottom-6">
                                     Select all that apply
                                 </span>
                                 <Checkbox
