@@ -46,6 +46,36 @@ export default function CallbackForm({
                 ...cevHelpNeeds,
                 foodAccessVoluntarySector: !cevHelpNeeds.foodAccessVoluntarySector
             });
+
+        if (cevHelpItem === cevHelpTypes.prioritySupermarketFoodDelivery)
+            setCEVHelpNeeds({
+                ...cevHelpNeeds,
+                prioritySupermarketFoodDelivery: !cevHelpNeeds.prioritySupermarketFoodDelivery
+            });
+
+        if (cevHelpItem === cevHelpTypes.supportCompletingNSSForm)
+            setCEVHelpNeeds({
+                ...cevHelpNeeds,
+                supportCompletingNSSForm: !cevHelpNeeds.supportCompletingNSSForm
+            });
+
+        if (cevHelpItem === cevHelpTypes.generalCEVGuidance)
+            setCEVHelpNeeds({
+                ...cevHelpNeeds,
+                generalCEVGuidance: !cevHelpNeeds.generalCEVGuidance
+            });
+
+        if (cevHelpItem === cevHelpTypes.otherNeeds)
+            setCEVHelpNeeds({
+                ...cevHelpNeeds,
+                otherNeeds: !cevHelpNeeds.otherNeeds
+            });
+
+        if (cevHelpItem === cevHelpTypes.noNeedsIdentified)
+            setCEVHelpNeeds({
+                ...cevHelpNeeds,
+                noNeedsIdentified: !cevHelpNeeds.noNeedsIdentified
+            });
     };
 
     const metadata =
@@ -235,6 +265,36 @@ export default function CallbackForm({
                                     value={cevHelpTypes.foodAccessVoluntarySector}
                                     label={cevHelpTypes.foodAccessVoluntarySector}
                                     checked={cevHelpNeeds.foodAccessVoluntarySector}
+                                    aria-describedby="cev-help-needs-hint"
+                                    onCheckboxChange={onCEVHelpNeedsCheckboxChange}></Checkbox>
+                                <Checkbox
+                                    value={cevHelpTypes.prioritySupermarketFoodDelivery}
+                                    label={cevHelpTypes.prioritySupermarketFoodDelivery}
+                                    checked={cevHelpNeeds.prioritySupermarketFoodDelivery}
+                                    aria-describedby="cev-help-needs-hint"
+                                    onCheckboxChange={onCEVHelpNeedsCheckboxChange}></Checkbox>
+                                <Checkbox
+                                    value={cevHelpTypes.supportCompletingNSSForm}
+                                    label={cevHelpTypes.supportCompletingNSSForm}
+                                    checked={cevHelpNeeds.supportCompletingNSSForm}
+                                    aria-describedby="cev-help-needs-hint"
+                                    onCheckboxChange={onCEVHelpNeedsCheckboxChange}></Checkbox>
+                                <Checkbox
+                                    value={cevHelpTypes.generalCEVGuidance}
+                                    label={cevHelpTypes.generalCEVGuidance}
+                                    checked={cevHelpNeeds.generalCEVGuidance}
+                                    aria-describedby="cev-help-needs-hint"
+                                    onCheckboxChange={onCEVHelpNeedsCheckboxChange}></Checkbox>
+                                <Checkbox
+                                    value={cevHelpTypes.otherNeeds}
+                                    label={cevHelpTypes.otherNeeds}
+                                    checked={cevHelpNeeds.otherNeeds}
+                                    aria-describedby="cev-help-needs-hint"
+                                    onCheckboxChange={onCEVHelpNeedsCheckboxChange}></Checkbox>
+                                <Checkbox
+                                    value={cevHelpTypes.noNeedsIdentified}
+                                    label={cevHelpTypes.noNeedsIdentified}
+                                    checked={cevHelpNeeds.noNeedsIdentified}
                                     aria-describedby="cev-help-needs-hint"
                                     onCheckboxChange={onCEVHelpNeedsCheckboxChange}></Checkbox>
                             </fieldset>
