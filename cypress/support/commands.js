@@ -16,19 +16,24 @@ Cypress.Commands.add('login', (userData) => {
     }
     const jwtSecret = Cypress.env('HACKNEY_JWT_SECRET');
     const cookieName = Cypress.env('NEXT_PUBLIC_HACKNEY_COOKIE_NAME');
-
+    
     console.error(cookieName);
     console.error(jwtSecret);
     console.error('Yup');
-
+    
     const token = jwt.sign(userData, jwtSecret);
-
+    
     cy.setCookie(cookieName, token);
     cy.wrap(defaultUser).as('defaultUser');
     cy.wrap(userData).as('user');
 });
 
 Cypress.Commands.add('setIntercepts', () => {
+    cy.intercept('POST', `/api/proxy/v4/residents/`, {
+        statusCode: 200,
+        fixture: 'residents/3/resident'
+    });
+    
     cy.intercept('GET', '/api/proxy/v3/help-requests/callbacks', {
         fixture: 'callbacks'
     });
@@ -72,7 +77,15 @@ Cypress.Commands.add('setIntercepts', () => {
         statusCode: 201
     });
 
+    cy.intercept('POST', `/api/proxy/v4/residents/3`, {
+        statusCode: 201
+    });
+
     cy.intercept('GET', `/api/proxy/addresses/*`, {
         fixture: 'addresses'
+    });
+
+    cy.intercept('GET', '/api/proxy/v4/helpcase-profile/*', {
+        fixture: 'residents/3/resident'
     });
 });
