@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Checkbox, RadioButton, Button } from '../Form';
+import { Checkbox, RadioButton, Button, SingleRadioButton } from '../Form';
 import KeyInformation from '../KeyInformation/KeyInformation';
 import Link from 'next/link';
 import { HelpRequestCallGateway } from '../../gateways/help-request-call';
@@ -11,7 +11,7 @@ import { cevHelpTypes } from '../../helpers/constants';
 import { useRouter } from 'next/router';
 
 
-export default function CallbackForm({residentId, resident, helpRequest, backHref, saveFunction, editableCaseNotes}) {
+export default function CallbackForm({residentId, resident, helpRequest, backHref, saveFunction, editableCaseNotes, helpRequestExists}) {
     const [callMade, setCallMade] = useState(null);
     const [callOutcome, setCallOutcome] = useState("");
     const [followUpRequired, setFollowupRequired] = useState(null)
@@ -227,12 +227,24 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                                                 Call type required
                                             </legend>
                                             <br />
-                                            <RadioButton
-                                                radioButtonItems={callTypes}
-                                                name="HelpNeeded"
-                                                onSelectOption={callBackFunction}
-                                                data-testid="call-type-radio-button"
-                                            />
+                                            {
+                                                helpRequestExists && (
+                                                    <div>
+                                                        {callTypes.map((callType) => (
+                                                            <SingleRadioButton
+                                                                radioButtonItem={callType}
+                                                                onSelectOption={() => {}} //noop
+                                                                checked={callType === helpRequest.helpNeeded}
+                                                            />
+                                                        ))}
+                                                    </div>
+                                                ) || <RadioButton
+                                                        radioButtonItems={callTypes}
+                                                        name="HelpNeeded"
+                                                        onSelectOption={(callBackFunction)}
+                                                        data-testid="call-type-radio-button"
+                                                    />
+                                            }
                                         </fieldset>
                                     </div>
                                 </div>

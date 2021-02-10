@@ -135,7 +135,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
                         <KeyInformation resident={resident}/>
                     </div>
                     <div className="govuk-grid-column-three-quarters-from-desktop">
-                        <CallbackForm residentId={residentId} resident={resident} helpRequest={helpRequest} backHref={backHref} saveFunction={saveFunction} editableCaseNotes={true} />
+                        <CallbackForm residentId={residentId} resident={resident} helpRequest={helpRequest} backHref={backHref} saveFunction={saveFunction} editableCaseNotes={true} helpRequestExists={true} />
                         <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
                         <CallHistory calls={calls}  />
                         <CaseNotes caseNotes={caseNotes}/>
