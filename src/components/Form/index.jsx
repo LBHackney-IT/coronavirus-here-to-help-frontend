@@ -3,6 +3,7 @@ import Checkbox from './Checkboxes/Checkbox';
 import Dropdown from './Dropdown/Dropdown';
 import SupportTable from '../SupportTable/SupportTable';
 import RadioButton from './RadioButtons/RadioButton';
+import SingleRadioButton from './RadioButton/RadioButton';
 import Address from './Address';
 
-export { Button, Checkbox, Dropdown, SupportTable, RadioButton, Address };
+export { Button, Checkbox, Dropdown, SupportTable, RadioButton, Address, SingleRadioButton };
