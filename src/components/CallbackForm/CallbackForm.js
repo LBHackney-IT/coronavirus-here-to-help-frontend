@@ -160,14 +160,17 @@ export default function CallbackForm({
             callbackRequired: callbackRequired,
             initialCallbackCompleted: initialCallbackCompleted,
             dateTimeRecorded: new Date(),
-            helpNeeded: helpNeeded,
-            helpWithAccessingFood: cevHelpNeeds.foodAccessVoluntarySector,
-            helpWithAccessingSupermarketFood: cevHelpNeeds.prioritySupermarketFoodDelivery,
-            helpWithCompletingNssForm: cevHelpNeeds.supportCompletingNSSForm,
-            helpWithShieldingGuidance: cevHelpNeeds.generalCEVGuidance,
-            helpWithAccessingOtherEssentials: cevHelpNeeds.otherNeeds,
-            helpWithNoNeedsIdentified: cevHelpNeeds.noNeedsIdentified
+            helpNeeded: helpNeeded
         };
+
+        if (helpNeeded === 'CEV') {
+            helpRequestObject.helpWithAccessingFood = cevHelpNeeds.foodAccessVoluntarySector,
+            helpRequestObject.helpWithAccessingSupermarketFood = cevHelpNeeds.prioritySupermarketFoodDelivery,
+            helpRequestObject.helpWithCompletingNssForm = cevHelpNeeds.supportCompletingNSSForm,
+            helpRequestObject.helpWithShieldingGuidance = cevHelpNeeds.generalCEVGuidance,
+            helpRequestObject.helpWithAccessingOtherEssentials = cevHelpNeeds.otherNeeds,
+            helpRequestObject.helpWithNoNeedsIdentified = cevHelpNeeds.noNeedsIdentified
+        }
 
         // jeez, this looks sooo fragile
         if (!validateCEVNeedsFieldset()) {
