@@ -10,19 +10,15 @@ import { cevHelpTypes } from '../../helpers/constants';
 
 import { useRouter } from 'next/router';
 
-export default function CallbackForm({
-    residentId,
-    resident,
-    helpRequest,
-    backHref,
-    saveFunction
-}) {
+
+export default function CallbackForm({residentId, resident, helpRequest, backHref, saveFunction, editableCaseNotes}) {
     const [callMade, setCallMade] = useState(null);
-    const [callOutcome, setCallOutcome] = useState('');
-    const [followUpRequired, setFollowupRequired] = useState(null);
-    const [helpNeeded, setHelpNeeded] = useState('');
-    const [callDirection, setCallDirection] = useState('');
-    const [callOutcomeValues, setCallOutcomeValues] = useState('');
+    const [callOutcome, setCallOutcome] = useState("");
+    const [followUpRequired, setFollowupRequired] = useState(null)
+    const [helpNeeded, setHelpNeeded] = useState("")
+    const [callDirection, setCallDirection] = useState("")
+    const [callOutcomeValues, setCallOutcomeValues] = useState("")
+    const [caseNote, setCaseNote] = useState("")
     const [cevHelpNeeds, setCEVHelpNeeds] = useState({
         foodAccessVoluntarySector: null,
         prioritySupermarketFoodDelivery: null,
@@ -175,18 +171,16 @@ export default function CallbackForm({
         // jeez, this looks sooo fragile
         if (!validateCEVNeedsFieldset()) {
             setErrorsExist(true);
-        } else if (
-            callMade == true &&
-            (followUpRequired == null ||
-                !helpNeeded ||
-                !callDirection ||
-                callOutcomeValues.length < 1)
+        }
+        else if (
+            (callMade == true &&
+                callOutcomeValues.length > 1 &&
+                callDirection != null &&
+                helpNeeded != null) ||
+            (callMade == false && helpNeeded && followUpRequired != null) ||
+            (followUpRequired != null && caseNote !="" && helpNeeded != null && helpNeeded != "")
         ) {
-            setErrorsExist(true);
-        } else if (callMade == false && (followUpRequired == null || !helpNeeded)) {
-            setErrorsExist(true);
-        } else if (callMade != null) {
-            saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade);
+            saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote);
         } else {
             setErrorsExist(true);
         }
@@ -475,10 +469,9 @@ export default function CallbackForm({
                         </div>
                     </div>
                 </div>
-
-                {/* <hr className="govuk-section-break govuk-section-break--m govuk-section-break" />
+                <hr className="govuk-section-break govuk-section-break--m govuk-section-break" />
                 <h2 className="govuk-heading-l">Case notes:</h2>
-                <h3 className="govuk-heading-m">
+                {editableCaseNotes && <><h3 className="govuk-heading-m">
                     Add a new case note (optional):
                 </h3>
                 <div className="govuk-form-group">
@@ -488,10 +481,10 @@ export default function CallbackForm({
                         id="NewCaseNote"
                         name="NewCaseNote"
                         rows="5"
-                        onChange = {(e) => {setCaseNotes(e.target.value)}}
+                        onChange = {(e) => {setCaseNote(e.target.value)}}
                         aria-describedby="NewCaseNote-hint">
                     </textarea>
-                </div> */}
+                </div></>}
                 <br></br>
                 <div className="govuk-grid-column">
                     <div className="govuk-form-group lbh-form-group">

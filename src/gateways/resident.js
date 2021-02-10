@@ -34,11 +34,15 @@ export class ResidentGateway extends DefaultGateway {
     }
     async getResident(residentId) {
         const response = await this.getFromUrl(`v4/residents/${residentId}`);
+
         return InboundMapper.ToResident(response);
     }
     async setResident(residentId, requestBody) {
         console.log("request body", ToPatchResidentObject(requestBody));
         return await this.patchToUrl(`v4/residents/${residentId}`, ToPatchResidentObject(requestBody));
+    }
+    async postResident(requestBody) {
+        return await this.postToUrl(`v4/residents/`, ToPatchResidentObject(requestBody));
     }
 
 }
