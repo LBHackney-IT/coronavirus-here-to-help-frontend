@@ -96,7 +96,8 @@ export default function addSupportPage({residentId, helpRequestId}) {
             const helpRequestGateway = new HelpRequestGateway();
 
             let patchHelpRequest = {
-                callbackRequired: helpRequestObject.callbackRequired
+                callbackRequired: helpRequestObject.callbackRequired,
+                initialCallbackCompleted: helpRequestObject.initialCallbackCompleted
             }
 
             await helpRequestGateway.patchHelpRequest(helpRequestId, patchHelpRequest);
