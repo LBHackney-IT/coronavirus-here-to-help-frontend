@@ -16,6 +16,11 @@ const ToHelpRequestDomain = (hr) => {
         gettingInTouchReason: hr.GettingInTouchReason,
         helpNeeded: (hr.HelpNeeded == SHIELDING)? CEV : hr.HelpNeeded,
         helpWithAccessingFood: hr.HelpWithAccessingFood,
+        helpWithAccessingSupermarketFood: hr.HelpWithAccessingSupermarketFood,
+        helpWithCompletingNssForm: hr.HelpWithCompletingNssForm,
+        helpWithShieldingGuidance: hr.HelpWithShieldingGuidance,
+        helpWithAccessingOtherEssentials: hr.HelpWithAccessingOtherEssentials,
+        helpWithNoNeedsIdentified: hr.HelpWithNoNeedsIdentified,
         helpWithAccessingInternet: hr.HelpWithAccessingInternet,
         helpWithAccessingMedicine: hr.HelpWithAccessingMedicine,
         hedicineDeliveryHelpNeeded: hr.MedicineDeliveryHelpNeeded,
@@ -127,7 +132,13 @@ const ToPostHelpRequestBody = (hr) => {
         CallbackRequired: hr.callbackRequired,
         InitialCallbackCompleted: hr.initialCallbackCompleted,
         DateTimeRecorded: hr.dateTimeRecorded,
-        HelpNeeded: (hr.helpNeeded == CEV)? SHIELDING : hr.helpNeeded
+        HelpNeeded: (hr.helpNeeded == CEV)? SHIELDING : hr.helpNeeded,
+        HelpWithAccessingFood: hr.helpWithAccessingFood,
+        HelpWithAccessingSupermarketFood: hr.helpWithAccessingSupermarketFood,
+        HelpWithCompletingNssForm: hr.helpWithCompletingNssForm,
+        HelpWithShieldingGuidance: hr.helpWithShieldingGuidance,
+        HelpWithAccessingOtherEssentials: hr.helpWithAccessingOtherEssentials,
+        HelpWithNoNeedsIdentified: hr.helpWithNoNeedsIdentified
     });
 };
 
@@ -138,7 +149,13 @@ const ToPatchHelpRequestObject = (hr) => {
         InitialCallbackCompleted: hr.initialCallbackCompleted,
         DateTimeRecorded: hr.dateTimeRecorded,
         HelpNeeded: (hr.helpNeeded == CEV)? SHIELDING : hr.helpNeeded,
-        AssignedTo: hr.assignedTo
+        AssignedTo: hr.assignedTo,
+        HelpWithAccessingFood: hr.helpWithAccessingFood,
+        HelpWithAccessingSupermarketFood: hr.helpWithAccessingSupermarketFood,
+        HelpWithCompletingNssForm: hr.helpWithCompletingNssForm,
+        HelpWithShieldingGuidance: hr.helpWithShieldingGuidance,
+        HelpWithAccessingOtherEssentials: hr.helpWithAccessingOtherEssentials,
+        HelpWithNoNeedsIdentified: hr.helpWithNoNeedsIdentified
     };
 
     Object.keys(object).forEach((key) => (object[key] == null) && delete object[key]);
