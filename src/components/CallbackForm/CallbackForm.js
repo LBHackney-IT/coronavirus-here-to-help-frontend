@@ -160,7 +160,13 @@ export default function CallbackForm({
             callbackRequired: callbackRequired,
             initialCallbackCompleted: initialCallbackCompleted,
             dateTimeRecorded: new Date(),
-            helpNeeded: helpNeeded
+            helpNeeded: helpNeeded,
+            helpWithAccessingFood: cevHelpNeeds.foodAccessVoluntarySector,
+            helpWithAccessingSupermarketFood: cevHelpNeeds.prioritySupermarketFoodDelivery,
+            helpWithCompletingNssForm: cevHelpNeeds.supportCompletingNSSForm,
+            helpWithShieldingGuidance: cevHelpNeeds.generalCEVGuidance,
+            helpWithAccessingOtherEssentials: cevHelpNeeds.otherNeeds,
+            helpWithNoNeedsIdentified: cevHelpNeeds.noNeedsIdentified
         };
 
         // jeez, this looks sooo fragile
