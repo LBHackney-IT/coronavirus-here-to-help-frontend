@@ -19,7 +19,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
     const [resident, setResident] = useState({})
     const [user, setUser] = useState({})
     const [calls, setCalls] = useState([])
-    const [helpRequest, setHelpRequest] = useState([])
+    const [helpRequest, setHelpRequest] = useState({})
     const [caseNotes, setCaseNotes] = useState({
         "All":[],
         "Welfare Call":[],
@@ -66,7 +66,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
                 });
             }
 
-            categorisedCaseNotes.helpType = response.helpNeeded
+            categorisedCaseNotes.helpType = response.helpNeeded // what is this supposed to do???
             setCaseNotes(categorisedCaseNotes)
             setHelpRequest(response);
             setCalls(response.helpRequestCalls.sort((a,b) => new Date(b.callDateTime) - new Date(a.callDateTime)))

@@ -19,14 +19,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
     const [callDirection, setCallDirection] = useState("")
     const [callOutcomeValues, setCallOutcomeValues] = useState("")
     const [caseNote, setCaseNote] = useState("")
-    const [cevHelpNeeds, setCEVHelpNeeds] = useState({
-        foodAccessVoluntarySector: null,
-        prioritySupermarketFoodDelivery: null,
-        supportCompletingNSSForm: null,
-        generalCEVGuidance: null,
-        otherNeeds: null,
-        noNeedsIdentified: null
-    });
+    const [cevHelpNeeds, setCEVHelpNeeds] = useState({});
     const [errors, setErrors] = useState({
         CallbackRequired: null,
         HelpNeeded: null,
@@ -35,6 +28,19 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         CallHandler: null
     });
     const router = useRouter();
+
+    useEffect(() => {
+        setHelpNeeded(helpRequest ? helpRequest.helpNeeded : "");
+        setCEVHelpNeeds({
+            foodAccessVoluntarySector: helpRequest ? helpRequest.helpWithAccessingFood : null,
+            prioritySupermarketFoodDelivery: helpRequest ? helpRequest.helpWithAccessingSupermarketFood : null,
+            supportCompletingNSSForm: helpRequest ? helpRequest.helpWithCompletingNssForm : null,
+            generalCEVGuidance: helpRequest ? helpRequest.helpWithShieldingGuidance : null,
+            otherNeeds: helpRequest ? helpRequest.helpWithAccessingOtherEssentials : null,
+            noNeedsIdentified: helpRequest ? helpRequest.helpWithNoNeedsIdentified : null
+        });
+    }, [helpRequest])
+
 
     const onCEVHelpNeedsCheckboxChange = (cevHelpItem) => {
         Object.entries(cevHelpTypes).map(([key, cevTextVal]) => {
