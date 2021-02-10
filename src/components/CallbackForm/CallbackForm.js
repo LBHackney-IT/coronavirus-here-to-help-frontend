@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Checkbox, RadioButton, Button } from "../Form";
-import KeyInformation from "../KeyInformation/KeyInformation";
 import Link from "next/link";
-import { HelpRequestCallGateway } from '../../gateways/help-request-call';
-import { ResidentGateway } from '../../gateways/resident';
-import { HelpRequestGateway } from '../../gateways/help-request';
-import {unsafeExtractUser} from '../../helpers/auth';
-
-import { useRouter } from "next/router";
+import {GovNotifyGateway} from '../../gateways/gov-notify'
+import {TEST_AND_TRACE_FOLLOWUP_TEXT, TEST_AND_TRACE_FOLLOWUP_EMAIL} from '../../helpers/constants'
 
 export default function CallbackForm({residentId, resident, helpRequest, backHref, saveFunction, editableCaseNotes}) {
     const [callMade, setCallMade] = useState(null);
@@ -17,14 +12,15 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
     const [callDirection, setCallDirection] = useState("")
     const [callOutcomeValues, setCallOutcomeValues] = useState("")
     const [caseNote, setCaseNote] = useState("")
-    const [errors, setErrors] = useState({
-        CallbackRequired: null,
-        HelpNeeded: null,
-        CallDirection: null,
-        CallOutcome: null,
-        CallHandler: null
-    })
-    const router = useRouter()
+    const [errorsExist, setErrorsExist] = useState(null)
+    const [sendMessage, setSendMessage] = useState(null)
+    const [phoneNumber, setPhoneNumber] = useState(null)
+    const [email, setEmail] = useState(null)
+    const [messageType, setMessageType] = useState(null)
+    const [emailTemplatePreview, setEmailTemplatePreview] = useState(null)
+    const [textTemplatePreview, setTextTemplatePreview] = useState(null)
+    const [showEmail, setShowEmail] = useState(false)
+    const [showText, setShowText] = useState(false)
 
     const metadata =  helpRequest && helpRequest.metadata ? (
       Object.entries(helpRequest.metadata).map(([key,value])=>{
@@ -44,7 +40,6 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
       </span>
     ) : ('');
 
-    const [errorsExist, setErrorsExist] = useState(null)
 
     const spokeToResidentCallOutcomes = [
         {name: "Callback comeplete" ,value: "callback_complete"},
@@ -72,10 +67,42 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         "The resident called me",
     ];
 
+    useEffect(async ()=>{
+        const govNotifyGateway = new GovNotifyGateway()
+
+        let textTemplate = await govNotifyGateway.getTemplatePreview(TEST_AND_TRACE_FOLLOWUP_TEXT)
+        if(textTemplate){
+            setTextTemplatePreview(textTemplate.body)
+        }
+        let emailTemplate = await govNotifyGateway.getTemplatePreview(TEST_AND_TRACE_FOLLOWUP_EMAIL)
+        if(emailTemplate){
+            setEmailTemplatePreview(emailTemplate.body)
+        }
+        
+    }, [])
+
+    const setShowContactDetails = value => {
+        if(value == TEST_AND_TRACE_FOLLOWUP_EMAIL){
+            if(showEmail){
+                setShowEmail(false)
+                setEmail(null)
+            }else{
+                setShowEmail(true)
+            }
+        }
+        if(value == TEST_AND_TRACE_FOLLOWUP_TEXT){
+            if(showText){
+                setShowText(false)
+                setPhoneNumber(null)
+            }else{
+                setShowText(true)
+            }
+        }
+    }
+
 
     const callBackFunction = value => {
         if(value=='Yes' || value == 'No'){
-            console.log(value)
             setFollowupRequired(value)
         }
         if(callTypes.includes(value)){
@@ -114,26 +141,13 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             }
         }
     }
+
     const handleUpdate = async (event) => {
         event.preventDefault();
 
         let callbackRequired = (followUpRequired == "Yes") ? true : false
         let initialCallbackCompleted = (followUpRequired == "Yes") ? false : true
 
-        const validationFields = [callbackRequired, helpNeeded, callDirection]
-        validationFields.forEach(validationField => {
-            if(!validationField) {
-                let tempErrors = errors
-                tempErrors.validationField = true
-                setErrors(tempErrors)
-            }
-        });
-
-        if(callOutcomeValues.length < 1) {
-            let tempErrors = errors
-            tempErrors.callOutcomeValues = true
-            setErrors(tempErrors)
-        }
 
         let helpRequestObject = {
             residentId: residentId,
@@ -144,14 +158,11 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         }
 
         if (
-            (callMade == true &&
-                callOutcomeValues.length > 1 &&
-                callDirection != null &&
-                helpNeeded != null) ||
-            (callMade == false && helpNeeded && followUpRequired != null) ||
-            (followUpRequired != null && caseNote !="" && helpNeeded != null && helpNeeded != "")
+            (callMade == true && callOutcomeValues.length > 1 && callDirection != null && helpNeeded != null && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText)) ||
+            (callMade == false && helpNeeded && followUpRequired != null && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText)) ||
+            (followUpRequired != null && caseNote !="" && helpNeeded != null && helpNeeded != "" && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText))
         ) {
-            saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote);
+            saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote, phoneNumber, email);
         } else {
             setErrorsExist(true);
         }
@@ -337,6 +348,87 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                     </textarea>
                 </div></>}
                 <br></br>
+
+
+                <fieldset className="govuk-fieldset">
+                    <h3 className="govuk-heading-m">Would you like to message the resident following this call?</h3>
+
+                    <Checkbox
+                        id='SendEmail'
+                        name="SendEmail"
+                        type="checkbox"
+                        value={TEST_AND_TRACE_FOLLOWUP_EMAIL}
+                        label="Send Email"
+                        aria-describedby="SendEmail"
+                        onCheckboxChange={setShowContactDetails}>
+                    </Checkbox>
+                    {showEmail && 
+                        <div className="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact">
+                            <br/>
+                            {emailTemplatePreview && 
+                                <div className="govuk-form-group">
+                                    <label className="govuk-label" for="contact-by-email">Email address</label>
+                                    <input className="govuk-input govuk-!-width-one-third" id="contact-by-email" name="contact-by-email" type="email" spellcheck="false" onChange={(e)=>setEmail(e.target.value)}/>
+                                <br/>
+                            
+                                <div id="contact-hint" className="govuk-hint">Email preview</div>
+                                <div className="govuk-inset-text">{emailTemplatePreview}</div>
+                            </div>
+                            }
+                            {!emailTemplatePreview && 
+                                <div className="govuk-warning-text">
+                                    <span className="govuk-warning-text__icon" aria-hidden="true">!</span>
+                                    <strong className="govuk-warning-text__text">
+                                    <span className="govuk-warning-text__assistive">Warning</span>
+                                        There is no email option for this call type
+                                    </strong>
+                                </div>
+                            }
+                            <br/>
+                        </div>
+                        }
+                    <Checkbox
+                        id='SendText'
+                        name="SendText"
+                        type="checkbox"
+                        value={TEST_AND_TRACE_FOLLOWUP_TEXT}
+                        label="Send Text"
+                        aria-describedby="SendEmail"
+                        onCheckboxChange={setShowContactDetails}>
+                    </Checkbox>
+                    {showText  && 
+                        <div className="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-3">
+                             <br/>
+                            {textTemplatePreview &&
+                            <div className="govuk-form-group">
+                                <div>
+                                    <label className="govuk-label" for="contact-by-text">Mobile phone number</label>
+                                    <input className="govuk-input govuk-!-width-one-third" id="contact-by-text" name="contact-by-text" type="tel" onChange={(e)=>{setPhoneNumber(e.target.value)}}/>
+                                </div>
+                                <br/><br/>
+                                <div id="contact-hint" className="govuk-hint">Text preview</div>
+                                <div className="govuk-inset-text">{textTemplatePreview}</div>
+                                </div>
+                            }
+                             <br/>
+                            {!textTemplatePreview && 
+                                <div className="govuk-warning-text">
+                                    <span className="govuk-warning-text__icon" aria-hidden="true">!</span>
+                                    <strong className="govuk-warning-text__text">
+                                    <span className="govuk-warning-text__assistive">Warning</span>
+                                    There is no text option for this call type
+                                    </strong>
+                                </div>
+                            }
+                            <br/>
+                        </div>
+                            
+                        }
+                    <br />
+
+                </fieldset>
+                  
+                <br/>
                 <div className="govuk-grid-column">
                     <div className="govuk-form-group lbh-form-group">
                         <fieldset className="govuk-fieldset">
@@ -358,3 +450,5 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         </>
     );
 }
+
+
