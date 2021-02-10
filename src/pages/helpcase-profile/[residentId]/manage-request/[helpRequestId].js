@@ -52,18 +52,19 @@ export default function addSupportPage({residentId, helpRequestId}) {
                                         "Help Request":[],
                                         "Contact Tracing":[],
                                         "CEV":[]}
-            if(!helpRequestCaseNotes) return
-            helpRequestCaseNotes.forEach(helpRequestCaseNote => {
-                helpRequestCaseNote.caseNote.forEach(note => {
-                    note.helpNeeded = response.helpNeeded
-                    categorisedCaseNotes[note.helpNeeded].push(note)
-                    categorisedCaseNotes['All'].push(note)
+            if(!helpRequestCaseNotes) {
+                helpRequestCaseNotes.forEach(helpRequestCaseNote => {
+                    helpRequestCaseNote.caseNote.forEach(note => {
+                        note.helpNeeded = response.helpNeeded
+                        categorisedCaseNotes[note.helpNeeded].push(note)
+                        categorisedCaseNotes['All'].push(note)
+                    });
+                
+                    helpTypes.forEach(helpType => {
+                        categorisedCaseNotes[helpType].sort((a, b) => new Date(b.noteDate) - new Date(a.noteDate))
+                    }); 
                 });
-            
-                helpTypes.forEach(helpType => {
-                    categorisedCaseNotes[helpType].sort((a, b) => new Date(b.noteDate) - new Date(a.noteDate))
-                }); 
-            });
+            }
 
             categorisedCaseNotes.helpType = response.helpNeeded
             setCaseNotes(categorisedCaseNotes)
