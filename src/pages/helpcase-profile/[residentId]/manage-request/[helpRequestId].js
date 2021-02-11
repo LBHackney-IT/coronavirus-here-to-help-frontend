@@ -52,7 +52,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
                                         "Help Request":[],
                                         "Contact Tracing":[],
                                         "CEV":[]}
-            if(!helpRequestCaseNotes) {
+            if(helpRequestCaseNotes) {
                 helpRequestCaseNotes.forEach(helpRequestCaseNote => {
                     helpRequestCaseNote.caseNote.forEach(note => {
                         note.helpNeeded = response.helpNeeded
@@ -64,10 +64,10 @@ export default function addSupportPage({residentId, helpRequestId}) {
                         categorisedCaseNotes[helpType].sort((a, b) => new Date(b.noteDate) - new Date(a.noteDate))
                     }); 
                 });
+                categorisedCaseNotes.helpType = response.helpNeeded // what is this supposed to do???
+                setCaseNotes(categorisedCaseNotes)
             }
 
-            categorisedCaseNotes.helpType = response.helpNeeded // what is this supposed to do???
-            setCaseNotes(categorisedCaseNotes)
             setHelpRequest(response);
             setCalls(response.helpRequestCalls.sort((a,b) => new Date(b.callDateTime) - new Date(a.callDateTime)))
         } catch (err) {
