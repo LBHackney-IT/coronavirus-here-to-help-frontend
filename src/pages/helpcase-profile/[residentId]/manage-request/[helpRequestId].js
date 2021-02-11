@@ -12,6 +12,8 @@ import {useRouter} from "next/router";
 import CallHistory from '../../../../components/CallHistory/CallHistory';
 import CaseNotes from '../../../../components/CaseNotes/CaseNotes';
 import { helpTypes } from "../../../../helpers/constants";
+import {GovNotifyGateway} from '../../../../gateways/gov-notify'
+import {TEST_AND_TRACE_FOLLOWUP_TEXT, TEST_AND_TRACE_FOLLOWUP_EMAIL} from '../../../../helpers/constants'
 
 export default function addSupportPage({residentId, helpRequestId}) {
     const backHref = `/helpcase-profile/${residentId}`;
@@ -83,7 +85,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
         await retreiveHelpRequest()
     }, []);
 
-    const saveFunction = async function(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote) {
+    const saveFunction = async function(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote, phoneNumber, email) {
         const callRequestObject = {
             callType: helpNeeded,
             callDirection: callDirection,
@@ -95,6 +97,8 @@ export default function addSupportPage({residentId, helpRequestId}) {
         try{
 
             const helpRequestGateway = new HelpRequestGateway();
+            const caseNotesGateway = new CaseNotesGateway();
+            let govNotifyGateway = new GovNotifyGateway()
 
             let patchHelpRequest = {
                 callbackRequired: helpRequestObject.callbackRequired,
@@ -109,7 +113,6 @@ export default function addSupportPage({residentId, helpRequestId}) {
             }
 
             if (caseNote && caseNote != "") {
-                const caseNotesGateway = new CaseNotesGateway();
                 const caseNoteObject = {
                     caseNote,
                     author: user.name,
@@ -117,6 +120,51 @@ export default function addSupportPage({residentId, helpRequestId}) {
                     helpNeeded: helpRequest.helpNeeded
                 };      
                 await caseNotesGateway.createCaseNote(helpRequestId, residentId, caseNoteObject);
+            }
+
+            if(phoneNumber){
+                let textResponse = await govNotifyGateway.sendText(phoneNumber, TEST_AND_TRACE_FOLLOWUP_TEXT)
+                let sendTextResponseCaseNoteObject
+                if(textResponse.id){
+                    sendTextResponseCaseNoteObject = {
+                        caseNote: `Text sent to ${phoneNumber}. \n Text id: ${textResponse.id}.\n Text content: ${textResponse.content.body}`,
+                        author: user.name,
+                        noteDate: new Date().toGMTString(),
+                        helpNeeded: helpRequest.helpNeeded 
+                    }
+                }else{
+                    sendTextResponseCaseNoteObject ={
+                        caseNote: `Failed text to ${phoneNumber}`,
+                        author: user.name,
+                        noteDate: new Date().toGMTString(),
+                        helpNeeded: helpRequest.helpNeeded 
+                    }
+                }
+
+                await caseNotesGateway.createCaseNote(helpRequestId, residentId, sendTextResponseCaseNoteObject)
+           
+            }
+            if(email){
+                let emailResponse = await govNotifyGateway.sendEmail(email, TEST_AND_TRACE_FOLLOWUP_EMAIL)
+                let sendEmailResponseCaseNoteObject
+
+                if(emailResponse.id){
+                    sendEmailResponseCaseNoteObject = {
+                        caseNote: `Email sent to ${email}. Email id: ${emailResponse.id}. Email content: ${emailResponse.content.body}`,
+                        author: user.name,
+                        noteDate: new Date().toGMTString(),
+                        helpNeeded: helpRequest.helpNeeded 
+                    }
+                }else{
+                    sendEmailResponseCaseNoteObject ={
+                        caseNote: `Failed email to ${email}`,
+                        author: user.name,
+                        noteDate: new Date().toGMTString(),
+                        helpNeeded: helpRequest.helpNeeded 
+                    }
+                }
+                await caseNotesGateway.createCaseNote(helpRequestId, residentId, sendEmailResponseCaseNoteObject)
+
             }
             router.push(`/helpcase-profile/${residentId}`)
         } catch(err){

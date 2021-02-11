@@ -26,3 +26,6 @@ export const cevHelpTypes = {
     otherNeeds: 'Other needs',
     noNeedsIdentified: 'No needs identified'
 };
+
+export const TEST_AND_TRACE_FOLLOWUP_TEXT = 'test-and-trace-followup-text'
+export const TEST_AND_TRACE_FOLLOWUP_EMAIL = 'test-and-trace-followup-email'
