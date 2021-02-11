@@ -258,7 +258,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                             </div>
                             <br />
                             {helpNeeded === 'CEV' && (
-                                <fieldset className="govuk-fieldset govuk-!-margin-bottom-7">
+                                <fieldset className="govuk-fieldset govuk-!-margin-bottom-7" data-testid="cev-help-needs">
                                     <legend className="govuk-fieldset__legend mandatoryQuestion">
                                         Help needed because of coronavirus
                                     </legend>
