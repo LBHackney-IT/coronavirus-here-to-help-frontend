@@ -25,7 +25,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         key = key.replace(/_/g, ' ');
         const upcaseKey = key.charAt(0).toUpperCase() + key.slice(1);
         return (
-          <span class="govuk-caption-l">
+          <span className="govuk-caption-l">
             <strong>{upcaseKey}:</strong> {value}
           </span>
         );
@@ -33,7 +33,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
     ) : ('');
 
     const nhsCtasId = helpRequest ? (
-      <span class="govuk-caption-l">
+      <span className="govuk-caption-l">
           <strong>CTAS ID:</strong> {helpRequest.nhsCtasId || "Not found"}
       </span>
     ) : ('');
@@ -68,15 +68,21 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
     useEffect(async ()=>{
         const govNotifyGateway = new GovNotifyGateway()
 
-        let textTemplate = await govNotifyGateway.getTemplatePreview(TEST_AND_TRACE_FOLLOWUP_TEXT)
-        if(textTemplate){
-            setTextTemplatePreview(textTemplate.body)
+        try{
+            
+            let textTemplate = await govNotifyGateway.getTemplatePreview(TEST_AND_TRACE_FOLLOWUP_TEXT)
+            if(textTemplate){
+                setTextTemplatePreview(textTemplate.body)
+            }
+            let emailTemplate = await govNotifyGateway.getTemplatePreview(TEST_AND_TRACE_FOLLOWUP_EMAIL)
+            if(emailTemplate){
+                console.log("emailTemplate",emailTemplate)
+                setEmailTemplatePreview(emailTemplate.body)
+            }
+        } catch(err){
+            console.log(`Error fetching themplates: ${err}`)
         }
-        let emailTemplate = await govNotifyGateway.getTemplatePreview(TEST_AND_TRACE_FOLLOWUP_EMAIL)
-        if(emailTemplate){
-            console.log("emailTemplate",emailTemplate)
-            setEmailTemplatePreview(emailTemplate.body)
-        }
+
        
     }, [])
 

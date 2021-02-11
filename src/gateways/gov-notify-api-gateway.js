@@ -39,9 +39,7 @@ export class GovNotifyGateway {
             return response;
          }
     } catch(err){
-      console.log(`Error ${err}`)
-      console.log("d", err)
-
+      console.log("Notify client error response", err)
       return err
     }
 
