@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import {TEST_AND_TRACE_FOLLOWUP_TEXT, TEST_AND_TRACE_FOLLOWUP_EMAIL} from '../../src/helpers/constants'
 
 Cypress.Commands.add('getBySel', (selector, ...args) => {
     return cy.get(`[data-cy=${selector}]`, ...args);
@@ -97,4 +98,13 @@ Cypress.Commands.add('setIntercepts', () => {
     cy.intercept('GET', '/api/proxy/v4/helpcase-profile/*', {
         fixture: 'residents/3/resident'
     });
+
+    cy.intercept('GET', `/api/proxy/gov-notify/previewTemplate?templateType=${TEST_AND_TRACE_FOLLOWUP_EMAIL}`, {
+        fixture: 'getEmailPreviewSuccessResponse'
+    });
+
+    cy.intercept('GET', `/api/proxy/gov-notify/previewTemplate?templateType=${TEST_AND_TRACE_FOLLOWUP_TEXT}`, {
+        fixture: 'getTextPreviewSuccessResponse'
+    });
+
 });

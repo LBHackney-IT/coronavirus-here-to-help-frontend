@@ -34,6 +34,22 @@ context('When you view a helpcase profile', () => {
         cy.get('[data-testid=case-note-entry]').first().should('contain', "Contact Tracing:");
         cy.get('[data-testid=case-note-entry]').first().should('contain', "CREATED");
     });
+
+    it("displays the email preview", () => {
+        cy.get('[data-testid=support-requested-table-view_link-0]')
+        .contains('View')
+        .click({ force: true });
+        cy.get('[data-testid=send-email-checkbox]').click({ force: true });
+        cy.get('[data-testid=send-email-preview]').should('contain', 'email preview')
+    })
+
+    it("displays the text preview if it exists", () => {
+        cy.get('[data-testid=support-requested-table-view_link-0]')
+        .contains('View')
+        .click({ force: true });
+        cy.get('[data-testid=send-text-checkbox]').click({ force: true });
+        cy.get('[data-testid=send-text-preview]').should('contain', 'text preview')
+    })
 });
 
 context('When viewing a single help request', () => {

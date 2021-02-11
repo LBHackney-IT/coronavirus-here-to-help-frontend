@@ -16,3 +16,7 @@ export const callOutcomes = {
 
 export const helpTypes = [ALL, WELFARE_CALL, HELP_REQUEST, CONTACT_TRACING, CEV]
 export const callTypes = ['All', 'Help Request', 'CEV', 'Welfare Call', 'Contact Tracing'];
+
+export const TEST_AND_TRACE_FOLLOWUP_TEXT = 'test-and-trace-followup-text'
+export const TEST_AND_TRACE_FOLLOWUP_EMAIL = 'test-and-trace-followup-email'
+

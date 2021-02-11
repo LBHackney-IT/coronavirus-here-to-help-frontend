@@ -1,0 +1,9 @@
+{
+  "body": "email preview",
+  "html": "<p style=\"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C0C;\">You recently asked us for help during the Coronavirus pandemic. Since launching the support helpline more than 500 people in Hackney have told us how they’re struggling and what help they need. </p><p style=\"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C0C;\">We’ve now been able to organise emergency help for people who most urgently needed it. We have:<br />Delivered 120 food parcels<br />Partnered with Volunteer Centre Hackney to deliver over 100 more<br />Introduced some people to mental health and wellbeing services</p><p style=\"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C0C;\">However, we know that lots of you are still waiting for help. We’re working to buy food from suppliers and deliver them to the doorstep for everyone who needs it. In the meantime, you can:<br />Sign up for a regular, basic food delivery from central government if you have been asked to stay indoors due to a medical condition<br />Find a community group near you that might be able to offer help<br />If you need to claim for benefits or a reduction in your council tax, go to <a style=\"word-wrap: break-word; color: #1D70B8;\" href=\"https://hackney.gov.uk/coronavirus-support#finance\">https://hackney.gov.uk/coronavirus-support#finance</a></p><p style=\"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C0C;\">Thank you for your patience – and we’ll be in touch next week. </p><p style=\"Margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C0C;\">You can always find the latest information on our website and by signing up for email updates.</p>",
+  "id": "some-id",
+  "postage": null,
+  "subject": "Supporting you through Coronavirus",
+  "type": "email",
+  "version": 1
+  }
