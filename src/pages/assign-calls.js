@@ -156,7 +156,7 @@ export default function AssignCallsPage() {
             )}
             <div>
                 <a
-                    href="/dashboard"
+                    href="/admin"
                     className="govuk-back-link  lbh-back-link"
                     data-testid="assign-call-back_button">
                     Back
@@ -227,7 +227,7 @@ export default function AssignCallsPage() {
                             }}
                             data-testid="assign-call-assign_button"
                         />
-                        <Link href="/dashboard">
+                        <Link href="/admin">
                             <Button
                                 text="Cancel"
                                 addClass="govuk-button--secondary"
