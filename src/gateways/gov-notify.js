@@ -8,7 +8,6 @@ export class GovNotifyGateway extends DefaultGateway {
     }
     async sendEmail(email, message) {
       const response = await this.postToUrl(`gov-notify/${message}?email=${email}`);
-      console.log("sendTextResponse", response)
 
       return response;
     }

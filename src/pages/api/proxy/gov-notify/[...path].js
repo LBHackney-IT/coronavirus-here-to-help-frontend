@@ -1,5 +1,5 @@
 import { authoriseUser } from '../../../../helpers/auth';
-import { GovNotifyGateway } from '../../../../gateways/govnotify-api-gateway';
+import { GovNotifyGateway } from '../../../../gateways/gov-notify-api-gateway';
 
 const govNotifyGateway = new GovNotifyGateway();
 

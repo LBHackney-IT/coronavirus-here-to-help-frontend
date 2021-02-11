@@ -27,19 +27,21 @@ export class GovNotifyGateway {
             let templateId
             if((queryParams.templateType == TEST_AND_TRACE_FOLLOWUP_TEXT)){
 
-              templateId =  process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_TEXT 
+              templateId =  process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_TEXT
 
             }else if(queryParams.templateType == TEST_AND_TRACE_FOLLOWUP_EMAIL){
 
-              templateId = "process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_EMAIL"
+              templateId = process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_EMAIL
 
-            }
+            } 
 
-            const response = await notifyClient.previewTemplateById(templateId, {})
+            const response = await notifyClient.previewTemplateById(templateId,{ })
             return response;
          }
     } catch(err){
       console.log(`Error ${err}`)
+      console.log("d", err)
+
       return err
     }
 

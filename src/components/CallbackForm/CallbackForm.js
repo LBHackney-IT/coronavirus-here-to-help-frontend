@@ -13,10 +13,8 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
     const [callOutcomeValues, setCallOutcomeValues] = useState("")
     const [caseNote, setCaseNote] = useState("")
     const [errorsExist, setErrorsExist] = useState(null)
-    const [sendMessage, setSendMessage] = useState(null)
     const [phoneNumber, setPhoneNumber] = useState(null)
     const [email, setEmail] = useState(null)
-    const [messageType, setMessageType] = useState(null)
     const [emailTemplatePreview, setEmailTemplatePreview] = useState(null)
     const [textTemplatePreview, setTextTemplatePreview] = useState(null)
     const [showEmail, setShowEmail] = useState(false)
@@ -76,10 +74,21 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         }
         let emailTemplate = await govNotifyGateway.getTemplatePreview(TEST_AND_TRACE_FOLLOWUP_EMAIL)
         if(emailTemplate){
+            console.log("emailTemplate",emailTemplate)
             setEmailTemplatePreview(emailTemplate.body)
+            // document.getElementById('email-template-preview').innerHTML = emailTemplate.htmls
+            // appendPreview("email-template-preview", emailTemplate.html, document)
         }
-        
+       
     }, [])
+    const appendPreview = (id, preview, document) => {
+        console.log("id", id)
+        console.log("preview", preview)
+        console.log("document", document)
+        document.getElementById(id).innerHTML = preview
+    }
+
+
 
     const setShowContactDetails = value => {
         if(value == TEST_AND_TRACE_FOLLOWUP_EMAIL){
@@ -356,6 +365,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                     <Checkbox
                         id='SendEmail'
                         name="SendEmail"
+                        data-testid='send-email-checkbox'
                         type="checkbox"
                         value={TEST_AND_TRACE_FOLLOWUP_EMAIL}
                         label="Send Email"
@@ -365,14 +375,14 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                     {showEmail && 
                         <div className="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact">
                             <br/>
-                            {emailTemplatePreview && 
+                            {emailTemplatePreview &&
                                 <div className="govuk-form-group">
                                     <label className="govuk-label" for="contact-by-email">Email address</label>
                                     <input className="govuk-input govuk-!-width-one-third" id="contact-by-email" name="contact-by-email" type="email" spellcheck="false" onChange={(e)=>setEmail(e.target.value)}/>
                                 <br/>
                             
                                 <div id="contact-hint" className="govuk-hint">Email preview</div>
-                                <div className="govuk-inset-text">{emailTemplatePreview}</div>
+                                <div id = "email-template-preview" className="govuk-inset-text" data-testid='send-email-preview'>{emailTemplatePreview}</div>
                             </div>
                             }
                             {!emailTemplatePreview && 
@@ -386,11 +396,12 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                             }
                             <br/>
                         </div>
-                        }
+                    }
                     <Checkbox
                         id='SendText'
                         name="SendText"
                         type="checkbox"
+                        data-testid='send-text-checkbox'
                         value={TEST_AND_TRACE_FOLLOWUP_TEXT}
                         label="Send Text"
                         aria-describedby="SendEmail"
@@ -398,7 +409,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                     </Checkbox>
                     {showText  && 
                         <div className="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-3">
-                             <br/>
+                            <br/>
                             {textTemplatePreview &&
                             <div className="govuk-form-group">
                                 <div>
@@ -406,8 +417,8 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                                     <input className="govuk-input govuk-!-width-one-third" id="contact-by-text" name="contact-by-text" type="tel" onChange={(e)=>{setPhoneNumber(e.target.value)}}/>
                                 </div>
                                 <br/><br/>
-                                <div id="contact-hint" className="govuk-hint">Text preview</div>
-                                <div className="govuk-inset-text">{textTemplatePreview}</div>
+                                    <div id="contact-hint" className="govuk-hint">Text preview</div>
+                                    <div className="govuk-inset-text" data-testid='send-text-preview'>{textTemplatePreview}</div>
                                 </div>
                             }
                              <br/>
@@ -423,7 +434,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                             <br/>
                         </div>
                             
-                        }
+                    }
                     <br />
 
                 </fieldset>
