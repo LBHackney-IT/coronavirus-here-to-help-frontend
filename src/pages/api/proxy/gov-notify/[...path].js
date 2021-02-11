@@ -17,7 +17,7 @@ const endpoint = async (req, res) => {
 
         res.json(response.data)
     } catch (error) {
-        console.log('Error: thiss' + error );
+        console.log('Error:' + error );
         res.json(error);
     }
 };
