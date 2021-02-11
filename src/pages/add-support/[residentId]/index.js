@@ -122,7 +122,7 @@ export default function addSupportPage({residentId}) {
 						<KeyInformation resident={resident}/>
 					</div>
 					<div className="govuk-grid-column-three-quarters-from-desktop">
-						<CallbackForm residentId={residentId} resident={resident} backHref={backHref} saveFunction={saveFunction} editableCaseNotes={true}  />
+						<CallbackForm residentId={residentId} resident={resident} backHref={backHref} saveFunction={saveFunction} editableCaseNotes={true} helpRequestExists={false} />
 					</div>
 				</div>
 			</div>

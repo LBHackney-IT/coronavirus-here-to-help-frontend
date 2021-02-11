@@ -109,4 +109,32 @@ context('When add support gets cancelled', () => {
     });
 });
 
+context('When opening an existing cev help request', () => {
+    it('the cev radio button should be pre-selected and the cev help needs form is visible', () => {
+        cy.get('[data-testid=support-requested-table]').find(`tbody > tr:contains("CEV")`).eq(0).find(`td:has(a:contains(View))`).find('a').click({force: true});                        
+        cy.get('[data-testid=cev-help-needs]').should('exist');
+        cy.get('[data-testid=cev-help-needs]').should('be.visible');
+    });
+
+    it('the cev support needed fields are retrieved and represented correctly in the checkboxes', () => {
+        cy.get('[data-testid=support-requested-table]').find(`tbody > tr:contains("CEV")`).eq(0).find(`td:has(a:contains(View))`).find('a').click({force: true});                        
+        cy.get('[data-testid=cev-help-needs]').find('input[type="checkbox"]').eq(0).should('be.checked');
+        cy.get('[data-testid=cev-help-needs]').find('input[type="checkbox"]').eq(1).should('be.checked');
+        cy.get('[data-testid=cev-help-needs]').find('input[type="checkbox"]').eq(3).should('be.checked');
+        cy.get('[data-testid=cev-help-needs]').find('input[type="checkbox"]').eq(2).should('not.be.checked');
+        cy.get('[data-testid=cev-help-needs]').find('input[type="checkbox"]').eq(4).should('not.be.checked');
+        cy.get('[data-testid=cev-help-needs]').find('input[type="checkbox"]').eq(5).should('not.be.checked');
+    });
+});
+
+context('When opening a non-cev help request', () => {
+    it('it does not display the cev help needs form', () => {
+        cy.get('[data-testid=support-requested-table]').find(`tbody > tr:contains("Contact Tracing")`).eq(0).find(`td:has(a:contains(View))`).find('a').click({force: true});                        
+        cy.get('[data-testid=cev-help-needs]').should('not.exist');
+
+        cy.get('[data-testid=support-requested-table]').find(`tbody > tr:contains("Help Request")`).eq(0).find(`td:has(a:contains(View))`).find('a').click({force: true});                        
+        cy.get('[data-testid=cev-help-needs]').should('not.exist');
+    })
+});
+
 export {};

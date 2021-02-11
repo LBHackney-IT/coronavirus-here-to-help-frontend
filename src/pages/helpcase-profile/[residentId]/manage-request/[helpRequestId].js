@@ -21,7 +21,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
     const [resident, setResident] = useState({})
     const [user, setUser] = useState({})
     const [calls, setCalls] = useState([])
-    const [helpRequest, setHelpRequest] = useState([])
+    const [helpRequest, setHelpRequest] = useState({})
     const [caseNotes, setCaseNotes] = useState({
         "All":[],
         "Welfare Call":[],
@@ -54,21 +54,22 @@ export default function addSupportPage({residentId, helpRequestId}) {
                                         "Help Request":[],
                                         "Contact Tracing":[],
                                         "CEV":[]}
-            if(!helpRequestCaseNotes) return
-            helpRequestCaseNotes.forEach(helpRequestCaseNote => {
-                helpRequestCaseNote.caseNote.forEach(note => {
-                    note.helpNeeded = response.helpNeeded
-                    categorisedCaseNotes[note.helpNeeded].push(note)
-                    categorisedCaseNotes['All'].push(note)
+            if(helpRequestCaseNotes) {
+                helpRequestCaseNotes.forEach(helpRequestCaseNote => {
+                    helpRequestCaseNote.caseNote.forEach(note => {
+                        note.helpNeeded = response.helpNeeded
+                        categorisedCaseNotes[note.helpNeeded].push(note)
+                        categorisedCaseNotes['All'].push(note)
+                    });
+                
+                    helpTypes.forEach(helpType => {
+                        categorisedCaseNotes[helpType].sort((a, b) => new Date(b.noteDate) - new Date(a.noteDate))
+                    }); 
                 });
-            
-                helpTypes.forEach(helpType => {
-                    categorisedCaseNotes[helpType].sort((a, b) => new Date(b.noteDate) - new Date(a.noteDate))
-                }); 
-            });
+                categorisedCaseNotes.helpType = response.helpNeeded // what is this supposed to do???
+                setCaseNotes(categorisedCaseNotes)
+            }
 
-            categorisedCaseNotes.helpType = response.helpNeeded
-            setCaseNotes(categorisedCaseNotes)
             setHelpRequest(response);
             setCalls(response.helpRequestCalls.sort((a,b) => new Date(b.callDateTime) - new Date(a.callDateTime)))
         } catch (err) {
@@ -182,7 +183,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
                         <KeyInformation resident={resident}/>
                     </div>
                     <div className="govuk-grid-column-three-quarters-from-desktop">
-                        <CallbackForm residentId={residentId} resident={resident} helpRequest={helpRequest} backHref={backHref} saveFunction={saveFunction} editableCaseNotes={true} />
+                        <CallbackForm residentId={residentId} resident={resident} helpRequest={helpRequest} backHref={backHref} saveFunction={saveFunction} editableCaseNotes={true} helpRequestExists={true} />
                         <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
                         <CallHistory calls={calls}  />
                         <CaseNotes caseNotes={caseNotes}/>
