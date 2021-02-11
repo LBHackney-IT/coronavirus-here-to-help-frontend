@@ -76,19 +76,9 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         if(emailTemplate){
             console.log("emailTemplate",emailTemplate)
             setEmailTemplatePreview(emailTemplate.body)
-            // document.getElementById('email-template-preview').innerHTML = emailTemplate.htmls
-            // appendPreview("email-template-preview", emailTemplate.html, document)
         }
        
     }, [])
-    const appendPreview = (id, preview, document) => {
-        console.log("id", id)
-        console.log("preview", preview)
-        console.log("document", document)
-        document.getElementById(id).innerHTML = preview
-    }
-
-
 
     const setShowContactDetails = value => {
         if(value == TEST_AND_TRACE_FOLLOWUP_EMAIL){
@@ -377,10 +367,11 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                             <br/>
                             {emailTemplatePreview &&
                                 <div className="govuk-form-group">
+                                    <div>
                                     <label className="govuk-label" for="contact-by-email">Email address</label>
                                     <input className="govuk-input govuk-!-width-one-third" id="contact-by-email" name="contact-by-email" type="email" spellcheck="false" onChange={(e)=>setEmail(e.target.value)}/>
-                                <br/>
-                            
+                                </div>
+                                <br/><br/>
                                 <div id="contact-hint" className="govuk-hint">Email preview</div>
                                 <div id = "email-template-preview" className="govuk-inset-text" data-testid='send-email-preview'>{emailTemplatePreview}</div>
                             </div>
@@ -390,7 +381,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                                     <span className="govuk-warning-text__icon" aria-hidden="true">!</span>
                                     <strong className="govuk-warning-text__text">
                                     <span className="govuk-warning-text__assistive">Warning</span>
-                                        There is no email option for this call type
+                                        There is no email option for this call type, please uncheck this option to proceed
                                     </strong>
                                 </div>
                             }
@@ -427,7 +418,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                                     <span className="govuk-warning-text__icon" aria-hidden="true">!</span>
                                     <strong className="govuk-warning-text__text">
                                     <span className="govuk-warning-text__assistive">Warning</span>
-                                    There is no text option for this call type
+                                    There is no text option for this call type, please uncheck this option to proceed
                                     </strong>
                                 </div>
                             }

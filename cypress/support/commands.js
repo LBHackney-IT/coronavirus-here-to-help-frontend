@@ -100,11 +100,11 @@ Cypress.Commands.add('setIntercepts', () => {
     });
 
     cy.intercept('GET', `/api/proxy/gov-notify/previewTemplate?templateType=${TEST_AND_TRACE_FOLLOWUP_EMAIL}`, {
-        fixture: 'sendEmailSuccessResponse'
+        fixture: 'getEmailPreviewSuccessResponse'
     });
 
     cy.intercept('GET', `/api/proxy/gov-notify/previewTemplate?templateType=${TEST_AND_TRACE_FOLLOWUP_TEXT}`, {
-        fixture: 'sendTextSuccessResponse'
+        fixture: 'getTextPreviewSuccessResponse'
     });
 
 });

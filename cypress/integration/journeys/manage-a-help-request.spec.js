@@ -39,7 +39,7 @@ context('When you view a helpcase profile', () => {
         cy.get('[data-testid=support-requested-table-view_link-0]')
         .contains('View')
         .click({ force: true });
-        cy.get('[data-testid=send-email-checkbox]').click();
+        cy.get('[data-testid=send-email-checkbox]').click({ force: true });
         cy.get('[data-testid=send-email-preview]').should('contain', 'email preview')
     })
 
@@ -47,7 +47,7 @@ context('When you view a helpcase profile', () => {
         cy.get('[data-testid=support-requested-table-view_link-0]')
         .contains('View')
         .click({ force: true });
-        cy.get('[data-testid=send-text-checkbox]').click();
+        cy.get('[data-testid=send-text-checkbox]').click({ force: true });
         cy.get('[data-testid=send-text-preview]').should('contain', 'text preview')
     })
 });
