@@ -6,11 +6,12 @@ export default function SingleRadioButton({ radioButtonItem, onSelectOption, ...
             onSelectOption(value);
         }
     };
+    const elementId = radioButtonItem.replace(/\s+/g, '-').toLowerCase();
     return (
         <div className="govuk-radios__item">
             <input
                 className="govuk-radios__input"
-                id={radioButtonItem}
+                id={elementId}
                 type="radio"
                 value={radioButtonItem}
                 onClick={(e) => handleOnSelectOption(e.target.value)}
@@ -19,6 +20,7 @@ export default function SingleRadioButton({ radioButtonItem, onSelectOption, ...
             <label
                 className="govuk-label govuk-radios__label"
                 htmlFor={radioButtonItem}
+                for={elementId}
                 style={{ marginBottom: '15px' }}>
                 {radioButtonItem}
             </label>
