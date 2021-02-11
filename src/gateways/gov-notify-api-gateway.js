@@ -5,7 +5,7 @@ var NotifyClient = require('notifications-node-client').NotifyClient
 export class GovNotifyGateway {
     async request(pathSegments, queryParams) {
     try{
-      const notifyClient = new NotifyClient(process.env.HERE_TO_HELP_DEV_NOTIFY_API_KEY)
+      const notifyClient = new NotifyClient(process.env.HERE_TO_HELP_NOTIFY_API_KEY)
       if(queryParams.phoneNumber){
         const templateId = (pathSegments[0] == TEST_AND_TRACE_FOLLOWUP_TEXT) ? process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_TEXT : ""
 
@@ -24,6 +24,7 @@ export class GovNotifyGateway {
             return response;
       }
       if(pathSegments[0] == "previewTemplate"){
+        console.log(pathSegments)
             let templateId
             if((queryParams.templateType == TEST_AND_TRACE_FOLLOWUP_TEXT)){
 
