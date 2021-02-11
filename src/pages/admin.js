@@ -9,7 +9,7 @@ export default function AssignCallsPage() {
                 <a
                     href="/dashboard"
                     className="govuk-back-link  lbh-back-link"
-                    data-testid="assign-call-back_button">
+                    data-testid="admin-back_button">
                     Back
                 </a>
 
