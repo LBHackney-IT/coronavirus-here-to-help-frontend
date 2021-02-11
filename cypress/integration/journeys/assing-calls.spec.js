@@ -2,6 +2,7 @@ beforeEach(() => {
     cy.login();
     cy.setIntercepts();
     cy.visit('/');
+    cy.get('[data-testid=admin_button]').click();
     cy.get('[data-testid=assign-calls_button]').click();
 });
 
@@ -11,14 +12,14 @@ describe('As a call handler I can bulk assign calls', () => {
             cy.url().should('match', /\/assign-calls$/);
         });
 
-        it('Back button should route back to dashboard page', () => {
+        it('Back button should route back to admin page', () => {
             cy.get('[data-testid=assign-call-back_button]').click({ force: true });
-            cy.url().should('match', /\/dashboard$/);
+            cy.url().should('match', /\/admin$/);
         });
 
-        it('Cancel button should route back to dashboard page', () => {
+        it('Cancel button should route back to admin page', () => {
             cy.get('[data-testid=assign-call-cancel_button]').click({ force: true });
-            cy.url().should('match', /\/dashboard$/);
+            cy.url().should('match', /\/admin$/);
         });
 
         it('Assign button should route to Callbacks list page', () => {
