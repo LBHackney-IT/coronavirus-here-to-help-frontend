@@ -302,5 +302,69 @@
                 "CallDateTime": "2021-01-15T11:32:17.750Z"
             }
         ]
+    },
+    {
+        "Id": 211,
+        "ResidentId": 3,
+        "AssignedTo": "Person A",
+        "AdviceNotes": "qui aliquid voluptates",
+        "CallbackRequired": true,
+        "CurrentSupport": "Cambridgeshire",
+        "CurrentSupportFeedback": "optio quo laboriosam nemo et",
+        "DateTimeRecorded": "2021-01-21T17:16:10.046Z",
+        "GettingInTouchReason": "voluptas architecto mollitia",
+        "HelpNeeded": "Shielding",
+        "HelpWithAccessingFood": true,
+        "HelpWithAccessingInternet": null,
+        "HelpWithAccessingMedicine": null,
+        "MedicineDeliveryHelpNeeded": null,
+        "HelpWithCompletingNssForm": null,
+        "HelpWithShieldingGuidance": true,
+        "HelpWithAccessingSupermarketFood": true,
+        "HelpWithAccessingOtherEssentials": null,
+        "HelpWithNoNeedsIdentified": null,
+        "HelpWithChildrenAndSchools": null,
+        "HelpWithDebtAndMoney": null,
+        "HelpWithDisabilities": null,
+        "HelpWithHealth": null,
+        "HelpWithHousing": null,
+        "HelpWithJobsOrTraining": null,
+        "HelpWithMentalHealth": null,
+        "HelpWithSomethingElse": null,
+        "InitialCallbackCompleted": null,
+        "IsOnBehalf": false,
+        "ConsentToCompleteOnBehalf": null,
+        "OnBehalfFirstName": "",
+        "OnBehalfLastName": "",
+        "OnBehalfEmailAddress": "",
+        "OnBehalfContactNumber": "",
+        "RecordStatus": "MASTER",
+        "RelationshipWithResident": "",
+        "UrgentEssentials": "velit aspernatur quas deserunt suscipit",
+        "UrgentEssentialsAnythingElse": "",
+        "WhenIsMedicinesDelivered": "",
+        "RescheduledAt": "04:40",
+        "RequestedDate": "2021-02-03T05:09:47.123Z",
+        "NhsCtasId": "123abc",
+        "HelpRequestCalls": [
+            {
+                "Id": 21,
+                "HelpRequestId": 11,
+                "CallType": "Shielding",
+                "CallDirection": "inbound",
+                "CallOutcome": "callback_complete",
+                "CallHandler": "Bart Simpson",
+                "CallDateTime": "2021-01-18T08:22:31.274Z"
+            },
+            {
+                "Id": 22,
+                "HelpRequestId": 11,
+                "CallType": "Contact Tracing",
+                "CallDirection": "inbound",
+                "CallOutcome": "callback_complete",
+                "CallHandler": "Bart Simpson",
+                "CallDateTime": "2021-01-23T18:16:35.195Z"
+            }
+        ]
     }
 ]

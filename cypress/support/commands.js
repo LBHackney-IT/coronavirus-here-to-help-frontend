@@ -29,6 +29,13 @@ Cypress.Commands.add('login', (userData) => {
 });
 
 Cypress.Commands.add('setIntercepts', () => {
+    cy.intercept('GET', '/api/proxy/v4/residents/3/help-requests/211/case-notes', {
+        fixture: 'residents/3/helpRequestCaseNotes'
+    });
+    cy.intercept('GET', 'api/proxy/v4/residents/3/help-requests/211', {
+        fixture: 'residents/3/helpRequests/helpRequestCevFields'
+    });
+    
     cy.intercept('POST', `/api/proxy/v4/residents/`, {
         statusCode: 200,
         fixture: 'residents/3/resident'
@@ -97,4 +104,5 @@ Cypress.Commands.add('setIntercepts', () => {
     cy.intercept('GET', '/api/proxy/v4/helpcase-profile/*', {
         fixture: 'residents/3/resident'
     });
+
 });
