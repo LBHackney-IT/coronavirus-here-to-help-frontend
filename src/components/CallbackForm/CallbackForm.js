@@ -241,6 +241,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                                                                 radioButtonItem={callType}
                                                                 onSelectOption={() => {}} //noop
                                                                 checked={callType === helpRequest.helpNeeded}
+                                                                data-testid="call-type-radio-button"
                                                             />
                                                         ))}
                                                     </div>
