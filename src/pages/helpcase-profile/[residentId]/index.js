@@ -40,10 +40,14 @@ export default function HelpcaseProfile({ residentId }) {
             residentCaseNotes.forEach(caseNote => {
                 if(!caseNote) return
                 caseNote.caseNote.forEach(note => {
-                    let helpNeeded = helpRequests.filter(hr => hr.id == caseNote.helpRequestId)[0].helpNeeded
-                    note.helpNeeded = helpNeeded
-                    if (note && note.helpNeeded && note.helpNeeded in categorisedCaseNotes) { categorisedCaseNotes[note.helpNeeded].push(note) }
-                    categorisedCaseNotes['All'].push(note)
+                    let helpNeeded = helpRequests.filter(hr => hr.id == caseNote.helpRequestId);
+                    // a hack to mitigate bad data
+                    if (helpNeeded?.length > 0) {
+                        helpNeeded = helpNeeded[0].helpNeeded;
+                        note.helpNeeded = helpNeeded
+                        if (note && note.helpNeeded && note.helpNeeded in categorisedCaseNotes) { categorisedCaseNotes[note.helpNeeded].push(note) }
+                        categorisedCaseNotes['All'].push(note)
+                    }
                 });
 
                 helpTypes.forEach(helpType => {
