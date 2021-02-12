@@ -1,7 +1,7 @@
 import { getPowerBICaseNotesArray } from './case_notes_helper';
 
 describe('Case note helper', () => {
-    it.only('can format powerBi case notes', () => {
+    it('can format powerBi case notes', () => {
         const unformattedCaseNote =
             '[2021-01-02]voicemail left.[2021-01-02]no answer[2021-01-02]voicemail left';
 

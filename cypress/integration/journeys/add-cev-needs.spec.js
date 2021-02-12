@@ -5,6 +5,7 @@ beforeEach(() => {
     cy.get('[data-testid=view-callback-list_button]').click();
     cy.get('[data-testid=callbacks-list-view_link-0]').click({ force: true });
     cy.get('[data-testid=add-support-button]').click({ force: true });
+
 });
 
 context('When adding new cev help request', () => {
@@ -15,20 +16,7 @@ context('When adding new cev help request', () => {
     })
 });
 
-context('When adding other type of help request', () => {
-    it('it does not display the cev help needs form', () => {
-        cy.get('input#contact-tracing').click({ force: true });
-        cy.get('[data-testid=cev-help-needs]').should('not.exist');
-
-        cy.get('input#welfare-call').click({ force: true });
-        cy.get('[data-testid=cev-help-needs]').should('not.exist');
-
-        cy.get('input#help-request').click({ force: true });
-        cy.get('[data-testid=cev-help-needs]').should('not.exist');
-    })
-});
-
-context('When required fields are not filled in at first', () => {
+context('When required fields are not filled in at first', () => {    
     it('it displays validation error', () => {
 
       cy.get('input#cev').click({ force: true });
