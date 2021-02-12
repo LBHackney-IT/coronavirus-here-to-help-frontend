@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Checkbox, RadioButton, Button, SingleRadioButton } from '../Form';
-import KeyInformation from '../KeyInformation/KeyInformation';
 import Link from 'next/link';
-import { HelpRequestCallGateway } from '../../gateways/help-request-call';
-import { ResidentGateway } from '../../gateways/resident';
-import { HelpRequestGateway } from '../../gateways/help-request';
-import { unsafeExtractUser } from '../../helpers/auth';
 import { cevHelpTypes } from '../../helpers/constants';
-
 import { useRouter } from 'next/router';
-
 import {GovNotifyGateway} from '../../gateways/gov-notify'
 import {TEST_AND_TRACE_FOLLOWUP_TEXT, TEST_AND_TRACE_FOLLOWUP_EMAIL} from '../../helpers/constants'
+import styles from "../CallbackForm/CallbackForm.module.scss";
 
 
 export default function CallbackForm({residentId, resident, helpRequest, backHref, saveFunction, editableCaseNotes, helpRequestExists}) {
@@ -38,7 +32,6 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         CallOutcome: null,
         CallHandler: null
     });
-    const router = useRouter();
 
     useEffect(() => {
         setHelpNeeded(helpRequest ? helpRequest.helpNeeded : "");
@@ -69,7 +62,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                   key = key.replace(/_/g, ' ');
                   const upcaseKey = key.charAt(0).toUpperCase() + key.slice(1);
                   return (
-                      <span class="govuk-caption-l">
+                      <span data-testid='metadata' class="govuk-caption-l">
                           <strong>{upcaseKey}:</strong> {value}
                       </span>
                   );
@@ -77,7 +70,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             : '';
 
     const nhsCtasId = helpRequest ? (
-        <span class="govuk-caption-l">
+        <span class="govuk-caption-l" data-testid='ctas-id'>
             <strong>CTAS ID:</strong> {helpRequest.nhsCtasId || 'Not found'}
         </span>
     ) : (
@@ -263,6 +256,17 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             <h1 className="govuk-heading-xl" style={{ marginTop: '0px', marginBottom: '40px' }}>
                 {' '}
                 {resident.firstName} {resident.lastName}
+                <br></br>
+                {helpRequest && 
+                    <strong data-testid='help-type' className={`govuk-tag govuk-tag--grey ${styles['help-request-tag']}`}> 
+                        {helpRequest?.helpNeeded}
+                    </strong>
+                }
+                <br></br>
+                {helpRequest &&
+                 <span class="govuk-caption-l">
+                    <strong>Date requested: </strong> {helpRequest?.dateTimeRecorded?.split('T')[0]}
+                </span>}
                 {nhsCtasId}
                 {metadata}
             </h1>
@@ -273,32 +277,22 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                             <div>
                                 <div className="govuk-grid-column">
                                     <div className="govuk-form-group lbh-form-group">
+                                        {!helpRequestExists && 
                                         <fieldset className="govuk-fieldset">
                                             <legend className="govuk-fieldset__legend mandatoryQuestion">
                                                 {' '}
-                                                Call type required
+                                                Support required
                                             </legend>
                                             <br />
                                             {
-                                                helpRequestExists && (
-                                                    <div>
-                                                        {callTypes.map((callType) => (
-                                                            <SingleRadioButton
-                                                                radioButtonItem={callType}
-                                                                onSelectOption={() => {}} //noop
-                                                                checked={callType === helpRequest.helpNeeded}
-                                                                data-testid="call-type-radio-button"
-                                                            />
-                                                        ))}
-                                                    </div>
-                                                ) || <RadioButton
+                                               <RadioButton
                                                         radioButtonItems={callTypes}
                                                         name="HelpNeeded"
                                                         onSelectOption={(callBackFunction)}
                                                         data-testid="call-type-radio-button"
                                                     />
                                             }
-                                        </fieldset>
+                                        </fieldset>}
                                     </div>
                                 </div>
                             </div>
@@ -572,7 +566,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                             {emailTemplatePreview &&
                                 <div className="govuk-form-group">
                                     <div>
-                                    <label className="govuk-label" for="contact-by-email">Email address</label>
+                                    <label className="govuk-label mandatoryQuestion" for="contact-by-email">Email address</label>
                                     <input className="govuk-input govuk-!-width-one-third" id="contact-by-email" name="contact-by-email" type="email" spellcheck="false" onChange={(e)=>setEmail(e.target.value)}/>
                                 </div>
                                 <br/><br/>
@@ -608,7 +602,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                             {textTemplatePreview &&
                             <div className="govuk-form-group">
                                 <div>
-                                    <label className="govuk-label" for="contact-by-text">Mobile phone number</label>
+                                    <label className="govuk-label mandatoryQuestion" for="contact-by-text">Mobile phone number</label>
                                     <input className="govuk-input govuk-!-width-one-third" id="contact-by-text" name="contact-by-text" type="tel" onChange={(e)=>{setPhoneNumber(e.target.value)}}/>
                                 </div>
                                 <br/><br/>

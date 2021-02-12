@@ -58,9 +58,39 @@ context('When viewing a single help request', () => {
         .contains('View')
         .click({ force: true });
     cy.get('.govuk-caption-l').should('have.length', 2);
-    cy.get('.govuk-caption-l').first().should('contain', "CTAS ID: 123abc");
-    cy.get('.govuk-caption-l').last().should('contain', "Date tested: 02/02/2020");
+    cy.get('[data-testid=ctas-id]').first().should('contain', "CTAS ID: 123abc");
+    cy.get('[data-testid=metadata]').last().should('contain', "Date tested: 02/02/2020");
   });
+
+  it('it displays help request type', () => {
+    cy.get('[data-testid=support-requested-table-view_link-0]')
+        .contains('View')
+        .click({ force: true });
+    cy.get('[data-testid=help-type]').should('contain', 'Contact Tracing');
+  });
+
+context('When managing other type of help request', () => {
+    it('it does not display the cev help needs form', () => {
+        cy.get('[data-testid=support-requested-table-view_link-0]')
+        .contains('View')
+        .click({ force: true });
+        cy.get('[data-testid=cev-help-needs]').should('not.exist');
+    })
+    it('it does not display the cev help needs form', () => {
+        cy.get('[data-testid=support-requested-table-view_link-1]')
+        .contains('View')
+        .click({ force: true });
+        cy.get('[data-testid=cev-help-needs]').should('not.exist');
+
+    })
+    it('it does not display the cev help needs form', () => {
+        cy.get('[data-testid=support-requested-table-view_link-5]')
+        .contains('View')
+        .click({ force: true });
+        cy.get('[data-testid=cev-help-needs]').should('exist');
+
+    })
+});
 });
 
 context('When required fields are not filled in', () => {
@@ -71,7 +101,6 @@ context('When required fields are not filled in', () => {
         cy.get('[data-testid=callback-form-update_button]').click({ force: true });
         cy.get('[data-testid=callback-form-validation-error]').should('be.visible');
 
-        cy.get('[data-testid=call-type-radio-button]').first().click({ force: true });
         cy.get('[data-testid=callback-form-update_button]').click({ force: true });
         cy.get('[data-testid=callback-form-validation-error]').should('be.visible');
 
@@ -86,7 +115,6 @@ context('When required fields are filled in', () => {
         cy.get('[data-testid=support-requested-table-view_link-0]')
             .contains('View')
             .click({ force: true });
-        cy.get('[data-testid=call-type-radio-button]').first().click({ force: true });
         cy.get('[data-testid=call-type-no-radio-button]').click({ force: true });
         cy.get('[data-testid=followup-required-radio-button]').first().click({ force: true });
         cy.get('[data-testid=callback-form-update_button]').click({ force: true });

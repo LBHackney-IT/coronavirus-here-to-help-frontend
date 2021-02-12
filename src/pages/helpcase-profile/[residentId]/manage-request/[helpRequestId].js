@@ -86,6 +86,7 @@ export default function addSupportPage({residentId, helpRequestId}) {
     }, []);
 
     const saveFunction = async function(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote, phoneNumber, email) {
+        console.log("helpNeeded",helpNeeded)
         const callRequestObject = {
             callType: helpNeeded,
             callDirection: callDirection,

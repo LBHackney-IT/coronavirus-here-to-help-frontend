@@ -24,6 +24,7 @@ export default function SupportTable({helpRequests}) {
 								<th scope="col" className="govuk-table__header">Type</th>
 								<th scope="col" className="govuk-table__header">Action required</th>
 								<th scope="col" className="govuk-table__header">Call attempts</th>
+								<th scope="col" className="govuk-table__header">Date requested</th>
 								<th scope="col" className="govuk-table__header"></th>
 							</tr>
 						</thead>
@@ -36,6 +37,7 @@ export default function SupportTable({helpRequests}) {
 										href="/helpcase-profile/[resident_id]/manage-request/[help_request]"
 										as={`/helpcase-profile/${hr.residentId}/manage-request/${hr.id}`}>{hr.upcomingCallOutcome}</Link></td>
 									<td className="govuk-table__cell" data-testid="support-requested-table-calls-count">{hr.helpRequestCalls?.length}</td>
+									<td className="govuk-table__cell" >{hr.dateTimeRecorded.split('T')[0]}</td>
 									<td className="govuk-table__cell" data-testid={`support-requested-table-view_link-${index}`}><Link
 												href="/helpcase-profile/[resident_id]/manage-request/[help_request]"
 												as={`/helpcase-profile/${hr.residentId}/manage-request/${hr.id}`}>View</Link></td>
@@ -60,6 +62,8 @@ export default function SupportTable({helpRequests}) {
 									return (<tr className="govuk-table__row" data-testid="support-received-table_row">
 									<td className="govuk-table__cell" data-testid="support-received-table-help-needed">{hr.helpNeeded}</td>
 									<td className="govuk-table__cell" data-testid="support-received-table-calls-count" >{hr.totalCompletedCalls}</td>
+									<td className="govuk-table__cell" >{hr.dateTimeRecorded?.split('T')[0]}</td>
+
 									<td className="govuk-table__cell"><Link
 												href="/helpcase-profile/[resident_id]/manage-request/[help_request]"
 												as={`/helpcase-profile/${hr.residentId}/manage-request/${hr.id}`}>View</Link></td>
