@@ -40,14 +40,14 @@ export default function HomePage() {
 
                     <tr className="govuk-table__row">
                         <th scope="row" className="govuk-table__header">
-                            Assign calls
+                            Manager view
                         </th>
                         <td className="govuk-table__cell govuk-table__cell--numeric">
                             <a
-                                href="/assign-calls"
+                                href="/admin"
                                 className="govuk-button lbh-button js-cta-btn"
                                 data-module="govuk-button"
-                                data-testid="assign-calls_button">
+                                data-testid="admin_button">
                                 Go
                             </a>
                         </td>
