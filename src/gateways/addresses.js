@@ -7,7 +7,7 @@ const ToAddresses = (response) => {
             addressSecondLine: response.line2,
             addressThirdLine: response.line3,
             postCode: response.postcode,
-            uprn: response.UPRN.toString()
+            uprn: response.UPRN?.toString()
         };
     });
 };
@@ -15,6 +15,11 @@ const ToAddresses = (response) => {
 export class AddressesGateway extends DefaultGateway {
     async getAddresses(postcode) {
         const response = await this.getFromUrl(`addresses/${postcode.replace(' ', '')}`);
-        return ToAddresses(response.address);
+        let addresses = [];
+        for (let currentPage = 1; currentPage <= response.page_count; currentPage++) {
+            const all_responses = await this.getFromUrl(`addresses/${postcode.replace(' ', '')}&page=${currentPage}`);
+            addresses=addresses.concat(all_responses.address)            
+        }
+        return ToAddresses(addresses);
     }
 }
