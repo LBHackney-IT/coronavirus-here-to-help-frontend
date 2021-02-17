@@ -26,6 +26,7 @@ describe('As a call handler, I want to create a new resident profile', () => {
             cy.get('[data-testid=dobYear-input]').type("2019", { force: true });
             cy.get('[data-testid=postcode-input]').type("E8 1DY", { force: true });
             cy.get('[data-testid=address-search]').click({ force: true });
+            cy.wait(5000);
             cy.get('[data-testid=address-dropdown]').select('Somewhere, else, HACKNEY, E8 1DY', { force: true });
             cy.get('[data-testid=edit-resident-form-update-button').click({ force: true });
             
