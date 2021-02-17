@@ -98,7 +98,7 @@ Cypress.Commands.add('setIntercepts', () => {
         statusCode: 201
     });
 
-    cy.intercept('GET', `/api/proxy/addresses/*`, {
+    cy.intercept('GET', `/api/proxy/addresses/E81DY&page=1`, {
         fixture: 'addresses'
     });
 
