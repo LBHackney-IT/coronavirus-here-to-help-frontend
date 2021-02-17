@@ -61,7 +61,6 @@ context('When required fields are not filled in', () => {
     
             cy.get('[data-testid=postcode-input]').type("E8 1DY", { force: true });
             cy.get('[data-testid=address-search]').click({ force: true });
-            cy.wait(5000);
             cy.get('[data-testid=address-dropdown]').select('Somewhere, over the rainbow, HACKNEY, E8 1DY', { force: true })
     
             cy.get('[data-testid=first-line-address-value]').should('have.value', "Somewhere")
