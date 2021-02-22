@@ -43,10 +43,14 @@ commands:
       stage:
         type: string
         default: staging
+      SNAPSHOT_URL:
+        type: string
     steps:
       - run:
           name: Deploy application
           command: |
+            export NEXT_PUBLIC_SNAPSHOT_URL=<< parameters.SNAPSHOT_URL >>
+            npm run build
             npm prune --production
             sudo npm i -g serverless
             sls deploy -s <<parameters.stage>>
@@ -111,6 +115,7 @@ jobs:
 #          key: *build-cache-key
       - deploy-lambda:
           stage: staging
+          SNAPSHOT_URL: ${NEXT_PUBLIC_SNAPSHOT_URL_STAGING}
 
   deploy-production:
     executor: node
@@ -122,6 +127,7 @@ jobs:
 
       - deploy-lambda:
           stage: production
+          SNAPSHOT_URL: ${NEXT_PUBLIC_SNAPSHOT_URL_PRODUCTION}
 
 workflows:
   version: 2

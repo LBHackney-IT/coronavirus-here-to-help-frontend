@@ -257,6 +257,11 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                 {' '}
                 {resident.firstName} {resident.lastName}
                 <br></br>
+                <div>
+                    <Link href={process.env.NEXT_PUBLIC_SNAPSHOT_URL}>
+                        <Button text="Go to snapshot" />
+                    </Link>
+                </div>
                 {helpRequest && 
                     <strong data-testid='help-type' className={`govuk-tag govuk-tag--grey ${styles['help-request-tag']}`}> 
                         {helpRequest?.helpNeeded}
