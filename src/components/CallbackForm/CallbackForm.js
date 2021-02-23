@@ -256,10 +256,9 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             <h1 className="govuk-heading-xl" style={{ marginTop: '0px', marginBottom: '40px' }}>
                 {' '}
                 {resident.firstName} {resident.lastName}
-                <br></br>
-                <div>
+                <div className='govuk-!-margin-top-5'>
                     <Link href={process.env.NEXT_PUBLIC_SNAPSHOT_URL}>
-                        <Button text="Go to snapshot" />
+                        <Button text="Open Better Conversations" />
                     </Link>
                 </div>
                 {helpRequest && 
