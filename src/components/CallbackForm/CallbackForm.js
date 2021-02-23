@@ -256,7 +256,11 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             <h1 className="govuk-heading-xl" style={{ marginTop: '0px', marginBottom: '40px' }}>
                 {' '}
                 {resident.firstName} {resident.lastName}
-                <br></br>
+                <div className='govuk-!-margin-top-5'>
+                    <Link href={process.env.NEXT_PUBLIC_SNAPSHOT_URL}>
+                        <Button text="Open Better Conversations" />
+                    </Link>
+                </div>
                 {helpRequest && 
                     <strong data-testid='help-type' className={`govuk-tag govuk-tag--grey ${styles['help-request-tag']}`}> 
                         {helpRequest?.helpNeeded}
