@@ -20,7 +20,7 @@ export class CaseNotesGateway extends DefaultGateway {
           console.log("helpRequestCaseNoteResponse",response)
         return InboundMapper.ToCaseNotes(response);
     }
-    async createCaseNote(residentId, helpRequestId, caseNoteObject) {
+    async createCaseNote(helpRequestId, residentId, caseNoteObject) {
         return await this.postToUrl(
             `v4/residents/${residentId}/help-requests/${helpRequestId}/case-notes`,
             ToRequest(caseNoteObject)
