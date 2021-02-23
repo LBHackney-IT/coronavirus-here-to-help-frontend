@@ -257,9 +257,23 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                 {' '}
                 {resident.firstName} {resident.lastName}
                 <div className='govuk-!-margin-top-5'>
-                    <Link href={process.env.NEXT_PUBLIC_SNAPSHOT_URL}>
-                        <Button text="Open Better Conversations" />
-                    </Link>
+                    <a href={process.env.NEXT_PUBLIC_SNAPSHOT_URL}  target="_blank">
+                        <Button text="Open Better Conversations" />                        
+                        <svg width="24px" height="24px" viewBox="0 0 24 24">
+                            <g
+                                id="external_link"
+                                className="icon_svg-stroke"
+                                stroke="#666"
+                                stroke-width="1.5"
+                                fill="none"
+                                fill-rule="evenodd"
+                                stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polyline points="17 13.5 17 19.5 5 19.5 5 7.5 11 7.5"></polyline>
+                                <path d="M14,4.5 L20,4.5 L20,10.5 M20,4.5 L11,13.5"></path>
+                            </g>
+                        </svg>
+                    </a>
                 </div>
                 {helpRequest && 
                     <strong data-testid='help-type' className={`govuk-tag govuk-tag--grey ${styles['help-request-tag']}`}> 
