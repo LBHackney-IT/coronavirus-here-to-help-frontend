@@ -141,7 +141,7 @@ describe('Case notes gateway', () => {
         );
 
         // act
-        await caseNotesGateway.createCaseNote(randomResidentId, randomHelpRequestId, mockDomainCaseNoteBody);
+        await caseNotesGateway.createCaseNote(randomHelpRequestId, randomResidentId, mockDomainCaseNoteBody);
 
         // assert
         let request = moxios.requests.mostRecent();
