@@ -10,10 +10,22 @@ export default function CreateResident({}) {
     const router = useRouter();
     const [resident, setResident] = useState({});
     const [errorsExist, setErrorsExist] = useState(false);
+    const [validation, setValidation] = useState({});
 
     const handleCreateResident = async (id, value) => {
+        let newValidation;
+        if (value == '') {
+            newValidation = { ...validation, ...{ [id]: true } };
+            setValidation(newValidation);
+        } else {
+            newValidation = { ...validation, ...{ [id]: false } };
+            setValidation(newValidation);
+        }
+        if (Object.values(newValidation).every((k) => k == false)) {
+            setErrorsExist(false);
+        }
         setResident({ ...resident, [id]: value });
-        console.log("resident:", resident);
+        console.log('resident:', resident);
     };
 
     const handleCreateAddress = async (object) => {
@@ -21,25 +33,22 @@ export default function CreateResident({}) {
     };
 
     const saveResident = async () => {
-        if (
-            !Object.values(resident).some(x => (x !== null && x !== '')))
-        {
-            setErrorsExist(true);
-            
-            return;
-        }
-        else{
-            const residentGateway = new ResidentGateway();
-            const newResident = await residentGateway.postResident(resident);
-            console.log("resident response", newResident);
-            router.push(`/helpcase-profile/${newResident.Id}`)
-        }
+        event.preventDefault();
+        const residentGateway = new ResidentGateway();
+        const newResident = await residentGateway.postResident(resident);
+        console.log('resident response', newResident);
+        router.push(`/helpcase-profile/${newResident.Id}`);
     };
-    
+
+    const onInvalidField = (id) => {
+        setErrorsExist(true);
+        setValidation({ ...validation, ...{ [id]: true } });
+    };
+
     return (
         <div>
             <Layout>
-                { errorsExist && (
+                {errorsExist && (
                     <div
                         className="govuk-error-summary"
                         aria-labelledby="error-summary-title"
@@ -52,9 +61,7 @@ export default function CreateResident({}) {
                         </h2>
                         <div className="govuk-error-summary__body">
                             <ul className="govuk-list govuk-error-summary__list">
-                                <li>
-                                    <a href="#">Some required fields are empty</a>
-                                </li>
+                                <li>Some required fields are empty</li>
                             </ul>
                         </div>
                     </div>
@@ -63,20 +70,31 @@ export default function CreateResident({}) {
                     Back
                 </a>
 
-                <EditResidentBioForm resident={resident} onChange={handleCreateResident}/>
-                <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-                <Address initialResident={resident} onChange={handleCreateAddress} />
-                <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-                <Button
-                    text="Save"
-                    addClass="govuk-!-margin-right-1"
-                    onClick={() => saveResident()}
-                    data-testid="edit-resident-form-update-button"
-                />
-                <Link href="#">
-                    <Button text="Cancel" addClass="govuk-button--secondary" onClick={() => router.back()}/>
-                </Link>
+                <form onSubmit={saveResident}>
+                    <EditResidentBioForm
+                        resident={resident}
+                        onChange={handleCreateResident}
+                        validation={validation}
+                        onInvalidField={onInvalidField}
+                    />
+                    <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+                    <Address initialResident={resident} onChange={handleCreateAddress} />
+                    <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+                    <Button
+                        text="Save"
+                        type="submit"
+                        addClass="govuk-!-margin-right-1"
+                        data-testid="edit-resident-form-update-button"
+                    />
+                    <Link href="#">
+                        <Button
+                            text="Cancel"
+                            addClass="govuk-button--secondary"
+                            onClick={() => router.back()}
+                        />
+                    </Link>
+                </form>
             </Layout>
         </div>
-    )
+    );
 }

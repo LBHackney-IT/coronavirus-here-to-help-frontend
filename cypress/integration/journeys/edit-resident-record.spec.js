@@ -20,6 +20,7 @@ context('When required fields are not filled in', () => {
         cy.get('[data-testid=first-name-input]').clear();
         cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
         cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible')
+        cy.get('[data-testid=first-name-error]').should("be.visible")
     });
 
     it('displays validation error when last name is missing', () => {
@@ -27,6 +28,7 @@ context('When required fields are not filled in', () => {
         cy.get('[data-testid=last-name-input]').clear();
         cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
         cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible')
+        cy.get('[data-testid=last-name-error]').should("be.visible")
     });
 
     it('displays validation error when contact telephone number is missing', () => {
@@ -34,6 +36,7 @@ context('When required fields are not filled in', () => {
         cy.get('[data-testid=contact-telephone-input]').clear();
         cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
         cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible')
+        cy.get('[data-testid=contact-number-error]').should("be.visible")
     });
 
     it('displays validation error when date of birth is missing', () => {
@@ -41,18 +44,21 @@ context('When required fields are not filled in', () => {
         cy.get('[data-testid=dobDay-input]').clear({ force: true });
         cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
         cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible')
+        cy.get('[data-testid=dob-error]').should("be.visible")
         cy.get('[data-testid=dobDay-input]').type("12", {force: true});
 
         cy.get('[data-testid=edit-resident-bio-button]').click({ force: true });
         cy.get('[data-testid=dobMonth-input]').clear({ force: true });
         cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
         cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible');
+        cy.get('[data-testid=dob-error]').should("be.visible")
         cy.get('[data-testid=dobMonth-input]').type("12", {force: true});
 
         cy.get('[data-testid=edit-resident-bio-button]').click({ force: true });
         cy.get('[data-testid=dobYear-input]').clear({ force: true });
         cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
         cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible')
+        cy.get('[data-testid=dob-error]').should("be.visible")
     });
 
     context('When an address search is made by postcode', (done) => {

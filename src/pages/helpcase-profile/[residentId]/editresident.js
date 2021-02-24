@@ -5,7 +5,6 @@ import { ResidentGateway } from '../../../gateways/resident';
 import { useState, useEffect } from 'react';
 import { Button, Address } from '../../../components/Form';
 import EditResidentBioForm from '../../../components/EditResidentBioForm/EditResidentBioForm';
-import Banner from '../../../components/Banner';
 import Link from 'next/link';
 import Router from 'next/router';
 
@@ -13,8 +12,20 @@ export default function EditResident({ residentId }) {
     const [resident, setResident] = useState([]);
     const [updatedResident, setUpdatedResident] = useState({});
     const [errorsExist, setErrorsExist] = useState(false);
+    const [validation, setValidation] = useState({});
 
     const handleEditResident = async (id, value) => {
+        let newValidation;
+        if (value == '') {
+            newValidation = { ...validation, ...{ [id]: true } };
+            setValidation(newValidation);
+        } else {
+            newValidation = { ...validation, ...{ [id]: false } };
+            setValidation(newValidation);
+        }
+        if (Object.values(newValidation).every((k) => k == false)) {
+            setErrorsExist(false);
+        }
         setUpdatedResident({ ...updatedResident, [id]: value });
     };
 
@@ -23,21 +34,10 @@ export default function EditResident({ residentId }) {
     };
 
     const saveResident = () => {
-        if (
-            Object.keys(updatedResident).some(
-                (k) =>
-                    (updatedResident[k] == '')
-            )
-        ) {
-            setErrorsExist(true);
-            
-            return;
-        }
-        else{
-            const residentGateway = new ResidentGateway();
-            residentGateway.setResident(residentId, updatedResident);
-            Router.back()
-        }
+        event.preventDefault();
+        const residentGateway = new ResidentGateway();
+        residentGateway.setResident(residentId, updatedResident);
+        Router.back();
     };
 
     useEffect(() => {}, [resident]);
@@ -55,11 +55,16 @@ export default function EditResident({ residentId }) {
         }
     };
 
+    const onInvalidField = (id) => {
+        setErrorsExist(true);
+        setValidation({ ...validation, ...{ [id]: true } });
+    };
+
     useEffect(getResident, []);
 
     return (
         <Layout>
-            { errorsExist && (
+            {errorsExist && (
                 <div
                     className="govuk-error-summary"
                     aria-labelledby="error-summary-title"
@@ -72,9 +77,7 @@ export default function EditResident({ residentId }) {
                     </h2>
                     <div className="govuk-error-summary__body">
                         <ul className="govuk-list govuk-error-summary__list">
-                            <li>
-                                <a href="#">Some required fields are empty</a>
-                            </li>
+                            <li>Some required fields are empty</li>
                         </ul>
                     </div>
                 </div>
@@ -83,22 +86,31 @@ export default function EditResident({ residentId }) {
                 <KeyInformation resident={resident} />
             </div>
             <div className="govuk-grid-column-three-quarters-from-desktop">
-                {residentId && (
-                    <EditResidentBioForm resident={resident} onChange={handleEditResident} />
-                )}
+                <form onSubmit={saveResident}>
+                    {residentId && (
+                        <EditResidentBioForm
+                            resident={resident}
+                            onChange={handleEditResident}
+                            validation={validation}
+                            onInvalidField={onInvalidField}
+                        />
+                    )}
 
-                <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-                <Address initialResident={resident} onChange={handleEditAddress} />
-                <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-                <Button
-                    text="Update"
-                    addClass="govuk-!-margin-right-1"
-                    onClick={() => saveResident()}
-                    data-testid="edit-resident-form-update-button"
-                />
-                <Link href="/helpcase-profile/[residentId]" as={`/helpcase-profile/${residentId}`}>
-                    <Button text="Cancel" addClass="govuk-button--secondary" />
-                </Link>
+                    <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+                    <Address initialResident={resident} onChange={handleEditAddress} />
+                    <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+                    <Button
+                        text="Update"
+                        addClass="govuk-!-margin-right-1"
+                        type="submit"
+                        data-testid="edit-resident-form-update-button"
+                    />
+                    <Link
+                        href="/helpcase-profile/[residentId]"
+                        as={`/helpcase-profile/${residentId}`}>
+                        <Button text="Cancel" addClass="govuk-button--secondary" />
+                    </Link>
+                </form>
             </div>
         </Layout>
     );
