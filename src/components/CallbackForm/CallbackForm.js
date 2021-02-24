@@ -256,6 +256,19 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             <h1 className="govuk-heading-xl" style={{ marginTop: '0px', marginBottom: '40px' }}>
                 {' '}
                 {resident.firstName} {resident.lastName}
+                <br/>
+                {helpRequest && 
+                    <strong data-testid='help-type' className={`govuk-tag govuk-tag--grey ${styles['help-request-tag']}`}> 
+                        {helpRequest?.helpNeeded}
+                    </strong>
+                }
+                <br></br>
+                {helpRequest &&
+                 <span class="govuk-caption-l">
+                    <strong>Date requested: </strong> {helpRequest?.dateTimeRecorded?.split('T')[0]}
+                </span>}
+                {nhsCtasId}
+                {metadata}
                 <div className='govuk-!-margin-top-5'>
                     <a href={process.env.NEXT_PUBLIC_SNAPSHOT_URL}  target="_blank">
                         <Button text="Open Better Conversations" />                        
@@ -274,19 +287,8 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                             </g>
                         </svg>
                     </a>
+                    <p className={`${styles['button-hint']}`}>Opens in new tab. Please note that information from Better Conversations will not currently be saved to the resident's profile.</p>
                 </div>
-                {helpRequest && 
-                    <strong data-testid='help-type' className={`govuk-tag govuk-tag--grey ${styles['help-request-tag']}`}> 
-                        {helpRequest?.helpNeeded}
-                    </strong>
-                }
-                <br></br>
-                {helpRequest &&
-                 <span class="govuk-caption-l">
-                    <strong>Date requested: </strong> {helpRequest?.dateTimeRecorded?.split('T')[0]}
-                </span>}
-                {nhsCtasId}
-                {metadata}
             </h1>
             <form>
                 <div>
