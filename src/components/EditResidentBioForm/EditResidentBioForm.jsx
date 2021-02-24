@@ -18,7 +18,9 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                             First name
                         </label>
                         <span id="first-name-error" className="govuk-error-message">
-                            <span hidden={validation.firstName ? false : true}>
+                            <span
+                                hidden={validation.firstName ? false : true}
+                                data-testid="first-name-error">
                                 Error: Enter the first name
                             </span>
                         </span>
@@ -47,7 +49,9 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                             Last name
                         </label>
                         <span id="last-name-error" className="govuk-error-message">
-                            <span hidden={validation.lastName ? false : true}>
+                            <span
+                                hidden={validation.lastName ? false : true}
+                                data-testid="last-name-error">
                                 Error: Enter the last name
                             </span>
                         </span>
@@ -78,7 +82,9 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                             Contact telephone
                         </label>
                         <span id="contact-number-error" className="govuk-error-message">
-                            <span hidden={validation.contactTelephoneNumber ? false : true}>
+                            <span
+                                hidden={validation.contactTelephoneNumber ? false : true}
+                                data-testid="contact-number-error">
                                 Error: Enter a valid contact telephone number
                             </span>
                         </span>
@@ -150,7 +156,8 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                             validation.dobDay || validation.dobMonth || validation.dobYear
                                 ? false
                                 : true
-                        }>
+                        }
+                        data-testid="dob-error">
                         Error: Enter a valid date of birth
                     </span>
                 </span>
