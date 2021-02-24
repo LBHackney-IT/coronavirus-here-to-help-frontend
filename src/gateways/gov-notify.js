@@ -15,4 +15,9 @@ export class GovNotifyGateway extends DefaultGateway {
       const response = await this.getFromUrl(`gov-notify/previewTemplate?templateType=${template}`);
       return response;
     }
+
+    async sendBulkText(reqBody) {
+      const response = await this.postToUrl(`gov-notify/send-bulk-message`, reqBody);
+      return response;
+    }
 }

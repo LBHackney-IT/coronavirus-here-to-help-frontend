@@ -28,6 +28,7 @@ export class DefaultGateway {
     }
 
     async postToUrl(url, body) {
+        console.log("this", this.createFullUrl(url))
       const res = await axios.post(this.createFullUrl(url), body, {
           headers: {
               'Content-Type': 'application/json'

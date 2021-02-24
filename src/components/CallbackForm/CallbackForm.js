@@ -587,7 +587,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                                 <div className="govuk-form-group">
                                     <div>
                                     <label className="govuk-label mandatoryQuestion" for="contact-by-email">Email address</label>
-                                    <input className="govuk-input govuk-!-width-one-third" id="contact-by-email" name="contact-by-email" type="email" spellcheck="false" onChange={(e)=>setEmail(e.target.value)}/>
+                                    <input className="govuk-input govuk-!-width-one-third" id="contact-by-email" name="contact-by-email" type="email" spellCheck="false" onChange={(e)=>setEmail(e.target.value)}/>
                                 </div>
                                 <br/><br/>
                                 <div id="contact-hint" className="govuk-hint">Email preview</div>
