@@ -15,13 +15,12 @@ export default function EditResident({ residentId }) {
     const [validation, setValidation] = useState({});
 
     const handleEditResident = async (id, value) => {
-        if (value==''){
-            setValidation({ ...validation, ...{[id]:true} });
-          }
-          else {
-            setValidation({ ...validation, ...{[id]:false} });
-          }
-        setUpdatedResident({...updatedResident, [id]: value });
+        if (value == '') {
+            setValidation({ ...validation, ...{ [id]: true } });
+        } else {
+            setValidation({ ...validation, ...{ [id]: false } });
+        }
+        setUpdatedResident({ ...updatedResident, [id]: value });
     };
 
     const handleEditAddress = async (object) => {
@@ -29,10 +28,10 @@ export default function EditResident({ residentId }) {
     };
 
     const saveResident = () => {
-        event.preventDefault()
+        event.preventDefault();
         const residentGateway = new ResidentGateway();
         residentGateway.setResident(residentId, updatedResident);
-        Router.back()
+        Router.back();
     };
 
     useEffect(() => {}, [resident]);
@@ -52,14 +51,14 @@ export default function EditResident({ residentId }) {
 
     const onInvalidField = (id) => {
         setErrorsExist(true);
-        setValidation({ ...validation, ...{[id]:true} });
-    }
+        setValidation({ ...validation, ...{ [id]: true } });
+    };
 
     useEffect(getResident, []);
 
     return (
         <Layout>
-            { errorsExist && (
+            {errorsExist && (
                 <div
                     className="govuk-error-summary"
                     aria-labelledby="error-summary-title"
@@ -72,9 +71,7 @@ export default function EditResident({ residentId }) {
                     </h2>
                     <div className="govuk-error-summary__body">
                         <ul className="govuk-list govuk-error-summary__list">
-                            <li>
-                                Some required fields are empty
-                            </li>
+                            <li>Some required fields are empty</li>
                         </ul>
                     </div>
                 </div>
@@ -84,22 +81,29 @@ export default function EditResident({ residentId }) {
             </div>
             <div className="govuk-grid-column-three-quarters-from-desktop">
                 <form onSubmit={saveResident}>
-                {residentId && (
-                    <EditResidentBioForm resident={resident} onChange={handleEditResident} validation={validation} onInvalidField={onInvalidField} />
-                )}
+                    {residentId && (
+                        <EditResidentBioForm
+                            resident={resident}
+                            onChange={handleEditResident}
+                            validation={validation}
+                            onInvalidField={onInvalidField}
+                        />
+                    )}
 
-                <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-                <Address initialResident={resident} onChange={handleEditAddress} />
-                <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-                <Button
-                    text="Update"
-                    addClass="govuk-!-margin-right-1"
-                    type="submit"
-                    data-testid="edit-resident-form-update-button"
-                />
-                <Link href="/helpcase-profile/[residentId]" as={`/helpcase-profile/${residentId}`}>
-                    <Button text="Cancel" addClass="govuk-button--secondary" />
-                </Link>
+                    <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+                    <Address initialResident={resident} onChange={handleEditAddress} />
+                    <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+                    <Button
+                        text="Update"
+                        addClass="govuk-!-margin-right-1"
+                        type="submit"
+                        data-testid="edit-resident-form-update-button"
+                    />
+                    <Link
+                        href="/helpcase-profile/[residentId]"
+                        as={`/helpcase-profile/${residentId}`}>
+                        <Button text="Cancel" addClass="govuk-button--secondary" />
+                    </Link>
                 </form>
             </div>
         </Layout>
