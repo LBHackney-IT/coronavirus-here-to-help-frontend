@@ -51,7 +51,7 @@ export default function AssignCallsPage() {
     }, [])
     
 
-    const handleReview = async (event) => {
+    const handleSend = async (event) => {
       if((assigned.value || unassigned.value) && helpType){
         event.preventDefault();
         let govNotifyGateway = new GovNotifyGateway
@@ -103,14 +103,14 @@ export default function AssignCallsPage() {
                     role="alert"
                     tabIndex="-1"
                     data-module="govuk-error-summary"
-                    data-testid="callback-form-validation-error">
+                    data-testid="send-bulk-sms-form-validation-error">
                     <h2 className="govuk-error-summary__title" id="error-summary-title">
                         There is a problem
                     </h2>
                     <div className="govuk-error-summary__body">
                         <ul className="govuk-list govuk-error-summary__list">
                             <li>
-                                <a href="#">You have not completed the form</a>
+                                You have not completed the form
                             </li>
                         </ul>
                     </div>
@@ -197,7 +197,7 @@ export default function AssignCallsPage() {
                             text="Send"
                             addClass="govuk-!-margin-right-1"
                             onClick={(event) => {
-                                handleReview(event);
+                              handleSend(event);
                             }}
                             data-testid="send-bulk-message_button"
                         />

@@ -2,8 +2,6 @@ import axios from 'axios';
 
 export class HereToHelpApiGateway {
     async request(pathSegments, method, body, queryParams) {
-        console.log("pathSegments, method, body")
-        console.log(`/${pathSegments.join('/')}`, method, body)
         try {
             const { status, data } = await axios.request({
                 method,

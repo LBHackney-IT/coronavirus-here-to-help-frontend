@@ -1,59 +1,59 @@
-import { isPotentialMobileNumber , containsPotentialMobileNumer, appendMobileContact} from './send-bulk-message-helper';
+import { isValidMobileNumberFormat , containsPotentialMobileNumer, appendMobileContact} from './send-bulk-message-helper';
 
 describe('Send bulk message helper', () => {
-    it('isPotentialMobileNumber returns false for landline', () => {
+    it('isValidMobileNumberFormat returns false for landline', () => {
         const number ='02028347348';
 
-        const response = isPotentialMobileNumber(number);
+        const response = isValidMobileNumberFormat(number);
 
         expect(response).toEqual(false);
     });
-    it('isPotentialMobileNumber returns true for a potential mobile numbers that start with 07', () => {
+    it('isValidMobileNumberFormat returns true for a potential mobile numbers that start with 07', () => {
         const number ='07415300588';
 
-        const response = isPotentialMobileNumber(number);
+        const response = isValidMobileNumberFormat(number);
 
         expect(response).toEqual(true);
     });
-    it('isPotentialMobileNumber returns true for a potential mobile numbers that start with 7', () => {
+    it('isValidMobileNumberFormat returns true for a potential mobile numbers that start with 7', () => {
         const number ='7415300588';
 
-        const response = isPotentialMobileNumber(number);
+        const response = isValidMobileNumberFormat(number);
 
         expect(response).toEqual(true);
     });
-    it('isPotentialMobileNumber returns true for a potential mobile numbers that start with 447', () => {
+    it('isValidMobileNumberFormat returns true for a potential mobile numbers that start with 447', () => {
         const number ='447415300588';
 
-        const response = isPotentialMobileNumber(number);
+        const response = isValidMobileNumberFormat(number);
 
         expect(response).toEqual(true);
     });
-    it('isPotentialMobileNumber returns true for a potential mobile numbers that start with +447', () => {
+    it('isValidMobileNumberFormat returns true for a potential mobile numbers that start with +447', () => {
         const number ='+447415300588';
 
-        const response = isPotentialMobileNumber(number);
+        const response = isValidMobileNumberFormat(number);
 
         expect(response).toEqual(true);
     });
-    it('isPotentialMobileNumber returns true for a potential mobile numbers that start with +447 and have whitespace', () => {
+    it('isValidMobileNumberFormat returns true for a potential mobile numbers that start with +447 and have whitespace', () => {
         const number ='   +447415300588';
 
-        const response = isPotentialMobileNumber(number);
+        const response = isValidMobileNumberFormat(number);
 
         expect(response).toEqual(true);
     });
-    it('isPotentialMobileNumber returns false for a potential mobile numbers that start with +447 and an incorrect length', () => {
+    it('isValidMobileNumberFormat returns false for a potential mobile numbers that start with +447 and an incorrect length', () => {
         const number ='+4474153005889';
 
-        const response = isPotentialMobileNumber(number);
+        const response = isValidMobileNumberFormat(number);
 
         expect(response).toEqual(false);
     });
-    it('isPotentialMobileNumber returns false for a potential mobile numbers that are an empty string', () => {
+    it('isValidMobileNumberFormat returns false for a potential mobile numbers that are an empty string', () => {
         const number =' ';
 
-        const response = isPotentialMobileNumber(number);
+        const response = isValidMobileNumberFormat(number);
 
         expect(response).toEqual(false);
     });

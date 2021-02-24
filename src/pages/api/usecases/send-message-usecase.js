@@ -26,24 +26,16 @@ export class SendMessageUseCase{
 
       if(pathSegments[0] == "previewTemplate"){
         try {
+          let templateId
           if((queryParams.templateType == TEST_AND_TRACE_FOLLOWUP_TEXT)){
-
-            let templateId =  process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_TEXT
-  
-            const response = await govNotifyGateway.getTemplatePreview(templateId)
-            return response;
-  
+            templateId =  process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_TEXT
           }else if(queryParams.templateType == TEST_AND_TRACE_FOLLOWUP_EMAIL){
-  
-            let templateId = process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_EMAIL
-            const response = await govNotifyGateway.getTemplatePreview(templateId)
-            return response;
-  
+            templateId = process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_EMAIL
           } else if (queryParams.templateType == PRE_CALL_MESSAGE_TEMPLATE){
-            let templateId = process.env.PRE_CALL_MESSAGE_TEMPLATE
-            const response = await govNotifyGateway.getTemplatePreview(templateId, {name:"(first name)"})
-            return response;
+            templateId = process.env.PRE_CALL_MESSAGE_TEMPLATE
           }
+          const response = await govNotifyGateway.getTemplatePreview(templateId, {name:"(first name)"})
+          return response;
         } catch (error) {
           console.log(`Get template usecase error: ${error}`)
           return error

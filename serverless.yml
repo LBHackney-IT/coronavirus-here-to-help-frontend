@@ -48,6 +48,7 @@ functions:
       TEST_AND_TRACE_FOLLOWUP_TEMPLATE_EMAIL: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/test-and-trace-email-template-id}
       ADDRESSES_API_URL: ${ssm:/hth/addresses-api/${self:provider.stage}/url}
       ADDRESSES_API_TOKEN: ${ssm:/hth/addresses-api/${self:provider.stage}/api-token}
+      PRE_CALL_MESSAGE_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/pre-call-message-template}
 resources:
   Resources:
     CloudFrontDistribution:

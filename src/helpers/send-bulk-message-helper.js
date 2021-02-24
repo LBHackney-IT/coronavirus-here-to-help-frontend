@@ -1,4 +1,4 @@
-export const isPotentialMobileNumber = (number) => {
+export const isValidMobileNumberFormat = (number) => {
   if(!number){
     return false
   }
@@ -18,7 +18,7 @@ export const containsPotentialMobileNumer = (number) => {
     return false
   }
   let contansPotentialMobile=[]
-  if(isPotentialMobileNumber(number)){
+  if(isValidMobileNumberFormat(number)){
     number
     return true
   } 
@@ -26,7 +26,7 @@ export const containsPotentialMobileNumer = (number) => {
   if(number.includes('/')){
     let numbers = number.split("/")
     numbers.forEach(number => {
-      if(isPotentialMobileNumber(number)){
+      if(isValidMobileNumberFormat(number)){
         contansPotentialMobile.push(true)
       }
     });
@@ -38,10 +38,10 @@ export const containsPotentialMobileNumer = (number) => {
 }
 
 export const appendMobileContact = (mobileContacts, number, callback) =>{
-  if(number && number.includes('/')){
+  if(number.includes('/')){
     let numbers = number.split("/")
     numbers.forEach(number => {
-      if(number && isPotentialMobileNumber(number)){
+      if(sValidMobileNumberFormat(number)){
         mobileContacts.push(
           { 
             number:number, 
@@ -52,7 +52,7 @@ export const appendMobileContact = (mobileContacts, number, callback) =>{
           })
       }
     });
-  }else if(number && isPotentialMobileNumber(number)){
+  }else if(isValidMobileNumberFormat(number)){
     mobileContacts.push(
       {
         number: number, 

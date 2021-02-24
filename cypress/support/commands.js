@@ -119,7 +119,8 @@ Cypress.Commands.add('setIntercepts', () => {
     });
 
     cy.intercept('POST', `/api/proxy/gov-notify/send-bulk-message`, {
-        fixture: 'sendBulkMessageResponse'
+        statusCode: 200, 
+        body:{}
     });
 
 });
