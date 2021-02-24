@@ -15,10 +15,16 @@ export default function EditResident({ residentId }) {
     const [validation, setValidation] = useState({});
 
     const handleEditResident = async (id, value) => {
+        let newValidation;
         if (value == '') {
-            setValidation({ ...validation, ...{ [id]: true } });
+            newValidation = { ...validation, ...{ [id]: true } };
+            setValidation(newValidation);
         } else {
-            setValidation({ ...validation, ...{ [id]: false } });
+            newValidation = { ...validation, ...{ [id]: false } };
+            setValidation(newValidation);
+        }
+        if (Object.values(newValidation).every((k) => k == false)) {
+            setErrorsExist(false);
         }
         setUpdatedResident({ ...updatedResident, [id]: value });
     };
