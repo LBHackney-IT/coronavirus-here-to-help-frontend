@@ -94,8 +94,7 @@ const sendBulkSms = async (callbacks, reqBody) =>{
 
     mobileContacts.forEach(async contact => {
       try{
-        let response = await govNotifyGateway.sendSms(textTemplateId, contact.number, {name:contact.name})
-        console.log("data", response)
+        let {data} = await govNotifyGateway.sendSms(textTemplateId, contact.number, {name:contact.name})
         if(data.id){
           let caseNoteObject = {CaseNote: JSON.stringify(
             {
