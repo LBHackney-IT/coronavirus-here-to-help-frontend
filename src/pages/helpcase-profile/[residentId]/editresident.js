@@ -5,7 +5,6 @@ import { ResidentGateway } from '../../../gateways/resident';
 import { useState, useEffect } from 'react';
 import { Button, Address } from '../../../components/Form';
 import EditResidentBioForm from '../../../components/EditResidentBioForm/EditResidentBioForm';
-import Banner from '../../../components/Banner';
 import Link from 'next/link';
 import Router from 'next/router';
 
@@ -13,9 +12,16 @@ export default function EditResident({ residentId }) {
     const [resident, setResident] = useState([]);
     const [updatedResident, setUpdatedResident] = useState({});
     const [errorsExist, setErrorsExist] = useState(false);
+    const [validation, setValidation] = useState({});
 
     const handleEditResident = async (id, value) => {
-        setUpdatedResident({ ...updatedResident, [id]: value });
+        if (value==''){
+            setValidation({ ...validation, ...{[id]:true} });
+          }
+          else {
+            setValidation({ ...validation, ...{[id]:false} });
+          }
+        setUpdatedResident({...updatedResident, [id]: value });
     };
 
     const handleEditAddress = async (object) => {
@@ -23,21 +29,10 @@ export default function EditResident({ residentId }) {
     };
 
     const saveResident = () => {
-        if (
-            Object.keys(updatedResident).some(
-                (k) =>
-                    (updatedResident[k] == '')
-            )
-        ) {
-            setErrorsExist(true);
-            
-            return;
-        }
-        else{
-            const residentGateway = new ResidentGateway();
-            residentGateway.setResident(residentId, updatedResident);
-            Router.back()
-        }
+        event.preventDefault()
+        const residentGateway = new ResidentGateway();
+        residentGateway.setResident(residentId, updatedResident);
+        Router.back()
     };
 
     useEffect(() => {}, [resident]);
@@ -54,6 +49,11 @@ export default function EditResident({ residentId }) {
             console.log(`Error getting resident props with help request ID ${residentId}: ${err}`);
         }
     };
+
+    const onInvalidField = (id) => {
+        setErrorsExist(true);
+        setValidation({ ...validation, ...{[id]:true} });
+    }
 
     useEffect(getResident, []);
 
@@ -73,7 +73,7 @@ export default function EditResident({ residentId }) {
                     <div className="govuk-error-summary__body">
                         <ul className="govuk-list govuk-error-summary__list">
                             <li>
-                                <a href="#">Some required fields are empty</a>
+                                Some required fields are empty
                             </li>
                         </ul>
                     </div>
@@ -83,8 +83,9 @@ export default function EditResident({ residentId }) {
                 <KeyInformation resident={resident} />
             </div>
             <div className="govuk-grid-column-three-quarters-from-desktop">
+                <form onSubmit={saveResident}>
                 {residentId && (
-                    <EditResidentBioForm resident={resident} onChange={handleEditResident} />
+                    <EditResidentBioForm resident={resident} onChange={handleEditResident} validation={validation} onInvalidField={onInvalidField} />
                 )}
 
                 <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
@@ -93,12 +94,13 @@ export default function EditResident({ residentId }) {
                 <Button
                     text="Update"
                     addClass="govuk-!-margin-right-1"
-                    onClick={() => saveResident()}
+                    type="submit"
                     data-testid="edit-resident-form-update-button"
                 />
                 <Link href="/helpcase-profile/[residentId]" as={`/helpcase-profile/${residentId}`}>
                     <Button text="Cancel" addClass="govuk-button--secondary" />
                 </Link>
+                </form>
             </div>
         </Layout>
     );
