@@ -8,6 +8,15 @@ import { HereToHelpApiGateway } from "../../../gateways/here-to-help-api-gateway
 export class SendBulkMessagesUseCase {
 
   async sendMessages(reqBody){
+    console.log(`Send bulk message request body : ${reqBody}`)
+    console.log(`Send bulk message request body assigned : ${reqBody["assigned"]}`)
+    console.log(`Send bulk message request body assigned value: ${reqBody["assigned"]["value"]}`)
+    console.log(`Send bulk message request body unnassigned : ${reqBody.unassigned}`)
+    console.log(`Send bulk message request body unassigned value: ${reqBody.unassigned.value}`)
+    console.log(`Send bulk message request body unassigned value: ${reqBody.unassigned["value"]}`)
+
+
+
     try{
       const hereToHelpApiGateway = new HereToHelpApiGateway()
 
