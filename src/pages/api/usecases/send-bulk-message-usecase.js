@@ -94,7 +94,8 @@ const sendBulkSms = async (callbacks, reqBody) =>{
 
     mobileContacts.forEach(async contact => {
       try{
-        let {data} = await govNotifyGateway.sendSms(textTemplateId, contact.number, {name:contact.name})
+        let response = await govNotifyGateway.sendSms(textTemplateId, contact.number, {name:contact.name})
+        console.log("data", response)
         if(data.id){
           let caseNoteObject = {CaseNote: JSON.stringify(
             {
@@ -104,7 +105,9 @@ const sendBulkSms = async (callbacks, reqBody) =>{
               helpNeeded: contact.helpNeeded
             })}
           await hereToHelpApiGateway.request([`v4`, `residents`,`${contact.residentId}` , `help-requests`, `${contact.helpRequestId}`, `case-notes`], "POST", caseNoteObject)
-        } else {
+        } 
+      }catch(err){
+        try{
           let {data} = await govNotifyGateway.sendSms(textTemplateId, contact.number, {name:contact.name})
           if(data.id){
             let caseNoteObject = {CaseNote: JSON.stringify(
@@ -113,25 +116,24 @@ const sendBulkSms = async (callbacks, reqBody) =>{
                 author: `Bulk message sent by ${reqBody.user}`,
                 noteDate: new Date().toGMTString(),
                 helpNeeded: contact.helpNeeded
-              })}
+              })
+            }
             await hereToHelpApiGateway.request([`v4`, `residents`, `${contact.residentId}`, `help-requests`, `${contact.helpRequestId}`, `case-notes`] ,"POST", caseNoteObject)
-          } else{
-            let caseNoteObject = {CaseNote:JSON.stringify(
-              {
-                note: `Failed bulk text to ${contact.number}`,
-                author: `Bulk message sent by ${reqBody.user}`,
-                noteDate: new Date().toGMTString(),
-                helpNeeded: contact.helpNeeded
-              })}
-              await hereToHelpApiGateway.request([`v4`, `residents`,`${contact.residentId}`, `help-requests`, `${contact.helpRequestId}`, `case-notes`], "POST", caseNoteObject)
-              console.log(`Failed to send text to residentId: ${contact.residentId}, helpRequestId: ${contact.helpRequestId}`)
           }
+        } catch(err){
+          console.log(`Error logging case note or sending ${err}`)
+          let caseNoteObject = {CaseNote:JSON.stringify(
+            {
+              note: `Failed bulk text to ${contact.number}`,
+              author: `Bulk message sent by ${reqBody.user}`,
+              noteDate: new Date().toGMTString(),
+              helpNeeded: contact.helpNeeded
+            })}
+            await hereToHelpApiGateway.request([`v4`, `residents`,`${contact.residentId}`, `help-requests`, `${contact.helpRequestId}`, `case-notes`], "POST", caseNoteObject)
+          return err
         }
-      }catch(err){
-        console.log(`Error ${err}`)
-        return err
       }
-    });
+  });
     return {status: 200}
   } catch (error) {
     console.log(`Error: ${error}`)
