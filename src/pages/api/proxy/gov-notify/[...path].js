@@ -1,7 +1,6 @@
 import { authoriseUser } from '../../../../helpers/auth';
-import { GovNotifyGateway } from '../../../../gateways/gov-notify-api-gateway';
-
-const govNotifyGateway = new GovNotifyGateway();
+import { SendMessageUseCase } from "../../usecases/send-message-usecase";
+const sendMessageUseCase = new SendMessageUseCase();
 
 const endpoint = async (req, res) => {
     const user = authoriseUser(req);
@@ -9,8 +8,7 @@ const endpoint = async (req, res) => {
 
     try {
         const { path, ...queryParams } = req.query;
-
-        const response =  await govNotifyGateway.request(
+        const response =  await sendMessageUseCase.sendMessage(
             path,
             queryParams
         );

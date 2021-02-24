@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import {TEST_AND_TRACE_FOLLOWUP_TEXT, TEST_AND_TRACE_FOLLOWUP_EMAIL} from '../../src/helpers/constants'
+import {TEST_AND_TRACE_FOLLOWUP_TEXT, TEST_AND_TRACE_FOLLOWUP_EMAIL, PRE_CALL_MESSAGE_TEMPLATE} from '../../src/helpers/constants'
 
 Cypress.Commands.add('getBySel', (selector, ...args) => {
     return cy.get(`[data-cy=${selector}]`, ...args);
@@ -112,6 +112,15 @@ Cypress.Commands.add('setIntercepts', () => {
 
     cy.intercept('GET', `/api/proxy/gov-notify/previewTemplate?templateType=${TEST_AND_TRACE_FOLLOWUP_TEXT}`, {
         fixture: 'getTextPreviewSuccessResponse'
+    });
+
+    cy.intercept('GET', `/api/proxy/gov-notify/previewTemplate?templateType=${PRE_CALL_MESSAGE_TEMPLATE}`, {
+        fixture: 'getBulkTextPreviewSuccessResponse'
+    });
+
+    cy.intercept('POST', `/api/proxy/gov-notify/send-bulk-message`, {
+        statusCode: 200, 
+        body:{}
     });
 
 });

@@ -19,6 +19,7 @@ export default function AssignCallsPage() {
 
                 <div className="govuk-grid-row" id="btn-bottom-panel">
                     <GovLinkBox link="/assign-calls" text="Assign calls" name="assign-calls_button" />
+                    <GovLinkBox link="/send-bulk-message" text="Send group text or email" name="send-bulk-message_button" />
                 </div>
             </div>
         </Layout>

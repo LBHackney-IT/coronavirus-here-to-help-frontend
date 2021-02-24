@@ -1,48 +1,42 @@
 import { v4 as uuidv4 } from 'uuid';
-import {TEST_AND_TRACE_FOLLOWUP_TEXT, TEST_AND_TRACE_FOLLOWUP_EMAIL} from '../helpers/constants'
 var NotifyClient = require('notifications-node-client').NotifyClient
-
+const notifyClient = new NotifyClient(process.env.HERE_TO_HELP_NOTIFY_API_KEY)
 export class GovNotifyGateway {
-    async request(pathSegments, queryParams) {
+  async sendEmail(emailTemplateId, email, personalisation={}){
     try{
-      const notifyClient = new NotifyClient(process.env.HERE_TO_HELP_NOTIFY_API_KEY)
-      if(queryParams.phoneNumber){
-        const templateId = (pathSegments[0] == TEST_AND_TRACE_FOLLOWUP_TEXT) ? process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_TEXT : ""
+      const response = notifyClient.sendEmail(emailTemplateId, email, {
+        personalisation: personalisation,
+        reference: uuidv4()
+      })
+      return response;
+    }catch(error){
+      console.log(`Semd email error: ${error}`)
+      return error
+    }
+  }
 
-        let response = await notifyClient.sendSms(templateId, queryParams.phoneNumber, {
-          personalisation:{},
-          reference: uuidv4()
-        })
-        return response;
-      }
-      if(queryParams.email){
-            const templateId = (pathSegments[0] == TEST_AND_TRACE_FOLLOWUP_EMAIL) ? process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_EMAIL : ""
-            const response = notifyClient.sendEmail(templateId, queryParams.email, {
-              personalisation: {},
-              reference: uuidv4()
-            })
-            return response;
-      }
-      if(pathSegments[0] == "previewTemplate"){
-        console.log(pathSegments)
-            let templateId
-            if((queryParams.templateType == TEST_AND_TRACE_FOLLOWUP_TEXT)){
-
-              templateId =  process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_TEXT
-
-            }else if(queryParams.templateType == TEST_AND_TRACE_FOLLOWUP_EMAIL){
-
-              templateId = process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_EMAIL
-
-            } 
-
-            const response = await notifyClient.previewTemplateById(templateId,{ })
-            return response;
-         }
-    } catch(err){
-      console.log("Notify client error response", err)
-      return err
+  async sendSms(smsTemplateId, phoneNumber, personalisation={}){
+    try{
+      const response = notifyClient.sendSms(smsTemplateId, phoneNumber, {
+        personalisation: personalisation,
+        reference: uuidv4()
+      })
+      return response;
+    }catch(error){
+      console.log(`Send sms error:${error}`)
+      return error
     }
 
+  }
+
+  async getTemplatePreview(previewTemplateId, personalisation={}){
+    try{
+      const response = await notifyClient.previewTemplateById(previewTemplateId, personalisation)
+      return response;
+    } catch(error){
+      console.log(`Get template error: ${error}`)
+      return error
+    }
+    
   }
 }
