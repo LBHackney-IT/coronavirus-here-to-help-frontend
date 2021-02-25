@@ -10,12 +10,13 @@ export class SendBulkMessagesUseCase {
   async sendMessages(reqBody){
     console.log(`Send bulk message request body : ${reqBody}`)
 
-    
+    console.log("TYPE")
+    console.log(typeof reqBody);
 
     var requestBody = reqBody;
 
     console.log('- - - - - - - - - ')
-    console.dir(requestBody);
+    console.log(requestBody);
     console.log('- - - - - - - - - ')
 
     console.log(`Send bulk message request body assigned : ${reqBody["assigned"]}`)
@@ -38,13 +39,17 @@ export class SendBulkMessagesUseCase {
       if(requestBody.assigned.value && requestBody.unassigned.value){
 
         let allCallbacks = unassignedCallbacks.concat(assignedCallbacks)
+
+        console.log("return: await sendBulkSms(allCallbacks, requestBody)", allCallbacks, requestBod)
         return await sendBulkSms(allCallbacks, requestBody)
 
       }else if(requestBody.assigned.value){
 
+        console.log("return: await sendBulkSms(assignedCallbacks, requestBody)", assignedCallbacks, requestBody)
         return await sendBulkSms(assignedCallbacks, requestBody)
 
       } else if(requestBody.unassigned.value){
+        console.log("return: await sendBulkSms(unassignedCallbacks, requestBody)", unassignedCallbacks, requestBody)
 
         return await sendBulkSms(unassignedCallbacks, requestBody)
 
