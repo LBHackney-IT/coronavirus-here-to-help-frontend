@@ -9,10 +9,7 @@ const endpoint = async (req, res) => {
     if (!user) return res.status(401).json({ error: 'Unauthorised' });
 
     try {
-        console.log("REQ")
-        console.dir(req)
-        console.log("DATA",req.data)
-        console.log("BODY", req.body)
+
         await sendBulkMessagesUseCase.sendMessages(
             req.body
         );
