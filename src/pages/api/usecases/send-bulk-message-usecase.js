@@ -10,14 +10,17 @@ export class SendBulkMessagesUseCase {
   async sendMessages(reqBody){
     console.log(`Send bulk message request body : ${reqBody}`)
 
-    console.log("JSON", reqBody.toJSON());
-    console.log("STRING", reqBody.toString());
+    
 
-    var request_body = reqBody;
-    var request_body_json = reqBody.toJSON();
+    var requestBody = reqBody;
+
+    console.log('- - - - - - - - - ')
+    console.dir(requestBody);
+    console.log('- - - - - - - - - ')
+
     console.log(`Send bulk message request body assigned : ${reqBody["assigned"]}`)
-    console.log(`Send bulk message request body assigned var: ${request_body["assigned"]}`)
-    console.log(`Send bulk message request body assigned json: ${request_body_json["assigned"]}`)
+    // console.log(`Send bulk message request body assigned var: ${request_body["assigned"]}`)
+    // console.log(`Send bulk message request body assigned json: ${request_body_json["assigned"]}`)
 
     console.log(`Send bulk message request body assigned value: ${reqBody["assigned"]["value"]}`)
     console.log(`Send bulk message request body unnassigned : ${reqBody.unassigned}`)
@@ -30,20 +33,20 @@ export class SendBulkMessagesUseCase {
       const hereToHelpApiGateway = new HereToHelpApiGateway()
 
       const callbacks = await hereToHelpApiGateway.request([`v3/help-requests/callbacks`])
-      const {unassignedCallbacks, assignedCallbacks} = getAssignedAndUnassignedCallbacks(callbacks.data, reqBody.helpType)
+      const {unassignedCallbacks, assignedCallbacks} = getAssignedAndUnassignedCallbacks(callbacks.data, requestBody.helpType)
 
-      if(reqBody.assigned.value && reqBody.unassigned.value){
+      if(requestBody.assigned.value && requestBody.unassigned.value){
 
         let allCallbacks = unassignedCallbacks.concat(assignedCallbacks)
-        return await sendBulkSms(allCallbacks, reqBody)
+        return await sendBulkSms(allCallbacks, requestBody)
 
-      }else if(reqBody.assigned.value){
+      }else if(requestBody.assigned.value){
 
-        return await sendBulkSms(assignedCallbacks, reqBody)
+        return await sendBulkSms(assignedCallbacks, requestBody)
 
-      } else if(reqBody.unassigned.value){
+      } else if(requestBody.unassigned.value){
 
-        return await sendBulkSms(unassignedCallbacks, reqBody)
+        return await sendBulkSms(unassignedCallbacks, requestBody)
 
       }
     } catch(error){
