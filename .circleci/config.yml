@@ -153,12 +153,12 @@ workflows:
 
       - assume-role-staging:
           context: api-assume-role-staging-context
-          requires: 
-            - build
+          requires:
+            - cypress/run
+            - test
           filters:
             branches:
-              only: bulk-message
-
+              only: master
 
       - deploy-staging:
           requires:
@@ -166,7 +166,7 @@ workflows:
           filters:
             branches:
               only:
-                - bulk-message
+                - master
 
       - permit-deploy-production:
           type: approval

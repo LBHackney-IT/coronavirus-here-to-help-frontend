@@ -8,36 +8,10 @@ import { HereToHelpApiGateway } from "../../../gateways/here-to-help-api-gateway
 export class SendBulkMessagesUseCase {
 
   async sendMessages(reqBody){
-    console.log(`Send bulk message request body : ${reqBody}`)
-
-    console.log("TYPE")
-    console.log(typeof reqBody);
-
-    console.log(Object.keys(reqBody));
-
-    var requestBody = JSON.parse(reqBody);
-
-    console.log('- - - - - - - - - ')
-    console.log(requestBody);
-    console.log('- - - - - - - - - ')
-    console.log(Object.keys(requestBody));
-
-
-    console.log(`Send bulk message request body assigned : ${requestBody["assigned"]}`)
-    // console.log(`Send bulk message request body assigned var: ${request_body["assigned"]}`)
-    // console.log(`Send bulk message request body assigned json: ${request_body_json["assigned"]}`)
-
-    console.log(`Send bulk message request body assigned value: ${requestBody["assigned"]["value"]}`)
-    console.log(`Send bulk message request body unnassigned : ${requestBody.unassigned}`)
-    console.log(`Send bulk message request body unassigned value: ${requestBody.unassigned.value}`)
-    console.log(`Send bulk message request body unassigned value: ${requestBody.unassigned["value"]}`)
-
-
+    const requestBody = JSON.parse(reqBody);
 
     try{
       const hereToHelpApiGateway = new HereToHelpApiGateway()
-      console.log(requestBody);
-      console.log(Object.keys(requestBody));
 
       const callbacks = await hereToHelpApiGateway.request([`v3/help-requests/callbacks`])
       const {unassignedCallbacks, assignedCallbacks} = getAssignedAndUnassignedCallbacks(callbacks.data, requestBody.helpType)
@@ -46,24 +20,19 @@ export class SendBulkMessagesUseCase {
 
         let allCallbacks = unassignedCallbacks.concat(assignedCallbacks)
 
-        console.log("return: await sendBulkSms(allCallbacks, requestBody)", allCallbacks, requestBod)
         return await sendBulkSms(allCallbacks, requestBody)
 
       }else if(requestBody.assigned.value){
 
-        console.log("return: await sendBulkSms(assignedCallbacks, requestBody)", assignedCallbacks, requestBody)
         return await sendBulkSms(assignedCallbacks, requestBody)
 
       } else if(requestBody.unassigned.value){
-        console.log("return: await sendBulkSms(unassignedCallbacks, requestBody)", unassignedCallbacks, requestBody)
 
         return await sendBulkSms(unassignedCallbacks, requestBody)
 
       }
     } catch(error){
       console.error(`Error sending bulk message: ${error}`)
-      console.log(error)
-      console.log(error.stack)
       return error
     }
   }
