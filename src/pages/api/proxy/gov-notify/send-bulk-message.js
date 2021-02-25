@@ -9,6 +9,7 @@ const endpoint = async (req, res) => {
     if (!user) return res.status(401).json({ error: 'Unauthorised' });
 
     try {
+
         await sendBulkMessagesUseCase.sendMessages(
             req.body
         );

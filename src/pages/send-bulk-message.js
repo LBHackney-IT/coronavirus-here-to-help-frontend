@@ -161,7 +161,7 @@ export default function AssignCallsPage() {
 
                       {
                         unassigned.value && 
-                          <div class="govuk-inset-text">
+                          <div className="govuk-inset-text">
                             Approximately {unAssignedCallbacks.length} unnasigned
                           </div>
                       }
@@ -177,7 +177,7 @@ export default function AssignCallsPage() {
 
                       {
                         assigned.value && 
-                          <div class="govuk-inset-text">
+                          <div className="govuk-inset-text">
                             Approximately {assignedCallbacks.length} assigned
                           </div>
                       }
@@ -188,7 +188,7 @@ export default function AssignCallsPage() {
                 }
                   <br/>
                   <h3 className="govuk-heading-m"> Text content</h3>
-                  <div class="govuk-inset-text">{previewTemplate}</div>
+                  <div className="govuk-inset-text">{previewTemplate}</div>
 
                   <br></br>
                 <div className="govuk-grid-row" id="btn-bottom-panel">

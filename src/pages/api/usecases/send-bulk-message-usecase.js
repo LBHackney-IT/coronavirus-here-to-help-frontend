@@ -8,33 +8,27 @@ import { HereToHelpApiGateway } from "../../../gateways/here-to-help-api-gateway
 export class SendBulkMessagesUseCase {
 
   async sendMessages(reqBody){
-    console.log(`Send bulk message request body : ${reqBody}`)
-    console.log(`Send bulk message request body assigned : ${reqBody["assigned"]}`)
-    console.log(`Send bulk message request body assigned value: ${reqBody["assigned"]["value"]}`)
-    console.log(`Send bulk message request body unnassigned : ${reqBody.unassigned}`)
-    console.log(`Send bulk message request body unassigned value: ${reqBody.unassigned.value}`)
-    console.log(`Send bulk message request body unassigned value: ${reqBody.unassigned["value"]}`)
-
-
+    const requestBody = JSON.parse(reqBody);
 
     try{
       const hereToHelpApiGateway = new HereToHelpApiGateway()
 
       const callbacks = await hereToHelpApiGateway.request([`v3/help-requests/callbacks`])
-      const {unassignedCallbacks, assignedCallbacks} = getAssignedAndUnassignedCallbacks(callbacks.data, reqBody.helpType)
+      const {unassignedCallbacks, assignedCallbacks} = getAssignedAndUnassignedCallbacks(callbacks.data, requestBody.helpType)
 
-      if(reqBody.assigned.value && reqBody.unassigned.value){
+      if(requestBody.assigned.value && requestBody.unassigned.value){
 
         let allCallbacks = unassignedCallbacks.concat(assignedCallbacks)
-        return await sendBulkSms(allCallbacks, reqBody)
 
-      }else if(reqBody.assigned.value){
+        return await sendBulkSms(allCallbacks, requestBody)
 
-        return await sendBulkSms(assignedCallbacks, reqBody)
+      }else if(requestBody.assigned.value){
 
-      } else if(reqBody.unassigned.value){
+        return await sendBulkSms(assignedCallbacks, requestBody)
 
-        return await sendBulkSms(unassignedCallbacks, reqBody)
+      } else if(requestBody.unassigned.value){
+
+        return await sendBulkSms(unassignedCallbacks, requestBody)
 
       }
     } catch(error){
