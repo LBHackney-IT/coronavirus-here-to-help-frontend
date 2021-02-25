@@ -9,6 +9,12 @@ export class SendBulkMessagesUseCase {
 
   async sendMessages(reqBody){
     console.log(`Send bulk message request body : ${reqBody}`)
+
+    console.dir(reqBody);
+    console.log("JSON", reqBody.toJSON());
+    console.log("STRING", reqBody.toString());
+
+
     console.log(`Send bulk message request body assigned : ${reqBody["assigned"]}`)
     console.log(`Send bulk message request body assigned value: ${reqBody["assigned"]["value"]}`)
     console.log(`Send bulk message request body unnassigned : ${reqBody.unassigned}`)
