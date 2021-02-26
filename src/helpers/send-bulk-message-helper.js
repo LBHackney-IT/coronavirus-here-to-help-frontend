@@ -41,7 +41,7 @@ export const appendMobileContact = (mobileContacts, number, callback) =>{
   if(number.includes('/')){
     let numbers = number.split("/")
     numbers.forEach(number => {
-      if(sValidMobileNumberFormat(number)){
+      if(isValidMobileNumberFormat(number)){
         mobileContacts.push(
           { 
             number:number, 
