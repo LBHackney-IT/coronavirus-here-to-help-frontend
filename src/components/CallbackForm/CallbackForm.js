@@ -24,6 +24,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
     const [textTemplatePreview, setTextTemplatePreview] = useState(null)
     const [showEmail, setShowEmail] = useState(false)
     const [showText, setShowText] = useState(false)
+    const [submitEnabled, setSubmitEnabled] = useState(true);
 
     const [errors, setErrors] = useState({
         CallbackRequired: null,
@@ -225,6 +226,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             (callMade == false && helpNeeded && followUpRequired != null && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText)) ||
             (followUpRequired != null && caseNote !="" && helpNeeded != null && helpNeeded != "" && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText))
         ) {
+            setSubmitEnabled(false);
             saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote, phoneNumber, email);
         } else {
             setErrorsExist(true);
@@ -674,6 +676,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                             onClick={(event) => {
                                 handleUpdate(event);
                             }}
+                            disabled={!submitEnabled}
                             data-testid="callback-form-update_button"
                         />
                         <Link href={backHref}>
