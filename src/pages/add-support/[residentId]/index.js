@@ -33,11 +33,14 @@ export default function addSupportPage({residentId}) {
 	}, []);
 
 	const saveFunction = async function(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote, phoneNumber, email) {
+		const tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+		const localTimeTZCorrectedBase = new Date(Date.now() - tzoffset);
+		
 		let callRequestObject = {
 			callType: helpNeeded,
 			callDirection: callDirection,
 			callOutcome: callOutcomeValues,
-			callDateTime: new Date(),
+			callDateTime: localTimeTZCorrectedBase,
 			callHandler: user.name
 		}
 
