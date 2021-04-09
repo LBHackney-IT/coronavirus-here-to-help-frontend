@@ -11,6 +11,7 @@ import {CaseNotesGateway} from "../../../gateways/case-notes";
 import {useRouter} from "next/router";
 import {GovNotifyGateway} from '../../../gateways/gov-notify'
 import { TEST_AND_TRACE_FOLLOWUP_EMAIL, TEST_AND_TRACE_FOLLOWUP_TEXT } from "../../../helpers/constants";
+import getTimeZoneCorrectedLocalDate from "../../../../tools/etcUtility"
 
 export default function addSupportPage({residentId}) {
 	const backHref = `/helpcase-profile/${residentId}`;
@@ -33,14 +34,11 @@ export default function addSupportPage({residentId}) {
 	}, []);
 
 	const saveFunction = async function(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote, phoneNumber, email) {
-		const tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
-		const localTimeTZCorrectedBase = new Date(Date.now() - tzoffset);
-		
 		let callRequestObject = {
 			callType: helpNeeded,
 			callDirection: callDirection,
 			callOutcome: callOutcomeValues,
-			callDateTime: localTimeTZCorrectedBase,
+			callDateTime: getTimeZoneCorrectedLocalDate(),
 			callHandler: user.name
 		}
 
