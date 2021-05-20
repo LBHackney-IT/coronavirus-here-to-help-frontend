@@ -3,6 +3,7 @@ import axios from 'axios';
 export class HereToHelpApiGateway {
     async request(pathSegments, method, body, queryParams) {
         try {
+            console.log('HTH API Gateway', method, pathSegments.join('/'), body);
             const { status, data } = await axios.request({
                 method,
                 baseURL: process.env.HERE_TO_HELP_API_BASE_URL,
@@ -17,9 +18,12 @@ export class HereToHelpApiGateway {
                     return true;
                 }
             });
+            console.log($`HTH Call status: ${status}`);
+            console.log($`HTH Call data: ${data}`);
 
             return { data, status };
         } catch (err) {
+            console.log('CATCH statement of HTH gateway');
             console.log('Error: ' + err);
             return { status: 500 };
         }
