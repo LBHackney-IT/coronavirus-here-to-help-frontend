@@ -1,9 +1,11 @@
 import { authoriseUser } from '../../../helpers/auth';
 import { HereToHelpApiGateway } from '../../../gateways/here-to-help-api-gateway';
 
+console.log('Proxy is hit!');
 const hereToHelpApiGateway = new HereToHelpApiGateway();
 
 const endpoint = async (req, res) => {
+    console.log('Proxy Endpoint!', req.method, req.path, req.body)
     const user = authoriseUser(req);
     if (!user) return res.status(401).json({ error: 'Unauthorised' });
 
