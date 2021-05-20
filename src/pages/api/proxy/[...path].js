@@ -5,7 +5,8 @@ console.log('Proxy is hit!');
 const hereToHelpApiGateway = new HereToHelpApiGateway();
 
 const endpoint = async (req, res) => {
-    console.log('Proxy Endpoint!', req.method, req.path, req.body)
+    console.log('Proxy Endpoint!');
+    console.log(`${req.method}, ${req.path}, ${JSON.stringify(req.body)}`);
     const user = authoriseUser(req);
     if (!user) return res.status(401).json({ error: 'Unauthorised' });
 

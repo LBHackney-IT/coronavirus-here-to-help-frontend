@@ -3,11 +3,12 @@ import axios from 'axios';
 export class HereToHelpApiGateway {
     async request(pathSegments, method, body, queryParams) {
         try {
-            console.log('HTH API Gateway', method, pathSegments.join('/'), body);
+            let fpath = pathSegments.join('/');
+            console.log('HTH API Gateway', method, fpath, JSON.stringify(body));
             const { status, data } = await axios.request({
                 method,
                 baseURL: process.env.HERE_TO_HELP_API_BASE_URL,
-                url: `/${pathSegments.join('/')}`,
+                url: `/${fpath}`,
                 params: queryParams,
                 data: body,
                 headers: {
@@ -18,8 +19,8 @@ export class HereToHelpApiGateway {
                     return true;
                 }
             });
-            console.log($`HTH Call status: ${status}`);
-            console.log($`HTH Call data: ${data}`);
+            console.log(`HTH Call status: ${status}`);
+            console.log(`HTH Call data: ${JSON.stringify(data)}`);
 
             return { data, status };
         } catch (err) {

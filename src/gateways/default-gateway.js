@@ -7,7 +7,7 @@ export class DefaultGateway {
 
     async getFromUrl(url) {
         url = this.createFullUrl(url);
-        console.log('GET', url);
+        console.log(`GET ${url}`);
 
         const res = await axios.get(url, {
             headers: {
@@ -18,7 +18,7 @@ export class DefaultGateway {
     }
 
     async putToUrl(url, body) {
-        console.log('PUT', url, body);
+        console.log(`PUT ${url} ${JSON.stringify(body)}`);
         const res = await axios.put(this.createFullUrl(url), body, {
             headers: {
                 'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ export class DefaultGateway {
     }
 
     async postToUrl(url, body) {
-      console.log('POST', url, body);
+      console.log(`POST ${url} ${JSON.stringify(body)}`);
       const res = await axios.post(this.createFullUrl(url), body, {
           headers: {
               'Content-Type': 'application/json'
@@ -38,7 +38,7 @@ export class DefaultGateway {
     }
 
     async patchToUrl(url, body) {
-      console.log('PATCH', url, body);
+      console.log(`PATCH ${url} ${JSON.stringify(body)}`);
       const res = await axios.patch(this.createFullUrl(url), body, {
           headers: {
               'Content-Type': 'application/json'
