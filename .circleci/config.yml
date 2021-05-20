@@ -158,7 +158,7 @@ workflows:
             - test
           filters:
             branches:
-              only: master
+              only: dummy-test-branch
 
       - deploy-staging:
           requires:
@@ -166,12 +166,16 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - dummy-test-branch
 
       - permit-deploy-production:
           type: approval
           requires:
             - deploy-staging
+          filters:
+            branches:
+              only:
+                - master
 
       - assume-role-production:
           context: api-assume-role-production-context
