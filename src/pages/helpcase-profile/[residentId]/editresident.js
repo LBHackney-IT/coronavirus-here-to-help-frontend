@@ -33,7 +33,7 @@ export default function EditResident({ residentId }) {
         setUpdatedResident({ ...updatedResident, ...object });
     };
 
-    const saveResident = () => {
+    const saveResident = (event) => {
         event.preventDefault();
         const residentGateway = new ResidentGateway();
         residentGateway.setResident(residentId, updatedResident);
