@@ -32,12 +32,15 @@ export default function CreateResident({}) {
         setResident({ ...resident, ...object });
     };
 
-    const saveResident = async () => {
+    const saveResident = (event) => {
         event.preventDefault();
         const residentGateway = new ResidentGateway();
-        const newResident = await residentGateway.postResident(resident);
-        console.log('resident response', newResident);
-        router.push(`/helpcase-profile/${newResident.Id}`);
+        residentGateway.postResident(resident).then((newResident) => {
+            console.log('resident response', newResident);
+            router.push(`/helpcase-profile/${newResident.Id}`);
+        }).catch(() => {
+            console.log('Resident could not be created!');
+        });
     };
 
     const onInvalidField = (id) => {
