@@ -37,6 +37,7 @@ export class DefaultGateway {
     }
 
     async patchToUrl(url, body) {
+      throw new Error("Need to see whether logging works like it should!");
       const res = await axios.patch(this.createFullUrl(url), body, {
           headers: {
               'Content-Type': 'application/json'
