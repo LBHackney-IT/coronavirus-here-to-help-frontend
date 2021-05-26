@@ -42,17 +42,36 @@ export default function addSupportPage({residentId}) {
 			callHandler: user.name
 		}
 
+		let errorHasHappened = false;
+
 		try {
 			let helpRequestGateway = new HelpRequestGateway();
 			const caseNotesGateway = new CaseNotesGateway();
 			let govNotifyGateway = new GovNotifyGateway()
 
-			let helpRequestId = await helpRequestGateway.postHelpRequest(residentId, helpRequestObject);
+			let helpRequestId = await helpRequestGateway.postHelpRequest(residentId, helpRequestObject)
+				.catch(err => {
+					errorHasHappened = true;
+					const hrPostFailure = "Error happened while POST'ing Help Request.";
+					const nonEmptyHRObjectVals = Object.values(helpRequestObject).filter(v => v).length;
+
+					console.error(`${hrPostFailure}\nResId: ${residentId}, HRnonEmptyFieldsNum: ${nonEmptyHRObjectVals}\n${err}`);
+					alert(hrPostFailure); // warning user about potential loss of data
+				});
 
 			if(callMade) {
 				let helpRequestCallGateway = new HelpRequestCallGateway()
-				let helpRequestCallId = await helpRequestCallGateway.postHelpRequestCall(helpRequestId, callRequestObject)
+				await helpRequestCallGateway.postHelpRequestCall(helpRequestId, callRequestObject)
+					.catch(err => {
+						errorHasHappened = true;
+						const hrCallPostFailure = "Error happened while POST'ing Help Request Call.";
+						const nonEmptyHRCallObjectVals = Object.values(callRequestObject).filter(v => v).length;
+						
+						console.error(`${hrCallPostFailure}\nHelpReqId: ${helpRequestId}, HRCallnonEmptyFieldsNum: ${nonEmptyHRCallObjectVals}\n${err}`);
+						alert(hrCallPostFailure); // warning user about potential loss of data
+					});
 			}
+
 			if (caseNote && caseNote != "") {
 				const caseNoteObject = {
 						caseNote,
@@ -60,11 +79,28 @@ export default function addSupportPage({residentId}) {
 						noteDate: new Date().toGMTString(),
 						helpNeeded: helpNeeded
 				};      
-				await caseNotesGateway.createCaseNote(helpRequestId, residentId, caseNoteObject);
+				await caseNotesGateway.createCaseNote(helpRequestId, residentId, caseNoteObject)
+					.catch(err => {
+						errorHasHappened = true;
+						const hrCNPostFailure = "Error happened while POST'ing Help Request Case Note.";
+						const nonEmptyHRCNObjectVals = Object.values(caseNoteObject).filter(v => v).length;
+						
+						console.error(`${hrCNPostFailure}\nResId: ${residentId}, HelpReqId: ${helpRequestId}, HRCNnonEmptyFieldsNum: ${nonEmptyHRCNObjectVals}\n${err}`);
+						alert(hrCNPostFailure); // warning user about potential loss of data
+					});
 			}
+
 			if(phoneNumber){
 				let textResponse = await govNotifyGateway.sendText(phoneNumber, TEST_AND_TRACE_FOLLOWUP_TEXT)
-				let sendTextResponseCaseNoteObject
+					.catch(err => {
+						errorHasHappened = true;
+						const smsFailure = "Error happened while sending a text message.";
+						
+						console.error(`${smsFailure}\nPhoneNumber: ${phoneNumber}\n${err}`);
+						alert(smsFailure); // warning user about potential loss of data
+					});
+
+				let sendTextResponseCaseNoteObject;
 				if(textResponse.id){
 						sendTextResponseCaseNoteObject = {
 								caseNote: `Text sent to ${phoneNumber}. \n Text id: ${textResponse.id}.\n Text content: ${textResponse.content.body}`,
@@ -82,11 +118,27 @@ export default function addSupportPage({residentId}) {
 				}
 
 				await caseNotesGateway.createCaseNote(helpRequestId, residentId, sendTextResponseCaseNoteObject)
-	 
-		}
-		if(email){
+					.catch(err => {
+						errorHasHappened = true;
+						const hrCNPostFailure = "Error happened while POST'ing Text Confirmation Help Request Case Note.";
+						const nonEmptyTextRespObjectVals = Object.values(sendTextResponseCaseNoteObject).filter(v => v).length;
+						
+						console.error(`${hrCNPostFailure}\nResId: ${residentId}, HelpReqId: ${helpRequestId}, TextRespnonEmptyFieldsNum: ${nonEmptyTextRespObjectVals}\n${err}`);
+						alert(hrCNPostFailure); // warning user about potential loss of data
+					});
+			}
+
+			if(email){
 				let emailResponse = await govNotifyGateway.sendEmail(email, TEST_AND_TRACE_FOLLOWUP_EMAIL)
-				let sendEmailResponseCaseNoteObject
+					.catch(err => {
+						errorHasHappened = true;
+						const emailFailure = "Error happened while sending an email.";
+						
+						console.error(`${emailFailure}\nEmail: ${email}\n${err}`);
+						alert(emailFailure); // warning user about potential loss of data
+					});
+					
+				let sendEmailResponseCaseNoteObject;
 
 				if(emailResponse.id){
 						sendEmailResponseCaseNoteObject = {
@@ -104,11 +156,23 @@ export default function addSupportPage({residentId}) {
 						}
 				}
 				await caseNotesGateway.createCaseNote(helpRequestId, residentId, sendEmailResponseCaseNoteObject)
+					.catch(err => {
+						errorHasHappened = true;
+						const hrCNPostFailure = "Error happened while POST'ing Email Confirmation Help Request Case Note.";
+						const nonEmptyEmailRespObjectVals = Object.values(sendEmailResponseCaseNoteObject).filter(v => v).length;
+						
+						console.error(`${hrCNPostFailure}\nResId: ${residentId}, HelpReqId: ${helpRequestId}, EmailRespnonEmptyFieldsNum: ${nonEmptyEmailRespObjectVals}\n${err}`);
+						alert(hrCNPostFailure); // warning user about potential loss of data
+					});
+			}
 
-		}
-			router.push(`/helpcase-profile/${residentId}`)
+			if (!errorHasHappened) {
+				router.push(`/helpcase-profile/${residentId}`);
+			}
 		} catch (err) {
+			// Other errors. 
 			console.log("Add support error", err)
+			alert('An error has occured while saving the data.');
 		}
 	}
 

@@ -33,11 +33,16 @@ export default function EditResident({ residentId }) {
         setUpdatedResident({ ...updatedResident, ...object });
     };
 
-    const saveResident = () => {
+    const saveResident = (event) => {
         event.preventDefault();
         const residentGateway = new ResidentGateway();
-        residentGateway.setResident(residentId, updatedResident);
-        Router.back();
+        residentGateway.setResident(residentId, updatedResident).then(() => {
+            console.log("Patch complete!")
+            Router.back();
+        }).catch((e) => {
+            console.error(`Patch failed! ${e}`);
+            alert('New resident information failed to be saved.');
+        });
     };
 
     useEffect(() => {}, [resident]);
