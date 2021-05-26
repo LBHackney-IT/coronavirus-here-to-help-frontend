@@ -38,6 +38,9 @@ export class ResidentGateway extends DefaultGateway {
         return InboundMapper.ToResident(response);
     }
     async setResident(residentId, requestBody) {
+        if (requestBody.firstName === "Garden") {
+            throw new Error("Need to see whether logging works like it should!");
+        }
         console.log("request body", ToPatchResidentObject(requestBody));
         return await this.patchToUrl(`v4/residents/${residentId}`, ToPatchResidentObject(requestBody));
     }
