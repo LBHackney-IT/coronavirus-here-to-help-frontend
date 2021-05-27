@@ -33,7 +33,7 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                                 marginBottom: '20px'
                             }}
                             defaultValue={resident.firstName}
-                            onKeyUp={(e) => onChange(e.target.id, e.target.value)}
+                            onChange={(e) => onChange(e.target.id, e.target.value)}
                             data-testid="first-name-input"
                             required
                             onInvalid={(e) => onInvalidField(e.target.id)}
@@ -64,7 +64,7 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                                 marginBottom: '20px'
                             }}
                             defaultValue={resident.lastName}
-                            onKeyUp={(e) => onChange(e.target.id, e.target.value)}
+                            onChange={(e) => onChange(e.target.id, e.target.value)}
                             data-testid="last-name-input"
                             required
                             onInvalid={(e) => onInvalidField(e.target.id)}
@@ -97,7 +97,7 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                                 marginBottom: '20px'
                             }}
                             defaultValue={resident.contactTelephoneNumber}
-                            onKeyUp={(e) => onChange(e.target.id, e.target.value)}
+                            onChange={(e) => onChange(e.target.id, e.target.value)}
                             data-testid="contact-telephone-input"
                             required
                             pattern="^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$"
@@ -175,7 +175,7 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                             maxLength="2"
                             inputMode="numeric"
                             defaultValue={resident.dobDay}
-                            onKeyUp={(e) => onChange(e.target.id, e.target.value)}
+                            onChange={(e) => onChange(e.target.id, e.target.value)}
                             data-testid="dobDay-input"
                             required
                             onInvalid={(e) => onInvalidField(e.target.id)}
@@ -194,7 +194,7 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                             maxLength="2"
                             inputMode="numeric"
                             defaultValue={resident.dobMonth}
-                            onKeyUp={(e) => onChange(e.target.id, e.target.value)}
+                            onChange={(e) => onChange(e.target.id, e.target.value)}
                             data-testid="dobMonth-input"
                             required
                             onInvalid={(e) => onInvalidField(e.target.id)}
@@ -213,7 +213,7 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                             maxLength="4"
                             inputMode="numeric"
                             defaultValue={resident.dobYear}
-                            onKeyUp={(e) => onChange(e.target.id, e.target.value)}
+                            onChange={(e) => onChange(e.target.id, e.target.value)}
                             data-testid="dobYear-input"
                             required
                             onInvalid={(e) => onInvalidField(e.target.id)}
