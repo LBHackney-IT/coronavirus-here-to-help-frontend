@@ -54,7 +54,6 @@ commands:
             npm prune --production
             sudo npm i -g serverless
             sls deploy -s <<parameters.stage>>
-
 jobs:
   build:
     executor: node
@@ -158,7 +157,7 @@ workflows:
             - test
           filters:
             branches:
-              only: master
+              only: crfdl-dummy-test
 
       - deploy-staging:
           requires:
@@ -166,12 +165,16 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - crfdl-dummy-test
 
       - permit-deploy-production:
           type: approval
           requires:
             - deploy-staging
+          filters:
+            branches:
+              only:
+                - master
 
       - assume-role-production:
           context: api-assume-role-production-context
