@@ -36,6 +36,15 @@ export default function Address({ initialResident, onChange }) {
         resident = newResident;
         setResident(newResident);
     };
+
+    const handleManualAddressEntry = (addressInputId, addressInputValue) => {
+        // honestly, I don't think this component should be talking in terms of resident
+        // but I'll leave a TODO: change res to address.
+        const newResident = { ...resident, [addressInputId]: addressInputValue}
+        setResident(newResident);
+        onChange({ [addressInputId]: addressInputValue });
+    };
+
     useEffect(() => {}, [resident]);
 
     const dropdownItems =['Select an address'].concat(addresses?.map(
@@ -84,6 +93,7 @@ export default function Address({ initialResident, onChange }) {
                             id="addressFirstLine"
                             name="addressFirstLine"
                             type="text"
+                            onChange={(e) => handleManualAddressEntry(e.target.id, e.target.value)}
                             value={
                                 resident.addressFirstLine
                                     ? resident.addressFirstLine
@@ -99,6 +109,7 @@ export default function Address({ initialResident, onChange }) {
                             id="addressSecondLine"
                             name="addressSecondLine"
                             type="text"
+                            onChange={(e) => handleManualAddressEntry(e.target.id, e.target.value)}
                             value={
                                 resident.addressSecondLine
                                     ? resident.addressSecondLine
@@ -113,6 +124,7 @@ export default function Address({ initialResident, onChange }) {
                             id="addressThirdLine"
                             name="addressThirdLine"
                             type="text"
+                            onChange={(e) => handleManualAddressEntry(e.target.id, e.target.value)}
                             value={
                                 resident.addressThirdLine
                                     ? resident.addressThirdLine
@@ -124,9 +136,10 @@ export default function Address({ initialResident, onChange }) {
                     <div className="govuk-form-group lbh-form-group">
                         <input
                             className="govuk-input  lbh-input"
-                            id="postcode"
-                            name="postcode"
+                            id="postCode"
+                            name="postCode"
                             type="text"
+                            onChange={(e) => handleManualAddressEntry(e.target.id, e.target.value)}
                             value={
                                 resident.postCode ? resident.postCode : initialResident?.postCode
                             }
