@@ -94,6 +94,7 @@ export default function Address({ initialResident, onChange }) {
                             name="addressFirstLine"
                             type="text"
                             onChange={(e) => handleManualAddressEntry(e.target.id, e.target.value)}
+                            placeholder="Address line 1"
                             value={
                                 resident.addressFirstLine
                                     ? resident.addressFirstLine
@@ -110,6 +111,7 @@ export default function Address({ initialResident, onChange }) {
                             name="addressSecondLine"
                             type="text"
                             onChange={(e) => handleManualAddressEntry(e.target.id, e.target.value)}
+                            placeholder="Address line 2"
                             value={
                                 resident.addressSecondLine
                                     ? resident.addressSecondLine
@@ -125,6 +127,7 @@ export default function Address({ initialResident, onChange }) {
                             name="addressThirdLine"
                             type="text"
                             onChange={(e) => handleManualAddressEntry(e.target.id, e.target.value)}
+                            placeholder="Address line 3"
                             value={
                                 resident.addressThirdLine
                                     ? resident.addressThirdLine
@@ -140,6 +143,7 @@ export default function Address({ initialResident, onChange }) {
                             name="postCode"
                             type="text"
                             onChange={(e) => handleManualAddressEntry(e.target.id, e.target.value)}
+                            placeholder="Post code"
                             value={
                                 resident.postCode ? resident.postCode : initialResident?.postCode
                             }
