@@ -17,10 +17,10 @@ export default function CaseNotes({ calls }) {
         <div>
             <h2 className="govuk-heading-l">Call history</h2>
             {calls.length < 1 &&
-             <>
-                <div className={styles['call-history-box'] }>No previous calls</div>
-                <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-             </>}
+                <>
+                    <div className={styles['call-history-box'] }>No previous calls</div>
+                    <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+                </>}
             {calls?.map((call, index) => {
                 return (
                     <>
@@ -34,8 +34,11 @@ export default function CaseNotes({ calls }) {
                                 {call.callHandler}
                             </h4>
                             <p>
-                                {call.callDirection} {call.callType}:{' '}
-                                {FormatCallOutcome(call.callOutcome)}
+                                {call.callDirection}{' '}
+                                {call.callType == 'Welfare Call'
+                                    ? 'Self Isolation Call'
+                                    : call.callType}
+                                : {FormatCallOutcome(call.callOutcome)}
                             </p>
                         </div>
                         <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />

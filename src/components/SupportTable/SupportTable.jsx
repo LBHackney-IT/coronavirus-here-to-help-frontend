@@ -32,7 +32,11 @@ export default function SupportTable({helpRequests}) {
 							{helpRequests.map((hr, index) => {
 								if(hr.callbackRequired == true){
 									return (	<tr className="govuk-table__row" data-testid="support-requested-table_row">
-									<td className="govuk-table__cell" data-testid="support-requested-table-help-needed">{hr.helpNeeded}</td>
+									<td className="govuk-table__cell" data-testid="support-requested-table-help-needed">
+											{hr.helpNeeded == 'Welfare Call'
+                                                    ? 'Self Isolation'
+                                                    : hr.helpNeeded}
+									</td>
 									<td className="govuk-table__cell"><Link
 										href="/helpcase-profile/[resident_id]/manage-request/[help_request]"
 										as={`/helpcase-profile/${hr.residentId}/manage-request/${hr.id}`}>{hr.upcomingCallOutcome}</Link></td>
@@ -60,7 +64,11 @@ export default function SupportTable({helpRequests}) {
 							{helpRequests.map((hr) => {
 								if(hr.callbackRequired == false){
 									return (<tr className="govuk-table__row" data-testid="support-received-table_row">
-									<td className="govuk-table__cell" data-testid="support-received-table-help-needed">{hr.helpNeeded}</td>
+									<td className="govuk-table__cell" data-testid="support-received-table-help-needed">
+									{hr.helpNeeded == 'Welfare Call'
+                                                    ? 'Self Isolation'
+                                                    : hr.helpNeeded}
+									</td>
 									<td className="govuk-table__cell" data-testid="support-received-table-calls-count" >{hr.totalCompletedCalls}</td>
 									<td className="govuk-table__cell" >{hr.dateTimeRecorded?.split('T')[0]}</td>
 
