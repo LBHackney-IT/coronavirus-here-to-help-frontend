@@ -28,7 +28,7 @@ export default function RadioButton({ radioButtonItems, name , optionalClass, on
                             for={elementId}
                             style={{marginBottom: "15px"}}
                         >
-                            {radioButtonItem}
+                            {radioButtonItem == 'Welfare Call' ? 'Self Isolation' : radioButtonItem}
                         </label>
                 </div>
                 )

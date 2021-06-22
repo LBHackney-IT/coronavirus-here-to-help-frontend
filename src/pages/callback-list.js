@@ -33,8 +33,11 @@ function CallbacksListPage({ callTypes }) {
     };
 
     const handleCallTypeChange = (event) => {
-        console.log(callTypes)
-        setDropdowns({ ...dropdowns, callType: event });
+        console.log(callTypes);
+        setDropdowns({
+            ...dropdowns,
+            callType: event == 'Self Isolation' ? 'Welfare Call' : event
+        });
     };
 
     const getCallHandlers = async () => {

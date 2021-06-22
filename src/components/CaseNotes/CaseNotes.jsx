@@ -21,13 +21,21 @@ export default function CaseNotes({ caseNotes }) {
         }
     },[caseNotes])
     const hanleOnChange = (selectedCaseNoteType) => {
-        setFilterBy(selectedCaseNoteType)
+        setFilterBy(
+            selectedCaseNoteType == 'Self Isolation' ? 'Welfare Call' : selectedCaseNoteType
+        );
     }
     return (
         <div>
             <h2 className="govuk-heading-l">Case notes</h2>
 
-                {caseNotes && !caseNotes.helpType && displayDropdown&&<Dropdown  onChange={(e) => hanleOnChange(e)} dropdownItems ={helpTypes}></Dropdown>}
+                {caseNotes && !caseNotes.helpType && displayDropdown&&
+                 <Dropdown
+                 onChange={(e) => hanleOnChange(e)}
+                 dropdownItems={helpTypes
+                     .join(',')
+                     .replace('Welfare Call', 'Self Isolation')
+                     .split(',')}></Dropdown>}
                 {caseNotes && caseNotes[filterBy]?.length == 0 && 
                 <>
                     <div className ={ styles['case-notes-box']}>No previous case notes</div>
@@ -45,7 +53,12 @@ export default function CaseNotes({ caseNotes }) {
                             <h4 className="govuk-heading-s">
                                 {caseNote.formattedDate} by {caseNote.author}
                             </h4>
-                            <p>{caseNote.helpNeeded}: {caseNote.note}</p>
+                            <p>
+                                {caseNote.helpNeeded == 'Welfare Call'
+                                    ? 'Self Isolation'
+                                    : caseNote.helpNeeded}
+                                    : {caseNote.note}
+                            </p>
                         </div>
                         <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
                     </>

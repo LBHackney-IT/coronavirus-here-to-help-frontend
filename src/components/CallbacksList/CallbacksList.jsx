@@ -59,8 +59,14 @@ export default function CallbacksList({ callbacks }) {
                                 <td className="govuk-table__cell">{callback.residentName}</td>
                                 <td className="govuk-table__cell">{callback.address}</td>
                                 <td className="govuk-table__cell">{callback.requestedDate}</td>
-                                <td className="govuk-table__cell" data-testid="callbacks-table-call-type">
-                                    <span title="Contact Tracing">{callback.callType}</span>
+                                <td
+                                    className="govuk-table__cell"
+                                    data-testid="callbacks-table-call-type">
+                                    <span title="Contact Tracing">
+                                        {callback.callType == 'Welfare Call'
+                                            ? 'Self Isolation'
+                                            : callback.callType}
+                                    </span>
                                 </td>
                                 <td className="govuk-table__cell ">
                                     {callback.unsuccessfulCallAttempts}
