@@ -261,7 +261,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                 <br/>
                 {helpRequest && 
                     <strong data-testid='help-type' className={`govuk-tag govuk-tag--grey ${styles['help-request-tag']}`}> 
-                        {helpRequest?.helpNeeded}
+                        {helpRequest?.helpNeeded == 'Welfare Call' ? 'Self Isolation' : helpRequest?.helpNeeded}
                     </strong>
                 }
                 <br></br>
