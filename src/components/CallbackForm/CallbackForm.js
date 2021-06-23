@@ -88,6 +88,11 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         { name: 'Wrong number', value: 'wrong_number' },
         { name: 'No answer machine', value: 'no_answer_machine' }
     ];
+    const selfIsolationNeeds = [
+        { name: 'The resident needed a referral to the food consortia', value: 'food_consortia_referral_needs' },
+        { name: 'Other support needs', value: 'other_support_needs' },
+        { name: 'No needs', value: 'no_support_needs' }
+    ];
     const callTypes = ['Contact Tracing', 'CEV', 'Welfare Call', 'Help Request'];
     const followupRequired = ['Yes', 'No'];
     const whoMadeInitialContact = ['I called the resident', 'The resident called me'];
@@ -178,6 +183,16 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         // Returns "false" only when helpNeeded = 'CEV' and 0 CEV needs checkboxes are selected.
         return helpNeeded !== 'CEV' || Object.values(cevHelpNeeds).includes(true);
     };
+    const validateSelfIsolationNeedsFieldset = () => {
+        return callOutcomeValues.includes('callback_complete') &&
+                helpNeeded === 'Welfare Call' &&
+                (callOutcomeValues.includes('food_consortia_referral_needs') ||
+                    callOutcomeValues.includes('other_support_needs') ||
+                    callOutcomeValues.includes('no_support_needs')) ||  
+                !callOutcomeValues.includes('callback_complete') ||
+                helpNeeded !== 'Welfare Call'
+        };
+    
 
     // Checks to see if the UI field was set (from null) to boolean (true, false) value, or if UI
     // field was set to a Truthy value: from null, undefined or "" to "CEV", "Welfare", etc.
@@ -239,7 +254,8 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
 
         // jeez, this looks sooo fragile
         if (
-            mandatoryFieldsWereGivenInput() &&
+            mandatoryFieldsWereGivenInput() && 
+            validateSelfIsolationNeedsFieldset() &&
             ((callMade == true &&
                 callOutcomeValues.length > 1 &&
                 callDirection != null &&
@@ -398,6 +414,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                                             }}
                                             aria-controls="conditional-CallMade"
                                             aria-expanded="false"
+                                            data-testid="call-type-yes-radio-button"
                                         />
                                         <label
                                             className="govuk-label govuk-radios__label"
@@ -432,6 +449,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                                                                 }}
                                                                 aria-controls="conditional-CallDetail"
                                                                 aria-expanded="false"
+                                                                data-testid="yes-spoke-to-resident"
                                                             />
                                                             <label
                                                                 className="govuk-label govuk-radios__label"
@@ -472,7 +490,8 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                                                                                             aria-describedby="CallOutcome-hint"
                                                                                             onCheckboxChange={
                                                                                                 onCheckboxChangeUpdate
-                                                                                            }></Checkbox>
+                                                                                            }
+                                                                                            data-testid={`${spokeToResidentCallOutcome.value}-checkbox`}></Checkbox>
                                                                                     );
                                                                                 }
                                                                             )}
@@ -546,7 +565,38 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                                                     </div>
                                                 </fieldset>
                                             </div>
-
+                                            {callOutcomeValues.includes('callback_complete') && helpNeeded == 'Welfare Call' &&
+                                            <div className="govuk-form-group lbh-form-group" data-testid="self-isolation-needs">
+                                                <fieldset className="govuk-fieldset">
+                                                    <legend className="govuk-fieldset__legend mandatoryQuestion">
+                                                        {' '}
+                                                        Did the resident require any support?{' '}
+                                                    </legend>
+                                                    {selfIsolationNeeds.map(
+                                                        (
+                                                            selfIsolationNeed
+                                                        ) => {
+                                                            return (
+                                                                <Checkbox
+                                                                    id={
+                                                                        selfIsolationNeed.name
+                                                                    }
+                                                                    name="selfIsolationNeeds"
+                                                                    type="checkbox"
+                                                                    value={
+                                                                        selfIsolationNeed.value
+                                                                    }
+                                                                    label={
+                                                                        selfIsolationNeed.name
+                                                                    }
+                                                                    onCheckboxChange={
+                                                                        onCheckboxChangeUpdate
+                                                                    }></Checkbox>
+                                                            );
+                                                        }
+                                                    )}
+                                                </fieldset>
+                                            </div>}
                                             <div className="govuk-form-group lbh-form-group">
                                                 <fieldset className="govuk-fieldset">
                                                     <legend className="govuk-fieldset__legend mandatoryQuestion">

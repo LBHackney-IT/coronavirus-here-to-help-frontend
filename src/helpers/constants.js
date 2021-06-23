@@ -12,7 +12,10 @@ export const callOutcomes = {
     call_rescheduled: 'Call rescheduled',
     voicemail: 'Voicemail left',
     wrong_number: 'Wrong number',
-    no_answer_machine: 'No answer machine'
+    no_answer_machine: 'No answer machine',
+    food_consortia_referral_needs: 'The resident needed a referral to the food consortia',
+    other_support_needs: 'Other support needs',
+    no_support_needs: 'No needs'
 };
 
 export const helpTypes = [ALL, WELFARE_CALL, HELP_REQUEST, CONTACT_TRACING, CEV];
