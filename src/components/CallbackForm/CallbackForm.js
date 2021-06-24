@@ -174,8 +174,8 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         }
     };
 
-    const validateCEVNeedsFieldset = () => {
-        // at least 1 checkbox has to be selected
+    const atLeast1CEVNeedsCheckboxIsSelected = () => {
+        // Returns "false" only when helpNeeded = 'CEV' and 0 CEV needs checkboxes are selected.
         return helpNeeded !== 'CEV' || Object.values(cevHelpNeeds).includes(true);
     };
 
@@ -188,7 +188,9 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         const whetherTheCallWasMadeIsSelected = isBooleanOrTruthyValue(callMade);
         const whetherTicketNeedsFollowUpIsSelected = isBooleanOrTruthyValue(followUpRequired);
 
-        return supportTypeIsSelected && whetherTheCallWasMadeIsSelected && whetherTicketNeedsFollowUpIsSelected;
+        const whenNotHiddenCEVNeedsAreSelected = atLeast1CEVNeedsCheckboxIsSelected();
+
+        return supportTypeIsSelected && whetherTheCallWasMadeIsSelected && whetherTicketNeedsFollowUpIsSelected && whenNotHiddenCEVNeedsAreSelected;
     }
 
     const handleUpdate = async (event) => {
@@ -230,11 +232,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         }
 
         // jeez, this looks sooo fragile
-        if (!validateCEVNeedsFieldset()) {
-            setErrorsExist(true);
-            window.scrollTo(0, 0);
-        }
-        else if (
+        if (
             mandatoryFieldsWereGivenInput() &&
             ((callMade == true && callOutcomeValues.length > 1 && callDirection != null && helpNeeded != null && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText)) ||
             (callMade == false && helpNeeded && followUpRequired != null && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText)) ||
