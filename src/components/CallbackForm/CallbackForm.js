@@ -89,9 +89,9 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         { name: 'No answer machine', value: 'no_answer_machine' }
     ];
     const selfIsolationNeeds = [
-        { name: 'The resident needed a referral to the food consortia', value: 'food_consortia_referral_needs' },
-        { name: 'Other support needs', value: 'other_support_needs' },
-        { name: 'No needs', value: 'no_support_needs' }
+        { name: 'Yes, the resident needed a referral to the food consortia', value: 'food_consortia_referral_needs' },
+        { name: 'Yes, the resident had other support needs', value: 'other_support_needs' },
+        { name: 'No, the resident did not require support', value: 'no_support_needs' }
     ];
     const callTypes = ['Contact Tracing', 'CEV', 'Welfare Call', 'Help Request'];
     const followupRequired = ['Yes', 'No'];
