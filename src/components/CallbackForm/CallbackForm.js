@@ -179,6 +179,8 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         return helpNeeded !== 'CEV' || Object.values(cevHelpNeeds).includes(true);
     };
 
+    const isNonEmpty = (argument) => argument === false || argument ? true : false;
+
     const handleUpdate = async (event) => {
         event.preventDefault();
 
@@ -222,9 +224,10 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             setErrorsExist(true);
         }
         else if (
-            (callMade == true && callOutcomeValues.length > 1 && callDirection != null && helpNeeded != null && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText)) ||
+            isNonEmpty(helpNeeded) && isNonEmpty(callMade) && isNonEmpty(followUpRequired) &&
+            ((callMade == true && callOutcomeValues.length > 1 && callDirection != null && helpNeeded != null && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText)) ||
             (callMade == false && helpNeeded && followUpRequired != null && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText)) ||
-            (followUpRequired != null && caseNote !="" && helpNeeded != null && helpNeeded != "" && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText))
+            (followUpRequired != null && caseNote !="" && helpNeeded != null && helpNeeded != "" && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText)))
         ) {
             setSubmitEnabled(false);
             saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote, phoneNumber, email);
