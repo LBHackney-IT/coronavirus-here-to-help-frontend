@@ -179,7 +179,17 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         return helpNeeded !== 'CEV' || Object.values(cevHelpNeeds).includes(true);
     };
 
-    const isNonEmpty = (argument) => argument === false || argument ? true : false;
+    // Checks to see if the UI field was set (from null) to boolean (true, false) value, or if UI
+    // field was set to a Truthy value: from null, undefined or "" to "CEV", "Welfare", etc. 
+    const isBooleanOrTruthyValue = (uiFieldValue) => uiFieldValue === false || uiFieldValue ? true : false;
+
+    const mandatoryFieldsWereGivenInput = () => {
+        const supportTypeIsSelected = isBooleanOrTruthyValue(helpNeeded);
+        const whetherTheCallWasMadeIsSelected = isBooleanOrTruthyValue(callMade);
+        const whetherTicketNeedsFollowUpIsSelected = isBooleanOrTruthyValue(followUpRequired);
+
+        return supportTypeIsSelected && whetherTheCallWasMadeIsSelected && whetherTicketNeedsFollowUpIsSelected;
+    }
 
     const handleUpdate = async (event) => {
         event.preventDefault();
@@ -225,7 +235,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             window.scrollTo(0, 0);
         }
         else if (
-            isNonEmpty(helpNeeded) && isNonEmpty(callMade) && isNonEmpty(followUpRequired) &&
+            mandatoryFieldsWereGivenInput() &&
             ((callMade == true && callOutcomeValues.length > 1 && callDirection != null && helpNeeded != null && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText)) ||
             (callMade == false && helpNeeded && followUpRequired != null && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText)) ||
             (followUpRequired != null && caseNote !="" && helpNeeded != null && helpNeeded != "" && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText)))
