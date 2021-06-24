@@ -79,7 +79,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
     );
 
     const spokeToResidentCallOutcomes = [
-        { name: 'Callback comeplete', value: 'callback_complete' },
+        { name: 'Callback complete', value: 'callback_complete' },
         { name: 'Refused to engage', value: 'refused_to_engage' },
         { name: 'Call rescheduled', value: 'call_rescheduled' }
     ];
