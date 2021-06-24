@@ -222,6 +222,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         // jeez, this looks sooo fragile
         if (!validateCEVNeedsFieldset()) {
             setErrorsExist(true);
+            window.scrollTo(0, 0);
         }
         else if (
             isNonEmpty(helpNeeded) && isNonEmpty(callMade) && isNonEmpty(followUpRequired) &&
@@ -232,7 +233,8 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             setSubmitEnabled(false);
             saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote, phoneNumber, email);
         } else {
-            setErrorsExist(true);
+            setErrorsExist(true); // generic error, user won't be told what's wrong.
+            window.scrollTo(0, 0);
         }
     };
 
