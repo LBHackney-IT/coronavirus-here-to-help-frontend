@@ -10,7 +10,10 @@ export default function CaseNotes({ calls }) {
             .replace('call_rescheduled', 'Call rescheduled')
             .replace('voicemail', 'Voicemail left')
             .replace('wrong_number', 'Wrong number')
-            .replace('no_answer_machine', 'No answer machine');
+            .replace('no_answer_machine', 'No answer machine')
+            .replace('food_consortia_referral_needs', 'The resident needed a referral to the food consortia')
+            .replace('other_support_needs', 'The resident had other support needs')
+            .replace('no_support_needs', 'The resident did not require support')
     };
 
     return (
