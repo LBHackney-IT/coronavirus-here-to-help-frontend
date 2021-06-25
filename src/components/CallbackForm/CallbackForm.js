@@ -174,9 +174,29 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         }
     };
 
-    const validateCEVNeedsFieldset = () => {
-        // at least 1 checkbox has to be selected
+    const atLeast1CEVNeedsCheckboxIsSelected = () => {
+        // Returns "false" only when helpNeeded = 'CEV' and 0 CEV needs checkboxes are selected.
         return helpNeeded !== 'CEV' || Object.values(cevHelpNeeds).includes(true);
+    };
+
+    // Checks to see if the UI field was set (from null) to boolean (true, false) value, or if UI
+    // field was set to a Truthy value: from null, undefined or "" to "CEV", "Welfare", etc.
+    const isBooleanOrTruthyValue = (uiFieldValue) =>
+        uiFieldValue === false || uiFieldValue ? true : false;
+
+    const mandatoryFieldsWereGivenInput = () => {
+        const supportTypeIsSelected = isBooleanOrTruthyValue(helpNeeded);
+        const whetherTheCallWasMadeIsSelected = isBooleanOrTruthyValue(callMade);
+        const whetherTicketNeedsFollowUpIsSelected = isBooleanOrTruthyValue(followUpRequired);
+
+        const whenNotHiddenCEVNeedsAreSelected = atLeast1CEVNeedsCheckboxIsSelected();
+
+        return (
+            supportTypeIsSelected &&
+            whetherTheCallWasMadeIsSelected &&
+            whetherTicketNeedsFollowUpIsSelected &&
+            whenNotHiddenCEVNeedsAreSelected
+        );
     };
 
     const handleUpdate = async (event) => {
@@ -218,18 +238,31 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         }
 
         // jeez, this looks sooo fragile
-        if (!validateCEVNeedsFieldset()) {
-            setErrorsExist(true);
-        }
-        else if (
-            (callMade == true && callOutcomeValues.length > 1 && callDirection != null && helpNeeded != null && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText)) ||
-            (callMade == false && helpNeeded && followUpRequired != null && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText)) ||
-            (followUpRequired != null && caseNote !="" && helpNeeded != null && helpNeeded != "" && ((email != null && showEmail) || !showEmail) && ((phoneNumber != null && showText) || !showText))
+        if (
+            mandatoryFieldsWereGivenInput() &&
+            ((callMade == true &&
+                callOutcomeValues.length > 1 &&
+                callDirection != null &&
+                helpNeeded != null &&
+                ((email != null && showEmail) || !showEmail) &&
+                ((phoneNumber != null && showText) || !showText)) ||
+                (callMade == false &&
+                    helpNeeded &&
+                    followUpRequired != null &&
+                    ((email != null && showEmail) || !showEmail) &&
+                    ((phoneNumber != null && showText) || !showText)) ||
+                (followUpRequired != null &&
+                    caseNote != '' &&
+                    helpNeeded != null &&
+                    helpNeeded != '' &&
+                    ((email != null && showEmail) || !showEmail) &&
+                    ((phoneNumber != null && showText) || !showText)))
         ) {
             setSubmitEnabled(false);
             saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote, phoneNumber, email);
         } else {
-            setErrorsExist(true);
+            setErrorsExist(true); // generic error, user won't be told what's wrong.
+            window.scrollTo(0, 0);
         }
     };
 
