@@ -166,6 +166,15 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             let newCallOutcomesValues = callOutcomeArray.filter(
                 (callOutcomeValue) => callOutcomeValue != value
             );
+            if (value == 'callback_complete'){
+                newCallOutcomesValues = newCallOutcomesValues.filter(
+                    (callOutcomeValue) => 
+                    callOutcomeValue != 'food_consortia_referral_needs' &&
+                    callOutcomeValue != 'other_support_needs' &&
+                    callOutcomeValue != 'no_support_needs'
+                );
+            }
+
             const callOutcomeString = newCallOutcomesValues.join();
             setCallOutcomeValues(callOutcomeString);
         } else {
