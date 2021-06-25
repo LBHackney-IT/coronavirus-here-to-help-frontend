@@ -162,7 +162,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
 
     const onCheckboxChangeUpdate = (value) => {
         if (callOutcomeValues.includes(value)) {
-            const callOutcomeArray = callOutcomeValues.split();
+            const callOutcomeArray = callOutcomeValues.split(',');
             let newCallOutcomesValues = callOutcomeArray.filter(
                 (callOutcomeValue) => callOutcomeValue != value
             );
