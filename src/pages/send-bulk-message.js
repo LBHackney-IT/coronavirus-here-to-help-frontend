@@ -5,7 +5,10 @@ import { useState, useEffect } from 'react';
 import { Button, Checkbox, Dropdown } from '../components/Form';
 import { CallbackGateway } from '../gateways/callback';
 import { useRouter } from 'next/router';
-import {PRE_CALL_MESSAGE_TEMPLATE} from '../helpers/constants';
+import {
+  PRE_CALL_MESSAGE_TEMPLATE,
+  SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE
+} from '../helpers/constants';
 import { GovNotifyGateway  } from "../gateways/gov-notify";
 import { unsafeExtractUser } from "../helpers/auth";
 import { callTypes } from "../helpers/constants";
@@ -34,11 +37,18 @@ export default function AssignCallsPage() {
       setCallbacks(callbacks)
     }
 
-    const getPreview = async () => {
-      let govNotifyGateway = new GovNotifyGateway
-      let response = await govNotifyGateway.getTemplatePreview(PRE_CALL_MESSAGE_TEMPLATE)
-      setTemplatePreview(response.body)
-    }
+    const getPreview = async (value) => {
+      let govNotifyGateway = new GovNotifyGateway();
+      let response;
+      if (value == 'Welfare Call') {
+          response = await govNotifyGateway.getTemplatePreview(
+            SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE
+          );
+      } else {
+          response = await govNotifyGateway.getTemplatePreview(PRE_CALL_MESSAGE_TEMPLATE);
+      }
+      setTemplatePreview(response.body);
+  };
 
     useEffect(()=> {
       getPreview()
@@ -55,7 +65,8 @@ export default function AssignCallsPage() {
       if((assigned.value || unassigned.value) && helpType){
         event.preventDefault();
         let govNotifyGateway = new GovNotifyGateway
-        await govNotifyGateway.sendBulkText(JSON.stringify({assigned:assigned, unassigned: unassigned, user:user.name, helpType: helpType, textTemplateId: PRE_CALL_MESSAGE_TEMPLATE}))
+        const textTemplateId = helpType == 'Welfare Call' ? SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE : PRE_CALL_MESSAGE_TEMPLATE;
+        await govNotifyGateway.sendBulkText(JSON.stringify({assigned:assigned, unassigned: unassigned, user:user.name, helpType: helpType, textTemplateId}))
         router.push('/dashboard');
       }else{
         setErrorsExist(true)
@@ -92,6 +103,7 @@ export default function AssignCallsPage() {
       });
       setAssignedCallbacks(assignedCallbacks);
       setUnAssignedCallbacks(unassignedCallbacks);
+      getPreview(value)
     }
 
     return (

@@ -1,5 +1,8 @@
 
-import { PRE_CALL_MESSAGE_TEMPLATE } from "../../../helpers/constants";
+import {
+  PRE_CALL_MESSAGE_TEMPLATE,
+  SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE
+} from '../../../helpers/constants';
 import { GovNotifyGateway } from "../../../gateways/gov-notify-api-gateway";
 import { containsPotentialMobileNumer, appendMobileContact} from "../../../helpers/send-bulk-message-helper";
 import { HereToHelpApiGateway } from "../../../gateways/here-to-help-api-gateway";
@@ -64,8 +67,12 @@ const sendBulkSms = async (callbacks, reqBody) =>{
 
   const govNotifyGateway = new GovNotifyGateway()
   const hereToHelpApiGateway = new HereToHelpApiGateway
-  const textTemplateId = (reqBody.textTemplateId == PRE_CALL_MESSAGE_TEMPLATE) ? process.env.PRE_CALL_MESSAGE_TEMPLATE : ""
-
+  const textTemplateId =
+    reqBody.textTemplateId == PRE_CALL_MESSAGE_TEMPLATE
+        ? process.env.PRE_CALL_MESSAGE_TEMPLATE
+        : reqBody.textTemplateId == SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE
+        ? process.env.SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE
+        : '';
   try {
     let mobileContacts = []
     callbacks.forEach(async callback => {

@@ -33,3 +33,5 @@ export const cevHelpTypes = {
 export const TEST_AND_TRACE_FOLLOWUP_TEXT = 'test-and-trace-followup-text'
 export const TEST_AND_TRACE_FOLLOWUP_EMAIL = 'test-and-trace-followup-email'
 export const PRE_CALL_MESSAGE_TEMPLATE = 'pre-call-message-template'
+export const SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE = 'self-isolation-pre-call-message-template'
+
