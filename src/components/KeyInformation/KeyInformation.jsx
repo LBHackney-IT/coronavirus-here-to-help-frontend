@@ -8,6 +8,12 @@ export default function KeyInformation({ resident }) {
         setHidden(!hidden);
     };
 
+    const getAge = (birthday) => {
+        const ageDiff = Date.now() - birthday.getTime();
+        const ageDate = new Date(ageDiff);
+        return Math.abs(ageDate.getUTCFullYear() - 1970);
+    };
+
     return (
         <div>
             <div className={styles['key-information-box']}>
@@ -55,8 +61,21 @@ export default function KeyInformation({ resident }) {
             <div className={styles['key-information-box']}>
                 <h3 className="govuk-heading-s">Key information</h3>
                 <div hidden={hidden}>
-                    {resident.dateOfBirth && (<p>Date of birth: {resident.dateOfBirth}</p>)}
-                    {resident.nhsNumber && (<p>NHS Number: {resident.nhsNumber}</p>)}
+                    {resident.dobYear && resident.dobMonth && resident.dobDay && (
+                        <>
+                            <p>
+                                Date of birth: {resident.dobDay}/{resident.dobMonth}/
+                                {resident.dobYear}
+                            </p>
+                            <p>
+                                Age:{' '}
+                                {getAge(
+                                    new Date(resident.dobYear, resident.dobMonth, resident.dobDay)
+                                )}
+                            </p>
+                        </>
+                    )}
+                    {resident.nhsNumber && <p>NHS Number: {resident.nhsNumber}</p>}
                     <br />
                     <div>
                         <h3 className="govuk-heading-s">
@@ -67,7 +86,7 @@ export default function KeyInformation({ resident }) {
                                 ✎
                             </a>
                         </h3>
-                        {resident.keyNotes || "None"}
+                        {resident.keyNotes || 'None'}
                     </div>
                     <br />
                 </div>
