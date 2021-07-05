@@ -12,7 +12,7 @@ export default function Dropdown({ onChange, dropdownItems, ...otherProps }) {
         {dropdownItems.map((dropdownItem, index) => {
           return (
             <option key={index} value={dropdownItem}>
-              {dropdownItem}
+              {dropdownItem == 'Welfare Call' ? 'Self Isolation' : dropdownItem}
             </option>
           );
         })}

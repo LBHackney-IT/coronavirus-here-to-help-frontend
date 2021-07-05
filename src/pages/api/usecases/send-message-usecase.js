@@ -1,5 +1,11 @@
 import {  GovNotifyGateway } from "../../../gateways/gov-notify-api-gateway";
-import { TEST_AND_TRACE_FOLLOWUP_EMAIL, TEST_AND_TRACE_FOLLOWUP_TEXT, PRE_CALL_MESSAGE_TEMPLATE } from "../../../helpers/constants";
+import {
+  TEST_AND_TRACE_FOLLOWUP_EMAIL,
+  TEST_AND_TRACE_FOLLOWUP_TEXT,
+  PRE_CALL_MESSAGE_TEMPLATE,
+  SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE
+} from '../../../helpers/constants';
+
 export class SendMessageUseCase{
   async sendMessage( pathSegments, queryParams){
     const govNotifyGateway = new GovNotifyGateway()
@@ -33,6 +39,8 @@ export class SendMessageUseCase{
             templateId = process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_EMAIL
           } else if (queryParams.templateType == PRE_CALL_MESSAGE_TEMPLATE){
             templateId = process.env.PRE_CALL_MESSAGE_TEMPLATE
+          } else if (queryParams.templateType == SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE){
+            templateId = process.env.SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE
           }
           const response = await govNotifyGateway.getTemplatePreview(templateId, {name:"(first name)"})
           return response;
