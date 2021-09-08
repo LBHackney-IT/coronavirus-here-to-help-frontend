@@ -11,7 +11,7 @@ import {
 } from '../helpers/constants';
 import { GovNotifyGateway  } from "../gateways/gov-notify";
 import { unsafeExtractUser } from "../helpers/auth";
-import { callTypes } from "../helpers/constants";
+import { callTypes, DEFAULT_DROPDOWN_OPTION } from "../helpers/constants";
 
 export default function AssignCallsPage() {
     const router = useRouter();
@@ -57,7 +57,7 @@ export default function AssignCallsPage() {
       getCallbacks()
     }, [])
     useEffect(()=>{
-      setDropDown(["Please choose"].concat(callTypes))
+      setDropDown([DEFAULT_DROPDOWN_OPTION].concat(callTypes))
     }, [])
     
 

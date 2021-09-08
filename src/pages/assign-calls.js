@@ -7,7 +7,7 @@ import { CallHandlerGateway } from '../gateways/call-handler';
 import { CallbackGateway } from '../gateways/callback';
 import { HelpRequestGateway } from '../gateways/help-request';
 import { useRouter } from 'next/router';
-import { callTypes } from '../helpers/constants';
+import { callTypes, DEFAULT_DROPDOWN_OPTION } from '../helpers/constants';
 
 export default function AssignCallsPage() {
     const router = useRouter();
@@ -31,7 +31,7 @@ export default function AssignCallsPage() {
     useEffect(getCallHandlers, []);
 
     useEffect(() => {
-        setDropDownItems(['Please choose'].concat(callTypes));
+        setDropDownItems([DEFAULT_DROPDOWN_OPTION].concat(callTypes));
     }, []);
 
     const updateSelectedCallHandlers = (value) => {
@@ -64,7 +64,7 @@ export default function AssignCallsPage() {
             selectedAssignment.length == 0 ||
             selectedCallHandlers.length == 0 ||
             selectedCallType == '' ||
-            selectedCallType == 'Please choose'
+            selectedCallType == DEFAULT_DROPDOWN_OPTION
         ) {
             setErrorsExist(true);
         } else {

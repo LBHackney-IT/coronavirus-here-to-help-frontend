@@ -1,3 +1,5 @@
+import { DEFAULT_DROPDOWN_OPTION } from '../../../src/helpers/constants';
+
 beforeEach(() => {
     cy.login();
     cy.setIntercepts();
@@ -35,7 +37,8 @@ describe('As a call handler I can bulk assign calls', () => {
         it('Call handlers are retrieved and mapped to dropdown options', () => {
             cy.get('[data-testid=assign-call-type_dropdown]')
                 .find('option')
-                .should('have.length', 6);
+                .should('have.length', 6)
+                .should('have.value', DEFAULT_DROPDOWN_OPTION);
             cy.get('[data-testid=assign-call-handler-checkbox]').should('have.length', 4);
         });
         it('Call types dropdown does not default to All', () => {

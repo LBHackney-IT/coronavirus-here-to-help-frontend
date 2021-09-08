@@ -5,6 +5,7 @@ export const CONTACT_TRACING = 'Contact Tracing';
 export const HELP_REQUEST = 'Help Request';
 export const WELFARE_CALL = 'Welfare Call';
 export const ALL = 'All';
+export const DEFAULT_DROPDOWN_OPTION = 'Please choose';
 
 export const callOutcomes = {
     callback_complete: 'Callback complete',
@@ -30,8 +31,7 @@ export const cevHelpTypes = {
     noNeedsIdentified: 'No needs identified'
 };
 
-export const TEST_AND_TRACE_FOLLOWUP_TEXT = 'test-and-trace-followup-text'
-export const TEST_AND_TRACE_FOLLOWUP_EMAIL = 'test-and-trace-followup-email'
-export const PRE_CALL_MESSAGE_TEMPLATE = 'pre-call-message-template'
-export const SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE = 'self-isolation-pre-call-message-template'
-
+export const TEST_AND_TRACE_FOLLOWUP_TEXT = 'test-and-trace-followup-text';
+export const TEST_AND_TRACE_FOLLOWUP_EMAIL = 'test-and-trace-followup-email';
+export const PRE_CALL_MESSAGE_TEMPLATE = 'pre-call-message-template';
+export const SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE = 'self-isolation-pre-call-message-template';
