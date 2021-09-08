@@ -172,7 +172,11 @@ export default function AssignCallsPage() {
                 </h1>
 
                 <div className="govuk-!-margin-bottom-5">
-                    <label className="govuk-label">Call types</label>
+                    <h3
+                        className="govuk-heading-m"
+                        style={{ marginRight: '1em', marginLeft: '.2em', marginTop: '2em' }}>
+                        Call types
+                    </h3>
                     <Dropdown
                         dropdownItems={dropdownItems}
                         onChange={(type) => {
