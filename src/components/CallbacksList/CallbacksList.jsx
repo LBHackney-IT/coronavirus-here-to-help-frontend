@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { NOT_ASSIGNED } from '../../helpers/constants';
+import { NOT_ASSIGNED, CONTACT_TRACING } from '../../helpers/constants';
 
 const calcInitials = (fullname) =>
     fullname
@@ -44,7 +44,7 @@ export default function CallbacksList({ callbacks }) {
                             Assigned to
                         </th>
                         <th scope="col" className="govuk-table__header">
-                            Rescheduled at
+                            CTAS Id
                         </th>
                         <th scope="col" className="govuk-table__header"></th>
                     </tr>
@@ -96,7 +96,11 @@ export default function CallbacksList({ callbacks }) {
                                         </a>
                                     </Link>
                                 </td>
-                                <td className="govuk-table__cell">{callback.rescheduledAt}</td>
+                                <td className="govuk-table__cell">
+                                    {callback.callType === CONTACT_TRACING
+                                        ? callback.nhsCtasId
+                                        : 'N/A'}
+                                </td>
                                 <td className="govuk-table__cell">
                                     <Link
                                         href="/helpcase-profile/[residentId]"
