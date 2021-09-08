@@ -59,13 +59,17 @@ export default function AssignCallsPage() {
         return assignmentCount;
     };
 
+    const formIsValid = () => {
+        return (
+            selectedAssignment.length > 0 &&
+            selectedCallHandlers.length > 0 &&
+            selectedCallType != '' &&
+            selectedCallType != DEFAULT_DROPDOWN_OPTION
+        );
+    };
+
     const handleAssign = async (event) => {
-        if (
-            selectedAssignment.length == 0 ||
-            selectedCallHandlers.length == 0 ||
-            selectedCallType == '' ||
-            selectedCallType == DEFAULT_DROPDOWN_OPTION
-        ) {
+        if (!formIsValid()) {
             setErrorsExist(true);
         } else {
             let callbacks = await callbackGateway.getCallback({});
