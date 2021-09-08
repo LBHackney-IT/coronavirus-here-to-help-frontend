@@ -13,7 +13,8 @@ export default function AssignCallsPage() {
     const router = useRouter();
     const [callHandlers, setCallHandlers] = useState([]);
     const [selectedCallHandlers, setSelectedCallHandlers] = useState([]);
-    const [selectedCallType, setSelectedCallType] = useState('All');
+    const [dropdownItems, setDropDownItems] = useState(['']);
+    const [selectedCallType, setSelectedCallType] = useState('');
     const [selectedAssignment, setSelectedAssignment] = useState([]);
     const [errorsExist, setErrorsExist] = useState(null);
 
@@ -28,6 +29,10 @@ export default function AssignCallsPage() {
     };
 
     useEffect(getCallHandlers, []);
+
+    useEffect(() => {
+        setDropDownItems(['Please choose'].concat(callTypes));
+    }, []);
 
     const updateSelectedCallHandlers = (value) => {
         if (selectedCallHandlers.includes(value)) {
@@ -169,7 +174,7 @@ export default function AssignCallsPage() {
                 <div className="govuk-!-margin-bottom-5">
                     <label className="govuk-label">Call types</label>
                     <Dropdown
-                        dropdownItems={callTypes}
+                        dropdownItems={dropdownItems}
                         onChange={(type) => {
                             setSelectedCallType(type);
                         }}
