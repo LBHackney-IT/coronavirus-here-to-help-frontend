@@ -60,7 +60,12 @@ export default function AssignCallsPage() {
     };
 
     const handleAssign = async (event) => {
-        if (selectedAssignment.length == 0 || selectedCallHandlers.length == 0) {
+        if (
+            selectedAssignment.length == 0 ||
+            selectedCallHandlers.length == 0 ||
+            selectedCallType == '' ||
+            selectedCallType == 'Please choose'
+        ) {
             setErrorsExist(true);
         } else {
             let callbacks = await callbackGateway.getCallback({});
@@ -172,11 +177,11 @@ export default function AssignCallsPage() {
                 </h1>
 
                 <div className="govuk-!-margin-bottom-5">
-                    <h3
-                        className="govuk-heading-m"
+                    <p
+                        className="govuk-heading-m mandatoryQuestion"
                         style={{ marginRight: '1em', marginLeft: '.2em', marginTop: '2em' }}>
                         Call types
-                    </h3>
+                    </p>
                     <Dropdown
                         dropdownItems={dropdownItems}
                         onChange={(type) => {
