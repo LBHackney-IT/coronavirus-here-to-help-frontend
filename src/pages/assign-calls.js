@@ -7,13 +7,14 @@ import { CallHandlerGateway } from '../gateways/call-handler';
 import { CallbackGateway } from '../gateways/callback';
 import { HelpRequestGateway } from '../gateways/help-request';
 import { useRouter } from 'next/router';
-import { callTypes } from '../helpers/constants';
+import { callTypes, DEFAULT_DROPDOWN_OPTION } from '../helpers/constants';
 
 export default function AssignCallsPage() {
     const router = useRouter();
     const [callHandlers, setCallHandlers] = useState([]);
     const [selectedCallHandlers, setSelectedCallHandlers] = useState([]);
-    const [selectedCallType, setSelectedCallType] = useState('All');
+    const [dropdownItems, setDropDownItems] = useState(['']);
+    const [selectedCallType, setSelectedCallType] = useState('');
     const [selectedAssignment, setSelectedAssignment] = useState([]);
     const [errorsExist, setErrorsExist] = useState(null);
 
@@ -28,6 +29,10 @@ export default function AssignCallsPage() {
     };
 
     useEffect(getCallHandlers, []);
+
+    useEffect(() => {
+        setDropDownItems([DEFAULT_DROPDOWN_OPTION].concat(callTypes));
+    }, []);
 
     const updateSelectedCallHandlers = (value) => {
         if (selectedCallHandlers.includes(value)) {
@@ -54,8 +59,17 @@ export default function AssignCallsPage() {
         return assignmentCount;
     };
 
+    const formIsValid = () => {
+        return (
+            selectedAssignment.length > 0 &&
+            selectedCallHandlers.length > 0 &&
+            selectedCallType != '' &&
+            selectedCallType != DEFAULT_DROPDOWN_OPTION
+        );
+    };
+
     const handleAssign = async (event) => {
-        if (selectedAssignment.length == 0 || selectedCallHandlers.length == 0) {
+        if (!formIsValid()) {
             setErrorsExist(true);
         } else {
             let callbacks = await callbackGateway.getCallback({});
@@ -167,9 +181,13 @@ export default function AssignCallsPage() {
                 </h1>
 
                 <div className="govuk-!-margin-bottom-5">
-                    <label className="govuk-label">Call types</label>
+                    <p
+                        className="govuk-heading-m mandatoryQuestion"
+                        style={{ marginRight: '1em', marginLeft: '.2em', marginTop: '2em' }}>
+                        Call types
+                    </p>
                     <Dropdown
-                        dropdownItems={callTypes}
+                        dropdownItems={dropdownItems}
                         onChange={(type) => {
                             setSelectedCallType(type);
                         }}
