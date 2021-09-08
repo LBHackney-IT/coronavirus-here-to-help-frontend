@@ -44,7 +44,7 @@ export default function CallbacksList({ callbacks }) {
                             Assigned to
                         </th>
                         <th scope="col" className="govuk-table__header">
-                            Rescheduled at
+                            CTAS Id
                         </th>
                         <th scope="col" className="govuk-table__header"></th>
                     </tr>
@@ -96,7 +96,7 @@ export default function CallbacksList({ callbacks }) {
                                         </a>
                                     </Link>
                                 </td>
-                                <td className="govuk-table__cell">{callback.rescheduledAt}</td>
+                                <td className="govuk-table__cell">{callback.nhsCtasId}</td>
                                 <td className="govuk-table__cell">
                                     <Link
                                         href="/helpcase-profile/[residentId]"
