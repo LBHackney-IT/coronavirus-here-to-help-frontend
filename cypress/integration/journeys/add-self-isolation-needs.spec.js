@@ -50,9 +50,19 @@ context('When adding new contact tracing help request and call completed is sele
 });
 
 context('When required fields are not filled in', () => {
-    it('displays validation error', () => {
+    it('displays validation error if form is submitted with no inputs', () => {
         cy.get('[data-testid=callback-form-update_button]').click({ force: true });
         cy.get('[data-testid=callback-form-validation-error]').should('be.visible');
         cy.url().should('match', /\/add-support/);
+    });
+    it('displays validation error when call completed but no support needs selected', () => {
+        cy.get('[data-testid=call-type-radio-button]').eq(0).click({ force: true });
+        cy.get('[data-testid=call-type-yes-radio-button]').click({ force: true });
+        cy.get('[data-testid=yes-spoke-to-resident]').click({ force: true });
+        cy.get('[data-testid=callback_complete-checkbox]').click({ force: true });
+        cy.get('[data-testid=call-direction-radio-button]').first().click({ force: true });
+        cy.get('[data-testid=followup-required-radio-button]').first().click({ force: true });
+        cy.get('[data-testid=callback-form-update_button]').click({ force: true });
+        cy.get('[data-testid=callback-form-validation-error]').should('be.visible');
     });
 });

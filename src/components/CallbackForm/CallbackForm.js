@@ -658,6 +658,7 @@ export default function CallbackForm({
                                                         radioButtonItems={whoMadeInitialContact}
                                                         name="InitialContact"
                                                         onSelectOption={CallDirectionFunction}
+                                                        data-testid="call-direction-radio-button"
                                                     />
                                                 </fieldset>
                                             </div>
