@@ -69,7 +69,7 @@ function CallbacksListPage({ callTypes }) {
 
         if (!queryParams.nhsCtasId.match(/^\s*$/))
             predicatesList.push((callback) =>
-                callback.nhsCtasId?.startsWith(queryParams.nhsCtasId)
+                callback.nhsCtasId?.startsWith(queryParams.nhsCtasId?.trim())
             );
 
         for (let predicate of predicatesList)
@@ -112,10 +112,11 @@ function CallbacksListPage({ callTypes }) {
                         </div>
                         <div className="govuk-grid-column-one-third">
                             <TextInput
-                                id={'ctas-id-filter'}
-                                name={'ctas-id-filter'}
+                                id={'ctasid-filter'}
+                                name={'ctasid-filter'}
                                 value={ctasInput}
                                 onChange={handleCTASFilterChange}
+                                data-testid="ctasid-filter"
                                 placeholder="CTAS Id e.g. zd007fg4"
                             />
                         </div>
