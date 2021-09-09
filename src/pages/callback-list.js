@@ -56,10 +56,8 @@ function CallbacksListPage({ callTypes }) {
 
     const filterCallbacks = () => {
         let collection = callbacks;
-        const queryParams = { ...dropdowns, nhsCtasId: ctasInput };
+        const queryParams = { ...dropdowns, nhsCtasId: ctasInput?.trim() };
         const predicatesList = [];
-
-        console.log(queryParams);
 
         if (queryParams.callType !== 'All')
             predicatesList.push((callback) => callback.callType === queryParams.callType);
@@ -69,7 +67,7 @@ function CallbacksListPage({ callTypes }) {
 
         if (!queryParams.nhsCtasId.match(/^\s*$/))
             predicatesList.push((callback) =>
-                callback.nhsCtasId?.startsWith(queryParams.nhsCtasId?.trim())
+                callback.nhsCtasId?.startsWith(queryParams.nhsCtasId)
             );
 
         for (let predicate of predicatesList)
@@ -92,7 +90,7 @@ function CallbacksListPage({ callTypes }) {
                 </Link>
                 <h1 className="govuk-heading-xl govuk-!-margin-bottom-2">Callback list</h1>
                 <br />
-                <h3 className="govuk-heading-m">Filter by:</h3>
+                <h2 className="govuk-heading-m">Filter by:</h2>
 
                 <div className="govuk-!-margin-bottom-5">
                     <div className="govuk-grid-row">
