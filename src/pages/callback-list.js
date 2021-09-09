@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/layout';
 import CallbacksList from '../components/CallbacksList/CallbacksList';
-import { Dropdown } from '../components/Form';
+import { Dropdown, TextInput } from '../components/Form';
 import { CallbackGateway } from '../gateways/callback';
 import { CallHandlerGateway } from '../gateways/call-handler';
 import { CallTypesGateway } from '../gateways/call-types';
@@ -92,6 +92,9 @@ function CallbacksListPage({ callTypes }) {
                                 onChange={handleCallHandlerChange}
                                 data-testid="call-handlers-dropdown"
                             />
+                        </div>
+                        <div className="govuk-grid-column-one-third">
+                            <TextInput />
                         </div>
                     </div>
                 </div>
