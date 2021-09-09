@@ -92,12 +92,13 @@ function CallbacksListPage({ callTypes }) {
                 </Link>
                 <h1 className="govuk-heading-xl govuk-!-margin-bottom-2">Callback list</h1>
                 <br />
-                <h3 className="govuk-heading-m">Filter by Help Type:</h3>
+                <h3 className="govuk-heading-m">Filter by:</h3>
 
                 <div className="govuk-!-margin-bottom-5">
                     <div className="govuk-grid-row">
                         <div className="govuk-grid-column-one-third">
                             <Dropdown
+                                label={'Help Type'}
                                 dropdownItems={callTypes}
                                 onChange={handleCallTypeChange}
                                 data-testid="help-type-dropdown"
@@ -105,6 +106,7 @@ function CallbacksListPage({ callTypes }) {
                         </div>
                         <div className="govuk-grid-column-one-third">
                             <Dropdown
+                                label={'Assignee'}
                                 dropdownItems={callHandlers}
                                 onChange={handleCallHandlerChange}
                                 data-testid="call-handlers-dropdown"
@@ -113,6 +115,7 @@ function CallbacksListPage({ callTypes }) {
                         <div className="govuk-grid-column-one-third">
                             <TextInput
                                 id={'ctasid-filter'}
+                                label={'CTAS Id'}
                                 name={'ctasid-filter'}
                                 value={ctasInput}
                                 onChange={handleCTASFilterChange}
