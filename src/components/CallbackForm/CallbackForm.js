@@ -5,6 +5,7 @@ import { cevHelpTypes } from '../../helpers/constants';
 import { useRouter } from 'next/router';
 import { GovNotifyGateway } from '../../gateways/gov-notify';
 import {
+    selfIsolationCallTypes,
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     TEST_AND_TRACE_FOLLOWUP_EMAIL
 } from '../../helpers/constants';
@@ -108,7 +109,6 @@ export default function CallbackForm({
         { name: 'No, the resident did not require support', value: 'no_support_needs' }
     ];
     const callTypes = ['Contact Tracing', 'CEV', 'Welfare Call', 'Help Request'];
-    const selfIsolationCallTypes = ['Contact Tracing', 'Welfare Call'];
     const followupRequired = ['Yes', 'No'];
     const whoMadeInitialContact = ['I called the resident', 'The resident called me'];
 
