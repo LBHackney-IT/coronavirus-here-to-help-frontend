@@ -34,10 +34,11 @@ function CallbacksListPage({ callTypes }) {
         setDropdowns({ ...dropdowns, assignedTo: event });
     };
 
-    const handleCTASFilterChange = (newValue) => setCtasInput(newValue);
+    const handleCTASFilterChange = (newValue) => {
+        setCtasInput(newValue);
+    };
 
     const handleCallTypeChange = (event) => {
-        console.log(callTypes);
         setDropdowns({
             ...dropdowns,
             callType: event == 'Self Isolation' ? 'Welfare Call' : event
@@ -55,13 +56,24 @@ function CallbacksListPage({ callTypes }) {
 
     const filterCallbacks = () => {
         let collection = callbacks;
-        let queryParams = { ...dropdowns, nhsCtasId: ctasInput };
-        if (queryParams.callType === 'All') delete queryParams['callType'];
-        if (queryParams.assignedTo === 'Assigned to all') delete queryParams['assignedTo'];
-        if (queryParams.nhsCtasId === '') delete queryParams['nhsCtasId'];
+        const queryParams = { ...dropdowns, nhsCtasId: ctasInput };
+        const predicatesList = [];
 
-        for (let param in queryParams)
-            collection = collection.filter((item) => item[param] == queryParams[param]);
+        console.log(queryParams);
+
+        if (queryParams.callType !== 'All')
+            predicatesList.push((callback) => callback.callType === queryParams.callType);
+
+        if (queryParams.assignedTo !== 'Assigned to all')
+            predicatesList.push((callback) => callback.assignedTo === queryParams.assignedTo);
+
+        if (!queryParams.nhsCtasId.match(/^\s*$/))
+            predicatesList.push((callback) =>
+                callback.nhsCtasId?.startsWith(queryParams.nhsCtasId)
+            );
+
+        for (let predicate of predicatesList)
+            collection = collection.filter((item) => predicate(item));
 
         setSubsetCallbacks(collection);
     };
