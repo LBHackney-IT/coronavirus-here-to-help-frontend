@@ -16,6 +16,8 @@ function CallbacksListPage({ callTypes }) {
         assignedTo: 'Assigned to all'
     });
 
+    const [ctasInput, setCtasInput] = useState('');
+
     const getCallBacks = async () => {
         // const queryParams = { ...dropdowns };
         // if (queryParams.callType === 'All') delete queryParams['callType'];
@@ -31,6 +33,8 @@ function CallbacksListPage({ callTypes }) {
     const handleCallHandlerChange = (event) => {
         setDropdowns({ ...dropdowns, assignedTo: event });
     };
+
+    const handleCTASFilterChange = (newValue) => setCtasInput(newValue);
 
     const handleCallTypeChange = (event) => {
         console.log(callTypes);
@@ -51,9 +55,10 @@ function CallbacksListPage({ callTypes }) {
 
     const filterCallbacks = () => {
         let collection = callbacks;
-        let queryParams = { ...dropdowns };
+        let queryParams = { ...dropdowns, nhsCtasId: ctasInput };
         if (queryParams.callType === 'All') delete queryParams['callType'];
         if (queryParams.assignedTo === 'Assigned to all') delete queryParams['assignedTo'];
+        if (queryParams.nhsCtasId === '') delete queryParams['nhsCtasId'];
 
         for (let param in queryParams)
             collection = collection.filter((item) => item[param] == queryParams[param]);
@@ -63,7 +68,7 @@ function CallbacksListPage({ callTypes }) {
 
     useEffect(getCallBacks, []);
     useEffect(getCallHandlers, []);
-    useEffect(filterCallbacks, [dropdowns]);
+    useEffect(filterCallbacks, [dropdowns, ctasInput]);
 
     return (
         <Layout>
@@ -94,7 +99,12 @@ function CallbacksListPage({ callTypes }) {
                             />
                         </div>
                         <div className="govuk-grid-column-one-third">
-                            <TextInput />
+                            <TextInput
+                                id={'ctas-id-filter'}
+                                name={'ctas-id-filter'}
+                                value={ctasInput}
+                                onChange={handleCTASFilterChange}
+                            />
                         </div>
                     </div>
                 </div>
