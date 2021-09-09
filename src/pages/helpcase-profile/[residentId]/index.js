@@ -20,7 +20,8 @@ export default function HelpcaseProfile({ residentId }) {
         "Welfare Call":[],
         "Help Requesst":[],
         "Contact Tracing":[],
-        "CEV":[]
+        "CEV":[],
+        "Link Work":[]
     })
 
     const getResidentAndHelpRequests = async () => {
@@ -35,7 +36,8 @@ export default function HelpcaseProfile({ residentId }) {
                                         "Welfare Call":[],
                                         "Help Request":[],
                                         "Contact Tracing":[],
-                                        "CEV":[]}
+                                        "CEV":[],
+                                        "Link Work":[]}
 
             residentCaseNotes.forEach(caseNote => {
                 if(!caseNote) return

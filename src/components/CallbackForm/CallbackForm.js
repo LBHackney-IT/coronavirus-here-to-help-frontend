@@ -107,7 +107,7 @@ export default function CallbackForm({
         { name: 'Yes, the resident had other support needs', value: 'other_support_needs' },
         { name: 'No, the resident did not require support', value: 'no_support_needs' }
     ];
-    const callTypes = ['Contact Tracing', 'CEV', 'Welfare Call', 'Help Request'];
+    const callTypes = ['Contact Tracing', 'CEV', 'Welfare Call', 'Help Request', 'Link Work'];
     const selfIsolationCallTypes = ['Contact Tracing', 'Welfare Call'];
     const followupRequired = ['Yes', 'No'];
     const whoMadeInitialContact = ['I called the resident', 'The resident called me'];
