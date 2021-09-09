@@ -19,12 +19,8 @@ function CallbacksListPage({ callTypes }) {
     const [ctasInput, setCtasInput] = useState('');
 
     const getCallBacks = async () => {
-        // const queryParams = { ...dropdowns };
-        // if (queryParams.callType === 'All') delete queryParams['callType'];
-        // if (queryParams.assignedTo === 'Assigned to all') delete queryParams['assignedTo'];
-
         const gateway = new CallbackGateway();
-        const callbackList = await gateway.getCallback({}); //queryParams);
+        const callbackList = await gateway.getCallback({});
 
         setCallbacks(callbackList);
         setSubsetCallbacks(callbackList);
@@ -118,7 +114,7 @@ function CallbacksListPage({ callTypes }) {
                                 value={ctasInput}
                                 onChange={handleCTASFilterChange}
                                 data-testid="ctasid-filter"
-                                placeholder="CTAS Id e.g. zd007fg4"
+                                placeholder="e.g. zd007fg4"
                             />
                         </div>
                     </div>
