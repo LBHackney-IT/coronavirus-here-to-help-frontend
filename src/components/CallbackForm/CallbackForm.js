@@ -3,27 +3,37 @@ import { Checkbox, RadioButton, Button, SingleRadioButton } from '../Form';
 import Link from 'next/link';
 import { cevHelpTypes } from '../../helpers/constants';
 import { useRouter } from 'next/router';
-import {GovNotifyGateway} from '../../gateways/gov-notify'
-import {TEST_AND_TRACE_FOLLOWUP_TEXT, TEST_AND_TRACE_FOLLOWUP_EMAIL} from '../../helpers/constants'
-import styles from "../CallbackForm/CallbackForm.module.scss";
+import { GovNotifyGateway } from '../../gateways/gov-notify';
+import {
+    TEST_AND_TRACE_FOLLOWUP_TEXT,
+    TEST_AND_TRACE_FOLLOWUP_EMAIL
+} from '../../helpers/constants';
+import styles from '../CallbackForm/CallbackForm.module.scss';
 
-
-export default function CallbackForm({residentId, resident, helpRequest, backHref, saveFunction, editableCaseNotes, helpRequestExists}) {
+export default function CallbackForm({
+    residentId,
+    resident,
+    helpRequest,
+    backHref,
+    saveFunction,
+    editableCaseNotes,
+    helpRequestExists
+}) {
     const [callMade, setCallMade] = useState(null);
-    const [callOutcome, setCallOutcome] = useState("");
-    const [followUpRequired, setFollowupRequired] = useState(null)
-    const [helpNeeded, setHelpNeeded] = useState("")
-    const [callDirection, setCallDirection] = useState("")
-    const [callOutcomeValues, setCallOutcomeValues] = useState("")
-    const [caseNote, setCaseNote] = useState("")
+    const [callOutcome, setCallOutcome] = useState('');
+    const [followUpRequired, setFollowupRequired] = useState(null);
+    const [helpNeeded, setHelpNeeded] = useState('');
+    const [callDirection, setCallDirection] = useState('');
+    const [callOutcomeValues, setCallOutcomeValues] = useState('');
+    const [caseNote, setCaseNote] = useState('');
     const [cevHelpNeeds, setCEVHelpNeeds] = useState({});
-    const [errorsExist, setErrorsExist] = useState(null)
-    const [phoneNumber, setPhoneNumber] = useState(null)
-    const [email, setEmail] = useState(null)
-    const [emailTemplatePreview, setEmailTemplatePreview] = useState(null)
-    const [textTemplatePreview, setTextTemplatePreview] = useState(null)
-    const [showEmail, setShowEmail] = useState(false)
-    const [showText, setShowText] = useState(false)
+    const [errorsExist, setErrorsExist] = useState(null);
+    const [phoneNumber, setPhoneNumber] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [emailTemplatePreview, setEmailTemplatePreview] = useState(null);
+    const [textTemplatePreview, setTextTemplatePreview] = useState(null);
+    const [showEmail, setShowEmail] = useState(false);
+    const [showText, setShowText] = useState(false);
     const [submitEnabled, setSubmitEnabled] = useState(true);
 
     const [errors, setErrors] = useState({
@@ -35,17 +45,18 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
     });
 
     useEffect(() => {
-        setHelpNeeded(helpRequest ? helpRequest.helpNeeded : "");
+        setHelpNeeded(helpRequest ? helpRequest.helpNeeded : '');
         setCEVHelpNeeds({
             foodAccessVoluntarySector: helpRequest ? helpRequest.helpWithAccessingFood : null,
-            prioritySupermarketFoodDelivery: helpRequest ? helpRequest.helpWithAccessingSupermarketFood : null,
+            prioritySupermarketFoodDelivery: helpRequest
+                ? helpRequest.helpWithAccessingSupermarketFood
+                : null,
             supportCompletingNSSForm: helpRequest ? helpRequest.helpWithCompletingNssForm : null,
             generalCEVGuidance: helpRequest ? helpRequest.helpWithShieldingGuidance : null,
             otherNeeds: helpRequest ? helpRequest.helpWithAccessingOtherEssentials : null,
             noNeedsIdentified: helpRequest ? helpRequest.helpWithNoNeedsIdentified : null
         });
-    }, [helpRequest])
-
+    }, [helpRequest]);
 
     const onCEVHelpNeedsCheckboxChange = (cevHelpItem) => {
         Object.entries(cevHelpTypes).map(([key, cevTextVal]) => {
@@ -63,7 +74,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                   key = key.replace(/_/g, ' ');
                   const upcaseKey = key.charAt(0).toUpperCase() + key.slice(1);
                   return (
-                      <span data-testid='metadata' class="govuk-caption-l">
+                      <span data-testid="metadata" class="govuk-caption-l">
                           <strong>{upcaseKey}:</strong> {value}
                       </span>
                   );
@@ -71,7 +82,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             : '';
 
     const nhsCtasId = helpRequest ? (
-        <span class="govuk-caption-l" data-testid='ctas-id'>
+        <span class="govuk-caption-l" data-testid="ctas-id">
             <strong>CTAS ID:</strong> {helpRequest.nhsCtasId || 'Not found'}
         </span>
     ) : (
@@ -89,58 +100,62 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         { name: 'No answer machine', value: 'no_answer_machine' }
     ];
     const selfIsolationNeeds = [
-        { name: 'Yes, the resident needed a referral to the food consortia', value: 'food_consortia_referral_needs' },
+        {
+            name: 'Yes, the resident needed a referral to the food consortia',
+            value: 'food_consortia_referral_needs'
+        },
         { name: 'Yes, the resident had other support needs', value: 'other_support_needs' },
         { name: 'No, the resident did not require support', value: 'no_support_needs' }
     ];
     const callTypes = ['Contact Tracing', 'CEV', 'Welfare Call', 'Help Request'];
+    const selfIsolationCallTypes = ['Contact Tracing', 'Welfare Call'];
     const followupRequired = ['Yes', 'No'];
     const whoMadeInitialContact = ['I called the resident', 'The resident called me'];
 
-    useEffect(async ()=>{
-        const govNotifyGateway = new GovNotifyGateway()
+    useEffect(async () => {
+        const govNotifyGateway = new GovNotifyGateway();
 
-        try{
-
-            let textTemplate = await govNotifyGateway.getTemplatePreview(TEST_AND_TRACE_FOLLOWUP_TEXT)
-            if(textTemplate){
-                setTextTemplatePreview(textTemplate.body)
+        try {
+            let textTemplate = await govNotifyGateway.getTemplatePreview(
+                TEST_AND_TRACE_FOLLOWUP_TEXT
+            );
+            if (textTemplate) {
+                setTextTemplatePreview(textTemplate.body);
             }
-            let emailTemplate = await govNotifyGateway.getTemplatePreview(TEST_AND_TRACE_FOLLOWUP_EMAIL)
-            if(emailTemplate){
-                console.log("emailTemplate",emailTemplate)
-                setEmailTemplatePreview(emailTemplate.body)
+            let emailTemplate = await govNotifyGateway.getTemplatePreview(
+                TEST_AND_TRACE_FOLLOWUP_EMAIL
+            );
+            if (emailTemplate) {
+                console.log('emailTemplate', emailTemplate);
+                setEmailTemplatePreview(emailTemplate.body);
             }
-        } catch(err){
-            console.log(`Error fetching themplates: ${err}`)
+        } catch (err) {
+            console.log(`Error fetching themplates: ${err}`);
         }
+    }, []);
 
-
-    }, [])
-
-    const setShowContactDetails = value => {
-        if(value == TEST_AND_TRACE_FOLLOWUP_EMAIL){
-            if(showEmail){
-                setShowEmail(false)
-                setEmail(null)
-            }else{
-                setShowEmail(true)
-            }
-        }
-        if(value == TEST_AND_TRACE_FOLLOWUP_TEXT){
-            if(showText){
-                setShowText(false)
-                setPhoneNumber(null)
-            }else{
-                setShowText(true)
+    const setShowContactDetails = (value) => {
+        if (value == TEST_AND_TRACE_FOLLOWUP_EMAIL) {
+            if (showEmail) {
+                setShowEmail(false);
+                setEmail(null);
+            } else {
+                setShowEmail(true);
             }
         }
-    }
+        if (value == TEST_AND_TRACE_FOLLOWUP_TEXT) {
+            if (showText) {
+                setShowText(false);
+                setPhoneNumber(null);
+            } else {
+                setShowText(true);
+            }
+        }
+    };
 
-
-    const callBackFunction = value => {
-        if(value=='Yes' || value == 'No'){
-            setFollowupRequired(value)
+    const callBackFunction = (value) => {
+        if (value == 'Yes' || value == 'No') {
+            setFollowupRequired(value);
         }
         if (callTypes.includes(value)) {
             setHelpNeeded(value);
@@ -166,12 +181,12 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             let newCallOutcomesValues = callOutcomeArray.filter(
                 (callOutcomeValue) => callOutcomeValue != value
             );
-            if (value == 'callback_complete'){
+            if (value == 'callback_complete') {
                 newCallOutcomesValues = newCallOutcomesValues.filter(
-                    (callOutcomeValue) => 
-                    callOutcomeValue != 'food_consortia_referral_needs' &&
-                    callOutcomeValue != 'other_support_needs' &&
-                    callOutcomeValue != 'no_support_needs'
+                    (callOutcomeValue) =>
+                        callOutcomeValue != 'food_consortia_referral_needs' &&
+                        callOutcomeValue != 'other_support_needs' &&
+                        callOutcomeValue != 'no_support_needs'
                 );
             }
 
@@ -193,15 +208,16 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         return helpNeeded !== 'CEV' || Object.values(cevHelpNeeds).includes(true);
     };
     const validateSelfIsolationNeedsFieldset = () => {
-        return callOutcomeValues.includes('callback_complete') &&
+        return (
+            (callOutcomeValues.includes('callback_complete') &&
                 helpNeeded === 'Welfare Call' &&
                 (callOutcomeValues.includes('food_consortia_referral_needs') ||
                     callOutcomeValues.includes('other_support_needs') ||
-                    callOutcomeValues.includes('no_support_needs')) ||  
-                !callOutcomeValues.includes('callback_complete') ||
-                helpNeeded !== 'Welfare Call'
-        };
-    
+                    callOutcomeValues.includes('no_support_needs'))) ||
+            !callOutcomeValues.includes('callback_complete') ||
+            helpNeeded !== 'Welfare Call'
+        );
+    };
 
     // Checks to see if the UI field was set (from null) to boolean (true, false) value, or if UI
     // field was set to a Truthy value: from null, undefined or "" to "CEV", "Welfare", etc.
@@ -253,17 +269,19 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
         };
 
         if (helpNeeded === 'CEV') {
-            helpRequestObject.helpWithAccessingFood = cevHelpNeeds.foodAccessVoluntarySector,
-            helpRequestObject.helpWithAccessingSupermarketFood = cevHelpNeeds.prioritySupermarketFoodDelivery,
-            helpRequestObject.helpWithCompletingNssForm = cevHelpNeeds.supportCompletingNSSForm,
-            helpRequestObject.helpWithShieldingGuidance = cevHelpNeeds.generalCEVGuidance,
-            helpRequestObject.helpWithAccessingOtherEssentials = cevHelpNeeds.otherNeeds,
-            helpRequestObject.helpWithNoNeedsIdentified = cevHelpNeeds.noNeedsIdentified
+            (helpRequestObject.helpWithAccessingFood = cevHelpNeeds.foodAccessVoluntarySector),
+                (helpRequestObject.helpWithAccessingSupermarketFood =
+                    cevHelpNeeds.prioritySupermarketFoodDelivery),
+                (helpRequestObject.helpWithCompletingNssForm =
+                    cevHelpNeeds.supportCompletingNSSForm),
+                (helpRequestObject.helpWithShieldingGuidance = cevHelpNeeds.generalCEVGuidance),
+                (helpRequestObject.helpWithAccessingOtherEssentials = cevHelpNeeds.otherNeeds),
+                (helpRequestObject.helpWithNoNeedsIdentified = cevHelpNeeds.noNeedsIdentified);
         }
 
         // jeez, this looks sooo fragile
         if (
-            mandatoryFieldsWereGivenInput() && 
+            mandatoryFieldsWereGivenInput() &&
             validateSelfIsolationNeedsFieldset() &&
             ((callMade == true &&
                 callOutcomeValues.length > 1 &&
@@ -284,7 +302,16 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                     ((phoneNumber != null && showText) || !showText)))
         ) {
             setSubmitEnabled(false);
-            saveFunction(helpNeeded, callDirection, callOutcomeValues, helpRequestObject, callMade, caseNote, phoneNumber, email);
+            saveFunction(
+                helpNeeded,
+                callDirection,
+                callOutcomeValues,
+                helpRequestObject,
+                callMade,
+                caseNote,
+                phoneNumber,
+                email
+            );
         } else {
             setErrorsExist(true); // generic error, user won't be told what's wrong.
             window.scrollTo(0, 0);
@@ -316,22 +343,28 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
             <h1 className="govuk-heading-xl" style={{ marginTop: '0px', marginBottom: '40px' }}>
                 {' '}
                 {resident.firstName} {resident.lastName}
-                <br/>
-                {helpRequest && 
-                    <strong data-testid='help-type' className={`govuk-tag govuk-tag--grey ${styles['help-request-tag']}`}> 
-                        {helpRequest?.helpNeeded == 'Welfare Call' ? 'Self Isolation' : helpRequest?.helpNeeded}
+                <br />
+                {helpRequest && (
+                    <strong
+                        data-testid="help-type"
+                        className={`govuk-tag govuk-tag--grey ${styles['help-request-tag']}`}>
+                        {helpRequest?.helpNeeded == 'Welfare Call'
+                            ? 'Self Isolation'
+                            : helpRequest?.helpNeeded}
                     </strong>
-                }
+                )}
                 <br></br>
-                {helpRequest &&
-                 <span class="govuk-caption-l">
-                    <strong>Date requested: </strong> {helpRequest?.dateTimeRecorded?.split('T')[0]}
-                </span>}
+                {helpRequest && (
+                    <span class="govuk-caption-l">
+                        <strong>Date requested: </strong>{' '}
+                        {helpRequest?.dateTimeRecorded?.split('T')[0]}
+                    </span>
+                )}
                 {nhsCtasId}
                 {metadata}
-                <div className='govuk-!-margin-top-5'>
-                    <a href={process.env.NEXT_PUBLIC_SNAPSHOT_URL}  target="_blank">
-                        <Button text="Open Better Conversations" />                        
+                <div className="govuk-!-margin-top-5">
+                    <a href={process.env.NEXT_PUBLIC_SNAPSHOT_URL} target="_blank">
+                        <Button text="Open Better Conversations" />
                         <svg width="24px" height="24px" viewBox="0 0 24 24">
                             <g
                                 id="external_link"
@@ -347,7 +380,10 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                             </g>
                         </svg>
                     </a>
-                    <p className={`${styles['button-hint']}`}>Opens in new tab. Please note that information from Better Conversations will not currently be saved to the resident's profile.</p>
+                    <p className={`${styles['button-hint']}`}>
+                        Opens in new tab. Please note that information from Better Conversations
+                        will not currently be saved to the resident's profile.
+                    </p>
                 </div>
             </h1>
             <form>
@@ -357,28 +393,31 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                             <div>
                                 <div className="govuk-grid-column">
                                     <div className="govuk-form-group lbh-form-group">
-                                        {!helpRequestExists && 
-                                        <fieldset className="govuk-fieldset">
-                                            <legend className="govuk-fieldset__legend mandatoryQuestion">
-                                                {' '}
-                                                Support required
-                                            </legend>
-                                            <br />
-                                            {
-                                               <RadioButton
+                                        {!helpRequestExists && (
+                                            <fieldset className="govuk-fieldset">
+                                                <legend className="govuk-fieldset__legend mandatoryQuestion">
+                                                    {' '}
+                                                    Support required
+                                                </legend>
+                                                <br />
+                                                {
+                                                    <RadioButton
                                                         radioButtonItems={callTypes}
                                                         name="HelpNeeded"
-                                                        onSelectOption={(callBackFunction)}
+                                                        onSelectOption={callBackFunction}
                                                         data-testid="call-type-radio-button"
                                                     />
-                                            }
-                                        </fieldset>}
+                                                }
+                                            </fieldset>
+                                        )}
                                     </div>
                                 </div>
                             </div>
                             <br />
                             {helpNeeded === 'CEV' && (
-                                <fieldset className="govuk-fieldset govuk-!-margin-bottom-7" data-testid="cev-help-needs">
+                                <fieldset
+                                    className="govuk-fieldset govuk-!-margin-bottom-7"
+                                    data-testid="cev-help-needs">
                                     <legend className="govuk-fieldset__legend mandatoryQuestion">
                                         Help needed because of coronavirus
                                     </legend>
@@ -574,38 +613,41 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                                                     </div>
                                                 </fieldset>
                                             </div>
-                                            {callOutcomeValues.includes('callback_complete') && helpNeeded == 'Welfare Call' &&
-                                            <div className="govuk-form-group lbh-form-group" data-testid="self-isolation-needs">
-                                                <fieldset className="govuk-fieldset">
-                                                    <legend className="govuk-fieldset__legend mandatoryQuestion">
-                                                        {' '}
-                                                        Did the resident require any support?{' '}
-                                                    </legend>
-                                                    {selfIsolationNeeds.map(
-                                                        (
-                                                            selfIsolationNeed
-                                                        ) => {
-                                                            return (
-                                                                <Checkbox
-                                                                    id={
-                                                                        selfIsolationNeed.name
-                                                                    }
-                                                                    name="selfIsolationNeeds"
-                                                                    type="checkbox"
-                                                                    value={
-                                                                        selfIsolationNeed.value
-                                                                    }
-                                                                    label={
-                                                                        selfIsolationNeed.name
-                                                                    }
-                                                                    onCheckboxChange={
-                                                                        onCheckboxChangeUpdate
-                                                                    }></Checkbox>
-                                                            );
-                                                        }
-                                                    )}
-                                                </fieldset>
-                                            </div>}
+                                            {callOutcomeValues.includes('callback_complete') &&
+                                                selfIsolationCallTypes.includes(helpNeeded) && (
+                                                    <div
+                                                        className="govuk-form-group lbh-form-group"
+                                                        data-testid="self-isolation-needs">
+                                                        <fieldset className="govuk-fieldset">
+                                                            <legend className="govuk-fieldset__legend mandatoryQuestion">
+                                                                {' '}
+                                                                Did the resident require any
+                                                                support?{' '}
+                                                            </legend>
+                                                            {selfIsolationNeeds.map(
+                                                                (selfIsolationNeed) => {
+                                                                    return (
+                                                                        <Checkbox
+                                                                            id={
+                                                                                selfIsolationNeed.name
+                                                                            }
+                                                                            name="selfIsolationNeeds"
+                                                                            type="checkbox"
+                                                                            value={
+                                                                                selfIsolationNeed.value
+                                                                            }
+                                                                            label={
+                                                                                selfIsolationNeed.name
+                                                                            }
+                                                                            onCheckboxChange={
+                                                                                onCheckboxChangeUpdate
+                                                                            }></Checkbox>
+                                                                    );
+                                                                }
+                                                            )}
+                                                        </fieldset>
+                                                    </div>
+                                                )}
                                             <div className="govuk-form-group lbh-form-group">
                                                 <fieldset className="govuk-fieldset">
                                                     <legend className="govuk-fieldset__legend mandatoryQuestion">
@@ -616,6 +658,7 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                                                         radioButtonItems={whoMadeInitialContact}
                                                         name="InitialContact"
                                                         onSelectOption={CallDirectionFunction}
+                                                        data-testid="call-direction-radio-button"
                                                     />
                                                 </fieldset>
                                             </div>
@@ -644,105 +687,157 @@ export default function CallbackForm({residentId, resident, helpRequest, backHre
                 </div>
                 <hr className="govuk-section-break govuk-section-break--m govuk-section-break" />
                 <h2 className="govuk-heading-l">Case notes:</h2>
-                {editableCaseNotes && <><h3 className="govuk-heading-m">
-                    Add a new case note (optional):
-                </h3>
-                <div className="govuk-form-group">
-                    <span id="NewCaseNote-hint" className="govuk-hint  lbh-hint"></span>
-                    <textarea
-                        className="govuk-textarea  lbh-textarea"
-                        id="NewCaseNote"
-                        name="NewCaseNote"
-                        rows="5"
-                        onChange = {(e) => {setCaseNote(e.target.value)}}
-                        aria-describedby="NewCaseNote-hint">
-                    </textarea>
-                </div></>}
+                {editableCaseNotes && (
+                    <>
+                        <h3 className="govuk-heading-m">Add a new case note (optional):</h3>
+                        <div className="govuk-form-group">
+                            <span id="NewCaseNote-hint" className="govuk-hint  lbh-hint"></span>
+                            <textarea
+                                className="govuk-textarea  lbh-textarea"
+                                id="NewCaseNote"
+                                name="NewCaseNote"
+                                rows="5"
+                                onChange={(e) => {
+                                    setCaseNote(e.target.value);
+                                }}
+                                aria-describedby="NewCaseNote-hint"></textarea>
+                        </div>
+                    </>
+                )}
                 <br></br>
 
-
                 <fieldset className="govuk-fieldset">
-                    <h3 className="govuk-heading-m">Would you like to message the resident following this call?</h3>
+                    <h3 className="govuk-heading-m">
+                        Would you like to message the resident following this call?
+                    </h3>
 
                     <Checkbox
-                        id='SendEmail'
+                        id="SendEmail"
                         name="SendEmail"
-                        data-testid='send-email-checkbox'
+                        data-testid="send-email-checkbox"
                         type="checkbox"
                         value={TEST_AND_TRACE_FOLLOWUP_EMAIL}
                         label="Send Email"
                         aria-describedby="SendEmail"
-                        onCheckboxChange={setShowContactDetails}>
-                    </Checkbox>
-                    {showEmail &&
-                        <div className="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact">
-                            <br/>
-                            {emailTemplatePreview &&
+                        onCheckboxChange={setShowContactDetails}></Checkbox>
+                    {showEmail && (
+                        <div
+                            className="govuk-radios__conditional govuk-radios__conditional--hidden"
+                            id="conditional-contact">
+                            <br />
+                            {emailTemplatePreview && (
                                 <div className="govuk-form-group">
                                     <div>
-                                    <label className="govuk-label mandatoryQuestion" for="contact-by-email">Email address</label>
-                                    <input className="govuk-input govuk-!-width-one-third" id="contact-by-email" name="contact-by-email" type="email" spellCheck="false" onChange={(e)=>setEmail(e.target.value)}/>
+                                        <label
+                                            className="govuk-label mandatoryQuestion"
+                                            for="contact-by-email">
+                                            Email address
+                                        </label>
+                                        <input
+                                            className="govuk-input govuk-!-width-one-third"
+                                            id="contact-by-email"
+                                            name="contact-by-email"
+                                            type="email"
+                                            spellCheck="false"
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div id="contact-hint" className="govuk-hint">
+                                        Email preview
+                                    </div>
+                                    <div
+                                        id="email-template-preview"
+                                        className="govuk-inset-text"
+                                        data-testid="send-email-preview">
+                                        {emailTemplatePreview}
+                                    </div>
                                 </div>
-                                <br/><br/>
-                                <div id="contact-hint" className="govuk-hint">Email preview</div>
-                                <div id = "email-template-preview" className="govuk-inset-text" data-testid='send-email-preview'>{emailTemplatePreview}</div>
-                            </div>
-                            }
-                            {!emailTemplatePreview &&
+                            )}
+                            {!emailTemplatePreview && (
                                 <div className="govuk-warning-text">
-                                    <span className="govuk-warning-text__icon" aria-hidden="true">!</span>
+                                    <span className="govuk-warning-text__icon" aria-hidden="true">
+                                        !
+                                    </span>
                                     <strong className="govuk-warning-text__text">
-                                    <span className="govuk-warning-text__assistive">Warning</span>
-                                        There is no email option for this call type, please uncheck this option to proceed
+                                        <span className="govuk-warning-text__assistive">
+                                            Warning
+                                        </span>
+                                        There is no email option for this call type, please uncheck
+                                        this option to proceed
                                     </strong>
                                 </div>
-                            }
-                            <br/>
+                            )}
+                            <br />
                         </div>
-                    }
+                    )}
                     <Checkbox
-                        id='SendText'
+                        id="SendText"
                         name="SendText"
                         type="checkbox"
-                        data-testid='send-text-checkbox'
+                        data-testid="send-text-checkbox"
                         value={TEST_AND_TRACE_FOLLOWUP_TEXT}
                         label="Send Text"
                         aria-describedby="SendEmail"
-                        onCheckboxChange={setShowContactDetails}>
-                    </Checkbox>
-                    {showText  &&
-                        <div className="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-3">
-                            <br/>
-                            {textTemplatePreview &&
-                            <div className="govuk-form-group">
-                                <div>
-                                    <label className="govuk-label mandatoryQuestion" for="contact-by-text">Mobile phone number</label>
-                                    <input className="govuk-input govuk-!-width-one-third" id="contact-by-text" name="contact-by-text" type="tel" onChange={(e)=>{setPhoneNumber(e.target.value)}}/>
+                        onCheckboxChange={setShowContactDetails}></Checkbox>
+                    {showText && (
+                        <div
+                            className="govuk-radios__conditional govuk-radios__conditional--hidden"
+                            id="conditional-contact-3">
+                            <br />
+                            {textTemplatePreview && (
+                                <div className="govuk-form-group">
+                                    <div>
+                                        <label
+                                            className="govuk-label mandatoryQuestion"
+                                            for="contact-by-text">
+                                            Mobile phone number
+                                        </label>
+                                        <input
+                                            className="govuk-input govuk-!-width-one-third"
+                                            id="contact-by-text"
+                                            name="contact-by-text"
+                                            type="tel"
+                                            onChange={(e) => {
+                                                setPhoneNumber(e.target.value);
+                                            }}
+                                        />
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div id="contact-hint" className="govuk-hint">
+                                        Text preview
+                                    </div>
+                                    <div
+                                        className="govuk-inset-text"
+                                        data-testid="send-text-preview">
+                                        {textTemplatePreview}
+                                    </div>
                                 </div>
-                                <br/><br/>
-                                    <div id="contact-hint" className="govuk-hint">Text preview</div>
-                                    <div className="govuk-inset-text" data-testid='send-text-preview'>{textTemplatePreview}</div>
-                                </div>
-                            }
-                             <br/>
-                            {!textTemplatePreview &&
+                            )}
+                            <br />
+                            {!textTemplatePreview && (
                                 <div className="govuk-warning-text">
-                                    <span className="govuk-warning-text__icon" aria-hidden="true">!</span>
+                                    <span className="govuk-warning-text__icon" aria-hidden="true">
+                                        !
+                                    </span>
                                     <strong className="govuk-warning-text__text">
-                                    <span className="govuk-warning-text__assistive">Warning</span>
-                                    There is no text option for this call type, please uncheck this option to proceed
+                                        <span className="govuk-warning-text__assistive">
+                                            Warning
+                                        </span>
+                                        There is no text option for this call type, please uncheck
+                                        this option to proceed
                                     </strong>
                                 </div>
-                            }
-                            <br/>
+                            )}
+                            <br />
                         </div>
-
-                    }
+                    )}
                     <br />
-
                 </fieldset>
 
-                <br/>
+                <br />
                 <div className="govuk-grid-column">
                     <div className="govuk-form-group lbh-form-group">
                         <fieldset className="govuk-fieldset">
