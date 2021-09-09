@@ -8,7 +8,8 @@ const TextInput = ({
     validate,
     value,
     className,
-    required
+    required,
+    ...others
 }) => {
     const [hasError, setHasError] = useState(false);
 
@@ -42,6 +43,7 @@ const TextInput = ({
                 onChange={updateValue}
                 value={value}
                 required={required}
+                {...others}
             />
         </div>
     );

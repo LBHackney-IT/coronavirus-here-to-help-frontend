@@ -116,6 +116,7 @@ function CallbacksListPage({ callTypes }) {
                                 name={'ctas-id-filter'}
                                 value={ctasInput}
                                 onChange={handleCTASFilterChange}
+                                placeholder="CTAS Id e.g. zd007fg4"
                             />
                         </div>
                     </div>
