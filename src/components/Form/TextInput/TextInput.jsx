@@ -23,9 +23,11 @@ const TextInput = ({
 
     return (
         <div className={`govuk-form-group${hasError ? ' govuk-form-group--error' : ''}`}>
-            <label className="govuk-label" htmlFor={name}>
-                {label}
-            </label>
+            {label && (
+                <label className="govuk-label" htmlFor={name}>
+                    {label}
+                </label>
+            )}
             {hasError && (
                 <span id={`${name}-error`} className="govuk-error-message">
                     <span className="govuk-visually-hidden">Error:</span> The {label} is required
