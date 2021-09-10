@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/layout';
 import CallbacksList from '../components/CallbacksList/CallbacksList';
-import { Dropdown } from '../components/Form';
+import { Dropdown, TextInput } from '../components/Form';
 import { CallbackGateway } from '../gateways/callback';
 import { CallHandlerGateway } from '../gateways/call-handler';
 import { CallTypesGateway } from '../gateways/call-types';
@@ -16,13 +16,11 @@ function CallbacksListPage({ callTypes }) {
         assignedTo: 'Assigned to all'
     });
 
-    const getCallBacks = async () => {
-        // const queryParams = { ...dropdowns };
-        // if (queryParams.callType === 'All') delete queryParams['callType'];
-        // if (queryParams.assignedTo === 'Assigned to all') delete queryParams['assignedTo'];
+    const [ctasInput, setCtasInput] = useState('');
 
+    const getCallBacks = async () => {
         const gateway = new CallbackGateway();
-        const callbackList = await gateway.getCallback({}); //queryParams);
+        const callbackList = await gateway.getCallback({});
 
         setCallbacks(callbackList);
         setSubsetCallbacks(callbackList);
@@ -32,8 +30,11 @@ function CallbacksListPage({ callTypes }) {
         setDropdowns({ ...dropdowns, assignedTo: event });
     };
 
+    const handleCTASFilterChange = (newValue) => {
+        setCtasInput(newValue);
+    };
+
     const handleCallTypeChange = (event) => {
-        console.log(callTypes);
         setDropdowns({
             ...dropdowns,
             callType: event == 'Self Isolation' ? 'Welfare Call' : event
@@ -51,19 +52,29 @@ function CallbacksListPage({ callTypes }) {
 
     const filterCallbacks = () => {
         let collection = callbacks;
-        let queryParams = { ...dropdowns };
-        if (queryParams.callType === 'All') delete queryParams['callType'];
-        if (queryParams.assignedTo === 'Assigned to all') delete queryParams['assignedTo'];
+        const queryParams = { ...dropdowns, nhsCtasId: ctasInput?.trim() };
+        const predicatesList = [];
 
-        for (let param in queryParams)
-            collection = collection.filter((item) => item[param] == queryParams[param]);
+        if (queryParams.callType !== 'All')
+            predicatesList.push((callback) => callback.callType === queryParams.callType);
+
+        if (queryParams.assignedTo !== 'Assigned to all')
+            predicatesList.push((callback) => callback.assignedTo === queryParams.assignedTo);
+
+        if (!queryParams.nhsCtasId.match(/^\s*$/))
+            predicatesList.push((callback) =>
+                callback.nhsCtasId?.startsWith(queryParams.nhsCtasId)
+            );
+
+        for (let predicate of predicatesList)
+            collection = collection.filter((item) => predicate(item));
 
         setSubsetCallbacks(collection);
     };
 
     useEffect(getCallBacks, []);
     useEffect(getCallHandlers, []);
-    useEffect(filterCallbacks, [dropdowns]);
+    useEffect(filterCallbacks, [dropdowns, ctasInput]);
 
     return (
         <Layout>
@@ -75,12 +86,13 @@ function CallbacksListPage({ callTypes }) {
                 </Link>
                 <h1 className="govuk-heading-xl govuk-!-margin-bottom-2">Callback list</h1>
                 <br />
-                <h3 className="govuk-heading-m">Filter by Help Type:</h3>
+                <h2 className="govuk-heading-m">Filter by:</h2>
 
                 <div className="govuk-!-margin-bottom-5">
                     <div className="govuk-grid-row">
                         <div className="govuk-grid-column-one-third">
                             <Dropdown
+                                label={'Help Type'}
                                 dropdownItems={callTypes}
                                 onChange={handleCallTypeChange}
                                 data-testid="help-type-dropdown"
@@ -88,9 +100,21 @@ function CallbacksListPage({ callTypes }) {
                         </div>
                         <div className="govuk-grid-column-one-third">
                             <Dropdown
+                                label={'Assignee'}
                                 dropdownItems={callHandlers}
                                 onChange={handleCallHandlerChange}
                                 data-testid="call-handlers-dropdown"
+                            />
+                        </div>
+                        <div className="govuk-grid-column-one-third">
+                            <TextInput
+                                id={'ctasid-filter'}
+                                label={'CTAS Id'}
+                                name={'ctasid-filter'}
+                                value={ctasInput}
+                                onChange={handleCTASFilterChange}
+                                data-testid="ctasid-filter"
+                                placeholder="e.g. zd007fg4"
                             />
                         </div>
                     </div>

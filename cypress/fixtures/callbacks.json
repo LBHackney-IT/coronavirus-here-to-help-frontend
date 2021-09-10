@@ -58,7 +58,6 @@
         "AdviceNotes": "string",
         "HelpNeeded": "Help Request",
         "NhsNumber": "string",
-        "NhsCtasId": "string",
         "AssignedTo": "Person B",
         "RescheduledAt": "",
         "NhsCtasId": "123abc",
@@ -138,12 +137,11 @@
         "CallbackRequired": null,
         "CaseNotes": "[object Object]---[object Object]",
         "AdviceNotes": "string",
-        "HelpNeeded": "Shielding",
+        "HelpNeeded": "Contact Tracing",
         "NhsNumber": "string",
-        "NhsCtasId": "string",
         "AssignedTo": "Person A",
         "RescheduledAt": "",
-        "NhsCtasId": "123abc",
+        "NhsCtasId": "ext4fs",
         "HelpRequestCalls": [
             {
                 "id": 205,
@@ -220,12 +218,11 @@
         "CallbackRequired": null,
         "CaseNotes": "[object Object]---[object Object]",
         "AdviceNotes": "string",
-        "HelpNeeded": "Help Request",
+        "HelpNeeded": "Contact Tracing",
         "NhsNumber": "string",
-        "NhsCtasId": "string",
         "AssignedTo": "Person B",
         "RescheduledAt": "",
-        "NhsCtasId": "123abc",
+        "NhsCtasId": "exodia",
         "HelpRequestCalls": [
             {
                 "id": 69,
@@ -302,12 +299,11 @@
         "CallbackRequired": true,
         "CaseNotes": "[object Object]---[object Object]",
         "AdviceNotes": "string",
-        "HelpNeeded": "Contact Tracing",
+        "HelpNeeded": "Help Request",
         "NhsNumber": "string",
-        "NhsCtasId": "string",
         "AssignedTo": "Person B",
         "RescheduledAt": "04:44",
-        "NhsCtasId": "123abc",
+        "NhsCtasId": "yugioh",
         "HelpRequestCalls": [
             {
                 "id": 129,
@@ -386,10 +382,9 @@
         "AdviceNotes": "string",
         "HelpNeeded": "Welfare Call",
         "NhsNumber": "string",
-        "NhsCtasId": "string",
         "AssignedTo": "Person D",
         "RescheduledAt": "",
-        "NhsCtasId": "123abc",
+        "NhsCtasId": "007agent",
         "HelpRequestCalls": [
             {
                 "id": 297,
@@ -468,10 +463,9 @@
         "AdviceNotes": "string",
         "HelpNeeded": "Help Request",
         "NhsNumber": "string",
-        "NhsCtasId": "string",
         "AssignedTo": "Person A",
         "RescheduledAt": "",
-        "NhsCtasId": "123abc",
+        "NhsCtasId": "008sa9",
         "HelpRequestCalls": [
             {
                 "id": 283,

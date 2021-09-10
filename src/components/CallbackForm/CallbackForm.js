@@ -5,6 +5,7 @@ import { cevHelpTypes } from '../../helpers/constants';
 import { useRouter } from 'next/router';
 import { GovNotifyGateway } from '../../gateways/gov-notify';
 import {
+    selfIsolationCallTypes,
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     TEST_AND_TRACE_FOLLOWUP_EMAIL
 } from '../../helpers/constants';

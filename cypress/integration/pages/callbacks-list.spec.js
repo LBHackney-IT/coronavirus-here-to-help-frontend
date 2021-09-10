@@ -52,6 +52,16 @@ describe('Callbacks list page filters callbacks correctly', () => {
         cy.get('[data-testid=call-handlers-dropdown]').select('Person B');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '4');
     });
+
+    it('Upon typing into CTAS filter text input, callbacks get filtered by that value', () => {
+        cy.visit('/callback-list');
+        cy.get('[data-testid=ctasid-filter]').type('ex');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '2');
+        cy.get('[data-testid=ctasid-filter]').type('o');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
+        cy.get('[data-testid=ctasid-filter]').type('dia ');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
+    });
 });
 
 describe('Navigating Away from Callbacks list page', () => {

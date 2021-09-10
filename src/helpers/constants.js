@@ -22,6 +22,7 @@ export const callOutcomes = {
 
 export const helpTypes = [ALL, WELFARE_CALL, HELP_REQUEST, CONTACT_TRACING, CEV, LINK_WORK];
 export const callTypes = ['All', 'Help Request', 'CEV', 'Welfare Call', 'Contact Tracing'];
+export const selfIsolationCallTypes = [WELFARE_CALL, CONTACT_TRACING];
 
 export const cevHelpTypes = {
     foodAccessVoluntarySector: 'Accessing food via voluntary sector',
