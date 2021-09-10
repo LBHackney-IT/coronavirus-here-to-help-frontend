@@ -18,9 +18,10 @@ export default function HelpcaseProfile({ residentId }) {
     const [caseNotes, setCaseNotes] = useState({
         "All":[],
         "Welfare Call":[],
-        "Help Requesst":[],
+        "Help Request":[],
         "Contact Tracing":[],
-        "CEV":[]
+        "CEV":[],
+        "Link Work":[]
     })
 
     const getResidentAndHelpRequests = async () => {
@@ -35,7 +36,8 @@ export default function HelpcaseProfile({ residentId }) {
                                         "Welfare Call":[],
                                         "Help Request":[],
                                         "Contact Tracing":[],
-                                        "CEV":[]}
+                                        "CEV":[],
+                                        "Link Work":[]}
 
             residentCaseNotes.forEach(caseNote => {
                 if(!caseNote) return

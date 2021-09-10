@@ -6,12 +6,12 @@ beforeEach(() => {
 describe('Callbacks list page displays and maps data correctly', () => {
     it('Callbacks are retrieved and mapped to table rows', () => {
         cy.visit('/callback-list');
-        cy.get('[data-testid=callbacks-table_row]').should('have.length', 6);
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', 7);
     });
 
     it('Help types are mapped to help case type dropdown options', () => {
         cy.visit('/callback-list');
-        cy.get('[data-testid=help-type-dropdown]').find('option').should('have.length', 5);
+        cy.get('[data-testid=help-type-dropdown]').find('option').should('have.length', 6);
     });
 
     it('Call handlers are mapped to call handlers dropdown options', () => {
@@ -35,20 +35,22 @@ describe('Callbacks list page displays and maps data correctly', () => {
 describe('Callbacks list page filters callbacks correctly', () => {
     it('Upon selecting Help Case Type dropdown value, callbacks get filtered by that value', () => {
         cy.visit('/callback-list');
-        cy.get('[data-testid=callbacks-table_row]').should('have.length', '6');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '7');
         cy.get('[data-testid=help-type-dropdown]').select('Self Isolation');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
         cy.get('[data-testid=help-type-dropdown]').select('Help Request');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '3');
+        cy.get('[data-testid=help-type-dropdown]').select('Link Work');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
     });
 
     it('Upon selecting Call Handlers dropdown value, callbacks get filtered by that value', () => {
         cy.visit('/callback-list');
-        cy.get('[data-testid=callbacks-table_row]').should('have.length', '6');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '7');
         cy.get('[data-testid=call-handlers-dropdown]').select('Person A');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '2');
         cy.get('[data-testid=call-handlers-dropdown]').select('Person B');
-        cy.get('[data-testid=callbacks-table_row]').should('have.length', '3');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '4');
     });
 
     it('Upon typing into CTAS filter text input, callbacks get filtered by that value', () => {
