@@ -16,6 +16,18 @@
     "HelpRequestId": 15,
     "ResidentId": 1,
     "CaseNote": "{\"author\":\"Bilbo Baggins\",\"noteDate\":\"Thu, 7 Sep 2020 16:56:06 GMT\",\"note\":\"*** CREATED ***\"}"
+  },
+  {
+    "Id": 3,
+    "HelpRequestId": 11,
+    "ResidentId": 1,
+    "CaseNote": "{\"author\":\"Hermione Granger\",\"noteDate\":\"Thu, 7 Sep 2020 17:56:06 GMT\",\"note\":\"*** CREATED ***\"}"
+  },
+  {
+    "Id": 3,
+    "HelpRequestId": 160,
+    "ResidentId": 1,
+    "CaseNote": "{\"author\":\"Gandalf\",\"noteDate\":\"Thu, 7 Sep 2020 18:56:06 GMT\",\"note\":\"*** CREATED ***\"}"
   }
 ]
 

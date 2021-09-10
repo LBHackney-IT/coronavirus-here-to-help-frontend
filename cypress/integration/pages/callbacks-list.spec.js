@@ -40,6 +40,8 @@ describe('Callbacks list page filters callbacks correctly', () => {
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
         cy.get('[data-testid=help-type-dropdown]').select('Help Request');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '3');
+        cy.get('[data-testid=help-type-dropdown]').select('Link Work');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
     });
 
     it('Upon selecting Call Handlers dropdown value, callbacks get filtered by that value', () => {

@@ -18,7 +18,7 @@ export default function HelpcaseProfile({ residentId }) {
     const [caseNotes, setCaseNotes] = useState({
         "All":[],
         "Welfare Call":[],
-        "Help Requesst":[],
+        "Help Request":[],
         "Contact Tracing":[],
         "CEV":[],
         "Link Work":[]
