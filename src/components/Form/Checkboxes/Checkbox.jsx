@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Checkbox = ({ label, isSelected, onCheckboxChange, value, ...others }) => (
-    <div className="govuk-checkboxes__item">
-        <input 
+const Checkbox = ({ label, isSelected, onCheckboxChange, value, containerStyle, ...others }) => (
+    <div className="govuk-checkboxes__item" style={containerStyle}>
+        <input
             type="checkbox"
             label={label}
             checked={isSelected}
@@ -11,9 +11,7 @@ const Checkbox = ({ label, isSelected, onCheckboxChange, value, ...others }) => 
             className="govuk-checkboxes__input"
             {...others}
         />
-        <label className="govuk-label govuk-checkboxes__label">
-        {label}
-        </label>
+        <label className="govuk-label govuk-checkboxes__label">{label}</label>
     </div>
 );
 

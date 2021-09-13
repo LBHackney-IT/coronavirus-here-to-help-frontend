@@ -2,19 +2,19 @@ import React from 'react';
 import Layout from '../components/layout';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { Button, Checkbox, Dropdown } from '../components/Form';
+import { Button, Checkbox } from '../components/Form';
 import { CallHandlerGateway } from '../gateways/call-handler';
 import { CallbackGateway } from '../gateways/callback';
 import { HelpRequestGateway } from '../gateways/help-request';
 import { useRouter } from 'next/router';
-import { callTypes, DEFAULT_DROPDOWN_OPTION } from '../helpers/constants';
+import { callTypes, ALL } from '../helpers/constants';
 
 export default function AssignCallsPage() {
     const router = useRouter();
     const [callHandlers, setCallHandlers] = useState([]);
     const [selectedCallHandlers, setSelectedCallHandlers] = useState([]);
-    const [dropdownItems, setDropDownItems] = useState(['']);
-    const [selectedCallType, setSelectedCallType] = useState('');
+    const [filteredCallTypes, setFilteredCallTypes] = useState([]);
+    const [selectedCallTypes, setSelectedCallTypes] = useState([]);
     const [selectedAssignment, setSelectedAssignment] = useState([]);
     const [errorsExist, setErrorsExist] = useState(null);
 
@@ -31,7 +31,7 @@ export default function AssignCallsPage() {
     useEffect(getCallHandlers, []);
 
     useEffect(() => {
-        setDropDownItems([DEFAULT_DROPDOWN_OPTION].concat(callTypes));
+        setFilteredCallTypes(callTypes.filter((x) => x != ALL));
     }, []);
 
     const updateSelectedCallHandlers = (value) => {
@@ -63,8 +63,7 @@ export default function AssignCallsPage() {
         return (
             selectedAssignment.length > 0 &&
             selectedCallHandlers.length > 0 &&
-            selectedCallType != '' &&
-            selectedCallType != DEFAULT_DROPDOWN_OPTION
+            selectedCallTypes.length > 0
         );
     };
 
@@ -73,9 +72,10 @@ export default function AssignCallsPage() {
             setErrorsExist(true);
         } else {
             let callbacks = await callbackGateway.getCallback({});
-            if (selectedCallType != 'All') {
-                callbacks = callbacks.filter((callback) => callback.callType == selectedCallType);
-            }
+
+            callbacks = callbacks.filter((callback) =>
+                selectedCallTypes.includes(callback.callType)
+            );
 
             let assignmentCount = {};
             selectedCallHandlers.forEach(
@@ -146,6 +146,18 @@ export default function AssignCallsPage() {
         }
     };
 
+    const selectedCallTypeChanged = (callType) => {
+        let selectedValues = selectedCallTypes;
+
+        if (selectedValues.includes(callType)) {
+            selectedValues = selectedValues.filter((c) => c != callType);
+        } else {
+            selectedValues.push(callType);
+        }
+
+        setSelectedCallTypes(selectedValues);
+    };
+
     return (
         <Layout>
             {errorsExist && (
@@ -184,20 +196,25 @@ export default function AssignCallsPage() {
                     <p
                         className="govuk-heading-m mandatoryQuestion"
                         style={{ marginRight: '1em', marginLeft: '.2em', marginTop: '2em' }}>
-                        Call types
+                        Which calls do you want to assign staff to today?
                     </p>
-                    <Dropdown
-                        dropdownItems={dropdownItems}
-                        onChange={(type) => {
-                            setSelectedCallType(type);
-                        }}
-                        data-testid="assign-call-type_dropdown"
-                    />
-                    <div className="govuk-hint">Select call help type</div>
+                    <div className="govuk-checkboxes  lbh-checkboxes">
+                        {filteredCallTypes.map((type, index) => {
+                            return (
+                                <Checkbox
+                                    key="call-type-checkbox"
+                                    label={type}
+                                    value={type}
+                                    onCheckboxChange={selectedCallTypeChanged}
+                                    data-testid={`call-type-checkbox`}
+                                />
+                            );
+                        })}
+                    </div>
                     <h3
                         className="govuk-heading-m"
                         style={{ marginRight: '1em', marginLeft: '.2em', marginTop: '2em' }}>
-                        Assign to
+                        Which status of calls should be assigned?
                     </h3>
                     <div className="govuk-checkboxes  lbh-checkboxes">
                         <Checkbox
@@ -220,19 +237,25 @@ export default function AssignCallsPage() {
                         Select who is able to make calls today
                     </h3>
 
-                    <div className="govuk-checkboxes  lbh-checkboxes">
-                        {callHandlers.map((callHandler) => {
+                    <ul
+                        className="govuk-checkboxes  lbh-checkboxes"
+                        style={{
+                            display: 'flex',
+                            flexWrap: 'Wrap'
+                        }}>
+                        {callHandlers.sort().map((callHandler) => {
                             return (
                                 <Checkbox
                                     key={callHandler}
                                     label={callHandler}
                                     value={callHandler}
+                                    containerStyle={{ flexBasis: '28%' }}
                                     onCheckboxChange={updateSelectedCallHandlers}
                                     data-testid="assign-call-handler-checkbox"
                                 />
                             );
                         })}
-                    </div>
+                    </ul>
                 </div>
 
                 <div className="govuk-grid-row" id="btn-bottom-panel">
