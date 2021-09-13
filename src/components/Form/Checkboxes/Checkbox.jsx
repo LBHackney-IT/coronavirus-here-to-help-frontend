@@ -11,7 +11,9 @@ const Checkbox = ({ label, isSelected, onCheckboxChange, value, containerStyle, 
             className="govuk-checkboxes__input"
             {...others}
         />
-        <label className="govuk-label govuk-checkboxes__label">{label}</label>
+        <label className="govuk-label govuk-checkboxes__label">
+            {label == 'Welfare Call' ? 'Self Isolation' : label}
+        </label>
     </div>
 );
 
