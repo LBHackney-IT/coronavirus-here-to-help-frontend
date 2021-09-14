@@ -18,11 +18,11 @@ export default function HelpcaseProfile({ residentId }) {
     const [caseNotes, setCaseNotes] = useState({
         All: [],
         'Welfare Call': [],
-        'Help Request': [],
+        'Help Requesst': [],
         'Contact Tracing': [],
         CEV: [],
         'Link Work': [],
-        EUSS: []
+        ...(process.env.NEXT_PUBLIC_IS_EUSS_ENABLED ? ['EUSS'] : [])
     });
 
     const getResidentAndHelpRequests = async () => {
@@ -39,9 +39,11 @@ export default function HelpcaseProfile({ residentId }) {
                 'Help Request': [],
                 'Contact Tracing': [],
                 CEV: [],
-                'Link Work': [],
-                EUSS: []
+                'Link Work': []
             };
+            if (process.env.NEXT_PUBLIC_IS_EUSS_ENABLED) {
+                categorisedCaseNotes.push({ EUSS: [] });
+            }
 
             residentCaseNotes.forEach((caseNote) => {
                 if (!caseNote) return;

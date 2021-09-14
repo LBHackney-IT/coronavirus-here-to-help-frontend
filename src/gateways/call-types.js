@@ -9,7 +9,7 @@ export class CallTypesGateway extends DefaultGateway {
             'Self Isolation',
             'Contact Tracing',
             'Link Work',
-            'EUSS'
+            ...(process.env.NEXT_PUBLIC_IS_EUSS_ENABLED ? ['EUSS'] : [])
         ];
     }
 }

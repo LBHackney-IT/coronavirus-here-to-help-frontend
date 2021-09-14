@@ -114,7 +114,7 @@ export default function CallbackForm({
         'Welfare Call',
         'Help Request',
         'Link Work',
-        'EUSS'
+        ...(process.env.NEXT_PUBLIC_IS_EUSS_ENABLED ? ['EUSS'] : [])
     ];
     const followupRequired = ['Yes', 'No'];
     const whoMadeInitialContact = ['I called the resident', 'The resident called me'];

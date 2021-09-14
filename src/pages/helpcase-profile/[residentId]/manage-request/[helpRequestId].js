@@ -29,11 +29,11 @@ export default function addSupportPage({ residentId, helpRequestId }) {
     const [caseNotes, setCaseNotes] = useState({
         All: [],
         'Welfare Call': [],
-        'Help Request': [],
+        'Help Requesst': [],
         'Contact Tracing': [],
         CEV: [],
         'Link Work': [],
-        EUSS: [],
+        ...(process.env.NEXT_PUBLIC_IS_EUSS_ENABLED ? ['EUSS'] : []),
         helpType: null
     });
 
@@ -64,9 +64,11 @@ export default function addSupportPage({ residentId, helpRequestId }) {
                 'Help Request': [],
                 'Contact Tracing': [],
                 CEV: [],
-                'Link Work': [],
-                EUSS: []
+                'Link Work': []
             };
+            if (process.env.NEXT_PUBLIC_IS_EUSS_ENABLED) {
+                categorisedCaseNotes.push({ EUSS: [] });
+            }
             if (helpRequestCaseNotes) {
                 helpRequestCaseNotes.forEach((helpRequestCaseNote) => {
                     helpRequestCaseNote.caseNote.forEach((note) => {

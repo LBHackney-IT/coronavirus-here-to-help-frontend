@@ -21,7 +21,15 @@ export const callOutcomes = {
     no_support_needs: 'No, the resident did not require support'
 };
 
-export const helpTypes = [ALL, WELFARE_CALL, HELP_REQUEST, CONTACT_TRACING, CEV, LINK_WORK, EUSS];
+export const helpTypes = [
+    ALL,
+    WELFARE_CALL,
+    HELP_REQUEST,
+    CONTACT_TRACING,
+    CEV,
+    LINK_WORK,
+    ...(process.env.NEXT_PUBLIC_IS_EUSS_ENABLED ? [EUSS] : [])
+];
 export const callTypes = ['All', 'Help Request', 'CEV', 'Welfare Call', 'Contact Tracing'];
 export const selfIsolationCallTypes = [WELFARE_CALL, CONTACT_TRACING];
 
