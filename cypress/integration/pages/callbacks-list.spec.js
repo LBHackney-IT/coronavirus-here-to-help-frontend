@@ -11,7 +11,7 @@ describe('Callbacks list page displays and maps data correctly', () => {
 
     it('Help types are mapped to help case type dropdown options', () => {
         cy.visit('/callback-list');
-        cy.get('[data-testid=help-type-dropdown]').find('option').should('have.length', 6);
+        cy.get('[data-testid=help-type-dropdown]').find('option').should('have.length', 7);
     });
 
     it('Call handlers are mapped to call handlers dropdown options', () => {

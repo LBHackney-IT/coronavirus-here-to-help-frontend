@@ -27,12 +27,14 @@ export default function addSupportPage({ residentId, helpRequestId }) {
     const [calls, setCalls] = useState([]);
     const [helpRequest, setHelpRequest] = useState({});
     const [caseNotes, setCaseNotes] = useState({
-        'All': [],
+        All: [],
         'Welfare Call': [],
-        'Help Requesst': [],
+        'Help Request': [],
         'Contact Tracing': [],
-        'CEV': [],
-        'helpType': null
+        CEV: [],
+        'Link Work': [],
+        EUSS: [],
+        helpType: null
     });
 
     const router = useRouter();
@@ -57,12 +59,13 @@ export default function addSupportPage({ residentId, helpRequestId }) {
             );
 
             let categorisedCaseNotes = {
-                'All': [],
+                All: [],
                 'Welfare Call': [],
                 'Help Request': [],
                 'Contact Tracing': [],
-                'CEV': [],
-                'Link Work': []
+                CEV: [],
+                'Link Work': [],
+                EUSS: []
             };
             if (helpRequestCaseNotes) {
                 helpRequestCaseNotes.forEach((helpRequestCaseNote) => {
