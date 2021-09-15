@@ -8,7 +8,7 @@ export const ALL = 'All';
 export const LINK_WORK = 'Link Work';
 export const EUSS = 'EUSS';
 export const DEFAULT_DROPDOWN_OPTION = 'Please choose';
-export const IS_EUSS_ENABLED = process.env.NODE_ENV !== 'production';
+export const IS_EUSS_ENABLED = process.env.APP_STAGE !== 'production';
 
 export const callOutcomes = {
     callback_complete: 'Callback complete',
