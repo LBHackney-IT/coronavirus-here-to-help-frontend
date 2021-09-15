@@ -1,4 +1,4 @@
-import { DEFAULT_DROPDOWN_OPTION } from '../../../src/helpers/constants';
+import { DEFAULT_DROPDOWN_OPTION, EUSS, IS_EUSS_ENABLED } from '../../../src/helpers/constants';
 
 beforeEach(() => {
     cy.login();
@@ -31,12 +31,27 @@ describe('As a call handler I can bulk assign calls', () => {
             cy.get('[data-testid=assign-call-assign_button]').click({ force: true });
             cy.url().should('match', /\/callback-list$/);
         });
+        if (IS_EUSS_ENABLED) {
+            it('Can assign to EUSS call types when EUSS is enabled', () => {
+                cy.get('[data-testid=call-type-checkbox]').eq(4).click({ force: true });
+                cy.get('[data-testid=assign-call-handler-checkbox]').first().click({ force: true });
+                cy.get('[data-testid=assign-call-assigned-checkbox]').click({ force: true });
+                cy.get('[data-testid=assign-call-assign_button]').click({ force: true });
+            });
+        }
+        if (!IS_EUSS_ENABLED) {
+            it('Does not assign to EUSS call types when EUSS is disabled ', () => {
+                cy.get('[data-testid=call-type-checkbox]')
+                    .should('have.length', 4)
+                    .should('not.have.value', EUSS);
+            });
+        }
     });
 
     context('Assign call page displays and maps data correctly', () => {
         it('Call handlers are retrieved and mapped to checkboxes', () => {
             cy.get('[data-testid=call-type-checkbox]')
-                .should('have.length', 4)
+                .should('have.length', IS_EUSS_ENABLED ? 5 : 4)
                 .should('not.have.value', DEFAULT_DROPDOWN_OPTION);
             cy.get('[data-testid=assign-call-handler-checkbox]').should('have.length', 4);
         });
