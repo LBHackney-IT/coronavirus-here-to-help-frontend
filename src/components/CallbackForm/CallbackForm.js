@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Checkbox, RadioButton, Button, SingleRadioButton } from '../Form';
 import Link from 'next/link';
-import { cevHelpTypes, IS_EUSS_ENABLED } from '../../helpers/constants';
-import { useRouter } from 'next/router';
-import { GovNotifyGateway } from '../../gateways/gov-notify';
 import {
+    cevHelpTypes,
+    IS_EUSS_ENABLED,
     selfIsolationCallTypes,
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     TEST_AND_TRACE_FOLLOWUP_EMAIL
 } from '../../helpers/constants';
+import { useRouter } from 'next/router';
+import { GovNotifyGateway } from '../../gateways/gov-notify';
 import styles from '../CallbackForm/CallbackForm.module.scss';
 
 export default function CallbackForm({
