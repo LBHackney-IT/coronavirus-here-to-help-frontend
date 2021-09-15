@@ -15,6 +15,7 @@ import CaseNotesGateway from '../../../gateways/case-notes';
 export default function HelpcaseProfile({ residentId }) {
     const [resident, setResident] = useState([]);
     const [helpRequests, setHelpRequests] = useState([]);
+    //Don't believe we need the caseNotes to be set - could just use []
     const [caseNotes, setCaseNotes] = useState({
         "All":[],
         "Welfare Call":[],

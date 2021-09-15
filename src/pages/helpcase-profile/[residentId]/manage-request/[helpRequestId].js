@@ -26,6 +26,7 @@ export default function addSupportPage({ residentId, helpRequestId }) {
     const [user, setUser] = useState({});
     const [calls, setCalls] = useState([]);
     const [helpRequest, setHelpRequest] = useState({});
+    //Don't believe we need the caseNotes to be set - could just use []
     const [caseNotes, setCaseNotes] = useState({
         'All': [],
         'Welfare Call': [],
