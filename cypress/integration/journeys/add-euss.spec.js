@@ -13,7 +13,7 @@ if (IS_EUSS_ENABLED) {
     context('When adding new EUSS help request and call completed is selected', () => {
         it('does not display self isolation help needs form and form can be submitted', () => {
             cy.get('[data-testid=call-type-radio-button]').eq(5).should('have.value', EUSS);
-            cy.get('[data-testid=call-type-radio-button]').check(EUSS);
+            cy.get('[data-testid=call-type-radio-button]').check(EUSS).click({ force: true });
             cy.get('[data-testid=call-type-yes-radio-button]').click({ force: true });
             cy.get('[data-testid=yes-spoke-to-resident]').click({ force: true });
             cy.get('[data-testid=callback_complete-checkbox]').click({ force: true });
@@ -35,7 +35,7 @@ if (IS_EUSS_ENABLED) {
         });
 
         it('displays validation error when call completed but no follow up selected', () => {
-            cy.get('[data-testid=call-type-radio-button]').eq(5).click({ force: true });
+            cy.get('[data-testid=call-type-radio-button]').check(EUSS).click({ force: true });
             cy.get('[data-testid=call-type-yes-radio-button]').click({ force: true });
             cy.get('[data-testid=yes-spoke-to-resident]').click({ force: true });
             cy.get('[data-testid=callback_complete-checkbox]').click({ force: true });
