@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Checkbox, RadioButton, Button, SingleRadioButton } from '../Form';
 import Link from 'next/link';
-import { cevHelpTypes } from '../../helpers/constants';
-import { useRouter } from 'next/router';
-import { GovNotifyGateway } from '../../gateways/gov-notify';
 import {
+    cevHelpTypes,
+    IS_EUSS_ENABLED,
     selfIsolationCallTypes,
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     TEST_AND_TRACE_FOLLOWUP_EMAIL
 } from '../../helpers/constants';
+import { useRouter } from 'next/router';
+import { GovNotifyGateway } from '../../gateways/gov-notify';
 import styles from '../CallbackForm/CallbackForm.module.scss';
 
 export default function CallbackForm({
@@ -108,8 +109,14 @@ export default function CallbackForm({
         { name: 'Yes, the resident had other support needs', value: 'other_support_needs' },
         { name: 'No, the resident did not require support', value: 'no_support_needs' }
     ];
-    const callTypes = ['Contact Tracing', 'CEV', 'Welfare Call', 'Help Request', 'Link Work'];
-    const selfIsolationCallTypes = ['Contact Tracing', 'Welfare Call'];
+    const callTypes = [
+        'Contact Tracing',
+        'CEV',
+        'Welfare Call',
+        'Help Request',
+        'Link Work',
+        ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
+    ];
     const followupRequired = ['Yes', 'No'];
     const whoMadeInitialContact = ['I called the resident', 'The resident called me'];
 

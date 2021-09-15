@@ -6,7 +6,9 @@ export const HELP_REQUEST = 'Help Request';
 export const WELFARE_CALL = 'Welfare Call';
 export const ALL = 'All';
 export const LINK_WORK = 'Link Work';
+export const EUSS = 'EUSS';
 export const DEFAULT_DROPDOWN_OPTION = 'Please choose';
+export const IS_EUSS_ENABLED = process.env.NODE_ENV !== 'production';
 
 export const callOutcomes = {
     callback_complete: 'Callback complete',
@@ -20,7 +22,15 @@ export const callOutcomes = {
     no_support_needs: 'No, the resident did not require support'
 };
 
-export const helpTypes = [ALL, WELFARE_CALL, HELP_REQUEST, CONTACT_TRACING, CEV, LINK_WORK];
+export const helpTypes = [
+    ALL,
+    WELFARE_CALL,
+    HELP_REQUEST,
+    CONTACT_TRACING,
+    CEV,
+    LINK_WORK,
+    ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
+];
 export const callTypes = ['All', 'Help Request', 'CEV', 'Welfare Call', 'Contact Tracing'];
 export const selfIsolationCallTypes = [WELFARE_CALL, CONTACT_TRACING];
 

@@ -7,22 +7,23 @@ import { Button } from '../../../components/Form';
 import { ResidentGateway } from '../../../gateways/resident';
 import { HelpRequestGateway } from '../../../gateways/help-request';
 import CallHistory from '../../../components/CallHistory/CallHistory';
-import CaseNotes  from "../../../components/CaseNotes/CaseNotes";
+import CaseNotes from '../../../components/CaseNotes/CaseNotes';
 import { useState, useEffect } from 'react';
-import { helpTypes } from "../../../helpers/constants";
+import { helpTypes, IS_EUSS_ENABLED } from '../../../helpers/constants';
 import CaseNotesGateway from '../../../gateways/case-notes';
 
 export default function HelpcaseProfile({ residentId }) {
     const [resident, setResident] = useState([]);
     const [helpRequests, setHelpRequests] = useState([]);
     const [caseNotes, setCaseNotes] = useState({
-        "All":[],
-        "Welfare Call":[],
-        "Help Request":[],
-        "Contact Tracing":[],
-        "CEV":[],
-        "Link Work":[]
-    })
+        All: [],
+        'Welfare Call': [],
+        'Help Requesst': [],
+        'Contact Tracing': [],
+        CEV: [],
+        'Link Work': [],
+        ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
+    });
 
     const getResidentAndHelpRequests = async () => {
         try {
@@ -31,32 +32,41 @@ export default function HelpcaseProfile({ residentId }) {
             const hrGateway = new HelpRequestGateway();
             const helpRequests = await hrGateway.getHelpRequests(residentId);
             const caseNotesGateway = new CaseNotesGateway();
-            const residentCaseNotes = await caseNotesGateway.getResidentCaseNotes(residentId)
-            let categorisedCaseNotes = {"All":[],
-                                        "Welfare Call":[],
-                                        "Help Request":[],
-                                        "Contact Tracing":[],
-                                        "CEV":[],
-                                        "Link Work":[]}
+            const residentCaseNotes = await caseNotesGateway.getResidentCaseNotes(residentId);
+            let categorisedCaseNotes = {
+                All: [],
+                'Welfare Call': [],
+                'Help Request': [],
+                'Contact Tracing': [],
+                CEV: [],
+                'Link Work': []
+            };
+            if (IS_EUSS_ENABLED) {
+                categorisedCaseNotes.EUSS = [];
+            }
 
-            residentCaseNotes.forEach(caseNote => {
-                if(!caseNote) return
-                caseNote.caseNote.forEach(note => {
-                    let helpNeeded = helpRequests.filter(hr => hr.id == caseNote.helpRequestId);
+            residentCaseNotes.forEach((caseNote) => {
+                if (!caseNote) return;
+                caseNote.caseNote.forEach((note) => {
+                    let helpNeeded = helpRequests.filter((hr) => hr.id == caseNote.helpRequestId);
                     // a hack to mitigate bad data
                     if (helpNeeded?.length > 0) {
                         helpNeeded = helpNeeded[0].helpNeeded;
-                        note.helpNeeded = helpNeeded
-                        if (note && note.helpNeeded && note.helpNeeded in categorisedCaseNotes) { categorisedCaseNotes[note.helpNeeded].push(note) }
-                        categorisedCaseNotes['All'].push(note)
+                        note.helpNeeded = helpNeeded;
+                        if (note && note.helpNeeded && note.helpNeeded in categorisedCaseNotes) {
+                            categorisedCaseNotes[note.helpNeeded].push(note);
+                        }
+                        categorisedCaseNotes['All'].push(note);
                     }
                 });
 
-                helpTypes.forEach(helpType => {
-                    categorisedCaseNotes[helpType].sort((a, b) => new Date(b.noteDate) - new Date(a.noteDate))
+                helpTypes.forEach((helpType) => {
+                    categorisedCaseNotes[helpType].sort(
+                        (a, b) => new Date(b.noteDate) - new Date(a.noteDate)
+                    );
                 });
             });
-            setCaseNotes(categorisedCaseNotes)
+            setCaseNotes(categorisedCaseNotes);
             setResident(resident);
             setHelpRequests(helpRequests);
         } catch (err) {
@@ -71,10 +81,12 @@ export default function HelpcaseProfile({ residentId }) {
 
     useEffectAsync(getResidentAndHelpRequests, []);
 
-
     const calls = [].concat
-        .apply([], helpRequests.map(helpRequest => helpRequest.helpRequestCalls))
-        .sort((a,b) => new Date(b.callDateTime) - new Date(a.callDateTime))
+        .apply(
+            [],
+            helpRequests.map((helpRequest) => helpRequest.helpRequestCalls)
+        )
+        .sort((a, b) => new Date(b.callDateTime) - new Date(a.callDateTime));
 
     return (
         resident && (
@@ -92,26 +104,26 @@ export default function HelpcaseProfile({ residentId }) {
                     </a>
                     <div className="govuk-grid-row">
                         <div className="govuk-grid-column-one-quarter-from-desktop">
-                           {resident.id && <KeyInformation resident={resident} />}
+                            {resident.id && <KeyInformation resident={resident} />}
                         </div>
 
                         <div className="govuk-grid-column-three-quarters-from-desktop">
-                            <h1
-                                className="govuk-heading-xl"
-                                data-testid="resident-name_header">
+                            <h1 className="govuk-heading-xl" data-testid="resident-name_header">
                                 {resident.firstName} {resident.lastName}
                             </h1>
 
-                        <SupportTable helpRequests={helpRequests} />
-                        <Link href="/add-support/[residentId]" as={`/add-support/${residentId}`}>
-                            <Button data-testid='add-support-button'text="+ Add new support" />
-                        </Link>
+                            <SupportTable helpRequests={helpRequests} />
+                            <Link
+                                href="/add-support/[residentId]"
+                                as={`/add-support/${residentId}`}>
+                                <Button data-testid="add-support-button" text="+ Add new support" />
+                            </Link>
 
                             <hr />
 
                             <br />
-                            <CallHistory calls={calls}  />
-                            <CaseNotes caseNotes={caseNotes}/>
+                            <CallHistory calls={calls} />
+                            <CaseNotes caseNotes={caseNotes} />
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,7 @@ import { CaseNotesGateway } from '../../../../gateways/case-notes';
 import { useRouter } from 'next/router';
 import CallHistory from '../../../../components/CallHistory/CallHistory';
 import CaseNotes from '../../../../components/CaseNotes/CaseNotes';
-import { helpTypes } from '../../../../helpers/constants';
+import { helpTypes, IS_EUSS_ENABLED } from '../../../../helpers/constants';
 import { GovNotifyGateway } from '../../../../gateways/gov-notify';
 import {
     TEST_AND_TRACE_FOLLOWUP_TEXT,
@@ -27,12 +27,14 @@ export default function addSupportPage({ residentId, helpRequestId }) {
     const [calls, setCalls] = useState([]);
     const [helpRequest, setHelpRequest] = useState({});
     const [caseNotes, setCaseNotes] = useState({
-        'All': [],
+        All: [],
         'Welfare Call': [],
         'Help Requesst': [],
         'Contact Tracing': [],
-        'CEV': [],
-        'helpType': null
+        CEV: [],
+        'Link Work': [],
+        ...(IS_EUSS_ENABLED ? ['EUSS'] : []),
+        helpType: null
     });
 
     const router = useRouter();
@@ -57,13 +59,17 @@ export default function addSupportPage({ residentId, helpRequestId }) {
             );
 
             let categorisedCaseNotes = {
-                'All': [],
+                All: [],
                 'Welfare Call': [],
                 'Help Request': [],
                 'Contact Tracing': [],
-                'CEV': [],
+                CEV: [],
                 'Link Work': []
             };
+            if (IS_EUSS_ENABLED) {
+                categorisedCaseNotes.EUSS = [];
+            }
+
             if (helpRequestCaseNotes) {
                 helpRequestCaseNotes.forEach((helpRequestCaseNote) => {
                     helpRequestCaseNote.caseNote.forEach((note) => {
