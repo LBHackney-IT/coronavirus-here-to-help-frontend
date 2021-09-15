@@ -11,7 +11,7 @@ import { CaseNotesGateway } from '../../../../gateways/case-notes';
 import { useRouter } from 'next/router';
 import CallHistory from '../../../../components/CallHistory/CallHistory';
 import CaseNotes from '../../../../components/CaseNotes/CaseNotes';
-import { helpTypes } from '../../../../helpers/constants';
+import { helpTypes, IS_EUSS_ENABLED } from '../../../../helpers/constants';
 import { GovNotifyGateway } from '../../../../gateways/gov-notify';
 import {
     TEST_AND_TRACE_FOLLOWUP_TEXT,
@@ -33,7 +33,7 @@ export default function addSupportPage({ residentId, helpRequestId }) {
         'Contact Tracing': [],
         CEV: [],
         'Link Work': [],
-        ...(process.env.NEXT_PUBLIC_IS_EUSS_ENABLED ? ['EUSS'] : []),
+        ...(IS_EUSS_ENABLED ? ['EUSS'] : []),
         helpType: null
     });
 
@@ -66,9 +66,10 @@ export default function addSupportPage({ residentId, helpRequestId }) {
                 CEV: [],
                 'Link Work': []
             };
-            if (process.env.NEXT_PUBLIC_IS_EUSS_ENABLED) {
-                categorisedCaseNotes.push({ EUSS: [] });
+            if (IS_EUSS_ENABLED) {
+                categorisedCaseNotes.EUSS = [];
             }
+
             if (helpRequestCaseNotes) {
                 helpRequestCaseNotes.forEach((helpRequestCaseNote) => {
                     helpRequestCaseNote.caseNote.forEach((note) => {

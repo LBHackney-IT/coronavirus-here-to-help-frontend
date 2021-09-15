@@ -441,5 +441,60 @@
                 "CallDateTime": "2021-01-14T07:36:42.014Z"
             }
         ]
+    },
+    {
+        "Id": 161,
+        "ResidentId": 3,
+        "AssignedTo": "Person B",
+        "AdviceNotes": "qui aliquid voluptates",
+        "CallbackRequired": true,
+        "CurrentSupport": "Cambridgeshire",
+        "CurrentSupportFeedback": "optio quo laboriosam nemo et",
+        "DateTimeRecorded": "2021-01-21T17:16:10.046Z",
+        "GettingInTouchReason": "voluptas architecto mollitia",
+        "HelpNeeded": "EUSS",
+        "HelpWithAccessingFood": null,
+        "HelpWithAccessingInternet": null,
+        "HelpWithAccessingMedicine": null,
+        "MedicineDeliveryHelpNeeded": null,
+        "HelpWithCompletingNssForm": null,
+        "HelpWithShieldingGuidance": null,
+        "HelpWithAccessingSupermarketFood": null,
+        "HelpWithAccessingOtherEssentials": null,
+        "HelpWithNoNeedsIdentified": null,
+        "HelpWithChildrenAndSchools": null,
+        "HelpWithDebtAndMoney": null,
+        "HelpWithDisabilities": null,
+        "HelpWithHealth": null,
+        "HelpWithHousing": null,
+        "HelpWithJobsOrTraining": null,
+        "HelpWithMentalHealth": null,
+        "HelpWithSomethingElse": null,
+        "InitialCallbackCompleted": null,
+        "IsOnBehalf": false,
+        "ConsentToCompleteOnBehalf": null,
+        "OnBehalfFirstName": "",
+        "OnBehalfLastName": "",
+        "OnBehalfEmailAddress": "",
+        "OnBehalfContactNumber": "",
+        "RecordStatus": "MASTER",
+        "RelationshipWithResident": "",
+        "UrgentEssentials": "velit aspernatur quas deserunt suscipit",
+        "UrgentEssentialsAnythingElse": "",
+        "WhenIsMedicinesDelivered": "",
+        "RescheduledAt": "",
+        "RequestedDate": "2021-02-03T05:09:47.123Z",
+        "NhsCtasId": "123abc",
+        "HelpRequestCalls": [
+            {
+                "id": 281,
+                "HelpRequestId": 161,
+                "CallType": "EUSS",
+                "CallDirection": "outbound",
+                "CallOutcome": "callback_complete",
+                "CallHandler": "Marge Simpson",
+                "CallDateTime": "2021-01-14T07:36:42.014Z"
+            }
+        ]
     }
 ]

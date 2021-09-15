@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Checkbox, RadioButton, Button, SingleRadioButton } from '../Form';
 import Link from 'next/link';
-import { cevHelpTypes } from '../../helpers/constants';
+import { cevHelpTypes, IS_EUSS_ENABLED } from '../../helpers/constants';
 import { useRouter } from 'next/router';
 import { GovNotifyGateway } from '../../gateways/gov-notify';
 import {
@@ -114,7 +114,7 @@ export default function CallbackForm({
         'Welfare Call',
         'Help Request',
         'Link Work',
-        ...(process.env.NEXT_PUBLIC_IS_EUSS_ENABLED ? ['EUSS'] : [])
+        ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
     ];
     const followupRequired = ['Yes', 'No'];
     const whoMadeInitialContact = ['I called the resident', 'The resident called me'];

@@ -8,6 +8,7 @@ export const ALL = 'All';
 export const LINK_WORK = 'Link Work';
 export const EUSS = 'EUSS';
 export const DEFAULT_DROPDOWN_OPTION = 'Please choose';
+export const IS_EUSS_ENABLED = true;
 
 export const callOutcomes = {
     callback_complete: 'Callback complete',
@@ -28,7 +29,7 @@ export const helpTypes = [
     CONTACT_TRACING,
     CEV,
     LINK_WORK,
-    ...(process.env.NEXT_PUBLIC_IS_EUSS_ENABLED ? [EUSS] : [])
+    ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
 ];
 export const callTypes = ['All', 'Help Request', 'CEV', 'Welfare Call', 'Contact Tracing'];
 export const selfIsolationCallTypes = [WELFARE_CALL, CONTACT_TRACING];

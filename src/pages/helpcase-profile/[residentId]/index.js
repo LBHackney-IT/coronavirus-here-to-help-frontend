@@ -9,7 +9,7 @@ import { HelpRequestGateway } from '../../../gateways/help-request';
 import CallHistory from '../../../components/CallHistory/CallHistory';
 import CaseNotes from '../../../components/CaseNotes/CaseNotes';
 import { useState, useEffect } from 'react';
-import { helpTypes } from '../../../helpers/constants';
+import { helpTypes, IS_EUSS_ENABLED } from '../../../helpers/constants';
 import CaseNotesGateway from '../../../gateways/case-notes';
 
 export default function HelpcaseProfile({ residentId }) {
@@ -22,7 +22,7 @@ export default function HelpcaseProfile({ residentId }) {
         'Contact Tracing': [],
         CEV: [],
         'Link Work': [],
-        ...(process.env.NEXT_PUBLIC_IS_EUSS_ENABLED ? ['EUSS'] : [])
+        ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
     });
 
     const getResidentAndHelpRequests = async () => {
@@ -41,8 +41,8 @@ export default function HelpcaseProfile({ residentId }) {
                 CEV: [],
                 'Link Work': []
             };
-            if (process.env.NEXT_PUBLIC_IS_EUSS_ENABLED) {
-                categorisedCaseNotes.push({ EUSS: [] });
+            if (IS_EUSS_ENABLED) {
+                categorisedCaseNotes.EUSS = [];
             }
 
             residentCaseNotes.forEach((caseNote) => {

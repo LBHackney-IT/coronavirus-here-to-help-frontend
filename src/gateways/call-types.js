@@ -1,4 +1,5 @@
 import { DefaultGateway } from '../gateways/default-gateway';
+import { IS_EUSS_ENABLED } from '../helpers/constants';
 
 export class CallTypesGateway extends DefaultGateway {
     async getCallTypes() {
@@ -9,7 +10,7 @@ export class CallTypesGateway extends DefaultGateway {
             'Self Isolation',
             'Contact Tracing',
             'Link Work',
-            ...(process.env.NEXT_PUBLIC_IS_EUSS_ENABLED ? ['EUSS'] : [])
+            ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
         ];
     }
 }
