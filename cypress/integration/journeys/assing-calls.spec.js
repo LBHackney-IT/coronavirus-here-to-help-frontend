@@ -40,7 +40,7 @@ describe('As a call handler I can bulk assign calls', () => {
             });
         }
         if (!IS_EUSS_ENABLED) {
-            it('Does not assign to EUSS call types when EUSS is disabled ', () => {
+            it('Can not assign to EUSS call types when EUSS is disabled ', () => {
                 cy.get('[data-testid=call-type-checkbox]')
                     .should('have.length', 4)
                     .should('not.have.value', EUSS);
