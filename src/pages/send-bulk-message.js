@@ -7,11 +7,14 @@ import { CallbackGateway } from '../gateways/callback';
 import { useRouter } from 'next/router';
 import {
     PRE_CALL_MESSAGE_TEMPLATE,
-    SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE
+    SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE,
+    EUSS_PRE_CALL_MESSAGE_TEMPLATE,
+    bulkMessageCallTypes,
+    DEFAULT_DROPDOWN_OPTION,
+    EUSS
 } from '../helpers/constants';
 import { GovNotifyGateway } from '../gateways/gov-notify';
 import { unsafeExtractUser } from '../helpers/auth';
-import { selfIsolationCallTypes, DEFAULT_DROPDOWN_OPTION } from '../helpers/constants';
 
 export default function AssignCallsPage() {
     const router = useRouter();
@@ -44,6 +47,8 @@ export default function AssignCallsPage() {
             response = await govNotifyGateway.getTemplatePreview(
                 SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE
             );
+        } else if (value === EUSS) {
+            response = await govNotifyGateway.getTemplatePreview(EUSS_PRE_CALL_MESSAGE_TEMPLATE);
         } else {
             response = await govNotifyGateway.getTemplatePreview(PRE_CALL_MESSAGE_TEMPLATE);
         }
@@ -57,7 +62,7 @@ export default function AssignCallsPage() {
         getCallbacks();
     }, []);
     useEffect(() => {
-        setDropDown([DEFAULT_DROPDOWN_OPTION].concat(selfIsolationCallTypes));
+        setDropDown([DEFAULT_DROPDOWN_OPTION].concat(bulkMessageCallTypes));
     }, []);
 
     const handleSend = async (event) => {
@@ -67,6 +72,8 @@ export default function AssignCallsPage() {
             const textTemplateId =
                 helpType == 'Welfare Call'
                     ? SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE
+                    : helpType === EUSS
+                    ? EUSS_PRE_CALL_MESSAGE_TEMPLATE
                     : PRE_CALL_MESSAGE_TEMPLATE;
             await govNotifyGateway.sendBulkText(
                 JSON.stringify({

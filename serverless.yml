@@ -50,6 +50,7 @@ functions:
       ADDRESSES_API_TOKEN: ${ssm:/hth/addresses-api/${self:provider.stage}/api-token}
       PRE_CALL_MESSAGE_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/pre-call-message-template}
       SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/self-isolation-pre-call-message-template}
+      EUSS_PRE_CALL_MESSAGE_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/euss-pre-call-message-template}
 resources:
   Resources:
     CloudFrontDistribution:
