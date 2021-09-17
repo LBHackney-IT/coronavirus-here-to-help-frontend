@@ -8,7 +8,7 @@ const includeHelpTypeParam = 'includeType';
 
 const authoriseQuery = (req, user) => {
     let query = req.query;
-    if (user.groups.includes(eussGroup) && req.method == 'GET')
+    if (user.groups?.includes(eussGroup) && req.method == 'GET')
         query[includeHelpTypeParam] = eussType;
     return query;
 };
