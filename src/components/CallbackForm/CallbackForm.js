@@ -114,8 +114,8 @@ export default function CallbackForm({
         'CEV',
         'Welfare Call',
         'Help Request',
-        'Link Work'
-        // ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
+        'Link Work',
+        'EUSS'
     ];
     const followupRequired = ['Yes', 'No'];
     const whoMadeInitialContact = ['I called the resident', 'The resident called me'];
