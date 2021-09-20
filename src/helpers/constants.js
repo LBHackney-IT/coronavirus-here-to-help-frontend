@@ -9,6 +9,7 @@ export const LINK_WORK = 'Link Work';
 export const EUSS = 'EUSS';
 export const DEFAULT_DROPDOWN_OPTION = 'Please choose';
 export const IS_EUSS_ENABLED = true;
+export const EUSS_GROUP = 'Here To Help EUSS Outbound Calls';
 
 export const callOutcomes = {
     callback_complete: 'Callback complete',

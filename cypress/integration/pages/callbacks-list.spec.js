@@ -1,4 +1,5 @@
 import { EUSS, IS_EUSS_ENABLED } from '../../../src/helpers/constants';
+import { EUSS_User } from '../../support/commands';
 
 beforeEach(() => {
     cy.login();
@@ -13,9 +14,7 @@ describe('Callbacks list page displays and maps data correctly', () => {
 
     it('Help types are mapped to help case type dropdown options', () => {
         cy.visit('/callback-list');
-        cy.get('[data-testid=help-type-dropdown]')
-            .find('option')
-            .should('have.length', IS_EUSS_ENABLED === true ? 7 : 6);
+        cy.get('[data-testid=help-type-dropdown]').find('option').should('have.length', 7);
     });
 
     it('Call handlers are mapped to call handlers dropdown options', () => {
@@ -46,10 +45,6 @@ describe('Callbacks list page filters callbacks correctly', () => {
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '3');
         cy.get('[data-testid=help-type-dropdown]').select('Link Work');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
-        if (IS_EUSS_ENABLED) {
-            cy.get('[data-testid=help-type-dropdown]').select(EUSS);
-            cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
-        }
     });
 
     it('Upon selecting Call Handlers dropdown value, callbacks get filtered by that value', () => {
@@ -79,15 +74,3 @@ describe('Navigating Away from Callbacks list page', () => {
         cy.url().should('match', /\/helpcase-profile\/\d+$/);
     });
 });
-
-if (!IS_EUSS_ENABLED) {
-    describe('When EUSS is not enabled', () => {
-        it('the callback list does not filter by EUSS', () => {
-            cy.visit('/callback-list');
-            cy.get('[data-testid=help-type-dropdown]').find('option').should('have.length', 6);
-            cy.get('[data-testid=help-type-dropdown]')
-                .find('option')
-                .should('not.have.value', EUSS);
-        });
-    });
-}

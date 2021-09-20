@@ -1,14 +1,14 @@
 import { authoriseUser } from '../../../helpers/auth';
 import { HereToHelpApiGateway } from '../../../gateways/here-to-help-api-gateway';
+import { EUSS_GROUP } from '../../../helpers/constants';
 
 const hereToHelpApiGateway = new HereToHelpApiGateway();
-const eussGroup = 'Here To Help EUSS Outbound Calls';
 const eussType = 'EUSS';
 const includeHelpTypeParam = 'includeType';
 
 const authoriseQuery = (req, user) => {
     let query = req.query;
-    if (user.groups?.includes(eussGroup) && req.method == 'GET')
+    if (user.groups?.includes(EUSS_GROUP) && req.method == 'GET')
         query[includeHelpTypeParam] = eussType;
     return query;
 };
