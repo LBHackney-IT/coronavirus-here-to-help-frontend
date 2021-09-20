@@ -11,6 +11,7 @@ import {
 import { useRouter } from 'next/router';
 import { GovNotifyGateway } from '../../gateways/gov-notify';
 import styles from '../CallbackForm/CallbackForm.module.scss';
+import { AuthorisedCallTypesGateway } from '../../gateways/authorised-call-types';
 
 export default function CallbackForm({
     residentId,
@@ -37,6 +38,13 @@ export default function CallbackForm({
     const [showEmail, setShowEmail] = useState(false);
     const [showText, setShowText] = useState(false);
     const [submitEnabled, setSubmitEnabled] = useState(true);
+    const [callTypes, setCallTypes] = useState([
+        'Contact Tracing',
+        'CEV',
+        'Welfare Call',
+        'Help Request',
+        'Link Work'
+    ]);
 
     const [errors, setErrors] = useState({
         CallbackRequired: null,
@@ -109,19 +117,13 @@ export default function CallbackForm({
         { name: 'Yes, the resident had other support needs', value: 'other_support_needs' },
         { name: 'No, the resident did not require support', value: 'no_support_needs' }
     ];
-    const callTypes = [
-        'Contact Tracing',
-        'CEV',
-        'Welfare Call',
-        'Help Request',
-        'Link Work'
-        // ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
-    ];
+
     const followupRequired = ['Yes', 'No'];
     const whoMadeInitialContact = ['I called the resident', 'The resident called me'];
 
     useEffect(async () => {
         const govNotifyGateway = new GovNotifyGateway();
+        const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
 
         try {
             let textTemplate = await govNotifyGateway.getTemplatePreview(
@@ -137,6 +139,9 @@ export default function CallbackForm({
                 console.log('emailTemplate', emailTemplate);
                 setEmailTemplatePreview(emailTemplate.body);
             }
+
+            let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
+            setCallTypes(authCallTypes);
         } catch (err) {
             console.log(`Error fetching themplates: ${err}`);
         }
