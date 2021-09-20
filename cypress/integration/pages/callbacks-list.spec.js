@@ -1,4 +1,5 @@
 import { EUSS, IS_EUSS_ENABLED } from '../../../src/helpers/constants';
+import { EUSS_User } from '../../support/commands';
 
 beforeEach(() => {
     cy.login();
@@ -8,14 +9,12 @@ beforeEach(() => {
 describe('Callbacks list page displays and maps data correctly', () => {
     it('Callbacks are retrieved and mapped to table rows', () => {
         cy.visit('/callback-list');
-        cy.get('[data-testid=callbacks-table_row]').should('have.length', 8);
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', 7);
     });
 
     it('Help types are mapped to help case type dropdown options', () => {
         cy.visit('/callback-list');
-        cy.get('[data-testid=help-type-dropdown]')
-            .find('option')
-            .should('have.length', IS_EUSS_ENABLED === true ? 7 : 6);
+        cy.get('[data-testid=help-type-dropdown]').find('option').should('have.length', 6);
     });
 
     it('Call handlers are mapped to call handlers dropdown options', () => {
@@ -46,15 +45,20 @@ describe('Callbacks list page filters callbacks correctly', () => {
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '3');
         cy.get('[data-testid=help-type-dropdown]').select('Link Work');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
-        if (IS_EUSS_ENABLED) {
-            cy.get('[data-testid=help-type-dropdown]').select(EUSS);
-            cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
-        }
+    });
+
+    it('Can filter by EUSS when logged in as the EUSS user', () => {
+        cy.login(EUSS_User);
+        cy.visit('/callback-list');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '8');
+        cy.get('[data-testid=help-type-dropdown]').find('option').should('have.length', 6);
+        cy.get('[data-testid=help-type-dropdown]').select(EUSS);
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
     });
 
     it('Upon selecting Call Handlers dropdown value, callbacks get filtered by that value', () => {
         cy.visit('/callback-list');
-        cy.get('[data-testid=callbacks-table_row]').should('have.length', '8');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '7');
         cy.get('[data-testid=call-handlers-dropdown]').select('Person A');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '2');
         cy.get('[data-testid=call-handlers-dropdown]').select('Person B');
@@ -80,14 +84,10 @@ describe('Navigating Away from Callbacks list page', () => {
     });
 });
 
-if (!IS_EUSS_ENABLED) {
-    describe('When EUSS is not enabled', () => {
-        it('the callback list does not filter by EUSS', () => {
-            cy.visit('/callback-list');
-            cy.get('[data-testid=help-type-dropdown]').find('option').should('have.length', 6);
-            cy.get('[data-testid=help-type-dropdown]')
-                .find('option')
-                .should('not.have.value', EUSS);
-        });
+describe('When EUSS is not enabled', () => {
+    it('the callback list does not filter by EUSS', () => {
+        cy.visit('/callback-list');
+        cy.get('[data-testid=help-type-dropdown]').find('option').should('have.length', 6);
+        cy.get('[data-testid=help-type-dropdown]').find('option').should('not.have.value', EUSS);
     });
-}
+});

@@ -11,6 +11,12 @@ export const defaultUser = {
     groups: ['development-team-staging']
 };
 
+export const EUSS_User = {
+    email: 'test@hackney.gov.uk',
+    name: 'EUSS Test User',
+    groups: ['development-team-staging', process.env.NEXT_PUBLIC_EUSS_GOOGLE_GROUP]
+};
+
 Cypress.Commands.add('login', (userData) => {
     if (userData === void 0) {
         userData = defaultUser;
@@ -21,6 +27,7 @@ Cypress.Commands.add('login', (userData) => {
     console.error(cookieName);
     console.error(jwtSecret);
     console.error('Yup');
+    console.log('user', userData.name);
 
     const token = jwt.sign(userData, jwtSecret);
 
