@@ -12,6 +12,9 @@ beforeEach(() => {
 
 context('When adding new EUSS help request and call completed is selected', () => {
     it('does not display self isolation help needs form and form can be submitted', () => {
+        cy.server();
+        cy.route('GET', '/api/proxy/help-types').as('getHelpTypes');
+        cy.wait('@getHelpTypes', { timeout: 10000});
         cy.get('[data-testid=call-type-radio-button]').eq(5).should('have.value', EUSS);
         cy.get('[data-testid=call-type-radio-button]').eq(5).click({ force: true });
         cy.get('[data-testid=call-type-yes-radio-button]').click({ force: true });
@@ -35,6 +38,9 @@ context('When required fields are not filled in', () => {
     });
 
     it('displays validation error when call completed but no follow up selected', () => {
+        cy.server();
+        cy.route('GET', '/api/proxy/help-types').as('getHelpTypes');
+        cy.wait('@getHelpTypes', { timeout: 10000});
         cy.get('[data-testid=call-type-radio-button]').eq(5).click({ force: true });
         cy.get('[data-testid=call-type-yes-radio-button]').click({ force: true });
         cy.get('[data-testid=yes-spoke-to-resident]').click({ force: true });
@@ -48,6 +54,9 @@ context('When required fields are not filled in', () => {
 context('When EUSS is not enabled', () => {
     it('does not display EUSS call type option', () => {
         cy.login();
+        cy.server();
+        cy.route('GET', '/api/proxy/help-types').as('getHelpTypes');
+        cy.wait('@getHelpTypes', { timeout: 10000});
         cy.get('[data-testid=call-type-radio-button]').last().should('not.have.value', EUSS);
         cy.get('[data-testid=call-type-radio-button]').should('not.contain.value', EUSS);
     });
