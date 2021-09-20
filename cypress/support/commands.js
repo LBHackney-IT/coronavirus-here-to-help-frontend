@@ -14,7 +14,7 @@ export const defaultUser = {
 export const EUSS_User = {
     email: 'test@hackney.gov.uk',
     name: 'EUSS Test User',
-    groups: ['development-team-staging', process.env.NEXT_PUBLIC_EUSS_GOOGLE_GROUP]
+    groups: ['development-team-staging', 'Here To Help EUSS Outbound Calls']
 };
 
 Cypress.Commands.add('login', (userData) => {
