@@ -8,7 +8,7 @@ export class AuthorisedCallTypesGateway extends DefaultGateway {
 
     async getCallTypes() {
         let authorisedTypes = await this.getAuthorisedHelpTypes();
-        return ['Help Request', 'CEV', 'Self Isolation', 'Contact Tracing', 'Link Work'].concat(
+        return ['Contact Tracing', 'CEV', 'Welfare Call', 'Help Request', 'Link Work'].concat(
             authorisedTypes
         );
     }
