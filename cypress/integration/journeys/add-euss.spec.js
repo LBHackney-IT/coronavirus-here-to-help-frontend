@@ -14,7 +14,7 @@ context('When adding new EUSS help request and call completed is selected', () =
     it('does not display self isolation help needs form and form can be submitted', () => {
         cy.server();
         cy.route('GET', '/api/proxy/help-types').as('getHelpTypes');
-        cy.wait('@getHelpTypes', { timeout: 10000});
+        cy.wait('@getHelpTypes', { timeout: 10000 });
         cy.get('[data-testid=call-type-radio-button]').eq(5).should('have.value', EUSS);
         cy.get('[data-testid=call-type-radio-button]').eq(5).click({ force: true });
         cy.get('[data-testid=call-type-yes-radio-button]').click({ force: true });
@@ -28,6 +28,15 @@ context('When adding new EUSS help request and call completed is selected', () =
 
         cy.get('[data-testid=callback-form-validation-error]').should('not.exist');
     });
+    it('does not display the messaging follow up options', () => {
+        cy.server();
+        cy.route('GET', '/api/proxy/help-types').as('getHelpTypes');
+        cy.wait('@getHelpTypes', { timeout: 10000 });
+        cy.get('[data-testid=call-type-radio-button]').eq(5).should('have.value', EUSS);
+        cy.get('[data-testid=call-type-radio-button]').eq(5).click({ force: true });
+
+        cy.get('[data-testid=send-email-checkbox]').should('not.exist');
+    });
 });
 
 context('When required fields are not filled in', () => {
@@ -40,7 +49,7 @@ context('When required fields are not filled in', () => {
     it('displays validation error when call completed but no follow up selected', () => {
         cy.server();
         cy.route('GET', '/api/proxy/help-types').as('getHelpTypes');
-        cy.wait('@getHelpTypes', { timeout: 10000});
+        cy.wait('@getHelpTypes', { timeout: 10000 });
         cy.get('[data-testid=call-type-radio-button]').eq(5).click({ force: true });
         cy.get('[data-testid=call-type-yes-radio-button]').click({ force: true });
         cy.get('[data-testid=yes-spoke-to-resident]').click({ force: true });
@@ -56,7 +65,7 @@ context('When EUSS is not enabled', () => {
         cy.login();
         cy.server();
         cy.route('GET', '/api/proxy/help-types').as('getHelpTypes');
-        cy.wait('@getHelpTypes', { timeout: 10000});
+        cy.wait('@getHelpTypes', { timeout: 10000 });
         cy.get('[data-testid=call-type-radio-button]').last().should('not.have.value', EUSS);
         cy.get('[data-testid=call-type-radio-button]').should('not.contain.value', EUSS);
     });
