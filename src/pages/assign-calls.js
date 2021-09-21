@@ -7,7 +7,8 @@ import { CallHandlerGateway } from '../gateways/call-handler';
 import { CallbackGateway } from '../gateways/callback';
 import { HelpRequestGateway } from '../gateways/help-request';
 import { useRouter } from 'next/router';
-import { callTypes, ALL } from '../helpers/constants';
+import { AuthorisedCallTypesGateway } from '../gateways/authorised-call-types';
+import { LINK_WORK } from '../helpers/constants';
 
 export default function AssignCallsPage() {
     const router = useRouter();
@@ -17,7 +18,6 @@ export default function AssignCallsPage() {
     const [selectedCallTypes, setSelectedCallTypes] = useState([]);
     const [selectedAssignment, setSelectedAssignment] = useState([]);
     const [errorsExist, setErrorsExist] = useState(null);
-
     const callbackGateway = new CallbackGateway();
     const gateway = new HelpRequestGateway();
 
@@ -30,8 +30,10 @@ export default function AssignCallsPage() {
 
     useEffect(getCallHandlers, []);
 
-    useEffect(() => {
-        setFilteredCallTypes(callTypes.filter((x) => x != ALL));
+    useEffect(async () => {
+        const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
+        let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
+        setFilteredCallTypes(authCallTypes.filter((x) => x != LINK_WORK));
     }, []);
 
     const updateSelectedCallHandlers = (value) => {

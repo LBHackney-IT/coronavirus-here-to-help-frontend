@@ -10,12 +10,18 @@ before(() => {
 context('When adding non self-isolation or contact tracing help request', () => {
     it('it does not display the self-isolation needs form', () => {
         cy.get('[data-testid=self-isolation-needs]').should('not.exist');
+        cy.get('[data-testid=send-email-checkbox]').should('not.exist');
 
         cy.get('[data-testid=call-type-radio-button]').eq(1).click({ force: true });
         cy.get('[data-testid=call-type-yes-radio-button]').click({ force: true });
         cy.get('[data-testid=yes-spoke-to-resident]').click({ force: true });
         cy.get('[data-testid=callback_complete-checkbox]').click({ force: true });
         cy.get('[data-testid=self-isolation-needs]').should('not.exist');
+    });
+    it('does display the messaging follow up options', () => {
+        cy.get('[data-testid=call-type-radio-button]').eq(1).click({ force: true });
+        cy.get('[data-testid=call-type-yes-radio-button]').click({ force: true });
+        cy.get('[data-testid=send-email-checkbox]').should('exist');
     });
 });
 

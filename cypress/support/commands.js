@@ -1,5 +1,10 @@
 import jwt from 'jsonwebtoken';
-import {TEST_AND_TRACE_FOLLOWUP_TEXT, TEST_AND_TRACE_FOLLOWUP_EMAIL, PRE_CALL_MESSAGE_TEMPLATE} from '../../src/helpers/constants'
+import {
+    TEST_AND_TRACE_FOLLOWUP_TEXT,
+    TEST_AND_TRACE_FOLLOWUP_EMAIL,
+    PRE_CALL_MESSAGE_TEMPLATE,
+    EUSS_GROUP
+} from '../../src/helpers/constants';
 
 Cypress.Commands.add('getBySel', (selector, ...args) => {
     return cy.get(`[data-cy=${selector}]`, ...args);
@@ -9,6 +14,12 @@ export const defaultUser = {
     email: 'test@hackney.gov.uk',
     name: 'Test User',
     groups: ['development-team-staging']
+};
+
+export const EUSS_User = {
+    email: 'test@hackney.gov.uk',
+    name: 'EUSS Test User',
+    groups: ['development-team-staging', EUSS_GROUP]
 };
 
 Cypress.Commands.add('login', (userData) => {
@@ -21,6 +32,7 @@ Cypress.Commands.add('login', (userData) => {
     console.error(cookieName);
     console.error(jwtSecret);
     console.error('Yup');
+    console.log('user', userData.name);
 
     const token = jwt.sign(userData, jwtSecret);
 
@@ -106,21 +118,32 @@ Cypress.Commands.add('setIntercepts', () => {
         fixture: 'residents/3/resident'
     });
 
-    cy.intercept('GET', `/api/proxy/gov-notify/previewTemplate?templateType=${TEST_AND_TRACE_FOLLOWUP_EMAIL}`, {
-        fixture: 'getEmailPreviewSuccessResponse'
-    });
+    cy.intercept(
+        'GET',
+        `/api/proxy/gov-notify/previewTemplate?templateType=${TEST_AND_TRACE_FOLLOWUP_EMAIL}`,
+        {
+            fixture: 'getEmailPreviewSuccessResponse'
+        }
+    );
 
-    cy.intercept('GET', `/api/proxy/gov-notify/previewTemplate?templateType=${TEST_AND_TRACE_FOLLOWUP_TEXT}`, {
-        fixture: 'getTextPreviewSuccessResponse'
-    });
+    cy.intercept(
+        'GET',
+        `/api/proxy/gov-notify/previewTemplate?templateType=${TEST_AND_TRACE_FOLLOWUP_TEXT}`,
+        {
+            fixture: 'getTextPreviewSuccessResponse'
+        }
+    );
 
-    cy.intercept('GET', `/api/proxy/gov-notify/previewTemplate?templateType=${PRE_CALL_MESSAGE_TEMPLATE}`, {
-        fixture: 'getBulkTextPreviewSuccessResponse'
-    });
+    cy.intercept(
+        'GET',
+        `/api/proxy/gov-notify/previewTemplate?templateType=${PRE_CALL_MESSAGE_TEMPLATE}`,
+        {
+            fixture: 'getBulkTextPreviewSuccessResponse'
+        }
+    );
 
     cy.intercept('POST', `/api/proxy/gov-notify/send-bulk-message`, {
-        statusCode: 200, 
-        body:{}
+        statusCode: 200,
+        body: {}
     });
-
 });

@@ -8,7 +8,8 @@ export const ALL = 'All';
 export const LINK_WORK = 'Link Work';
 export const EUSS = 'EUSS';
 export const DEFAULT_DROPDOWN_OPTION = 'Please choose';
-export const IS_EUSS_ENABLED = false;
+export const IS_EUSS_ENABLED = true;
+export const EUSS_GROUP = 'Here To Help EUSS Outbound Calls';
 
 export const callOutcomes = {
     callback_complete: 'Callback complete',
@@ -31,7 +32,14 @@ export const helpTypes = [
     LINK_WORK,
     ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
 ];
-export const callTypes = ['All', 'Help Request', 'CEV', 'Welfare Call', 'Contact Tracing'];
+export const callTypes = [
+    'All',
+    'Help Request',
+    'CEV',
+    'Welfare Call',
+    'Contact Tracing',
+    ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
+];
 export const selfIsolationCallTypes = [WELFARE_CALL, CONTACT_TRACING];
 export const bulkMessageCallTypes = [
     WELFARE_CALL,

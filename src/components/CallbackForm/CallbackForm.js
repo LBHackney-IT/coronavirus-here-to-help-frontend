@@ -6,11 +6,13 @@ import {
     IS_EUSS_ENABLED,
     selfIsolationCallTypes,
     TEST_AND_TRACE_FOLLOWUP_TEXT,
-    TEST_AND_TRACE_FOLLOWUP_EMAIL
+    TEST_AND_TRACE_FOLLOWUP_EMAIL,
+    EUSS
 } from '../../helpers/constants';
 import { useRouter } from 'next/router';
 import { GovNotifyGateway } from '../../gateways/gov-notify';
 import styles from '../CallbackForm/CallbackForm.module.scss';
+import { AuthorisedCallTypesGateway } from '../../gateways/authorised-call-types';
 
 export default function CallbackForm({
     residentId,
@@ -37,6 +39,13 @@ export default function CallbackForm({
     const [showEmail, setShowEmail] = useState(false);
     const [showText, setShowText] = useState(false);
     const [submitEnabled, setSubmitEnabled] = useState(true);
+    const [callTypes, setCallTypes] = useState([
+        'Contact Tracing',
+        'CEV',
+        'Welfare Call',
+        'Help Request',
+        'Link Work'
+    ]);
 
     const [errors, setErrors] = useState({
         CallbackRequired: null,
@@ -109,19 +118,13 @@ export default function CallbackForm({
         { name: 'Yes, the resident had other support needs', value: 'other_support_needs' },
         { name: 'No, the resident did not require support', value: 'no_support_needs' }
     ];
-    const callTypes = [
-        'Contact Tracing',
-        'CEV',
-        'Welfare Call',
-        'Help Request',
-        'Link Work'
-        // ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
-    ];
+
     const followupRequired = ['Yes', 'No'];
     const whoMadeInitialContact = ['I called the resident', 'The resident called me'];
 
     useEffect(async () => {
         const govNotifyGateway = new GovNotifyGateway();
+        const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
 
         try {
             let textTemplate = await govNotifyGateway.getTemplatePreview(
@@ -137,6 +140,9 @@ export default function CallbackForm({
                 console.log('emailTemplate', emailTemplate);
                 setEmailTemplatePreview(emailTemplate.body);
             }
+
+            let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
+            setCallTypes(authCallTypes);
         } catch (err) {
             console.log(`Error fetching themplates: ${err}`);
         }
@@ -714,137 +720,142 @@ export default function CallbackForm({
                 )}
                 <br></br>
 
-                <fieldset className="govuk-fieldset">
-                    <h3 className="govuk-heading-m">
-                        Would you like to message the resident following this call?
-                    </h3>
+                {helpNeeded !== EUSS && helpNeeded && (
+                    <fieldset className="govuk-fieldset">
+                        <h3 className="govuk-heading-m">
+                            Would you like to message the resident following this call?
+                        </h3>
 
-                    <Checkbox
-                        id="SendEmail"
-                        name="SendEmail"
-                        data-testid="send-email-checkbox"
-                        type="checkbox"
-                        value={TEST_AND_TRACE_FOLLOWUP_EMAIL}
-                        label="Send Email"
-                        aria-describedby="SendEmail"
-                        onCheckboxChange={setShowContactDetails}></Checkbox>
-                    {showEmail && (
-                        <div
-                            className="govuk-radios__conditional govuk-radios__conditional--hidden"
-                            id="conditional-contact">
-                            <br />
-                            {emailTemplatePreview && (
-                                <div className="govuk-form-group">
-                                    <div>
-                                        <label
-                                            className="govuk-label mandatoryQuestion"
-                                            for="contact-by-email">
-                                            Email address
-                                        </label>
-                                        <input
-                                            className="govuk-input govuk-!-width-one-third"
-                                            id="contact-by-email"
-                                            name="contact-by-email"
-                                            type="email"
-                                            spellCheck="false"
-                                            onChange={(e) => setEmail(e.target.value)}
-                                        />
+                        <Checkbox
+                            id="SendEmail"
+                            name="SendEmail"
+                            data-testid="send-email-checkbox"
+                            type="checkbox"
+                            value={TEST_AND_TRACE_FOLLOWUP_EMAIL}
+                            label="Send Email"
+                            aria-describedby="SendEmail"
+                            onCheckboxChange={setShowContactDetails}></Checkbox>
+                        {showEmail && (
+                            <div
+                                className="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                id="conditional-contact">
+                                <br />
+                                {emailTemplatePreview && (
+                                    <div className="govuk-form-group">
+                                        <div>
+                                            <label
+                                                className="govuk-label mandatoryQuestion"
+                                                for="contact-by-email">
+                                                Email address
+                                            </label>
+                                            <input
+                                                className="govuk-input govuk-!-width-one-third"
+                                                id="contact-by-email"
+                                                name="contact-by-email"
+                                                type="email"
+                                                spellCheck="false"
+                                                onChange={(e) => setEmail(e.target.value)}
+                                            />
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div id="contact-hint" className="govuk-hint">
+                                            Email preview
+                                        </div>
+                                        <div
+                                            id="email-template-preview"
+                                            className="govuk-inset-text"
+                                            data-testid="send-email-preview">
+                                            {emailTemplatePreview}
+                                        </div>
                                     </div>
-                                    <br />
-                                    <br />
-                                    <div id="contact-hint" className="govuk-hint">
-                                        Email preview
-                                    </div>
-                                    <div
-                                        id="email-template-preview"
-                                        className="govuk-inset-text"
-                                        data-testid="send-email-preview">
-                                        {emailTemplatePreview}
-                                    </div>
-                                </div>
-                            )}
-                            {!emailTemplatePreview && (
-                                <div className="govuk-warning-text">
-                                    <span className="govuk-warning-text__icon" aria-hidden="true">
-                                        !
-                                    </span>
-                                    <strong className="govuk-warning-text__text">
-                                        <span className="govuk-warning-text__assistive">
-                                            Warning
+                                )}
+                                {!emailTemplatePreview && (
+                                    <div className="govuk-warning-text">
+                                        <span
+                                            className="govuk-warning-text__icon"
+                                            aria-hidden="true">
+                                            !
                                         </span>
-                                        There is no email option for this call type, please uncheck
-                                        this option to proceed
-                                    </strong>
-                                </div>
-                            )}
-                            <br />
-                        </div>
-                    )}
-                    <Checkbox
-                        id="SendText"
-                        name="SendText"
-                        type="checkbox"
-                        data-testid="send-text-checkbox"
-                        value={TEST_AND_TRACE_FOLLOWUP_TEXT}
-                        label="Send Text"
-                        aria-describedby="SendEmail"
-                        onCheckboxChange={setShowContactDetails}></Checkbox>
-                    {showText && (
-                        <div
-                            className="govuk-radios__conditional govuk-radios__conditional--hidden"
-                            id="conditional-contact-3">
-                            <br />
-                            {textTemplatePreview && (
-                                <div className="govuk-form-group">
-                                    <div>
-                                        <label
-                                            className="govuk-label mandatoryQuestion"
-                                            for="contact-by-text">
-                                            Mobile phone number
-                                        </label>
-                                        <input
-                                            className="govuk-input govuk-!-width-one-third"
-                                            id="contact-by-text"
-                                            name="contact-by-text"
-                                            type="tel"
-                                            onChange={(e) => {
-                                                setPhoneNumber(e.target.value);
-                                            }}
-                                        />
+                                        <strong className="govuk-warning-text__text">
+                                            <span className="govuk-warning-text__assistive">
+                                                Warning
+                                            </span>
+                                            There is no email option for this call type, please
+                                            uncheck this option to proceed
+                                        </strong>
                                     </div>
-                                    <br />
-                                    <br />
-                                    <div id="contact-hint" className="govuk-hint">
-                                        Text preview
+                                )}
+                                <br />
+                            </div>
+                        )}
+                        <Checkbox
+                            id="SendText"
+                            name="SendText"
+                            type="checkbox"
+                            data-testid="send-text-checkbox"
+                            value={TEST_AND_TRACE_FOLLOWUP_TEXT}
+                            label="Send Text"
+                            aria-describedby="SendEmail"
+                            onCheckboxChange={setShowContactDetails}></Checkbox>
+                        {showText && (
+                            <div
+                                className="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                id="conditional-contact-3">
+                                <br />
+                                {textTemplatePreview && (
+                                    <div className="govuk-form-group">
+                                        <div>
+                                            <label
+                                                className="govuk-label mandatoryQuestion"
+                                                for="contact-by-text">
+                                                Mobile phone number
+                                            </label>
+                                            <input
+                                                className="govuk-input govuk-!-width-one-third"
+                                                id="contact-by-text"
+                                                name="contact-by-text"
+                                                type="tel"
+                                                onChange={(e) => {
+                                                    setPhoneNumber(e.target.value);
+                                                }}
+                                            />
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div id="contact-hint" className="govuk-hint">
+                                            Text preview
+                                        </div>
+                                        <div
+                                            className="govuk-inset-text"
+                                            data-testid="send-text-preview">
+                                            {textTemplatePreview}
+                                        </div>
                                     </div>
-                                    <div
-                                        className="govuk-inset-text"
-                                        data-testid="send-text-preview">
-                                        {textTemplatePreview}
-                                    </div>
-                                </div>
-                            )}
-                            <br />
-                            {!textTemplatePreview && (
-                                <div className="govuk-warning-text">
-                                    <span className="govuk-warning-text__icon" aria-hidden="true">
-                                        !
-                                    </span>
-                                    <strong className="govuk-warning-text__text">
-                                        <span className="govuk-warning-text__assistive">
-                                            Warning
+                                )}
+                                <br />
+                                {!textTemplatePreview && (
+                                    <div className="govuk-warning-text">
+                                        <span
+                                            className="govuk-warning-text__icon"
+                                            aria-hidden="true">
+                                            !
                                         </span>
-                                        There is no text option for this call type, please uncheck
-                                        this option to proceed
-                                    </strong>
-                                </div>
-                            )}
-                            <br />
-                        </div>
-                    )}
-                    <br />
-                </fieldset>
-
+                                        <strong className="govuk-warning-text__text">
+                                            <span className="govuk-warning-text__assistive">
+                                                Warning
+                                            </span>
+                                            There is no text option for this call type, please
+                                            uncheck this option to proceed
+                                        </strong>
+                                    </div>
+                                )}
+                                <br />
+                            </div>
+                        )}
+                        <br />
+                    </fieldset>
+                )}
                 <br />
                 <div className="govuk-grid-column">
                     <div className="govuk-form-group lbh-form-group">
