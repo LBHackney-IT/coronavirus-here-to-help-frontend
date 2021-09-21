@@ -41,11 +41,7 @@ export const callTypes = [
     ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
 ];
 export const selfIsolationCallTypes = [WELFARE_CALL, CONTACT_TRACING];
-export const bulkMessageCallTypes = [
-    WELFARE_CALL,
-    CONTACT_TRACING,
-    ...(IS_EUSS_ENABLED ? [EUSS] : [])
-];
+export const bulkMessageCallTypes = [WELFARE_CALL, CONTACT_TRACING, EUSS];
 
 export const cevHelpTypes = {
     foodAccessVoluntarySector: 'Accessing food via voluntary sector',

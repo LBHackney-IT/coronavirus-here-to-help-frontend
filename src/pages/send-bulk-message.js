@@ -15,6 +15,7 @@ import {
 } from '../helpers/constants';
 import { GovNotifyGateway } from '../gateways/gov-notify';
 import { unsafeExtractUser } from '../helpers/auth';
+import { AuthorisedCallTypesGateway } from '../gateways/authorised-call-types';
 
 export default function AssignCallsPage() {
     const router = useRouter();
@@ -61,8 +62,14 @@ export default function AssignCallsPage() {
     useEffect(() => {
         getCallbacks();
     }, []);
-    useEffect(() => {
-        setDropDown([DEFAULT_DROPDOWN_OPTION].concat(bulkMessageCallTypes));
+    useEffect(async () => {
+        const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
+        let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
+        setDropDown(
+            [DEFAULT_DROPDOWN_OPTION].concat(
+                authCallTypes.filter((x) => bulkMessageCallTypes.includes(x))
+            )
+        );
     }, []);
 
     const handleSend = async (event) => {
