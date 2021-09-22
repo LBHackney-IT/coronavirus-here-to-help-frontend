@@ -60,7 +60,7 @@ context('When required fields are not filled in', () => {
     });
 });
 
-context('When EUSS is not enabled', () => {
+context('When a non-EUSS user is logged in', () => {
     it('does not display EUSS call type option', () => {
         cy.login();
         cy.server();
