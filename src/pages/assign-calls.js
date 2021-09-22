@@ -8,7 +8,6 @@ import { CallbackGateway } from '../gateways/callback';
 import { HelpRequestGateway } from '../gateways/help-request';
 import { useRouter } from 'next/router';
 import { AuthorisedCallTypesGateway } from '../gateways/authorised-call-types';
-import { LINK_WORK } from '../helpers/constants';
 
 export default function AssignCallsPage() {
     const router = useRouter();
@@ -33,7 +32,7 @@ export default function AssignCallsPage() {
     useEffect(async () => {
         const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
         let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
-        setFilteredCallTypes(authCallTypes.filter((x) => x != LINK_WORK));
+        setFilteredCallTypes(authCallTypes);
     }, []);
 
     const updateSelectedCallHandlers = (value) => {

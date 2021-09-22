@@ -35,8 +35,8 @@ describe('As a call handler I can bulk assign calls', () => {
         it('Can assign to EUSS call types when logged in as EUSS user', () => {
             cy.login(EUSS_User);
             cy.get('[data-testid=call-type-checkbox]')
-                .should('have.length', 5)
-                .eq(4)
+                .should('have.length', 6)
+                .eq(5)
                 .should('have.value', EUSS);
             cy.get('[data-testid=call-type-checkbox]').eq(4).click({ force: true });
             cy.get('[data-testid=assign-call-handler-checkbox]').first().click({ force: true });
@@ -45,7 +45,7 @@ describe('As a call handler I can bulk assign calls', () => {
         });
         it('Can not assign to EUSS call types when EUSS is disabled ', () => {
             cy.get('[data-testid=call-type-checkbox]')
-                .should('have.length', 4)
+                .should('have.length', 5)
                 .should('not.have.value', EUSS);
         });
     });
@@ -53,7 +53,7 @@ describe('As a call handler I can bulk assign calls', () => {
     context('Assign call page displays and maps data correctly', () => {
         it('Call handlers are retrieved and mapped to checkboxes', () => {
             cy.get('[data-testid=call-type-checkbox]')
-                .should('have.length', 4)
+                .should('have.length', 5)
                 .should('not.have.value', DEFAULT_DROPDOWN_OPTION);
             cy.get('[data-testid=assign-call-handler-checkbox]').should('have.length', 4);
         });
