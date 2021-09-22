@@ -3,12 +3,12 @@ import { Checkbox, RadioButton, Button, SingleRadioButton } from '../Form';
 import Link from 'next/link';
 import {
     cevHelpTypes,
-    IS_EUSS_ENABLED,
     selfIsolationCallTypes,
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     TEST_AND_TRACE_FOLLOWUP_EMAIL,
     EUSS
 } from '../../helpers/constants';
+import { formatSubTypes } from '../../helpers/formatter';
 import { useRouter } from 'next/router';
 import { GovNotifyGateway } from '../../gateways/gov-notify';
 import styles from '../CallbackForm/CallbackForm.module.scss';
@@ -364,7 +364,7 @@ export default function CallbackForm({
                         className={`govuk-tag govuk-tag--grey ${styles['help-request-tag']}`}>
                         {helpRequest?.helpNeeded == 'Welfare Call'
                             ? 'Self Isolation'
-                            : helpRequest?.helpNeeded}
+                            : formatSubTypes(helpRequest?.helpNeeded, helpRequest?.helpNeeded)}
                     </strong>
                 )}
                 <br></br>
