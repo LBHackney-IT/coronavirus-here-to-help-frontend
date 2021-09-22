@@ -1,5 +1,4 @@
-import { EUSS, IS_EUSS_ENABLED } from '../../../src/helpers/constants';
-import { EUSS_User } from '../../support/commands';
+import { EUSS } from '../../../src/helpers/constants';
 
 beforeEach(() => {
     cy.login();
