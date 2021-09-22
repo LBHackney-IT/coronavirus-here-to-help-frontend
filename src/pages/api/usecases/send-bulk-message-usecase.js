@@ -1,7 +1,9 @@
 import {
     PRE_CALL_MESSAGE_TEMPLATE,
     SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE,
-    EUSS_PRE_CALL_MESSAGE_TEMPLATE
+    EUSS_PRE_CALL_MESSAGE_TEMPLATE,
+    EUSS_GROUP, 
+  EUSS
 } from '../../../helpers/constants';
 import { GovNotifyGateway } from '../../../gateways/gov-notify-api-gateway';
 import {
@@ -12,12 +14,17 @@ import { HereToHelpApiGateway } from '../../../gateways/here-to-help-api-gateway
 
 export class SendBulkMessagesUseCase {
     async sendMessages(reqBody) {
-        const requestBody = JSON.parse(reqBody);
-
+        const requestBody = reqBody;
         try {
             const hereToHelpApiGateway = new HereToHelpApiGateway();
+            const queryParam = reqBody.helpType == EUSS ? { IncludeType: 'EUSS' } : null;
+            const callbacks = await hereToHelpApiGateway.request(
+                [`v3/help-requests/callbacks`],
+                'GET',
+                null,
+                queryParam
+            );
 
-            const callbacks = await hereToHelpApiGateway.request([`v3/help-requests/callbacks`]);
             const { unassignedCallbacks, assignedCallbacks } = getAssignedAndUnassignedCallbacks(
                 callbacks.data,
                 requestBody.helpType
