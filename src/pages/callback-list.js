@@ -43,7 +43,9 @@ function CallbacksListPage({ callTypes }) {
 
     const getCallHandlers = async () => {
         const gateway = new CallHandlerGateway();
-        const callHandlersList = await gateway.getCallHandler();
+        let callHandlersList = await gateway.getCallHandler();
+
+        callHandlersList.sort();
 
         callHandlersList.unshift('Assigned to all');
 

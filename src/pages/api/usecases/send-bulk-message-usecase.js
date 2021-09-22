@@ -12,7 +12,7 @@ import { HereToHelpApiGateway } from '../../../gateways/here-to-help-api-gateway
 
 export class SendBulkMessagesUseCase {
     async sendMessages(reqBody) {
-        const requestBody = JSON.parse(reqBody);
+        const requestBody = reqBody;
 
         try {
             const hereToHelpApiGateway = new HereToHelpApiGateway();
