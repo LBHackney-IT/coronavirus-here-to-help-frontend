@@ -14,10 +14,10 @@ import { HereToHelpApiGateway } from '../../../gateways/here-to-help-api-gateway
 
 export class SendBulkMessagesUseCase {
     async sendMessages(reqBody) {
-        const requestBody = reqBody;
+        const requestBody = JSON.parse(reqBody);
         try {
             const hereToHelpApiGateway = new HereToHelpApiGateway();
-            const queryParam = reqBody.helpType == EUSS ? { IncludeType: 'EUSS' } : null;
+            const queryParam = requestBody.helpType == EUSS ? { IncludeType: 'EUSS' } : null;
             const callbacks = await hereToHelpApiGateway.request(
                 [`v3/help-requests/callbacks`],
                 'GET',
