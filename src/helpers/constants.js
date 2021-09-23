@@ -32,14 +32,6 @@ export const helpTypes = [
     LINK_WORK,
     ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
 ];
-export const callTypes = [
-    'All',
-    'Help Request',
-    'CEV',
-    'Welfare Call',
-    'Contact Tracing',
-    ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
-];
 export const selfIsolationCallTypes = [WELFARE_CALL, CONTACT_TRACING];
 export const bulkMessageCallTypes = [WELFARE_CALL, CONTACT_TRACING, EUSS];
 
