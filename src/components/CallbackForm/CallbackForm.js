@@ -3,7 +3,6 @@ import { Checkbox, RadioButton, Button, SingleRadioButton } from '../Form';
 import Link from 'next/link';
 import {
     cevHelpTypes,
-    IS_EUSS_ENABLED,
     selfIsolationCallTypes,
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     TEST_AND_TRACE_FOLLOWUP_EMAIL,

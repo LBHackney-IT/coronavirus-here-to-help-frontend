@@ -1,5 +1,4 @@
-import { EUSS, IS_EUSS_ENABLED } from '../../../src/helpers/constants';
-import { EUSS_User } from '../../support/commands';
+import { EUSS } from '../../../src/helpers/constants';
 
 beforeEach(() => {
     cy.login();
@@ -44,6 +43,8 @@ describe('Callbacks list page filters callbacks correctly', () => {
         cy.get('[data-testid=help-type-dropdown]').select('Help Request');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '3');
         cy.get('[data-testid=help-type-dropdown]').select('Link Work');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
+        cy.get('[data-testid=help-type-dropdown]').select(EUSS);
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
     });
 
