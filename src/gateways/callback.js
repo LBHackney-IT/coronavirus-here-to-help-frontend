@@ -21,6 +21,7 @@ const ToCallbackList = (callbacks) => {
                 ? isoDateToOtherDate(callback.DateTimeRecorded)
                 : '', //remove this line from the component
             callType: replaceIfShielding(callback.HelpNeeded),
+            callSubType: callback.HelpNeededSubtype,
             unsuccessfulCallAttempts: unsuccessfulCalls(callback.HelpRequestCalls),
             followUpRequired: callback.CallbackRequired,
             assignedTo: callback.AssignedTo,

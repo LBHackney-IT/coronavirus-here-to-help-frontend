@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { LINK_WORK } from '../../helpers/constants';
-import { formatSubTypes } from '../../helpers/formatter';
+import { formatSubText } from '../../helpers/formatter';
 
 export default function SupportTable({ helpRequests }) {
     return (
@@ -55,9 +54,9 @@ export default function SupportTable({ helpRequests }) {
                                                 data-testid="support-requested-table-help-needed">
                                                 {hr.helpNeeded == 'Welfare Call'
                                                     ? 'Self Isolation'
-                                                    : formatSubTypes(
+                                                    : formatSubText(
                                                           hr.helpNeeded,
-                                                          hr.upcomingCallOutcome
+                                                          hr.helpNeededSubtype
                                                       )}
                                             </td>
                                             <td className="govuk-table__cell">
@@ -116,9 +115,9 @@ export default function SupportTable({ helpRequests }) {
                                                 data-testid="support-received-table-help-needed">
                                                 {hr.helpNeeded == 'Welfare Call'
                                                     ? 'Self Isolation'
-                                                    : formatSubTypes(
+                                                    : formatSubText(
                                                           hr.helpNeeded,
-                                                          hr.upcomingCallOutcome
+                                                          hr.helpNeededSubtype
                                                       )}
                                             </td>
                                             <td

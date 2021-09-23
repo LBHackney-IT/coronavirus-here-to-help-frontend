@@ -1,3 +1,3 @@
-export const formatSubTypes = (text, subtext = '') => {
+export const formatSubText = (text, subtext = '') => {
     return subtext ? text.concat(' (', subtext, ')') : text;
 };
