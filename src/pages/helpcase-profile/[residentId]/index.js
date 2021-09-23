@@ -9,20 +9,28 @@ import { HelpRequestGateway } from '../../../gateways/help-request';
 import CallHistory from '../../../components/CallHistory/CallHistory';
 import CaseNotes from '../../../components/CaseNotes/CaseNotes';
 import { useState, useEffect } from 'react';
-import { helpTypes, IS_EUSS_ENABLED } from '../../../helpers/constants';
 import CaseNotesGateway from '../../../gateways/case-notes';
+import { AuthorisedCallTypesGateway } from '../../../gateways/authorised-call-types';
+import { ALL } from '../../../helpers/constants';
 
 export default function HelpcaseProfile({ residentId }) {
     const [resident, setResident] = useState([]);
     const [helpRequests, setHelpRequests] = useState([]);
+    const [callTypes, setCallTypes] = useState([]);
     const [caseNotes, setCaseNotes] = useState({
         All: [],
         'Welfare Call': [],
-        'Help Requesst': [],
+        'Help Request': [],
         'Contact Tracing': [],
         CEV: [],
         'Link Work': [],
-        ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
+        EUSS: []
+    });
+
+    useEffect(async () => {
+        const gateway = new AuthorisedCallTypesGateway();
+        const res = await gateway.getCallTypes();
+        setCallTypes([ALL].concat(res.sort()));
     });
 
     const getResidentAndHelpRequests = async () => {
@@ -39,11 +47,9 @@ export default function HelpcaseProfile({ residentId }) {
                 'Help Request': [],
                 'Contact Tracing': [],
                 CEV: [],
-                'Link Work': []
+                'Link Work': [],
+                EUSS: []
             };
-            if (IS_EUSS_ENABLED) {
-                categorisedCaseNotes.EUSS = [];
-            }
 
             residentCaseNotes.forEach((caseNote) => {
                 if (!caseNote) return;
@@ -60,7 +66,7 @@ export default function HelpcaseProfile({ residentId }) {
                     }
                 });
 
-                helpTypes.forEach((helpType) => {
+                callTypes.forEach((helpType) => {
                     categorisedCaseNotes[helpType].sort(
                         (a, b) => new Date(b.noteDate) - new Date(a.noteDate)
                     );

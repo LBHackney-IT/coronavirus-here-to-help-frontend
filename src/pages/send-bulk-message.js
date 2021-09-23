@@ -11,7 +11,8 @@ import {
     EUSS_PRE_CALL_MESSAGE_TEMPLATE,
     bulkMessageCallTypes,
     DEFAULT_DROPDOWN_OPTION,
-    EUSS
+    EUSS,
+    WELFARE_CALL
 } from '../helpers/constants';
 import { GovNotifyGateway } from '../gateways/gov-notify';
 import { unsafeExtractUser } from '../helpers/auth';
@@ -44,7 +45,7 @@ export default function AssignCallsPage() {
     const getPreview = async (value) => {
         let govNotifyGateway = new GovNotifyGateway();
         let response;
-        if (value == 'Welfare Call') {
+        if (value == WELFARE_CALL) {
             response = await govNotifyGateway.getTemplatePreview(
                 SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE
             );

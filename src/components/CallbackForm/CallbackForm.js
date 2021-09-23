@@ -38,13 +38,7 @@ export default function CallbackForm({
     const [showEmail, setShowEmail] = useState(false);
     const [showText, setShowText] = useState(false);
     const [submitEnabled, setSubmitEnabled] = useState(true);
-    const [callTypes, setCallTypes] = useState([
-        'Contact Tracing',
-        'CEV',
-        'Welfare Call',
-        'Help Request',
-        'Link Work'
-    ]);
+    const [callTypes, setCallTypes] = useState([]);
 
     const [errors, setErrors] = useState({
         CallbackRequired: null,
