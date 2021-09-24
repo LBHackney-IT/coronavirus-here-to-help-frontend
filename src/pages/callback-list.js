@@ -23,7 +23,14 @@ function CallbacksListPage() {
     useEffect(async () => {
         const gateway = new AuthorisedCallTypesGateway();
         const res = await gateway.getCallTypes();
-        setCallTypes([ALL].concat(res.sort()));
+        console.log('res', res[0].name);
+        let callNames = [];
+        for (const type in res) {
+            console.log('type', type);
+            callNames.push(res[type].name);
+        }
+        console.log('callNames', callNames);
+        setCallTypes([ALL].concat(callNames.sort()));
     }, []);
 
     const getCallBacks = async () => {

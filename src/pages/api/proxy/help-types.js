@@ -7,7 +7,7 @@ const endpoint = async (req, res) => {
 
     try {
         let response = [];
-        if (user?.groups.includes(EUSS_GROUP)) response.push('EUSS');
+        if (user?.groups.includes(EUSS_GROUP)) response.push({ name: 'EUSS' });
 
         return res.json(response);
     } catch (err) {
