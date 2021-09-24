@@ -24,7 +24,7 @@ function CallbacksListPage() {
         const gateway = new AuthorisedCallTypesGateway();
         const res = await gateway.getCallTypes();
         setCallTypes([ALL].concat(res.sort()));
-    });
+    }, []);
 
     const getCallBacks = async () => {
         const gateway = new CallbackGateway();
