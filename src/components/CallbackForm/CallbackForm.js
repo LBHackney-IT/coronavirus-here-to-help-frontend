@@ -55,8 +55,6 @@ export default function CallbackForm({
         CallHandler: null
     });
 
-    console.log('helpRequest', helpRequest);
-
     useEffect(() => {
         setHelpNeeded(helpRequest ? helpRequest.helpNeeded : '');
         setCEVHelpNeeds({
