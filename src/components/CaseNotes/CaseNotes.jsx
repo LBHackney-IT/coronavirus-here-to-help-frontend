@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { helpTypes } from '../../helpers/constants';
+import { helpTypes, WELFARE_CALL } from '../../helpers/constants';
 import Dropdown from '../../components/Form/Dropdown/Dropdown';
 import styles from '../CaseNotes/CaseNotes.module.scss';
 import { useRouter } from 'next/router';
@@ -57,7 +57,7 @@ export default function CaseNotes({ caseNotes }) {
                                     {caseNote.formattedDate} by {caseNote.author}
                                 </h4>
                                 <p>
-                                    {caseNote.helpNeeded == 'Welfare Call'
+                                    {caseNote.helpNeeded == WELFARE_CALL
                                         ? 'Self Isolation'
                                         : formatSubText(
                                               caseNote.helpNeeded,

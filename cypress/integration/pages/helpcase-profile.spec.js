@@ -1,4 +1,5 @@
 import { EUSS } from '../../../src/helpers/constants';
+import { formatSubText } from '../../../src/helpers/formatter';
 
 beforeEach(() => {
     cy.login();
@@ -32,7 +33,7 @@ describe('View helpcase profile page', () => {
         cy.get('[data-testid=support-requested-table-calls-count]').first().should('contain', '1');
 
         cy.get('[data-testid=support-received-tab]').click({ force: true });
-        cy.get('[data-testid=support-received-table_row]').should('have.length', 1);
+        cy.get('[data-testid=support-received-table_row]').should('have.length', 2);
         cy.get('[data-testid=support-received-table-help-needed]')
             .first()
             .should('contain', 'Self Isolation');
@@ -41,13 +42,20 @@ describe('View helpcase profile page', () => {
 
     it('displays a call history', () => {
         cy.visit(`http://localhost:3000/helpcase-profile/3`);
-        cy.get('[data-testid=call-history-entry]').should('have.length', 13);
+        cy.get('[data-testid=call-history-entry]').should('have.length', 14);
         cy.get('[data-testid=call-history-entry]')
             .first()
             .should('contain', '2021-01-26 15:12 by Bart Simpson');
         cy.get('[data-testid=call-history-entry]')
             .first()
             .should('contain', 'outbound Self Isolation Call: Wrong number');
+    });
+    it('displays help needed subtype in the call history', () => {
+        cy.visit(`http://localhost:3000/helpcase-profile/3`);
+        cy.get('[data-testid=call-history-entry]').should(
+            'contain',
+            formatSubText('Link Work', 'Repairs')
+        );
     });
     it('displays JSON and string case notes ordered by date', () => {
         cy.visit(`http://localhost:3000/helpcase-profile/3`);
@@ -79,7 +87,7 @@ describe('View helpcase profile page', () => {
             .last()
             .should('contain', 'Self Isolation: *** CREATED ***');
     });
-    it('displays filtered Link Work case notes ordered by date', () => {
+    it('displays filtered Link Work case notes ordered by date and helpNeeded subtype', () => {
         cy.visit(`http://localhost:3000/helpcase-profile/3`);
         cy.get('[data-testid=select-dropdown]').select('Link Work', { force: true });
         cy.get('[data-testid=case-note-entry]').should('have.length', 1);
@@ -88,7 +96,7 @@ describe('View helpcase profile page', () => {
         cy.get('[data-testid=case-note-entry]').first().should('contain', '2020-09-07');
         cy.get('[data-testid=case-note-entry]')
             .first()
-            .should('contain', 'Link Work: *** CREATED ***');
+            .should('contain', 'Link Work (Repairs): *** CREATED ***');
     });
 
     it('displays filtered EUSS case notes ordered by date', () => {
