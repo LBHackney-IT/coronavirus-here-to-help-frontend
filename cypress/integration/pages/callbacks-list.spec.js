@@ -1,5 +1,4 @@
-import { EUSS, IS_EUSS_ENABLED } from '../../../src/helpers/constants';
-import { EUSS_User } from '../../support/commands';
+import { formatSubText } from '../../../src/helpers/formatter';
 
 beforeEach(() => {
     cy.login();
@@ -10,6 +9,13 @@ describe('Callbacks list page displays and maps data correctly', () => {
     it('Callbacks are retrieved and mapped to table rows', () => {
         cy.visit('/callback-list');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', 8);
+    });
+    it('Shows subtypes correctly', () => {
+        cy.visit('/callback-list');
+        cy.get('[data-testid=callbacks-table_row]').should(
+            'contain',
+            formatSubText('Link Work', 'Repairs')
+        );
     });
 
     it('Help types are mapped to help case type dropdown options', () => {
