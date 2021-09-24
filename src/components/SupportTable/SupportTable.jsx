@@ -52,7 +52,7 @@ export default function SupportTable({ helpRequests }) {
                                             <td
                                                 className="govuk-table__cell"
                                                 data-testid="support-requested-table-help-needed">
-                                                {hr.helpNeeded == 'Welfare Call'
+                                                {hr.helpNeeded == WELFARE_CALL
                                                     ? 'Self Isolation'
                                                     : hr.helpNeeded}
                                             </td>

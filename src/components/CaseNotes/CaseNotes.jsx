@@ -63,7 +63,7 @@ export default function CaseNotes({ caseNotes }) {
                                     {caseNote.formattedDate} by {caseNote.author}
                                 </h4>
                                 <p>
-                                    {caseNote.helpNeeded == 'Welfare Call'
+                                    {caseNote.helpNeeded == WELFARE_CALL
                                         ? 'Self Isolation'
                                         : caseNote.helpNeeded}
                                     : {caseNote.note}

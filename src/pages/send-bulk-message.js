@@ -78,7 +78,7 @@ export default function AssignCallsPage() {
             event.preventDefault();
             let govNotifyGateway = new GovNotifyGateway();
             const textTemplateId =
-                helpType == 'Welfare Call'
+                helpType == WELFARE_CALL
                     ? SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE
                     : helpType === EUSS
                     ? EUSS_PRE_CALL_MESSAGE_TEMPLATE
