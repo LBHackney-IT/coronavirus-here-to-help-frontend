@@ -1,6 +1,5 @@
-import { EUSS } from '../../../src/helpers/constants';
-import { formatSubText } from '../../../src/helpers/formatter';
 import { EUSS, LINK_WORK } from '../../../src/helpers/constants';
+import { formatSubText } from '../../../src/helpers/formatter';
 import { EUSS_User } from '../../support/commands';
 
 beforeEach(() => {
