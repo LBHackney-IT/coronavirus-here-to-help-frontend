@@ -6,7 +6,8 @@ import {
     selfIsolationCallTypes,
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     TEST_AND_TRACE_FOLLOWUP_EMAIL,
-    EUSS
+    EUSS,
+    WELFARE_CALL
 } from '../../helpers/constants';
 import { formatSubText } from '../../helpers/formatter';
 import { useRouter } from 'next/router';
@@ -39,13 +40,7 @@ export default function CallbackForm({
     const [showEmail, setShowEmail] = useState(false);
     const [showText, setShowText] = useState(false);
     const [submitEnabled, setSubmitEnabled] = useState(true);
-    const [callTypes, setCallTypes] = useState([
-        'Contact Tracing',
-        'CEV',
-        'Welfare Call',
-        'Help Request',
-        'Link Work'
-    ]);
+    const [callTypes, setCallTypes] = useState([]);
 
     const [errors, setErrors] = useState({
         CallbackRequired: null,
@@ -224,12 +219,12 @@ export default function CallbackForm({
     const validateSelfIsolationNeedsFieldset = () => {
         return (
             (callOutcomeValues.includes('callback_complete') &&
-                helpNeeded === 'Welfare Call' &&
+                helpNeeded === WELFARE_CALL &&
                 (callOutcomeValues.includes('food_consortia_referral_needs') ||
                     callOutcomeValues.includes('other_support_needs') ||
                     callOutcomeValues.includes('no_support_needs'))) ||
             !callOutcomeValues.includes('callback_complete') ||
-            helpNeeded !== 'Welfare Call'
+            helpNeeded !== WELFARE_CALL
         );
     };
 

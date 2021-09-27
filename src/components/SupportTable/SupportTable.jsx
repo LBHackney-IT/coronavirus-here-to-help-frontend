@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { formatSubText } from '../../helpers/formatter';
+import { WELFARE_CALL } from '../../helpers/constants';
 
 export default function SupportTable({ helpRequests }) {
     return (
@@ -52,7 +53,7 @@ export default function SupportTable({ helpRequests }) {
                                             <td
                                                 className="govuk-table__cell"
                                                 data-testid="support-requested-table-help-needed">
-                                                {hr.helpNeeded == 'Welfare Call'
+                                                {hr.helpNeeded == WELFARE_CALL
                                                     ? 'Self Isolation'
                                                     : formatSubText(
                                                           hr.helpNeeded,
@@ -113,7 +114,7 @@ export default function SupportTable({ helpRequests }) {
                                             <td
                                                 className="govuk-table__cell"
                                                 data-testid="support-received-table-help-needed">
-                                                {hr.helpNeeded == 'Welfare Call'
+                                                {hr.helpNeeded == WELFARE_CALL
                                                     ? 'Self Isolation'
                                                     : formatSubText(
                                                           hr.helpNeeded,

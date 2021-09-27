@@ -23,23 +23,6 @@ export const callOutcomes = {
     no_support_needs: 'No, the resident did not require support'
 };
 
-export const helpTypes = [
-    ALL,
-    WELFARE_CALL,
-    HELP_REQUEST,
-    CONTACT_TRACING,
-    CEV,
-    LINK_WORK,
-    ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
-];
-export const callTypes = [
-    'All',
-    'Help Request',
-    'CEV',
-    'Welfare Call',
-    'Contact Tracing',
-    ...(IS_EUSS_ENABLED ? ['EUSS'] : [])
-];
 export const selfIsolationCallTypes = [WELFARE_CALL, CONTACT_TRACING];
 export const bulkMessageCallTypes = [WELFARE_CALL, CONTACT_TRACING, EUSS];
 

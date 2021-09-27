@@ -1,5 +1,6 @@
-import { EUSS, IS_EUSS_ENABLED } from '../../../src/helpers/constants';
 import { formatSubText } from '../../../src/helpers/formatter';
+import { EUSS, LINK_WORK } from '../../../src/helpers/constants';
+import { EUSS_User } from '../../support/commands';
 
 beforeEach(() => {
     cy.login();
@@ -94,7 +95,7 @@ describe('View helpcase profile page', () => {
     });
     it('displays filtered Link Work case notes ordered by date', () => {
         cy.visit(`http://localhost:3000/helpcase-profile/3`);
-        cy.get('[data-testid=select-dropdown]').select('Link Work', { force: true });
+        cy.get('[data-testid=select-dropdown]').select(LINK_WORK, { force: true });
         cy.get('[data-testid=case-note-entry]').should('have.length', 1);
         cy.get('[data-testid=case-note-entry]').first().scrollIntoView();
         cy.get('[data-testid=case-note-entry]').first().should('contain', 'by Gandalf');
@@ -103,25 +104,16 @@ describe('View helpcase profile page', () => {
             .first()
             .should('contain', 'Link Work: *** CREATED ***');
     });
-    if (IS_EUSS_ENABLED) {
-        it('displays filtered EUSS case notes ordered by date', () => {
-            cy.visit(`http://localhost:3000/helpcase-profile/3`);
-            cy.get('[data-testid=select-dropdown]').select(EUSS, { force: true });
 
-            cy.get('[data-testid=case-note-entry]').should('have.length', 1);
-            cy.get('[data-testid=case-note-entry]').first().scrollIntoView();
-            cy.get('[data-testid=case-note-entry]').first().should('contain', 'by Frodo Baggins');
-            cy.get('[data-testid=case-note-entry]').first().should('contain', '2020-09-07');
-            cy.get('[data-testid=case-note-entry]')
-                .first()
-                .should('contain', 'EUSS: *** CREATED ***');
-        });
-    }
-    if (!IS_EUSS_ENABLED) {
-        it('does not display EUSS filter if EUSS is not enabled', () => {
-            cy.visit(`http://localhost:3000/helpcase-profile/3`);
-            cy.get('[data-testid=select-dropdown]').find('option').should('have.length', 6);
-            cy.get('[data-testid=select-dropdown]').find('option').should('not.have.value', EUSS);
-        });
-    }
+    it('displays filtered EUSS case notes ordered by date when logged in as an EUSS user', () => {
+        cy.login(EUSS_User);
+        cy.visit(`http://localhost:3000/helpcase-profile/3`);
+        cy.get('[data-testid=select-dropdown]').select(EUSS, { force: true });
+
+        cy.get('[data-testid=case-note-entry]').should('have.length', 1);
+        cy.get('[data-testid=case-note-entry]').first().scrollIntoView();
+        cy.get('[data-testid=case-note-entry]').first().should('contain', 'by Frodo Baggins');
+        cy.get('[data-testid=case-note-entry]').first().should('contain', '2020-09-07');
+        cy.get('[data-testid=case-note-entry]').first().should('contain', 'EUSS: *** CREATED ***');
+    });
 });
