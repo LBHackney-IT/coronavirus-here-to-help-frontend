@@ -1,4 +1,5 @@
 import React from 'react';
+import {WELFARE_CALL} from '../../../helpers/constants';
 
 const Checkbox = ({ label, isSelected, onCheckboxChange, value, containerStyle, ...others }) => (
     <div className="govuk-checkboxes__item" style={containerStyle}>
@@ -12,7 +13,7 @@ const Checkbox = ({ label, isSelected, onCheckboxChange, value, containerStyle, 
             {...others}
         />
         <label className="govuk-label govuk-checkboxes__label">
-            {label == 'Welfare Call' ? 'Self Isolation' : label}
+            {label == WELFARE_CALL ? 'Self Isolation' : label}
         </label>
     </div>
 );

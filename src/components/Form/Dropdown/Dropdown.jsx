@@ -1,4 +1,5 @@
 import React from 'react';
+import { WELFARE_CALL } from '../../../helpers/constants';
 
 export default function Dropdown({ onChange, dropdownItems, label, name, ...otherProps }) {
     return (
@@ -16,7 +17,7 @@ export default function Dropdown({ onChange, dropdownItems, label, name, ...othe
                 {dropdownItems.map((dropdownItem, index) => {
                     return (
                         <option key={index} value={dropdownItem}>
-                            {dropdownItem == 'Welfare Call' ? 'Self Isolation' : dropdownItem}
+                            {dropdownItem == WELFARE_CALL ? 'Self Isolation' : dropdownItem}
                         </option>
                     );
                 })}

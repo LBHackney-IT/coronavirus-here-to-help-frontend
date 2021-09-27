@@ -11,13 +11,14 @@ import { CaseNotesGateway } from '../../../../gateways/case-notes';
 import { useRouter } from 'next/router';
 import CallHistory from '../../../../components/CallHistory/CallHistory';
 import CaseNotes from '../../../../components/CaseNotes/CaseNotes';
-import { helpTypes, IS_EUSS_ENABLED } from '../../../../helpers/constants';
+import { IS_EUSS_ENABLED } from '../../../../helpers/constants';
 import { GovNotifyGateway } from '../../../../gateways/gov-notify';
 import {
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     TEST_AND_TRACE_FOLLOWUP_EMAIL
 } from '../../../../helpers/constants';
 import getTimeZoneCorrectedLocalDate from '../../../../../tools/etcUtility';
+import { AuthorisedCallTypesGateway } from '../../../../gateways/authorised-call-types';
 
 export default function addSupportPage({ residentId, helpRequestId }) {
     const backHref = `/helpcase-profile/${residentId}`;
@@ -58,6 +59,9 @@ export default function addSupportPage({ residentId, helpRequestId }) {
                 helpRequestId
             );
 
+            const callTypesGateway = new AuthorisedCallTypesGateway();
+            const helpTypes = await callTypesGateway.getCallTypes();
+
             let categorisedCaseNotes = {
                 All: [],
                 'Welfare Call': [],
@@ -66,6 +70,7 @@ export default function addSupportPage({ residentId, helpRequestId }) {
                 CEV: [],
                 'Link Work': []
             };
+
             if (IS_EUSS_ENABLED) {
                 categorisedCaseNotes.EUSS = [];
             }

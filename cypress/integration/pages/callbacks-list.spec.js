@@ -1,4 +1,5 @@
 import { EUSS } from '../../../src/helpers/constants';
+import { EUSS_User } from '../../support/commands';
 
 beforeEach(() => {
     cy.login();
@@ -12,6 +13,12 @@ describe('Callbacks list page displays and maps data correctly', () => {
     });
 
     it('Help types are mapped to help case type dropdown options', () => {
+        cy.visit('/callback-list');
+        cy.get('[data-testid=help-type-dropdown]').find('option').should('have.length', 6);
+    });
+
+    it('Displays EUSS filter when logged in as an EUSS user', () => {
+        cy.login(EUSS_User);
         cy.visit('/callback-list');
         cy.get('[data-testid=help-type-dropdown]').find('option').should('have.length', 7);
     });
@@ -44,6 +51,10 @@ describe('Callbacks list page filters callbacks correctly', () => {
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '3');
         cy.get('[data-testid=help-type-dropdown]').select('Link Work');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
+    });
+    it('Allows filtering by EUSS when logged in as an EUSS user', () => {
+        cy.login(EUSS_User);
+        cy.visit('/callback-list');
         cy.get('[data-testid=help-type-dropdown]').select(EUSS);
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
     });

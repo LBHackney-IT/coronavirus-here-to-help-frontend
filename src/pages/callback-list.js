@@ -5,18 +5,26 @@ import CallbacksList from '../components/CallbacksList/CallbacksList';
 import { Dropdown, TextInput } from '../components/Form';
 import { CallbackGateway } from '../gateways/callback';
 import { CallHandlerGateway } from '../gateways/call-handler';
-import { CallTypesGateway } from '../gateways/call-types';
+import { AuthorisedCallTypesGateway } from '../gateways/authorised-call-types';
+import { ALL, WELFARE_CALL } from '../helpers/constants';
 
-function CallbacksListPage({ callTypes }) {
+function CallbacksListPage() {
     const [callbacks, setCallbacks] = useState([]);
     const [subsetCallbacks, setSubsetCallbacks] = useState([]);
     const [callHandlers, setCallHandlers] = useState([]);
+    const [callTypes, setCallTypes] = useState([]);
     const [dropdowns, setDropdowns] = useState({
         callType: 'All',
         assignedTo: 'Assigned to all'
     });
 
     const [ctasInput, setCtasInput] = useState('');
+
+    useEffect(async () => {
+        const gateway = new AuthorisedCallTypesGateway();
+        const res = await gateway.getCallTypes();
+        setCallTypes([ALL].concat(res.sort()));
+    }, []);
 
     const getCallBacks = async () => {
         const gateway = new CallbackGateway();
@@ -37,7 +45,7 @@ function CallbacksListPage({ callTypes }) {
     const handleCallTypeChange = (event) => {
         setDropdowns({
             ...dropdowns,
-            callType: event == 'Self Isolation' ? 'Welfare Call' : event
+            callType: event == 'Self Isolation' ? WELFARE_CALL : event
         });
     };
 
@@ -127,11 +135,5 @@ function CallbacksListPage({ callTypes }) {
         </Layout>
     );
 }
-
-CallbacksListPage.getInitialProps = async (ctx) => {
-    const gateway = new CallTypesGateway();
-    const res = await gateway.getCallTypes();
-    return { callTypes: res };
-};
 
 export default CallbacksListPage;

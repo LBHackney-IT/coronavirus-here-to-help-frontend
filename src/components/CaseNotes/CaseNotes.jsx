@@ -1,15 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { helpTypes, WELFARE_CALL } from '../../helpers/constants';
 import Dropdown from '../../components/Form/Dropdown/Dropdown';
+import { WELFARE_CALL, ALL } from '../../helpers/constants';
+import Dropdown from '../../components/Form/Dropdown/Dropdown';
 import styles from '../CaseNotes/CaseNotes.module.scss';
 import { useRouter } from 'next/router';
 import { formatSubText } from '../../helpers/formatter';
+import { AuthorisedCallTypesGateway } from '../../gateways/authorised-call-types';
+import { useRouter } from 'next/router';
 
 export default function CaseNotes({ caseNotes }) {
     const [filterBy, setFilterBy] = useState('');
     const [displayDropdown, setDisplayDropDown] = useState(true);
+    const [callTypes, setCallTypes] = useState([]);
     const router = useRouter();
-    useEffect(() => {
+
+    useEffect(async () => {
+        const gateway = new AuthorisedCallTypesGateway();
+        const res = await gateway.getCallTypes();
+        console.log(res);
+        setCallTypes([ALL].concat(res.sort()));
+
         if (router.pathname.includes('manage-request')) {
             setDisplayDropDown(false);
         }
@@ -17,13 +28,12 @@ export default function CaseNotes({ caseNotes }) {
         if (caseNotes?.helpType) {
             setFilterBy(caseNotes.helpType);
         } else {
-            setFilterBy('All');
+            setFilterBy(ALL);
         }
     }, [caseNotes]);
+
     const hanleOnChange = (selectedCaseNoteType) => {
-        setFilterBy(
-            selectedCaseNoteType == 'Self Isolation' ? 'Welfare Call' : selectedCaseNoteType
-        );
+        setFilterBy(selectedCaseNoteType == 'Self Isolation' ? WELFARE_CALL : selectedCaseNoteType);
     };
     return (
         <div>
@@ -32,9 +42,9 @@ export default function CaseNotes({ caseNotes }) {
             {caseNotes && !caseNotes.helpType && displayDropdown && (
                 <Dropdown
                     onChange={(e) => hanleOnChange(e)}
-                    dropdownItems={helpTypes
+                    dropdownItems={callTypes
                         .join(',')
-                        .replace('Welfare Call', 'Self Isolation')
+                        .replace(WELFARE_CALL, 'Self Isolation')
                         .split(',')}></Dropdown>
             )}
             {caseNotes && caseNotes[filterBy]?.length == 0 && (
@@ -60,9 +70,9 @@ export default function CaseNotes({ caseNotes }) {
                                     {caseNote.helpNeeded == WELFARE_CALL
                                         ? 'Self Isolation'
                                         : formatSubText(
-                                              caseNote.helpNeeded,
-                                              caseNote.helpNeededSubtype
-                                          )}
+                                            caseNote.helpNeeded,
+                                            caseNote.helpNeededSubtype
+                                        )}
                                     : {caseNote.note}
                                 </p>
                             </div>
