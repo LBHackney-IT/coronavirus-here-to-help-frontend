@@ -1,4 +1,5 @@
 import { DefaultGateway } from '../gateways/default-gateway';
+import { CEV, CONTACT_TRACING, HELP_REQUEST, LINK_WORK, WELFARE_CALL } from '../helpers/constants';
 
 export class AuthorisedCallTypesGateway extends DefaultGateway {
     async getAuthorisedHelpTypes() {
@@ -8,7 +9,7 @@ export class AuthorisedCallTypesGateway extends DefaultGateway {
 
     async getCallTypes() {
         let authorisedTypes = await this.getAuthorisedHelpTypes();
-        return ['Contact Tracing', 'CEV', 'Welfare Call', 'Help Request', 'Link Work'].concat(
+        return [CONTACT_TRACING, CEV, WELFARE_CALL, HELP_REQUEST, LINK_WORK].concat(
             authorisedTypes
         );
     }

@@ -6,7 +6,8 @@ import {
     selfIsolationCallTypes,
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     TEST_AND_TRACE_FOLLOWUP_EMAIL,
-    EUSS
+    EUSS,
+    WELFARE_CALL
 } from '../../helpers/constants';
 import { useRouter } from 'next/router';
 import { GovNotifyGateway } from '../../gateways/gov-notify';
@@ -217,12 +218,12 @@ export default function CallbackForm({
     const validateSelfIsolationNeedsFieldset = () => {
         return (
             (callOutcomeValues.includes('callback_complete') &&
-                helpNeeded === 'Welfare Call' &&
+                helpNeeded === WELFARE_CALL &&
                 (callOutcomeValues.includes('food_consortia_referral_needs') ||
                     callOutcomeValues.includes('other_support_needs') ||
                     callOutcomeValues.includes('no_support_needs'))) ||
             !callOutcomeValues.includes('callback_complete') ||
-            helpNeeded !== 'Welfare Call'
+            helpNeeded !== WELFARE_CALL
         );
     };
 
