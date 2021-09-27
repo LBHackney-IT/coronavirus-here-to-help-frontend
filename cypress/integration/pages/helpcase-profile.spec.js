@@ -1,5 +1,5 @@
-import { EUSS, LINK_WORK } from '../../../src/helpers/constants';
 import { formatSubText } from '../../../src/helpers/formatter';
+import { EUSS, LINK_WORK } from '../../../src/helpers/constants';
 import { EUSS_User } from '../../support/commands';
 
 beforeEach(() => {
@@ -41,6 +41,18 @@ describe('View helpcase profile page', () => {
         cy.get('[data-testid=support-received-table-calls-count]').first().should('contain', '1');
     });
 
+    it('displays subtype correctly in support requested and support recieved', () => {
+        cy.visit(`http://localhost:3000/helpcase-profile/3`);
+        cy.get('[data-testid=support-requested-table-help-needed]').should(
+            'contain',
+            formatSubText('Link Work', 'Repairs')
+        );
+
+        cy.get('[data-testid=support-received-tab]').click({ force: true }),
+            cy
+                .get('[data-testid=support-received-table-help-needed]')
+                .should('contain', formatSubText('Link Work', 'Repairs'));
+    });
     it('displays a call history', () => {
         cy.visit(`http://localhost:3000/helpcase-profile/3`);
         cy.get('[data-testid=call-history-entry]').should('have.length', 14);

@@ -543,6 +543,7 @@
         "CaseNotes": "[object Object]---[object Object]",
         "AdviceNotes": "string",
         "HelpNeeded": "Link Work",
+        "HelpNeededSubtype": "Repairs",
         "NhsNumber": "string",
         "AssignedTo": "Person B",
         "RescheduledAt": "",
