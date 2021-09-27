@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { formatSubText } from '../../helpers/formatter';
 import { NOT_ASSIGNED, CONTACT_TRACING, WELFARE_CALL } from '../../helpers/constants';
 
 const calcInitials = (fullname) =>
@@ -65,7 +66,10 @@ export default function CallbacksList({ callbacks }) {
                                     <span title="Contact Tracing">
                                         {callback.callType == WELFARE_CALL
                                             ? 'Self Isolation'
-                                            : callback.callType}
+                                            : formatSubText(
+                                                  callback.callType,
+                                                  callback.callSubType
+                                              )}
                                     </span>
                                 </td>
                                 <td className="govuk-table__cell ">

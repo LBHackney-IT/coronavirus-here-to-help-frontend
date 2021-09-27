@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { formatSubText } from '../../helpers/formatter';
 import { WELFARE_CALL } from '../../helpers/constants';
 import styles from './CallHistory.module.scss';
 
@@ -41,7 +42,7 @@ export default function CaseNotes({ calls }) {
                                 {call.callDirection}{' '}
                                 {call.callType == WELFARE_CALL
                                     ? 'Self Isolation Call'
-                                    : call.callType}
+                                    : formatSubText(call.callType, call.helpNeededSubtype)}
                                 : {FormatCallOutcome(call.callOutcome)}
                             </p>
                         </div>

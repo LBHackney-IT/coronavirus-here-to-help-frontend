@@ -1,6 +1,13 @@
 import { DefaultGateway } from '../gateways/default-gateway';
-import {CEV, SHIELDING} from '../helpers/constants';
-import {isJSON, getDate, getNote, getAuthor, formatDate, getNonJsonCasenotesArray} from '../helpers/case_notes_helper'
+import { CEV, SHIELDING } from '../helpers/constants';
+import {
+    isJSON,
+    getDate,
+    getNote,
+    getAuthor,
+    formatDate,
+    getNonJsonCasenotesArray
+} from '../helpers/case_notes_helper';
 
 const ToHelpRequestDomain = (hr) => {
     return {
@@ -15,6 +22,7 @@ const ToHelpRequestDomain = (hr) => {
         dateTimeRecorded: hr.DateTimeRecorded,
         gettingInTouchReason: hr.GettingInTouchReason,
         helpNeeded: (hr.HelpNeeded == SHIELDING)? CEV : hr.HelpNeeded,
+        helpNeededSubtype: hr.HelpNeededSubtype,
         helpWithAccessingFood: hr.HelpWithAccessingFood,
         helpWithAccessingSupermarketFood: hr.HelpWithAccessingSupermarketFood,
         helpWithCompletingNssForm: hr.HelpWithCompletingNssForm,
@@ -43,74 +51,78 @@ const ToHelpRequestDomain = (hr) => {
         recordStatus: hr.RecordStatus,
         relationshipWithResident: hr.RelationshipWithResident,
         nhsCtasId: hr.NhsCtasId,
-        metadata: hr.Metadata ?  JSON.parse(hr.Metadata) : {},
+        metadata: hr.Metadata ? JSON.parse(hr.Metadata) : {},
         urgentEssentials: hr.UrgentEssentials,
         urgentEssentialsAnythingElse: hr.UrgentEssentialsAnythingElse,
         whenIsMedicinesDelivered: hr.WhenIsMedicinesDelivered,
         rescheduledAt: hr.RescheduledAt,
         requestedDate: hr.RequestedDate,
         helpRequestCalls: ToCalls(hr.HelpRequestCalls),
-        upcomingCallOutcome:ToUpcomingAction(hr.HelpRequestCalls, hr.CallbackRequired, hr.InitialCallbackCompleted),
+        upcomingCallOutcome: ToUpcomingAction(
+            hr.HelpRequestCalls,
+            hr.CallbackRequired,
+            hr.InitialCallbackCompleted
+        ),
         totalCompletedCalls: ToTotalCompletedCalls(hr.HelpRequestCalls),
-        caseNotes: ToStandardisiedCaseNotesArray(hr.CaseNotes, (hr.HelpNeeded == SHIELDING)? CEV : hr.HelpNeeded)
+        caseNotes: ToStandardisiedCaseNotesArray(
+            hr.CaseNotes,
+            hr.HelpNeeded == SHIELDING ? CEV : hr.HelpNeeded
+        )
     };
 };
 const ToStandardisiedCaseNotesArray = (caseNotes, helpNeeded) => {
-    if(!caseNotes) return []
-    let standardisiedCaseNotesArray = []
-    if(isJSON(caseNotes)){
-        let caseNoteObject = JSON.parse(caseNotes)
-        if(caseNoteObject.length > 0){
-            caseNoteObject.forEach(note => {
-                note.formattedDate = formatDate(note.noteDate)
-                note.helpNeeded = helpNeeded
-                standardisiedCaseNotesArray.push(note)
+    if (!caseNotes) return [];
+    let standardisiedCaseNotesArray = [];
+    if (isJSON(caseNotes)) {
+        let caseNoteObject = JSON.parse(caseNotes);
+        if (caseNoteObject.length > 0) {
+            caseNoteObject.forEach((note) => {
+                note.formattedDate = formatDate(note.noteDate);
+                note.helpNeeded = helpNeeded;
+                standardisiedCaseNotesArray.push(note);
             });
         }
-    }
-    else if(!isJSON(caseNotes)){
-        let nonJsonCaseNotesArray = getNonJsonCasenotesArray(caseNotes)
-        nonJsonCaseNotesArray.forEach(nonJsonCaseNote => {
+    } else if (!isJSON(caseNotes)) {
+        let nonJsonCaseNotesArray = getNonJsonCasenotesArray(caseNotes);
+        nonJsonCaseNotesArray.forEach((nonJsonCaseNote) => {
             if (nonJsonCaseNote) {
-                let caseNoteObject = {"author": getAuthor(nonJsonCaseNote),
-                                            "formattedDate": formatDate(getDate(nonJsonCaseNote)),
-                                            "note": getNote(nonJsonCaseNote),
-                                            "helpNeeded": helpNeeded,
-                                            "noteDate": getDate(nonJsonCaseNote)
-                                            }
-                standardisiedCaseNotesArray.push(caseNoteObject)
-
+                let caseNoteObject = {
+                    author: getAuthor(nonJsonCaseNote),
+                    formattedDate: formatDate(getDate(nonJsonCaseNote)),
+                    note: getNote(nonJsonCaseNote),
+                    helpNeeded: helpNeeded,
+                    noteDate: getDate(nonJsonCaseNote)
+                };
+                standardisiedCaseNotesArray.push(caseNoteObject);
             }
         });
     }
-    return standardisiedCaseNotesArray
-}
+    return standardisiedCaseNotesArray;
+};
 
 const ToUpcomingAction = (helpRequestCalls, callbackRequired, initialCallbackCompleted) => {
+    if (callbackRequired == false && initialCallbackCompleted == true) return '';
 
-    if (callbackRequired == false && initialCallbackCompleted == true)  return "" ;
+    if (helpRequestCalls.length == 0) return 'Call required';
 
-    if(helpRequestCalls.length == 0) return "Call required";
+    if (helpRequestCalls.pop()?.CallOutcome?.includes('call_rescheduled'))
+        return 'Call rescheduled';
 
-    if(helpRequestCalls.pop()?.CallOutcome?.includes('call_rescheduled')) return "Call rescheduled";
-
-    return "Follow-up required";
-
-}
+    return 'Follow-up required';
+};
 
 const ToTotalCompletedCalls = (helpRequestCalls) => {
-    let totalCompletedCalls = 0
-    if(helpRequestCalls.length > 0){
-        helpRequestCalls.forEach(call => {
-            if(call.CallOutcome?.includes('callback_complete')){
-                console.log(call)
-                totalCompletedCalls += 1
+    let totalCompletedCalls = 0;
+    if (helpRequestCalls.length > 0) {
+        helpRequestCalls.forEach((call) => {
+            if (call.CallOutcome?.includes('callback_complete')) {
+                console.log(call);
+                totalCompletedCalls += 1;
             }
         });
     }
-    return totalCompletedCalls
-}
-
+    return totalCompletedCalls;
+};
 
 const ToCalls = (calls) => {
     return calls?.map((call) => {
@@ -132,7 +144,7 @@ const ToPostHelpRequestBody = (hr) => {
         CallbackRequired: hr.callbackRequired,
         InitialCallbackCompleted: hr.initialCallbackCompleted,
         DateTimeRecorded: hr.dateTimeRecorded,
-        HelpNeeded: (hr.helpNeeded == CEV)? SHIELDING : hr.helpNeeded,
+        HelpNeeded: hr.helpNeeded == CEV ? SHIELDING : hr.helpNeeded,
         HelpWithAccessingFood: hr.helpWithAccessingFood,
         HelpWithAccessingSupermarketFood: hr.helpWithAccessingSupermarketFood,
         HelpWithCompletingNssForm: hr.helpWithCompletingNssForm,
@@ -148,7 +160,7 @@ const ToPatchHelpRequestObject = (hr) => {
         CallbackRequired: hr.callbackRequired,
         InitialCallbackCompleted: hr.initialCallbackCompleted,
         DateTimeRecorded: hr.dateTimeRecorded,
-        HelpNeeded: (hr.helpNeeded == CEV)? SHIELDING : hr.helpNeeded,
+        HelpNeeded: hr.helpNeeded == CEV ? SHIELDING : hr.helpNeeded,
         AssignedTo: hr.assignedTo,
         HelpWithAccessingFood: hr.helpWithAccessingFood,
         HelpWithAccessingSupermarketFood: hr.helpWithAccessingSupermarketFood,
@@ -158,21 +170,23 @@ const ToPatchHelpRequestObject = (hr) => {
         HelpWithNoNeedsIdentified: hr.helpWithNoNeedsIdentified
     };
 
-    Object.keys(object).forEach((key) => (object[key] == null) && delete object[key]);
+    Object.keys(object).forEach((key) => object[key] == null && delete object[key]);
 
-    return JSON.stringify(object)
-}
+    return JSON.stringify(object);
+};
 
 export class HelpRequestGateway extends DefaultGateway {
     async getHelpRequest(residentId, requestId) {
-        const response = await this.getFromUrl(`v4/residents/${residentId}/help-requests/${requestId}`);
+        const response = await this.getFromUrl(
+            `v4/residents/${residentId}/help-requests/${requestId}`
+        );
         const helpRequest = ToHelpRequestDomain(response);
         return helpRequest;
     }
 
     async getHelpRequests(residentId) {
         const response = await this.getFromUrl(`v4/residents/${residentId}/help-requests`);
-        console.log("helpRequestResponse", response)
+        console.log('helpRequestResponse', response);
         const helpRequests = response.map(ToHelpRequestDomain);
         return helpRequests;
     }
@@ -187,10 +201,16 @@ export class HelpRequestGateway extends DefaultGateway {
     }
 
     async patchHelpRequest(helpRequestId, requestBody) {
-        return await this.patchToUrl(`v3/help-requests/${helpRequestId}`, ToPatchHelpRequestObject(requestBody));
+        return await this.patchToUrl(
+            `v3/help-requests/${helpRequestId}`,
+            ToPatchHelpRequestObject(requestBody)
+        );
     }
 
     async postHelpRequest(residentId, requestBody) {
-        return await this.postToUrl(`v4/residents/${residentId}/help-requests`, ToPostHelpRequestBody(requestBody));
+        return await this.postToUrl(
+            `v4/residents/${residentId}/help-requests`,
+            ToPostHelpRequestBody(requestBody)
+        );
     }
 }

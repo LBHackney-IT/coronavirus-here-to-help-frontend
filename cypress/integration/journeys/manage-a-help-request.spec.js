@@ -21,8 +21,12 @@ context('When you view a helpcase profile', () => {
             .contains('View')
             .click({ force: true });
         cy.get('[data-testid=call-history-entry]').should('have.length', 2);
-        cy.get('[data-testid=call-history-entry]').first().should('contain', "2021-01-26 15:12 by handler");
-        cy.get('[data-testid=call-history-entry]').first().should('contain', "outbound Self Isolation Call: Callback complete");
+        cy.get('[data-testid=call-history-entry]')
+            .first()
+            .should('contain', '2021-01-26 15:12 by handler');
+        cy.get('[data-testid=call-history-entry]')
+            .first()
+            .should('contain', 'outbound Self Isolation Call: Callback complete');
     });
     it('it displays the case notes', () => {
         cy.url().should('match', /\/helpcase-profile\/\d+$/);
@@ -30,67 +34,67 @@ context('When you view a helpcase profile', () => {
             .contains('View')
             .click({ force: true });
         cy.get('[data-testid=case-note-entry]').should('have.length', 1);
-        cy.get('[data-testid=case-note-entry]').first().should('contain', "020-09-10 08:53 by Professor Umbridge");
-        cy.get('[data-testid=case-note-entry]').first().should('contain', "Contact Tracing:");
-        cy.get('[data-testid=case-note-entry]').first().should('contain', "CREATED");
+        cy.get('[data-testid=case-note-entry]')
+            .first()
+            .should('contain', '020-09-10 08:53 by Professor Umbridge');
+        cy.get('[data-testid=case-note-entry]').first().should('contain', 'Contact Tracing:');
+        cy.get('[data-testid=case-note-entry]').first().should('contain', 'CREATED');
     });
 
-    it("displays the email preview", () => {
+    it('displays the email preview', () => {
         cy.get('[data-testid=support-requested-table-view_link-0]')
-        .contains('View')
-        .click({ force: true });
+            .contains('View')
+            .click({ force: true });
         cy.get('[data-testid=send-email-checkbox]').click({ force: true });
-        cy.get('[data-testid=send-email-preview]').should('contain', 'email preview')
-    })
+        cy.get('[data-testid=send-email-preview]').should('contain', 'email preview');
+    });
 
-    it("displays the text preview if it exists", () => {
+    it('displays the text preview if it exists', () => {
         cy.get('[data-testid=support-requested-table-view_link-0]')
-        .contains('View')
-        .click({ force: true });
+            .contains('View')
+            .click({ force: true });
         cy.get('[data-testid=send-text-checkbox]').click({ force: true });
-        cy.get('[data-testid=send-text-preview]').should('contain', 'text preview')
-    })
+        cy.get('[data-testid=send-text-preview]').should('contain', 'text preview');
+    });
 });
 
 context('When viewing a single help request', () => {
-  it('it displays help request metadata', () => {
-    cy.get('[data-testid=support-requested-table-view_link-0]')
-        .contains('View')
-        .click({ force: true });
-    cy.get('.govuk-caption-l').should('have.length', 2);
-    cy.get('[data-testid=ctas-id]').first().should('contain', "CTAS ID: 123abc");
-    cy.get('[data-testid=metadata]').last().should('contain', "Date tested: 02/02/2020");
-  });
-
-  it('it displays help request type', () => {
-    cy.get('[data-testid=support-requested-table-view_link-0]')
-        .contains('View')
-        .click({ force: true });
-    cy.get('[data-testid=help-type]').should('contain', 'Contact Tracing');
-  });
-
-context('When managing other type of help request', () => {
-    it('it does not display the cev help needs form', () => {
+    it('it displays help request metadata', () => {
         cy.get('[data-testid=support-requested-table-view_link-0]')
-        .contains('View')
-        .click({ force: true });
-        cy.get('[data-testid=cev-help-needs]').should('not.exist');
-    })
-    it('it does not display the cev help needs form', () => {
-        cy.get('[data-testid=support-requested-table-view_link-1]')
-        .contains('View')
-        .click({ force: true });
-        cy.get('[data-testid=cev-help-needs]').should('not.exist');
+            .contains('View')
+            .click({ force: true });
+        cy.get('.govuk-caption-l').should('have.length', 2);
+        cy.get('[data-testid=ctas-id]').first().should('contain', 'CTAS ID: 123abc');
+        cy.get('[data-testid=metadata]').last().should('contain', 'Date tested: 02/02/2020');
+    });
 
-    })
-    it('it does not display the cev help needs form', () => {
-        cy.get('[data-testid=support-requested-table-view_link-5]')
-        .contains('View')
-        .click({ force: true });
-        cy.get('[data-testid=cev-help-needs]').should('exist');
+    it('it displays help request type', () => {
+        cy.get('[data-testid=support-requested-table-view_link-0]')
+            .contains('View')
+            .click({ force: true });
+        cy.get('[data-testid=help-type]').should('contain', 'Contact Tracing');
+    });
 
-    })
-});
+    context('When managing other type of help request', () => {
+        it('it does not display the cev help needs form', () => {
+            cy.get('[data-testid=support-requested-table-view_link-0]')
+                .contains('View')
+                .click({ force: true });
+            cy.get('[data-testid=cev-help-needs]').should('not.exist');
+        });
+        it('it does not display the cev help needs form', () => {
+            cy.get('[data-testid=support-requested-table-view_link-1]')
+                .contains('View')
+                .click({ force: true });
+            cy.get('[data-testid=cev-help-needs]').should('not.exist');
+        });
+        it('it does not display the cev help needs form', () => {
+            cy.get('[data-testid=support-requested-table-view_link-5]')
+                .contains('View')
+                .click({ force: true });
+            cy.get('[data-testid=cev-help-needs]').should('exist');
+        });
+    });
 });
 
 context('When required fields are not filled in', () => {
@@ -139,30 +143,68 @@ context('When add support gets cancelled', () => {
 
 context('When opening an existing cev help request', () => {
     it('the cev radio button should be pre-selected and the cev help needs form is visible', () => {
-        cy.get('[data-testid=support-requested-table]').find(`tbody > tr:contains("CEV")`).eq(0).find(`td:has(a:contains(View))`).find('a').click({force: true});                        
+        cy.get('[data-testid=support-requested-table]')
+            .find(`tbody > tr:contains("CEV")`)
+            .eq(0)
+            .find(`td:has(a:contains(View))`)
+            .find('a')
+            .click({ force: true });
         cy.get('[data-testid=cev-help-needs]').should('exist');
         cy.get('[data-testid=cev-help-needs]').should('be.visible');
     });
 
     it('the cev support needed fields are retrieved and represented correctly in the checkboxes', () => {
-        cy.get('[data-testid=support-requested-table]').find(`tbody > tr:contains("CEV")`).eq(0).find(`td:has(a:contains(View))`).find('a').click({force: true});                        
-        cy.get('[data-testid=cev-help-needs]').find('input[type="checkbox"]').eq(0).should('be.checked');
-        cy.get('[data-testid=cev-help-needs]').find('input[type="checkbox"]').eq(1).should('be.checked');
-        cy.get('[data-testid=cev-help-needs]').find('input[type="checkbox"]').eq(3).should('be.checked');
-        cy.get('[data-testid=cev-help-needs]').find('input[type="checkbox"]').eq(2).should('not.be.checked');
-        cy.get('[data-testid=cev-help-needs]').find('input[type="checkbox"]').eq(4).should('not.be.checked');
-        cy.get('[data-testid=cev-help-needs]').find('input[type="checkbox"]').eq(5).should('not.be.checked');
+        cy.get('[data-testid=support-requested-table]')
+            .find(`tbody > tr:contains("CEV")`)
+            .eq(0)
+            .find(`td:has(a:contains(View))`)
+            .find('a')
+            .click({ force: true });
+        cy.get('[data-testid=cev-help-needs]')
+            .find('input[type="checkbox"]')
+            .eq(0)
+            .should('be.checked');
+        cy.get('[data-testid=cev-help-needs]')
+            .find('input[type="checkbox"]')
+            .eq(1)
+            .should('be.checked');
+        cy.get('[data-testid=cev-help-needs]')
+            .find('input[type="checkbox"]')
+            .eq(3)
+            .should('be.checked');
+        cy.get('[data-testid=cev-help-needs]')
+            .find('input[type="checkbox"]')
+            .eq(2)
+            .should('not.be.checked');
+        cy.get('[data-testid=cev-help-needs]')
+            .find('input[type="checkbox"]')
+            .eq(4)
+            .should('not.be.checked');
+        cy.get('[data-testid=cev-help-needs]')
+            .find('input[type="checkbox"]')
+            .eq(5)
+            .should('not.be.checked');
     });
 });
 
 context('When opening a non-cev help request', () => {
     it('it does not display the cev help needs form', () => {
-        cy.get('[data-testid=support-requested-table]').find(`tbody > tr:contains("Contact Tracing")`).eq(0).find(`td:has(a:contains(View))`).find('a').click({force: true});                        
+        cy.get('[data-testid=support-requested-table]')
+            .find(`tbody > tr:contains("Contact Tracing")`)
+            .eq(0)
+            .find(`td:has(a:contains(View))`)
+            .find('a')
+            .click({ force: true });
         cy.get('[data-testid=cev-help-needs]').should('not.exist');
 
-        cy.get('[data-testid=support-requested-table]').find(`tbody > tr:contains("Help Request")`).eq(0).find(`td:has(a:contains(View))`).find('a').click({force: true});                        
+        cy.get('[data-testid=support-requested-table]')
+            .find(`tbody > tr:contains("Help Request")`)
+            .eq(0)
+            .find(`td:has(a:contains(View))`)
+            .find('a')
+            .click({ force: true });
         cy.get('[data-testid=cev-help-needs]').should('not.exist');
-    })
+    });
 });
 
 export {};

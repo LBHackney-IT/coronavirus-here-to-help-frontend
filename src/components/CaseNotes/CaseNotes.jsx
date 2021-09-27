@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { WELFARE_CALL, ALL } from '../../helpers/constants';
+import { ALL, WELFARE_CALL } from '../../helpers/constants';
 import Dropdown from '../../components/Form/Dropdown/Dropdown';
 import styles from '../CaseNotes/CaseNotes.module.scss';
-import { AuthorisedCallTypesGateway } from '../../gateways/authorised-call-types';
 import { useRouter } from 'next/router';
+import { formatSubText } from '../../helpers/formatter';
+import { AuthorisedCallTypesGateway } from '../../gateways/authorised-call-types';
 
 export default function CaseNotes({ caseNotes }) {
     const [filterBy, setFilterBy] = useState('');
@@ -65,7 +66,10 @@ export default function CaseNotes({ caseNotes }) {
                                 <p>
                                     {caseNote.helpNeeded == WELFARE_CALL
                                         ? 'Self Isolation'
-                                        : caseNote.helpNeeded}
+                                        : formatSubText(
+                                            caseNote.helpNeeded,
+                                            caseNote.helpNeededSubtype
+                                        )}
                                     : {caseNote.note}
                                 </p>
                             </div>

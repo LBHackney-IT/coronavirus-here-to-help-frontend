@@ -35,6 +35,10 @@ export default function HelpcaseProfile({ residentId }) {
 
     const getResidentAndHelpRequests = async () => {
         try {
+            const authorisedGateway = new AuthorisedCallTypesGateway();
+            const res = await authorisedGateway.getCallTypes();
+            const callTypes = [ALL].concat(res.sort());
+
             const gateway = new ResidentGateway();
             const resident = await gateway.getResident(residentId);
             const hrGateway = new HelpRequestGateway();
@@ -55,10 +59,13 @@ export default function HelpcaseProfile({ residentId }) {
                 if (!caseNote) return;
                 caseNote.caseNote.forEach((note) => {
                     let helpNeeded = helpRequests.filter((hr) => hr.id == caseNote.helpRequestId);
+                    let helpNeededSubtype = helpNeeded;
                     // a hack to mitigate bad data
                     if (helpNeeded?.length > 0) {
                         helpNeeded = helpNeeded[0].helpNeeded;
+                        helpNeededSubtype = helpNeededSubtype[0].helpNeededSubtype;
                         note.helpNeeded = helpNeeded;
+                        note.helpNeededSubtype = helpNeededSubtype;
                         if (note && note.helpNeeded && note.helpNeeded in categorisedCaseNotes) {
                             categorisedCaseNotes[note.helpNeeded].push(note);
                         }
@@ -87,12 +94,17 @@ export default function HelpcaseProfile({ residentId }) {
 
     useEffectAsync(getResidentAndHelpRequests, []);
 
-    const calls = [].concat
+    let calls = [].concat
         .apply(
             [],
             helpRequests.map((helpRequest) => helpRequest.helpRequestCalls)
         )
         .sort((a, b) => new Date(b.callDateTime) - new Date(a.callDateTime));
+
+    calls.forEach((call) => {
+        const helpRequest = helpRequests.filter((hr) => hr.id == call.helpRequestId);
+        call.helpNeededSubtype = helpRequest[0].helpNeededSubtype;
+    });
 
     return (
         resident && (

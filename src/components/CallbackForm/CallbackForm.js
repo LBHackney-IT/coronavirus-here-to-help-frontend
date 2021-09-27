@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Checkbox, RadioButton, Button, SingleRadioButton } from '../Form';
+import { Checkbox, RadioButton, Button } from '../Form';
 import Link from 'next/link';
 import {
     cevHelpTypes,
     selfIsolationCallTypes,
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     TEST_AND_TRACE_FOLLOWUP_EMAIL,
-    EUSS
+    EUSS,
+    WELFARE_CALL
 } from '../../helpers/constants';
+import { formatSubText } from '../../helpers/formatter';
 import { useRouter } from 'next/router';
 import { GovNotifyGateway } from '../../gateways/gov-notify';
 import styles from '../CallbackForm/CallbackForm.module.scss';
@@ -217,12 +219,12 @@ export default function CallbackForm({
     const validateSelfIsolationNeedsFieldset = () => {
         return (
             (callOutcomeValues.includes('callback_complete') &&
-                helpNeeded === 'Welfare Call' &&
+                helpNeeded === WELFARE_CALL &&
                 (callOutcomeValues.includes('food_consortia_referral_needs') ||
                     callOutcomeValues.includes('other_support_needs') ||
                     callOutcomeValues.includes('no_support_needs'))) ||
             !callOutcomeValues.includes('callback_complete') ||
-            helpNeeded !== 'Welfare Call'
+            helpNeeded !== WELFARE_CALL
         );
     };
 
@@ -357,7 +359,10 @@ export default function CallbackForm({
                         className={`govuk-tag govuk-tag--grey ${styles['help-request-tag']}`}>
                         {helpRequest?.helpNeeded == 'Welfare Call'
                             ? 'Self Isolation'
-                            : helpRequest?.helpNeeded}
+                            : formatSubText(
+                                  helpRequest?.helpNeeded,
+                                  helpRequest?.helpNeededSubtype
+                              )}
                     </strong>
                 )}
                 <br></br>
