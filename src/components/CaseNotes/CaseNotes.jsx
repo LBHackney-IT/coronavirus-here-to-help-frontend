@@ -1,69 +1,78 @@
 import React, { useEffect, useState } from 'react';
-import { helpTypes } from "../../helpers/constants"
-import Dropdown from "../../components/Form/Dropdown/Dropdown";
+import { WELFARE_CALL, ALL } from '../../helpers/constants';
+import Dropdown from '../../components/Form/Dropdown/Dropdown';
 import styles from '../CaseNotes/CaseNotes.module.scss';
-import { useRouter } from "next/router";
+import { AuthorisedCallTypesGateway } from '../../gateways/authorised-call-types';
+import { useRouter } from 'next/router';
 
 export default function CaseNotes({ caseNotes }) {
-    const [filterBy, setFilterBy] = useState("")
-    const [displayDropdown, setDisplayDropDown] = useState(true)
-    const router = useRouter()
-    useEffect(()=>{
+    const [filterBy, setFilterBy] = useState('');
+    const [displayDropdown, setDisplayDropDown] = useState(true);
+    const [callTypes, setCallTypes] = useState([]);
+    const router = useRouter();
 
-        if(router.pathname.includes('manage-request')){
-            setDisplayDropDown(false)
-          } 
+    useEffect(async () => {
+        const gateway = new AuthorisedCallTypesGateway();
+        const res = await gateway.getCallTypes();
+        console.log(res);
+        setCallTypes([ALL].concat(res.sort()));
 
-        if(caseNotes?.helpType){
-            setFilterBy(caseNotes.helpType)
-        }else{
-            setFilterBy("All")
+        if (router.pathname.includes('manage-request')) {
+            setDisplayDropDown(false);
         }
-    },[caseNotes])
+
+        if (caseNotes?.helpType) {
+            setFilterBy(caseNotes.helpType);
+        } else {
+            setFilterBy(ALL);
+        }
+    }, [caseNotes]);
+
     const hanleOnChange = (selectedCaseNoteType) => {
-        setFilterBy(
-            selectedCaseNoteType == 'Self Isolation' ? 'Welfare Call' : selectedCaseNoteType
-        );
-    }
+        setFilterBy(selectedCaseNoteType == 'Self Isolation' ? WELFARE_CALL : selectedCaseNoteType);
+    };
     return (
         <div>
             <h2 className="govuk-heading-l">Case notes</h2>
 
-                {caseNotes && !caseNotes.helpType && displayDropdown&&
-                 <Dropdown
-                 onChange={(e) => hanleOnChange(e)}
-                 dropdownItems={helpTypes
-                     .join(',')
-                     .replace('Welfare Call', 'Self Isolation')
-                     .split(',')}></Dropdown>}
-                {caseNotes && caseNotes[filterBy]?.length == 0 && 
+            {caseNotes && !caseNotes.helpType && displayDropdown && (
+                <Dropdown
+                    onChange={(e) => hanleOnChange(e)}
+                    dropdownItems={callTypes
+                        .join(',')
+                        .replace(WELFARE_CALL, 'Self Isolation')
+                        .split(',')}></Dropdown>
+            )}
+            {caseNotes && caseNotes[filterBy]?.length == 0 && (
                 <>
-                    <div className ={ styles['case-notes-box']}>No previous case notes</div>
+                    <div className={styles['case-notes-box']}>No previous case notes</div>
                     <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-                </>}
+                </>
+            )}
 
-            { caseNotes &&caseNotes[filterBy]?.map((caseNote, i) => {
-                return (
-                    <>
-                        <div
-                            key={i}
-                            id={`case-note-${i}`}
-                            className={`filter ${styles['case-notes-box']}`}
-                            data-testid="case-note-entry">
-                            <h4 className="govuk-heading-s">
-                                {caseNote.formattedDate} by {caseNote.author}
-                            </h4>
-                            <p>
-                                {caseNote.helpNeeded == 'Welfare Call'
-                                    ? 'Self Isolation'
-                                    : caseNote.helpNeeded}
+            {caseNotes &&
+                caseNotes[filterBy]?.map((caseNote, i) => {
+                    return (
+                        <>
+                            <div
+                                key={i}
+                                id={`case-note-${i}`}
+                                className={`filter ${styles['case-notes-box']}`}
+                                data-testid="case-note-entry">
+                                <h4 className="govuk-heading-s">
+                                    {caseNote.formattedDate} by {caseNote.author}
+                                </h4>
+                                <p>
+                                    {caseNote.helpNeeded == WELFARE_CALL
+                                        ? 'Self Isolation'
+                                        : caseNote.helpNeeded}
                                     : {caseNote.note}
-                            </p>
-                        </div>
-                        <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-                    </>
-                );
-            })}
+                                </p>
+                            </div>
+                            <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+                        </>
+                    );
+                })}
         </div>
     );
 }
