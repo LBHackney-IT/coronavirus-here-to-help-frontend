@@ -16,7 +16,6 @@ import { ALL } from '../../../helpers/constants';
 export default function HelpcaseProfile({ residentId }) {
     const [resident, setResident] = useState([]);
     const [helpRequests, setHelpRequests] = useState([]);
-    const [callTypes, setCallTypes] = useState([]);
     const [caseNotes, setCaseNotes] = useState({
         All: [],
         'Welfare Call': [],
@@ -27,14 +26,12 @@ export default function HelpcaseProfile({ residentId }) {
         EUSS: []
     });
 
-    useEffect(async () => {
-        const gateway = new AuthorisedCallTypesGateway();
-        const res = await gateway.getCallTypes();
-        setCallTypes([ALL].concat(res.sort()));
-    }, []);
-
     const getResidentAndHelpRequests = async () => {
         try {
+            const authorisedGateway = new AuthorisedCallTypesGateway();
+            const res = await authorisedGateway.getCallTypes();
+            const callTypes = [ALL].concat(res.sort());
+
             const gateway = new ResidentGateway();
             const resident = await gateway.getResident(residentId);
             const hrGateway = new HelpRequestGateway();
