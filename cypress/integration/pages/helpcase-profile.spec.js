@@ -1,5 +1,6 @@
 import { formatSubText } from '../../../src/helpers/formatter';
 import { EUSS, LINK_WORK } from '../../../src/helpers/constants';
+import { formatSubText } from '../../../src/helpers/formatter';
 import { EUSS_User } from '../../support/commands';
 
 beforeEach(() => {
@@ -63,6 +64,13 @@ describe('View helpcase profile page', () => {
             .first()
             .should('contain', 'outbound Self Isolation Call: Wrong number');
     });
+    it('displays help needed subtype in the call history', () => {
+        cy.visit(`http://localhost:3000/helpcase-profile/3`);
+        cy.get('[data-testid=call-history-entry]').should(
+            'contain',
+            formatSubText('Link Work', 'Repairs')
+        );
+    });
     it('displays JSON and string case notes ordered by date', () => {
         cy.visit(`http://localhost:3000/helpcase-profile/3`);
         cy.get('[data-testid=case-note-entry]').should('have.length', 7);
@@ -93,7 +101,7 @@ describe('View helpcase profile page', () => {
             .last()
             .should('contain', 'Self Isolation: *** CREATED ***');
     });
-    it('displays filtered Link Work case notes ordered by date', () => {
+    it('displays filtered Link Work case notes ordered by date and helpNeeded subtype', () => {
         cy.visit(`http://localhost:3000/helpcase-profile/3`);
         cy.get('[data-testid=select-dropdown]').select(LINK_WORK, { force: true });
         cy.get('[data-testid=case-note-entry]').should('have.length', 1);
@@ -102,7 +110,7 @@ describe('View helpcase profile page', () => {
         cy.get('[data-testid=case-note-entry]').first().should('contain', '2020-09-07');
         cy.get('[data-testid=case-note-entry]')
             .first()
-            .should('contain', 'Link Work: *** CREATED ***');
+            .should('contain', 'Link Work (Repairs): *** CREATED ***');
     });
 
     it('displays filtered EUSS case notes ordered by date when logged in as an EUSS user', () => {

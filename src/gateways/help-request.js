@@ -21,7 +21,7 @@ const ToHelpRequestDomain = (hr) => {
         postCode: hr.Postcode,
         dateTimeRecorded: hr.DateTimeRecorded,
         gettingInTouchReason: hr.GettingInTouchReason,
-        helpNeeded: hr.HelpNeeded == SHIELDING ? CEV : hr.HelpNeeded,
+        helpNeeded: (hr.HelpNeeded == SHIELDING)? CEV : hr.HelpNeeded,
         helpNeededSubtype: hr.HelpNeededSubtype,
         helpWithAccessingFood: hr.HelpWithAccessingFood,
         helpWithAccessingSupermarketFood: hr.HelpWithAccessingSupermarketFood,
