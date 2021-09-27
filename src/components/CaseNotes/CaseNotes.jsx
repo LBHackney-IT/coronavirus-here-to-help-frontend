@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { helpTypes, WELFARE_CALL } from '../../helpers/constants';
-import Dropdown from '../../components/Form/Dropdown/Dropdown';
-import { WELFARE_CALL, ALL } from '../../helpers/constants';
+import { ALL, WELFARE_CALL } from '../../helpers/constants';
 import Dropdown from '../../components/Form/Dropdown/Dropdown';
 import styles from '../CaseNotes/CaseNotes.module.scss';
 import { useRouter } from 'next/router';
 import { formatSubText } from '../../helpers/formatter';
 import { AuthorisedCallTypesGateway } from '../../gateways/authorised-call-types';
-import { useRouter } from 'next/router';
 
 export default function CaseNotes({ caseNotes }) {
     const [filterBy, setFilterBy] = useState('');
