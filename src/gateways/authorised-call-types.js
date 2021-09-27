@@ -1,5 +1,12 @@
 import { DefaultGateway } from '../gateways/default-gateway';
-import { CEV, CONTACT_TRACING, HELP_REQUEST, LINK_WORK, WELFARE_CALL } from '../helpers/constants';
+import {
+    CEV,
+    CONTACT_TRACING,
+    HELP_REQUEST,
+    LINK_WORK,
+    WELFARE_CALL,
+    REPAIRS
+} from '../helpers/constants';
 
 export class AuthorisedCallTypesGateway extends DefaultGateway {
     async getAuthorisedHelpTypes() {
@@ -14,7 +21,7 @@ export class AuthorisedCallTypesGateway extends DefaultGateway {
             { name: CEV },
             { name: WELFARE_CALL },
             { name: HELP_REQUEST },
-            { name: LINK_WORK, subtype: 'Repairs' }
+            { name: LINK_WORK, subtypes: [REPAIRS] }
         ].concat(authorisedTypes);
     }
 }
