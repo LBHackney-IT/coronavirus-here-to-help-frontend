@@ -21,9 +21,9 @@ function CallbacksListPage() {
     const [ctasInput, setCtasInput] = useState('');
 
     useEffect(async () => {
-        const gateway = new AuthorisedCallTypesGateway();
-        const res = await gateway.getCallTypes();
-        setCallTypes([ALL].concat(res.sort()));
+        const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
+        const authCallTypes = await authorisedCallTypesGateway.getCallTypes();
+        setCallTypes([ALL].concat(authCallTypes.map((callType) => callType.name).sort()));
     }, []);
 
     const getCallBacks = async () => {

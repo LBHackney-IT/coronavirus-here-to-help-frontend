@@ -13,10 +13,9 @@ export default function CaseNotes({ caseNotes }) {
     const router = useRouter();
 
     useEffect(async () => {
-        const gateway = new AuthorisedCallTypesGateway();
-        const res = await gateway.getCallTypes();
-        console.log(res);
-        setCallTypes([ALL].concat(res.sort()));
+        const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
+        const authCallTypes = await authorisedCallTypesGateway.getCallTypes();
+        setCallTypes([ALL].concat(authCallTypes.map((callType) => callType.name).sort()));
 
         if (router.pathname.includes('manage-request')) {
             setDisplayDropDown(false);
@@ -67,9 +66,9 @@ export default function CaseNotes({ caseNotes }) {
                                     {caseNote.helpNeeded == WELFARE_CALL
                                         ? 'Self Isolation'
                                         : formatSubText(
-                                            caseNote.helpNeeded,
-                                            caseNote.helpNeededSubtype
-                                        )}
+                                              caseNote.helpNeeded,
+                                              caseNote.helpNeededSubtype
+                                          )}
                                     : {caseNote.note}
                                 </p>
                             </div>

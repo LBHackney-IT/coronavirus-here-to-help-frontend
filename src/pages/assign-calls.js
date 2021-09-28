@@ -32,7 +32,7 @@ export default function AssignCallsPage() {
     useEffect(async () => {
         const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
         let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
-        setFilteredCallTypes(authCallTypes);
+        setFilteredCallTypes(authCallTypes.map((callType) => callType.name));
     }, []);
 
     const updateSelectedCallHandlers = (value) => {

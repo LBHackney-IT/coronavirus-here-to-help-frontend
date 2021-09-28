@@ -137,7 +137,7 @@ export default function CallbackForm({
             }
 
             let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
-            setCallTypes(authCallTypes);
+            setCallTypes(authCallTypes.map((callType) => callType.name));
         } catch (err) {
             console.log(`Error fetching themplates: ${err}`);
         }

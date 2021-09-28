@@ -59,8 +59,8 @@ export default function addSupportPage({ residentId, helpRequestId }) {
                 helpRequestId
             );
 
-            const callTypesGateway = new AuthorisedCallTypesGateway();
-            const helpTypes = await callTypesGateway.getCallTypes();
+            const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
+            const authCallTypes = await authorisedCallTypesGateway.getCallTypes();
 
             let categorisedCaseNotes = {
                 All: [],
@@ -83,11 +83,13 @@ export default function addSupportPage({ residentId, helpRequestId }) {
                         categorisedCaseNotes['All'].push(note);
                     });
 
-                    helpTypes.forEach((helpType) => {
-                        categorisedCaseNotes[helpType].sort(
-                            (a, b) => new Date(b.noteDate) - new Date(a.noteDate)
-                        );
-                    });
+                    authCallTypes
+                        .map((callType) => callType.name)
+                        .forEach((helpType) => {
+                            categorisedCaseNotes[helpType].sort(
+                                (a, b) => new Date(b.noteDate) - new Date(a.noteDate)
+                            );
+                        });
                 });
                 categorisedCaseNotes.helpType = response.helpNeeded; // what is this supposed to do???
                 setCaseNotes(categorisedCaseNotes);
