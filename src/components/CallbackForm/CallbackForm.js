@@ -137,12 +137,7 @@ export default function CallbackForm({
             }
 
             let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
-            let callNames = [];
-            for (const type in authCallTypes) {
-                callNames.push(authCallTypes[type].name);
-            }
-
-            setCallTypes(callNames);
+            setCallTypes(authCallTypes.map((callType) => callType.name));
         } catch (err) {
             console.log(`Error fetching themplates: ${err}`);
         }

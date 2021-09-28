@@ -15,12 +15,7 @@ export default function CaseNotes({ caseNotes }) {
     useEffect(async () => {
         const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
         const authCallTypes = await authorisedCallTypesGateway.getCallTypes();
-        console.log(authCallTypes);
-        let callNames = [];
-        for (const type in authCallTypes) {
-            callNames.push(authCallTypes[type].name);
-        }
-        setCallTypes([ALL].concat(callNames.sort()));
+        setCallTypes([ALL].concat(authCallTypes.map((callType) => callType.name).sort()));
 
         if (router.pathname.includes('manage-request')) {
             setDisplayDropDown(false);

@@ -30,11 +30,7 @@ export default function HelpcaseProfile({ residentId }) {
         try {
             const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
             const authCallTypes = await authorisedCallTypesGateway.getCallTypes();
-            let callNames = [];
-            for (const type in authCallTypes) {
-                callNames.push(authCallTypes[type].name);
-            }
-            const callTypes = [ALL].concat(callNames.sort());
+            const callTypes = [ALL].concat(authCallTypes.map((callType) => callType.name).sort());
 
             const gateway = new ResidentGateway();
             const resident = await gateway.getResident(residentId);
