@@ -59,8 +59,8 @@ export default function addSupportPage({ residentId, helpRequestId }) {
                 helpRequestId
             );
 
-            const callTypesGateway = new AuthorisedCallTypesGateway();
-            const helpTypes = await callTypesGateway.getCallTypes();
+            const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
+            const authCallTypes = await authorisedCallTypesGateway.getCallTypes();
 
             let categorisedCaseNotes = {
                 All: [],
@@ -83,6 +83,10 @@ export default function addSupportPage({ residentId, helpRequestId }) {
                         categorisedCaseNotes['All'].push(note);
                     });
 
+                    let helpTypes = [];
+                    for (const type in authCallTypes) {
+                        helpTypes.push(authCallTypes[type].name);
+                    }
                     helpTypes.forEach((helpType) => {
                         categorisedCaseNotes[helpType].sort(
                             (a, b) => new Date(b.noteDate) - new Date(a.noteDate)

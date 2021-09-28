@@ -66,9 +66,14 @@ export default function AssignCallsPage() {
     useEffect(async () => {
         const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
         let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
+        let callNames = [];
+        for (const type in authCallTypes) {
+            callNames.push(authCallTypes[type].name);
+        }
+
         setDropDown(
             [DEFAULT_DROPDOWN_OPTION].concat(
-                authCallTypes.filter((x) => bulkMessageCallTypes.includes(x))
+                callNames.filter((x) => bulkMessageCallTypes.includes(x))
             )
         );
     }, []);

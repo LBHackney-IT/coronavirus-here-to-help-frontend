@@ -27,17 +27,15 @@ export default function HelpcaseProfile({ residentId }) {
         EUSS: []
     });
 
-    useEffect(async () => {
-        const gateway = new AuthorisedCallTypesGateway();
-        const res = await gateway.getCallTypes();
-        setCallTypes([ALL].concat(res.sort()));
-    }, []);
-
     const getResidentAndHelpRequests = async () => {
         try {
-            const authorisedGateway = new AuthorisedCallTypesGateway();
-            const res = await authorisedGateway.getCallTypes();
-            const callTypes = [ALL].concat(res.sort());
+            const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
+            const authCallTypes = await authorisedCallTypesGateway.getCallTypes();
+            let callNames = [];
+            for (const type in authCallTypes) {
+                callNames.push(authCallTypes[type].name);
+            }
+            const callTypes = [ALL].concat(callNames.sort());
 
             const gateway = new ResidentGateway();
             const resident = await gateway.getResident(residentId);

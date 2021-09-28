@@ -13,10 +13,14 @@ export default function CaseNotes({ caseNotes }) {
     const router = useRouter();
 
     useEffect(async () => {
-        const gateway = new AuthorisedCallTypesGateway();
-        const res = await gateway.getCallTypes();
-        console.log(res);
-        setCallTypes([ALL].concat(res.sort()));
+        const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
+        const authCallTypes = await authorisedCallTypesGateway.getCallTypes();
+        console.log(authCallTypes);
+        let callNames = [];
+        for (const type in authCallTypes) {
+            callNames.push(authCallTypes[type].name);
+        }
+        setCallTypes([ALL].concat(callNames.sort()));
 
         if (router.pathname.includes('manage-request')) {
             setDisplayDropDown(false);
@@ -67,9 +71,9 @@ export default function CaseNotes({ caseNotes }) {
                                     {caseNote.helpNeeded == WELFARE_CALL
                                         ? 'Self Isolation'
                                         : formatSubText(
-                                            caseNote.helpNeeded,
-                                            caseNote.helpNeededSubtype
-                                        )}
+                                              caseNote.helpNeeded,
+                                              caseNote.helpNeededSubtype
+                                          )}
                                     : {caseNote.note}
                                 </p>
                             </div>
