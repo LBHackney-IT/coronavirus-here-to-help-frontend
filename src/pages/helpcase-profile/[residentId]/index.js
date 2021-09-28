@@ -16,7 +16,6 @@ import { ALL } from '../../../helpers/constants';
 export default function HelpcaseProfile({ residentId }) {
     const [resident, setResident] = useState([]);
     const [helpRequests, setHelpRequests] = useState([]);
-    const [callTypes, setCallTypes] = useState([]);
     const [caseNotes, setCaseNotes] = useState({
         All: [],
         'Welfare Call': [],
