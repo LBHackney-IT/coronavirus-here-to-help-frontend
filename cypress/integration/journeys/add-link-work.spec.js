@@ -44,7 +44,6 @@ context('When Link Work is the selected help type', () => {
         cy.get('[data-testid=call-direction-radio-button]').first().click({ force: true });
         cy.get('[data-testid=followup-required-radio-button]').first().click({ force: true });
         cy.get('[data-testid=callback-form-update_button]').click({ force: true });
-
         cy.get('[data-testid=callback-form-validation-error]').should('not.exist');
     });
 });

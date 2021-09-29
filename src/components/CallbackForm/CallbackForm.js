@@ -188,7 +188,7 @@ export default function CallbackForm({
     };
 
     const updateSubTypeSelection = (value) => {
-        setHelpNeededSubtype(value);
+        setHelpNeededSubtype(value === DEFAULT_DROPDOWN_OPTION ? '' : value);
     };
 
     const CallDirectionFunction = (value) => {
