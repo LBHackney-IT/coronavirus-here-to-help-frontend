@@ -38,7 +38,6 @@ export default function addSupportPage({ residentId }) {
 
     const saveFunction = async function (
         helpNeeded,
-        helpNeededSubtype,
         callDirection,
         callOutcomeValues,
         helpRequestObject,
@@ -49,7 +48,6 @@ export default function addSupportPage({ residentId }) {
     ) {
         let callRequestObject = {
             callType: helpNeeded,
-            callSubType: helpNeededSubtype,
             callDirection: callDirection,
             callOutcome: callOutcomeValues,
             callDateTime: getTimeZoneCorrectedLocalDate(),

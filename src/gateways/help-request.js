@@ -145,6 +145,7 @@ const ToPostHelpRequestBody = (hr) => {
         InitialCallbackCompleted: hr.initialCallbackCompleted,
         DateTimeRecorded: hr.dateTimeRecorded,
         HelpNeeded: hr.helpNeeded == CEV ? SHIELDING : hr.helpNeeded,
+        HelpNeededSubtype: hr.helpNeededSubtype,
         HelpWithAccessingFood: hr.helpWithAccessingFood,
         HelpWithAccessingSupermarketFood: hr.helpWithAccessingSupermarketFood,
         HelpWithCompletingNssForm: hr.helpWithCompletingNssForm,

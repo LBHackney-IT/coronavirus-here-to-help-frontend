@@ -45,7 +45,7 @@ export default function CallbackForm({
     const [callTypes, setCallTypes] = useState([]);
     const [authCallTypes, setAuthCallTypes] = useState([]);
     const [subTypesDropdown, setSubTypesDropdown] = useState([]);
-    const [helpNeededSubtype, setHelpNeededSubtype] = useState([]);
+    const [helpNeededSubtype, setHelpNeededSubtype] = useState('');
 
     const [errors, setErrors] = useState({
         CallbackRequired: null,
@@ -294,7 +294,8 @@ export default function CallbackForm({
             callbackRequired: callbackRequired,
             initialCallbackCompleted: initialCallbackCompleted,
             dateTimeRecorded: new Date(),
-            helpNeeded: helpNeeded
+            helpNeeded: helpNeeded,
+            helpNeededSubtype: helpNeededSubtype
         };
 
         if (helpNeeded === 'CEV') {
@@ -333,7 +334,6 @@ export default function CallbackForm({
             setSubmitEnabled(false);
             saveFunction(
                 helpNeeded,
-                helpNeededSubtype,
                 callDirection,
                 callOutcomeValues,
                 helpRequestObject,
@@ -451,9 +451,9 @@ export default function CallbackForm({
 
                                                         <Dropdown
                                                             onChange={updateSubTypeSelection}
-                                                            dropdownItems={
-                                                                subTypesDropdown
-                                                            }></Dropdown>
+                                                            dropdownItems={subTypesDropdown}
+                                                            data-testid="subtype-dropdown"
+                                                        />
                                                     </fieldset>
                                                 )}
                                             </fieldset>

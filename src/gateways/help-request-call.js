@@ -4,7 +4,6 @@ import { CEV, SHIELDING } from '../helpers/constants';
 const ToPostHelpRequestCall = (hr) => {
     return JSON.stringify({
         CallType: hr.callType == CEV ? SHIELDING : hr.callType,
-        CallSubType: hr.callSubType,
         CallDirection: hr.callDirection,
         CallOutcome: hr.callOutcome,
         CallDateTime: hr.callDateTime,
