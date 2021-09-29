@@ -36,7 +36,7 @@ context('When Link Work is the selected help type', () => {
             .find('option')
             .should('have.length', 2)
             .should('have.value', DEFAULT_DROPDOWN_OPTION);
-        cy.get('[data-testid=subtype-dropdown]').select(REPAIRS);
+        cy.get('[data-testid=subtype-dropdown]').select(REPAIRS, { force: true });
         cy.get('[data-testid=call-type-yes-radio-button]').click({ force: true });
         cy.get('[data-testid=yes-spoke-to-resident]').click({ force: true });
         cy.get('[data-testid=callback_complete-checkbox]').click({ force: true });
