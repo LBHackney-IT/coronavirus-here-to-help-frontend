@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Checkbox, RadioButton, Button } from '../Form';
 import Link from 'next/link';
 import {
+    DEFAULT_DROPDOWN_OPTION,
     cevHelpTypes,
     selfIsolationCallTypes,
     TEST_AND_TRACE_FOLLOWUP_TEXT,
@@ -14,6 +15,7 @@ import { useRouter } from 'next/router';
 import { GovNotifyGateway } from '../../gateways/gov-notify';
 import styles from '../CallbackForm/CallbackForm.module.scss';
 import { AuthorisedCallTypesGateway } from '../../gateways/authorised-call-types';
+import Dropdown from '../../components/Form/Dropdown/Dropdown';
 
 export default function CallbackForm({
     residentId,
@@ -41,6 +43,9 @@ export default function CallbackForm({
     const [showText, setShowText] = useState(false);
     const [submitEnabled, setSubmitEnabled] = useState(true);
     const [callTypes, setCallTypes] = useState([]);
+    const [authCallTypes, setAuthCallTypes] = useState([]);
+    const [subTypesDropdown, setSubTypesDropdown] = useState([]);
+    const [helpNeededSubtype, setHelpNeededSubtype] = useState('');
 
     const [errors, setErrors] = useState({
         CallbackRequired: null,
@@ -137,6 +142,7 @@ export default function CallbackForm({
             }
 
             let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
+            setAuthCallTypes(authCallTypes);
             setCallTypes(authCallTypes.map((callType) => callType.name));
         } catch (err) {
             console.log(`Error fetching themplates: ${err}`);
@@ -162,13 +168,29 @@ export default function CallbackForm({
         }
     };
 
+    const followUpRequiredFunction = (value) => {
+        setFollowupRequired(value);
+    };
+
     const callBackFunction = (value) => {
-        if (value == 'Yes' || value == 'No') {
-            setFollowupRequired(value);
-        }
         if (callTypes.includes(value)) {
             setHelpNeeded(value);
+            setSubtypeDropdownValues(value);
         }
+    };
+
+    const setSubtypeDropdownValues = (selectedCallType) => {
+        const subtypes = authCallTypes.filter((callType) => callType.name == selectedCallType)[0]
+            .subtypes;
+        if (subtypes) {
+            setSubTypesDropdown([DEFAULT_DROPDOWN_OPTION].concat(subtypes));
+        } else {
+            setSubTypesDropdown([]);
+        }
+    };
+
+    const updateSubTypeSelection = (value) => {
+        setHelpNeededSubtype(value === DEFAULT_DROPDOWN_OPTION ? '' : value);
     };
 
     const CallDirectionFunction = (value) => {
@@ -274,7 +296,8 @@ export default function CallbackForm({
             callbackRequired: callbackRequired,
             initialCallbackCompleted: initialCallbackCompleted,
             dateTimeRecorded: new Date(),
-            helpNeeded: helpNeeded
+            helpNeeded: helpNeeded,
+            helpNeededSubtype: helpNeededSubtype
         };
 
         if (helpNeeded === 'CEV') {
@@ -420,6 +443,21 @@ export default function CallbackForm({
                                                         data-testid="call-type-radio-button"
                                                     />
                                                 }
+
+                                                {subTypesDropdown.length > 0 && (
+                                                    <fieldset className="govuk-fieldset">
+                                                        <h3 className="govuk-heading-m">
+                                                            {' '}
+                                                            {helpNeeded} Category
+                                                        </h3>
+
+                                                        <Dropdown
+                                                            onChange={updateSubTypeSelection}
+                                                            dropdownItems={subTypesDropdown}
+                                                            data-testid="subtype-dropdown"
+                                                        />
+                                                    </fieldset>
+                                                )}
                                             </fieldset>
                                         )}
                                     </div>
@@ -866,7 +904,7 @@ export default function CallbackForm({
                                 radioButtonItems={followupRequired}
                                 name="FollowUpRequired"
                                 optionalClass="govuk-radios--inline"
-                                onSelectOption={callBackFunction}
+                                onSelectOption={followUpRequiredFunction}
                                 data-testid="followup-required-radio-button"
                             />
                         </fieldset>

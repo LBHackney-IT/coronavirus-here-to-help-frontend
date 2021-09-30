@@ -1,3 +1,5 @@
+import { DEFAULT_DROPDOWN_OPTION, REPAIRS } from '../../../src/helpers/constants';
+
 beforeEach(() => {
     cy.login();
     cy.setIntercepts();
@@ -23,6 +25,28 @@ context('When adding new link work help request and call completed is selected',
     });
 });
 
+context('When Link Work is the selected help type', () => {
+    it('displays the drop-down giving you the option to select a subtype', () => {
+        cy.get('[data-testid=call-type-radio-button]').eq(4).click({ force: true });
+        cy.get('[data-testid=subtype-dropdown]').should('exist');
+    });
+    it('should be possible to select the repairs subtype and submit the form', () => {
+        cy.get('[data-testid=call-type-radio-button]').eq(4).click({ force: true });
+        cy.get('[data-testid=subtype-dropdown]')
+            .find('option')
+            .should('have.length', 2)
+            .should('have.value', DEFAULT_DROPDOWN_OPTION);
+        cy.get('[data-testid=subtype-dropdown]').select(REPAIRS, { force: true });
+        cy.get('[data-testid=call-type-yes-radio-button]').click({ force: true });
+        cy.get('[data-testid=yes-spoke-to-resident]').click({ force: true });
+        cy.get('[data-testid=callback_complete-checkbox]').click({ force: true });
+
+        cy.get('[data-testid=call-direction-radio-button]').first().click({ force: true });
+        cy.get('[data-testid=followup-required-radio-button]').first().click({ force: true });
+        cy.get('[data-testid=callback-form-update_button]').click({ force: true });
+        cy.get('[data-testid=callback-form-validation-error]').should('not.exist');
+    });
+});
 context('When required fields are not filled in', () => {
     it('displays validation error if form is submitted with no inputs', () => {
         cy.get('[data-testid=callback-form-update_button]').click({ force: true });
