@@ -68,17 +68,15 @@ export default function addSupportPage({ residentId, helpRequestId }) {
                 'Help Request': [],
                 'Contact Tracing': [],
                 CEV: [],
-                'Link Work': []
+                'Link Work': [],
+                EUSS: []
             };
-
-            if (IS_EUSS_ENABLED) {
-                categorisedCaseNotes.EUSS = [];
-            }
 
             if (helpRequestCaseNotes) {
                 helpRequestCaseNotes.forEach((helpRequestCaseNote) => {
                     helpRequestCaseNote.caseNote.forEach((note) => {
                         note.helpNeeded = response.helpNeeded;
+                        note.helpNeededSubtype = response.helpNeededSubtype;
                         categorisedCaseNotes[note.helpNeeded].push(note);
                         categorisedCaseNotes['All'].push(note);
                     });
@@ -95,12 +93,15 @@ export default function addSupportPage({ residentId, helpRequestId }) {
                 setCaseNotes(categorisedCaseNotes);
             }
 
-            setHelpRequest(response);
-            setCalls(
-                response.helpRequestCalls.sort(
-                    (a, b) => new Date(b.callDateTime) - new Date(a.callDateTime)
-                )
+            let sortedCalls = response.helpRequestCalls.sort(
+                (a, b) => new Date(b.callDateTime) - new Date(a.callDateTime)
             );
+            sortedCalls.forEach((call) => {
+                call.helpNeededSubtype = response.helpNeededSubtype;
+            });
+
+            setHelpRequest(response);
+            setCalls(sortedCalls);
         } catch (err) {
             console.log(`Error getting resident props with help request ID ${residentId}: ${err}`);
         }
