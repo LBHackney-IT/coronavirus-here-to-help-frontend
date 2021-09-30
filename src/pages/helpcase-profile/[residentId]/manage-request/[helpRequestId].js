@@ -11,7 +11,6 @@ import { CaseNotesGateway } from '../../../../gateways/case-notes';
 import { useRouter } from 'next/router';
 import CallHistory from '../../../../components/CallHistory/CallHistory';
 import CaseNotes from '../../../../components/CaseNotes/CaseNotes';
-import { IS_EUSS_ENABLED } from '../../../../helpers/constants';
 import { GovNotifyGateway } from '../../../../gateways/gov-notify';
 import {
     TEST_AND_TRACE_FOLLOWUP_TEXT,
@@ -34,7 +33,7 @@ export default function addSupportPage({ residentId, helpRequestId }) {
         'Contact Tracing': [],
         CEV: [],
         'Link Work': [],
-        ...(IS_EUSS_ENABLED ? ['EUSS'] : []),
+        EUSS: [],
         helpType: null
     });
 
