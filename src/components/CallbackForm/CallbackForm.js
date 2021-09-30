@@ -168,18 +168,20 @@ export default function CallbackForm({
         }
     };
 
+    const followUpRequiredFunction = (value) => {
+        setFollowupRequired(value);
+    };
+
     const callBackFunction = (value) => {
-        if (value == 'Yes' || value == 'No') {
-            setFollowupRequired(value);
-        }
         if (callTypes.includes(value)) {
             setHelpNeeded(value);
             setSubtypeDropdownValues(value);
         }
     };
 
-    const setSubtypeDropdownValues = (value) => {
-        const subtypes = authCallTypes.filter((callType) => callType.name == value)[0].subtypes;
+    const setSubtypeDropdownValues = (selectedCallType) => {
+        const subtypes = authCallTypes.filter((callType) => callType.name == selectedCallType)[0]
+            .subtypes;
         if (subtypes) {
             setSubTypesDropdown([DEFAULT_DROPDOWN_OPTION].concat(subtypes));
         } else {
@@ -446,7 +448,7 @@ export default function CallbackForm({
                                                     <fieldset className="govuk-fieldset">
                                                         <h3 className="govuk-heading-m">
                                                             {' '}
-                                                            Support required subtype
+                                                            {helpNeeded} Category
                                                         </h3>
 
                                                         <Dropdown
@@ -902,7 +904,7 @@ export default function CallbackForm({
                                 radioButtonItems={followupRequired}
                                 name="FollowUpRequired"
                                 optionalClass="govuk-radios--inline"
-                                onSelectOption={callBackFunction}
+                                onSelectOption={followUpRequiredFunction}
                                 data-testid="followup-required-radio-button"
                             />
                         </fieldset>
