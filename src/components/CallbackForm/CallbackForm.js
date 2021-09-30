@@ -8,6 +8,7 @@ import {
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     TEST_AND_TRACE_FOLLOWUP_EMAIL,
     EUSS,
+    LINK_WORK,
     WELFARE_CALL
 } from '../../helpers/constants';
 import { formatSubText } from '../../helpers/formatter';
@@ -756,7 +757,7 @@ export default function CallbackForm({
                 )}
                 <br></br>
 
-                {helpNeeded !== EUSS && helpNeeded && (
+                {helpNeeded !== EUSS && helpNeeded !== LINK_WORK && helpNeeded && (
                     <fieldset className="govuk-fieldset">
                         <h3 className="govuk-heading-m">
                             Would you like to message the resident following this call?
