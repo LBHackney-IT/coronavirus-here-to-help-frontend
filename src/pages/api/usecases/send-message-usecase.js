@@ -4,7 +4,8 @@ import {
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     PRE_CALL_MESSAGE_TEMPLATE,
     SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE,
-    EUSS_PRE_CALL_MESSAGE_TEMPLATE
+    EUSS_PRE_CALL_MESSAGE_TEMPLATE,
+    LINK_WORK_BULK_MESSAGE_TEMPLATE
 } from '../../../helpers/constants';
 
 export class SendMessageUseCase {
@@ -54,7 +55,10 @@ export class SendMessageUseCase {
                     templateId = process.env.SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE;
                 } else if (queryParams.templateType == EUSS_PRE_CALL_MESSAGE_TEMPLATE) {
                     templateId = process.env.EUSS_PRE_CALL_MESSAGE_TEMPLATE;
+                } else if (queryParams.templateType == LINK_WORK_BULK_MESSAGE_TEMPLATE) {
+                    templateId = process.env.LINK_WORK_BULK_MESSAGE_TEMPLATE;
                 }
+
                 const response = await govNotifyGateway.getTemplatePreview(templateId, {
                     name: '(first name)'
                 });
