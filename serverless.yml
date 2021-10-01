@@ -51,6 +51,7 @@ functions:
       PRE_CALL_MESSAGE_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/pre-call-message-template}
       SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/self-isolation-pre-call-message-template}
       EUSS_PRE_CALL_MESSAGE_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/euss-pre-call-message-template}
+      LINK_WORK_BULK_MESSAGE_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/link-work-bulk-message-template}
 resources:
   Resources:
     CloudFrontDistribution:

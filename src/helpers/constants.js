@@ -25,7 +25,7 @@ export const callOutcomes = {
 };
 
 export const selfIsolationCallTypes = [WELFARE_CALL, CONTACT_TRACING];
-export const bulkMessageCallTypes = [WELFARE_CALL, CONTACT_TRACING, EUSS];
+export const bulkMessageCallTypes = [WELFARE_CALL, CONTACT_TRACING, EUSS, LINK_WORK];
 
 export const cevHelpTypes = {
     foodAccessVoluntarySector: 'Accessing food via voluntary sector',
@@ -41,3 +41,4 @@ export const TEST_AND_TRACE_FOLLOWUP_EMAIL = 'test-and-trace-followup-email';
 export const PRE_CALL_MESSAGE_TEMPLATE = 'pre-call-message-template';
 export const SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE = 'self-isolation-pre-call-message-template';
 export const EUSS_PRE_CALL_MESSAGE_TEMPLATE = 'euss-pre-call-message-template';
+export const LINK_WORK_BULK_MESSAGE_TEMPLATE = 'link-work-bulk-message-template';

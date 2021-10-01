@@ -2,8 +2,9 @@ import {
     PRE_CALL_MESSAGE_TEMPLATE,
     SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE,
     EUSS_PRE_CALL_MESSAGE_TEMPLATE,
-    EUSS_GROUP, 
-  EUSS
+    EUSS_GROUP,
+    EUSS,
+    LINK_WORK_BULK_MESSAGE_TEMPLATE
 } from '../../../helpers/constants';
 import { GovNotifyGateway } from '../../../gateways/gov-notify-api-gateway';
 import {
@@ -80,6 +81,8 @@ const sendBulkSms = async (callbacks, reqBody) => {
             ? process.env.SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE
             : reqBody.textTemplateId == EUSS_PRE_CALL_MESSAGE_TEMPLATE
             ? process.env.EUSS_PRE_CALL_MESSAGE_TEMPLATE
+            : reqBody.textTemplateId == LINK_WORK_BULK_MESSAGE_TEMPLATE
+            ? process.env.LINK_WORK_BULK_MESSAGE_TEMPLATE
             : '';
     try {
         let mobileContacts = [];
