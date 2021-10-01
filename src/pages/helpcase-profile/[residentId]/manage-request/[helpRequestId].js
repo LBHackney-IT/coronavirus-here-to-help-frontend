@@ -11,7 +11,6 @@ import { CaseNotesGateway } from '../../../../gateways/case-notes';
 import { useRouter } from 'next/router';
 import CallHistory from '../../../../components/CallHistory/CallHistory';
 import CaseNotes from '../../../../components/CaseNotes/CaseNotes';
-import { IS_EUSS_ENABLED } from '../../../../helpers/constants';
 import { GovNotifyGateway } from '../../../../gateways/gov-notify';
 import {
     TEST_AND_TRACE_FOLLOWUP_TEXT,
@@ -34,7 +33,7 @@ export default function addSupportPage({ residentId, helpRequestId }) {
         'Contact Tracing': [],
         CEV: [],
         'Link Work': [],
-        ...(IS_EUSS_ENABLED ? ['EUSS'] : []),
+        EUSS: [],
         helpType: null
     });
 
@@ -68,17 +67,15 @@ export default function addSupportPage({ residentId, helpRequestId }) {
                 'Help Request': [],
                 'Contact Tracing': [],
                 CEV: [],
-                'Link Work': []
+                'Link Work': [],
+                EUSS: []
             };
-
-            if (IS_EUSS_ENABLED) {
-                categorisedCaseNotes.EUSS = [];
-            }
 
             if (helpRequestCaseNotes) {
                 helpRequestCaseNotes.forEach((helpRequestCaseNote) => {
                     helpRequestCaseNote.caseNote.forEach((note) => {
                         note.helpNeeded = response.helpNeeded;
+                        note.helpNeededSubtype = response.helpNeededSubtype;
                         categorisedCaseNotes[note.helpNeeded].push(note);
                         categorisedCaseNotes['All'].push(note);
                     });
@@ -95,12 +92,15 @@ export default function addSupportPage({ residentId, helpRequestId }) {
                 setCaseNotes(categorisedCaseNotes);
             }
 
-            setHelpRequest(response);
-            setCalls(
-                response.helpRequestCalls.sort(
-                    (a, b) => new Date(b.callDateTime) - new Date(a.callDateTime)
-                )
+            let sortedCalls = response.helpRequestCalls.sort(
+                (a, b) => new Date(b.callDateTime) - new Date(a.callDateTime)
             );
+            sortedCalls.forEach((call) => {
+                call.helpNeededSubtype = response.helpNeededSubtype;
+            });
+
+            setHelpRequest(response);
+            setCalls(sortedCalls);
         } catch (err) {
             console.log(`Error getting resident props with help request ID ${residentId}: ${err}`);
         }

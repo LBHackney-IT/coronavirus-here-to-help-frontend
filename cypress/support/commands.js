@@ -62,12 +62,20 @@ Cypress.Commands.add('setIntercepts', () => {
         fixture: 'residents/3/helpRequestCaseNotes'
     });
 
+    cy.intercept('GET', '/api/proxy/v4/residents/3/help-requests/160/case-notes', {
+        fixture: 'residents/3/helpRequest160CaseNotes'
+    });
+
     cy.intercept('GET', '/api/proxy/v3/help-requests/callbacks', {
         fixture: 'callbacks'
     });
 
     cy.intercept('GET', `/api/proxy/v4/residents/3/help-requests/12`, {
         fixture: 'residents/3/helpRequests/12'
+    });
+
+    cy.intercept('GET', `/api/proxy/v4/residents/3/help-requests/160`, {
+        fixture: 'residents/3/helpRequests/160'
     });
 
     cy.intercept('GET', `/api/proxy/v4/residents/3/help-requests`, {

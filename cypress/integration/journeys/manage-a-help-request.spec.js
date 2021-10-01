@@ -207,4 +207,26 @@ context('When opening a non-cev help request', () => {
     });
 });
 
+context('When opening a Link Work (Repairs) request', () => {
+    it('it does displays Link Work (Repairs) in the title, call history and case notes', () => {
+        cy.get('[data-testid=support-requested-table-view_link-6]')
+            .contains('View')
+            .click({ force: true });
+        cy.get('[data-testid=help-type]').should('contain', 'Link Work (Repairs)');
+        cy.get('[data-testid=call-history-entry]').should('have.length', 1);
+        cy.get('[data-testid=call-history-entry]')
+            .first()
+            .should('contain', '2021-01-14 07:36 by Homer Simpson');
+        cy.get('[data-testid=call-history-entry]')
+            .first()
+            .should('contain', 'outbound Link Work (Repairs): Callback complete');
+        cy.get('[data-testid=case-note-entry]').should('have.length', 1);
+        cy.get('[data-testid=case-note-entry]')
+            .first()
+            .should('contain', '2021-09-12 10:53 by Harry Potter');
+        cy.get('[data-testid=case-note-entry]').first().should('contain', 'Link Work (Repairs):');
+        cy.get('[data-testid=case-note-entry]').first().should('contain', 'CREATED');
+    });
+});
+
 export {};
