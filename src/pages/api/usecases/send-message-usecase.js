@@ -15,43 +15,21 @@ const templateAliasToIdDecoder = (tAlias) => {
             return process.env.EUSS_PRE_CALL_MESSAGE_TEMPLATE;
         case TEMPLATE_ID_ALIASES.EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE:
             return process.env.EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE;
+        case TEMPLATE_ID_ALIASES.TEST_AND_TRACE_FOLLOWUP_TEXT: // why is this named different
+            return process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_TEXT; // than this var?
+        case TEMPLATE_ID_ALIASES.TEST_AND_TRACE_FOLLOWUP_EMAIL: // same here
+            return process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_EMAIL;
         default:
-            return undefined;
+            // would want this to be 'undefined' instead, but will keep empty
+            // string for now, as it's unclear whether in the previous code it
+            // was important or not.
+            return '';
     }
 };
 export class SendMessageUseCase {
     async sendMessage(pathSegments, queryParams, reqBody) {
         const govNotifyGateway = new GovNotifyGateway();
-        if (queryParams.phoneNumber) {
-            try {
-                const templateId =
-                    pathSegments[0] == TEST_AND_TRACE_FOLLOWUP_TEXT
-                        ? process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_TEXT
-                        : '';
-                let response = await govNotifyGateway.sendSms(
-                    templateId,
-                    queryParams.phoneNumber,
-                    {}
-                );
-                return response;
-            } catch (error) {
-                console.log(`Send text usecase error: ${error}`);
-                return error;
-            }
-        }
-        if (queryParams.email) {
-            try {
-                const templateId =
-                    pathSegments[0] == TEST_AND_TRACE_FOLLOWUP_EMAIL
-                        ? process.env.TEST_AND_TRACE_FOLLOWUP_TEMPLATE_EMAIL
-                        : '';
-                let response = await govNotifyGateway.sendEmail(templateId, queryParams.email);
-                return response;
-            } catch (error) {
-                console.log(`Send email usecase error: ${error}`);
-                return error;
-            }
-        }
+        const requestBody = JSON.parse(reqBody);
 
         if (pathSegments[0] == 'previewTemplate') {
             try {
@@ -84,6 +62,41 @@ export class SendMessageUseCase {
                 console.log(`Get template usecase error: ${error}`);
                 return error;
             }
+        } else {
+            // else start
+            const templateAliasName = pathSegments[0];
+
+            if (queryParams.phoneNumber) {
+                try {
+                    const templateId = templateAliasToIdDecoder(templateAliasName);
+
+                    let response = await govNotifyGateway.sendSms(
+                        templateId,
+                        queryParams.phoneNumber,
+                        requestBody // I hope it's the correct format of key val pairs of templateParamName: value
+                    );
+                    return response;
+                } catch (error) {
+                    console.log(`Send text usecase error: ${error}`);
+                    return error;
+                }
+            }
+            if (queryParams.email) {
+                try {
+                    const templateId = templateAliasToIdDecoder(templateAliasName);
+
+                    let response = await govNotifyGateway.sendEmail(
+                        templateId,
+                        queryParams.email,
+                        requestBody
+                    );
+                    return response;
+                } catch (error) {
+                    console.log(`Send email usecase error: ${error}`);
+                    return error;
+                }
+            }
+            // else end
         }
     }
 }
