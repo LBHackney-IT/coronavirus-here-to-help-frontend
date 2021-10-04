@@ -11,8 +11,11 @@ export class GovNotifyGateway extends DefaultGateway {
       return response;
     }
 
-    async getTemplatePreview(template) {
-      const response = await this.getFromUrl(`gov-notify/previewTemplate?templateType=${template}`);
+    async getTemplatePreview(template, templateParams) {
+        const response = await this.postToUrl(
+            `gov-notify/previewTemplate?templateType=${template}`,
+            templateParams
+        );
       return response;
     }
 

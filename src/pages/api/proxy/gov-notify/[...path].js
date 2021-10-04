@@ -1,5 +1,5 @@
 import { authoriseUser } from '../../../../helpers/auth';
-import { SendMessageUseCase } from "../../usecases/send-message-usecase";
+import { SendMessageUseCase } from '../../usecases/send-message-usecase';
 const sendMessageUseCase = new SendMessageUseCase();
 
 const endpoint = async (req, res) => {
@@ -8,14 +8,11 @@ const endpoint = async (req, res) => {
 
     try {
         const { path, ...queryParams } = req.query;
-        const response =  await sendMessageUseCase.sendMessage(
-            path,
-            queryParams
-        );
+        const response = await sendMessageUseCase.sendMessage(path, queryParams, req.body);
 
-        res.json(response.data)
+        res.json(response.data);
     } catch (error) {
-        console.log('Error:' + error );
+        console.log('Error:' + error);
         res.json(error);
     }
 };

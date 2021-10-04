@@ -41,3 +41,29 @@ export const TEST_AND_TRACE_FOLLOWUP_EMAIL = 'test-and-trace-followup-email';
 export const PRE_CALL_MESSAGE_TEMPLATE = 'pre-call-message-template';
 export const SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE = 'self-isolation-pre-call-message-template';
 export const EUSS_PRE_CALL_MESSAGE_TEMPLATE = 'euss-pre-call-message-template';
+
+// currently contains duplicate, but ideally, after refactoring the other ones get
+// removed. The code becomes much clearer, when the constants are grouped.
+export const TEMPLATE_ID_ALIASES = {
+    EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE: 'euss-sms-follow-up-no-answer',
+    EUSS_PRE_CALL_MESSAGE_TEMPLATE: 'euss-pre-call-message-template', // sms
+    EUSS_EMAIL_PRE_CALL_TEMPLATE: 'euss-pre-call-email' // email
+};
+
+// Creating duplicate constants for now:
+// I'm hoping to have them refactored in the future.
+export const HELP_TYPE = {
+    CEV: 'CEV',
+    SHIELDING: 'Shielding',
+    CONTACT_TRACING: 'Contact Tracing',
+    HELP_REQUEST: 'Help Request',
+    WELFARE_CALL: 'Welfare Call',
+    LINK_WORK: 'Link Work',
+    EUSS: 'EUSS',
+    REPAIRS: 'Repairs'
+};
+
+export const CONTACT_TYPE = {
+    EMAIL: 'EMAIL',
+    SMS_TEXT: 'SMS_TEXT'
+};

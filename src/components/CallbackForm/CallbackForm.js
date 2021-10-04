@@ -7,7 +7,10 @@ import {
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     TEST_AND_TRACE_FOLLOWUP_EMAIL,
     EUSS,
-    WELFARE_CALL
+    WELFARE_CALL,
+    HELP_TYPE,
+    CONTACT_TYPE,
+    TEMPLATE_ID_ALIASES
 } from '../../helpers/constants';
 import { formatSubText } from '../../helpers/formatter';
 import { useRouter } from 'next/router';
@@ -117,19 +120,48 @@ export default function CallbackForm({
     const followupRequired = ['Yes', 'No'];
     const whoMadeInitialContact = ['I called the resident', 'The resident called me'];
 
+    const helpTypeToTemplateNameMap = (helpType, contactType) => {
+        const isEmail = contactType === CONTACT_TYPE.EMAIL;
+        switch (helpType) {
+            case HELP_TYPE.EUSS:
+                // EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE - not sure where this fits in
+                return isEmail
+                    ? TEMPLATE_ID_ALIASES.EUSS_EMAIL_PRE_CALL_TEMPLATE // pre call email
+                    : TEMPLATE_ID_ALIASES.EUSS_PRE_CALL_MESSAGE_TEMPLATE; // pre call sms
+            default:
+                return isEmail ? TEST_AND_TRACE_FOLLOWUP_EMAIL : TEST_AND_TRACE_FOLLOWUP_TEXT;
+        }
+    };
+
+    const templateParamsBuilder = (templateName) => {
+        const templateParams = {};
+        switch (templateName) {
+            case HELP_TYPE.EUSS:
+                templateParams.firstName = resident.firstName;
+                break;
+            default:
+                return undefined;
+        }
+    };
+
     useEffect(async () => {
         const govNotifyGateway = new GovNotifyGateway();
         const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
 
+        const smsTemplateName = helpTypeToTemplateNameMap(helpNeeded, CONTACT_TYPE.SMS_TEXT);
+        const emailTemplateName = helpTypeToTemplateNameMap(helpNeeded, CONTACT_TYPE.EMAIL);
+
         try {
             let textTemplate = await govNotifyGateway.getTemplatePreview(
-                TEST_AND_TRACE_FOLLOWUP_TEXT
+                smsTemplateName,
+                templateParamsBuilder(smsTemplateName)
             );
             if (textTemplate) {
                 setTextTemplatePreview(textTemplate.body);
             }
             let emailTemplate = await govNotifyGateway.getTemplatePreview(
-                TEST_AND_TRACE_FOLLOWUP_EMAIL
+                emailTemplateName,
+                templateParamsBuilder(emailTemplateName)
             );
             if (emailTemplate) {
                 console.log('emailTemplate', emailTemplate);
