@@ -124,7 +124,7 @@ export default function CallbackForm({
         const isEmail = contactType === CONTACT_TYPE.EMAIL;
         switch (helpType) {
             case HELP_TYPE.EUSS:
-                // EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE - not sure where this fits in
+                // EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE - is this triggered upon a call attempt?
                 return isEmail
                     ? TEMPLATE_ID_ALIASES.EUSS_EMAIL_PRE_CALL_TEMPLATE // pre call email
                     : TEMPLATE_ID_ALIASES.EUSS_PRE_CALL_MESSAGE_TEMPLATE; // pre call sms
@@ -142,6 +142,29 @@ export default function CallbackForm({
             default:
                 return undefined;
         }
+    };
+
+    // create a command, which instructs the save function to send one, or the other, or both
+    const notifyRequestOptionsConstructor = (helpNeeded, phoneNumber, email) => {
+        const smsTemplateName = helpTypeToTemplateNameMap(helpNeeded, CONTACT_TYPE.SMS_TEXT);
+        const emailTemplateName = helpTypeToTemplateNameMap(helpNeeded, CONTACT_TYPE.EMAIL);
+
+        return {
+            smsText: phoneNumber
+                ? {
+                      phoneNumber,
+                      templateName: smsTemplateName,
+                      templateParams: templateParamsBuilder(smsTemplateName)
+                  }
+                : undefined,
+            email: email
+                ? {
+                      email,
+                      templateName: emailTemplateName,
+                      templateParams: templateParamsBuilder(emailTemplateName)
+                  }
+                : undefined
+        };
     };
 
     useEffect(async () => {
@@ -350,8 +373,7 @@ export default function CallbackForm({
                 helpRequestObject,
                 callMade,
                 caseNote,
-                phoneNumber,
-                email
+                notifyRequestOptionsConstructor(helpNeeded, phoneNumber, email)
             );
         } else {
             setErrorsExist(true); // generic error, user won't be told what's wrong.
