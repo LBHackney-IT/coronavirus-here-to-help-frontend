@@ -54,7 +54,7 @@ export default function CallbackForm({
         CallHandler: null
     });
 
-    useEffect(() => {
+    useEffect(async () => {
         setHelpNeeded(helpRequest ? helpRequest.helpNeeded : '');
         setCEVHelpNeeds({
             foodAccessVoluntarySector: helpRequest ? helpRequest.helpWithAccessingFood : null,
@@ -66,6 +66,15 @@ export default function CallbackForm({
             otherNeeds: helpRequest ? helpRequest.helpWithAccessingOtherEssentials : null,
             noNeedsIdentified: helpRequest ? helpRequest.helpWithNoNeedsIdentified : null
         });
+
+        const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
+
+        try {
+            let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
+            setCallTypes(authCallTypes.map((callType) => callType.name));
+        } catch (err) {
+            console.log(`Error fetching auth calltypes: ${err}`);
+        }
     }, [helpRequest]);
 
     const onCEVHelpNeedsCheckboxChange = (cevHelpItem) => {
@@ -76,6 +85,37 @@ export default function CallbackForm({
                 setCEVHelpNeeds(cevHelpNeedsCopy);
             }
         });
+    };
+
+    const fetchTemplates = async () => {
+        // a workaround for template fetch firing off before the help requests's help type
+        // state being fetched and set. The problem was that incorrect template alias would
+        // be used as a result of 'undefined' help type. The solution is to tirgger template
+        // fetch on checkbox tick, which is way past the page load mark, giving enough time
+        // for any state to get set.
+        const govNotifyGateway = new GovNotifyGateway();
+
+        const smsTemplateName = helpTypeToTemplateNameMap(helpNeeded, CONTACT_TYPE.SMS_TEXT);
+        const emailTemplateName = helpTypeToTemplateNameMap(helpNeeded, CONTACT_TYPE.EMAIL);
+        try {
+            let textTemplate = await govNotifyGateway.getTemplatePreview(
+                smsTemplateName,
+                templateParamsBuilder(smsTemplateName)
+            );
+            if (textTemplate) {
+                setTextTemplatePreview(textTemplate.body);
+            }
+            let emailTemplate = await govNotifyGateway.getTemplatePreview(
+                emailTemplateName,
+                templateParamsBuilder(emailTemplateName)
+            );
+            if (emailTemplate) {
+                console.log('emailTemplate', emailTemplate);
+                setEmailTemplatePreview(emailTemplate.body);
+            }
+        } catch (err) {
+            console.log(`Error fetching themplates: ${err}`);
+        }
     };
 
     const metadata =
@@ -169,37 +209,8 @@ export default function CallbackForm({
         };
     };
 
-    useEffect(async () => {
-        const govNotifyGateway = new GovNotifyGateway();
-        const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
 
-        const smsTemplateName = helpTypeToTemplateNameMap(helpNeeded, CONTACT_TYPE.SMS_TEXT);
-        const emailTemplateName = helpTypeToTemplateNameMap(helpNeeded, CONTACT_TYPE.EMAIL);
-
-        try {
-            let textTemplate = await govNotifyGateway.getTemplatePreview(
-                smsTemplateName,
-                templateParamsBuilder(smsTemplateName)
-            );
-            if (textTemplate) {
-                setTextTemplatePreview(textTemplate.body);
-            }
-            let emailTemplate = await govNotifyGateway.getTemplatePreview(
-                emailTemplateName,
-                templateParamsBuilder(emailTemplateName)
-            );
-            if (emailTemplate) {
-                console.log('emailTemplate', emailTemplate);
-                setEmailTemplatePreview(emailTemplate.body);
-            }
-
-            let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
-            setCallTypes(authCallTypes.map((callType) => callType.name));
-        } catch (err) {
-            console.log(`Error fetching themplates: ${err}`);
-        }
-    }, []);
-
+    // Wtf is this? Why do we have presentation logic mixed up with validation?
     const setShowContactDetails = (value) => {
         if (value == TEST_AND_TRACE_FOLLOWUP_EMAIL) {
             if (showEmail) {
@@ -788,7 +799,10 @@ export default function CallbackForm({
                             value={TEST_AND_TRACE_FOLLOWUP_EMAIL}
                             label="Send Email"
                             aria-describedby="SendEmail"
-                            onCheckboxChange={setShowContactDetails}></Checkbox>
+                            onCheckboxChange={(val) => {
+                                fetchTemplates();
+                                setShowContactDetails(val);
+                            }}></Checkbox>
                         {showEmail && (
                             <div
                                 className="govuk-radios__conditional govuk-radios__conditional--hidden"
@@ -851,7 +865,10 @@ export default function CallbackForm({
                             value={TEST_AND_TRACE_FOLLOWUP_TEXT}
                             label="Send Text"
                             aria-describedby="SendEmail"
-                            onCheckboxChange={setShowContactDetails}></Checkbox>
+                            onCheckboxChange={(val) => {
+                                fetchTemplates();
+                                setShowContactDetails(val);
+                            }}></Checkbox>
                         {showText && (
                             <div
                                 className="govuk-radios__conditional govuk-radios__conditional--hidden"
