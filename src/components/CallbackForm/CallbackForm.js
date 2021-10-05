@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import { GovNotifyGateway } from '../../gateways/gov-notify';
 import styles from '../CallbackForm/CallbackForm.module.scss';
 import { AuthorisedCallTypesGateway } from '../../gateways/authorised-call-types';
+import cbCSS from './CallbackForm.module.css';
 
 export default function CallbackForm({
     residentId,
@@ -140,8 +141,9 @@ export default function CallbackForm({
                 templateParams.firstName = resident.firstName;
                 break;
             default:
-                return undefined;
+                break;
         }
+        return templateParams;
     };
 
     // create a command, which instructs the save function to send one, or the other, or both
@@ -814,12 +816,12 @@ export default function CallbackForm({
                                         <div id="contact-hint" className="govuk-hint">
                                             Email preview
                                         </div>
-                                        <div
+                                        <p
                                             id="email-template-preview"
-                                            className="govuk-inset-text"
+                                            className={`govuk-inset-text ${cbCSS['template-text']}`}
                                             data-testid="send-email-preview">
                                             {emailTemplatePreview}
-                                        </div>
+                                        </p>
                                     </div>
                                 )}
                                 {!emailTemplatePreview && (
@@ -878,11 +880,11 @@ export default function CallbackForm({
                                         <div id="contact-hint" className="govuk-hint">
                                             Text preview
                                         </div>
-                                        <div
-                                            className="govuk-inset-text"
+                                        <p
+                                            className={`govuk-inset-text ${cbCSS['template-text']}`}
                                             data-testid="send-text-preview">
                                             {textTemplatePreview}
-                                        </div>
+                                        </p>
                                     </div>
                                 )}
                                 <br />
