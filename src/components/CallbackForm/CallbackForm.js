@@ -785,7 +785,7 @@ export default function CallbackForm({
                 )}
                 <br></br>
 
-                {helpNeeded !== EUSS && helpNeeded && (
+                {helpNeeded && (
                     <fieldset className="govuk-fieldset">
                         <h3 className="govuk-heading-m">
                             Would you like to message the resident following this call?
