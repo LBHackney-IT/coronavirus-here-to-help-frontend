@@ -175,9 +175,14 @@ export default function CallbackForm({
     };
 
     const templateParamsBuilder = (templateName) => {
-        const templateParams = {};
+        let templateParams = {};
         switch (templateName) {
-            case HELP_TYPE.EUSS:
+            case TEMPLATE_ID_ALIASES.EUSS_PRE_CALL_MESSAGE_TEMPLATE:
+                // according to the spec document it has to be first name
+                // however due to historic reasons, it will be left as name
+                templateParams.name = resident.firstName;
+                break;
+            case TEMPLATE_ID_ALIASES.EUSS_EMAIL_PRE_CALL_TEMPLATE:
                 templateParams.firstName = resident.firstName;
                 break;
             default:
@@ -208,7 +213,6 @@ export default function CallbackForm({
                 : undefined
         };
     };
-
 
     // Wtf is this? Why do we have presentation logic mixed up with validation?
     const setShowContactDetails = (value) => {
