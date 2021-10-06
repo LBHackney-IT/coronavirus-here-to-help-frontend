@@ -42,17 +42,23 @@ Login should now work.
 
 ## 🧪 Testing it
 
-It uses cypress for tests. Run them with:
+It uses Cypress for automated tests. Run them with:
 
 ```
-npm run test:e2e:dev
+npm run test:e2e:ci
+```
+
+It uses Jest for unit tests. Run them with:
+
+```
+npm test
 ```
 
 ## 🌎 Putting it on the internet
 
 It's suitable for Heroku, Vercel, AWS, or any other Node.js hosting.
 
-Pushes to the main branch will be automatically built and deployed to our staging environment.
+Pushes to the main branch will be automatically built and deployed to our staging environment in Circle CI.
 
 Check the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
