@@ -78,10 +78,13 @@ describe('Callbacks list page filters callbacks correctly', () => {
 
     it('Upon typing into CTAS filter text input, callbacks get filtered by that value', () => {
         cy.visit('/callback-list');
+        // test of filtering correctness
         cy.get('[data-testid=ctasid-filter]').type('ex');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '2');
+        // test if filtering while typing
         cy.get('[data-testid=ctasid-filter]').type('o');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
+        // test of whitespace trimming
         cy.get('[data-testid=ctasid-filter]').type('dia ');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
     });

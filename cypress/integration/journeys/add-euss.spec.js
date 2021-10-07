@@ -28,15 +28,15 @@ context('When adding new EUSS help request and call completed is selected', () =
 
         cy.get('[data-testid=callback-form-validation-error]').should('not.exist');
     });
-    it('does not display the messaging follow up options', () => {
-        cy.server();
-        cy.route('GET', '/api/proxy/help-types').as('getHelpTypes');
-        cy.wait('@getHelpTypes', { timeout: 10000 });
-        cy.get('[data-testid=call-type-radio-button]').eq(5).should('have.value', EUSS);
-        cy.get('[data-testid=call-type-radio-button]').eq(5).click({ force: true });
+    // it('does not display the messaging follow up options', () => {
+    //     cy.server();
+    //     cy.route('GET', '/api/proxy/help-types').as('getHelpTypes');
+    //     cy.wait('@getHelpTypes', { timeout: 10000 });
+    //     cy.get('[data-testid=call-type-radio-button]').eq(5).should('have.value', EUSS);
+    //     cy.get('[data-testid=call-type-radio-button]').eq(5).click({ force: true });
 
-        cy.get('[data-testid=send-email-checkbox]').should('not.exist');
-    });
+    //     cy.get('[data-testid=send-email-checkbox]').should('not.exist');
+    // });
 });
 
 context('When required fields are not filled in', () => {
