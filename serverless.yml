@@ -14,45 +14,46 @@ package:
         - ./**
 
 functions:
-    here-to-help-frontend:
-        name: ${self:service}-${self:provider.stage}
-        handler: src/lambda.handler
-        package:
-            include:
-                - auth-groups.json
-                - src/lambda.js
-                - next.config.js
-                - public/**
-                - build/_next/**
-                - node_modules/**
-        events:
-            - http:
-                  path: /
-                  method: ANY
-            - http:
-                  path: /{any+}
-                  method: ANY
-        vpc:
-            securityGroupIds: ${self:custom.securityGroups.${self:provider.stage}}
-            subnetIds: ${self:custom.subnets.${self:provider.stage}}
-        environment:
-            APP_URL: https://${self:custom.aliases.${self:provider.stage}}
-            APP_STAGE: ${self:provider.stage}
-            NEXT_PUBLIC_HACKNEY_GOOGLE_GROUP: inh-users-dev
-            NEXT_PUBLIC_HACKNEY_COOKIE_NAME: hackneyToken
-            HACKNEY_JWT_SECRET: ${ssm:/common/hackney-jwt-secret}
-            HERE_TO_HELP_API_BASE_URL: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/api-base-url}
-            HERE_TO_HELP_API_KEY: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/api-key}
-            HERE_TO_HELP_NOTIFY_API_KEY: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/notify-key}
-            TEST_AND_TRACE_FOLLOWUP_TEMPLATE_TEXT: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/test-and-trace-text-template-id}
-            TEST_AND_TRACE_FOLLOWUP_TEMPLATE_EMAIL: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/test-and-trace-email-template-id}
-            ADDRESSES_API_URL: ${ssm:/hth/addresses-api/${self:provider.stage}/url}
-            ADDRESSES_API_TOKEN: ${ssm:/hth/addresses-api/${self:provider.stage}/api-token}
-            PRE_CALL_MESSAGE_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/pre-call-message-template}
-            SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/self-isolation-pre-call-message-template}
-            EUSS_PRE_CALL_MESSAGE_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/euss-pre-call-message-template}
-            EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/euss-sms-follow-up-no-answer}
-            EUSS_EMAIL_PRE_CALL_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/euss-email-pre-call-template}
+  here-to-help-frontend:
+    name: ${self:service}-${self:provider.stage}
+    handler: src/lambda.handler
+    package:
+      include:
+        - auth-groups.json
+        - src/lambda.js
+        - next.config.js
+        - public/**
+        - build/_next/**
+        - node_modules/**
+    events:
+      - http:
+          path: /
+          method: ANY
+      - http:
+          path: /{any+}
+          method: ANY
+    vpc:
+      securityGroupIds: ${self:custom.securityGroups.${self:provider.stage}}
+      subnetIds: ${self:custom.subnets.${self:provider.stage}}
+    environment:
+      APP_URL: https://${self:custom.aliases.${self:provider.stage}}
+      APP_STAGE: ${self:provider.stage}
+      NEXT_PUBLIC_HACKNEY_GOOGLE_GROUP: inh-users-dev
+      NEXT_PUBLIC_HACKNEY_COOKIE_NAME: hackneyToken
+      HACKNEY_JWT_SECRET: ${ssm:/common/hackney-jwt-secret}
+      HERE_TO_HELP_API_BASE_URL: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/api-base-url}
+      HERE_TO_HELP_API_KEY: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/api-key}
+      HERE_TO_HELP_NOTIFY_API_KEY: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/notify-key}
+      TEST_AND_TRACE_FOLLOWUP_TEMPLATE_TEXT: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/test-and-trace-text-template-id}
+      TEST_AND_TRACE_FOLLOWUP_TEMPLATE_EMAIL: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/test-and-trace-email-template-id}
+      ADDRESSES_API_URL: ${ssm:/hth/addresses-api/${self:provider.stage}/url}
+      ADDRESSES_API_TOKEN: ${ssm:/hth/addresses-api/${self:provider.stage}/api-token}
+      PRE_CALL_MESSAGE_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/pre-call-message-template}
+      SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/self-isolation-pre-call-message-template}
+      EUSS_PRE_CALL_MESSAGE_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/euss-pre-call-message-template}
+      EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/euss-sms-follow-up-no-answer}
+      EUSS_EMAIL_PRE_CALL_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/euss-email-pre-call-template}
+      LINK_WORK_BULK_MESSAGE_TEMPLATE: ${ssm:/cv-19-res-support-v3/${self:provider.stage}/link-work-bulk-message-template}
 resources:
     Resources:
         CloudFrontDistribution:

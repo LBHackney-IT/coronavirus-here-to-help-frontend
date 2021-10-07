@@ -21,7 +21,7 @@ export default function ResidentsList({ firstName, lastName, postcode }) {
 
     useEffect(() => {
         loadResidents();
-    },[])
+    }, []);
 
     return (
         <Layout>
@@ -35,20 +35,25 @@ export default function ResidentsList({ firstName, lastName, postcode }) {
                 <h1 className="govuk-heading-xl" style={{ marginBottom: '0.4em' }}>
                     Search results
                 </h1>
-                <p className="govuk-body" data-testid="resident-search-result-count">Displaying {residents.length} record(s)</p>
+                <p className="govuk-body" data-testid="resident-search-result-count">
+                    Displaying {residents.length} record(s)
+                </p>
                 <div className="govuk-grid-row">
                     <div className="govuk-grid-column-one-half">
                         <Link href="/resident-search">
-                            <Button text="New search" addClass="govuk-button--secondary"/>
+                            <Button text="New search" addClass="govuk-button--secondary" />
                         </Link>
                     </div>
                     <div className="govuk-grid-column-one-quarter">
                         <Link href="/create-resident">
-                            <Button text="Add new resident" addClass="govuk-button" data-testid="add-new-resident-button"/>
+                            <Button
+                                text="Add new resident"
+                                addClass="govuk-button"
+                                data-testid="add-new-resident-button"
+                            />
                         </Link>
                     </div>
-                    <div className="govuk-grid-column-one-half text-align-right">
-                    </div>
+                    <div className="govuk-grid-column-one-half text-align-right"></div>
                     <ResidentList residents={residents} />
                 </div>
             </div>

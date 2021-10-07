@@ -9,10 +9,12 @@ import {
     PRE_CALL_MESSAGE_TEMPLATE,
     SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE,
     EUSS_PRE_CALL_MESSAGE_TEMPLATE,
+    LINK_WORK_BULK_MESSAGE_TEMPLATE,
     bulkMessageCallTypes,
     DEFAULT_DROPDOWN_OPTION,
     EUSS,
-    WELFARE_CALL
+    WELFARE_CALL,
+    LINK_WORK
 } from '../helpers/constants';
 import { GovNotifyGateway } from '../gateways/gov-notify';
 import { unsafeExtractUser } from '../helpers/auth';
@@ -51,6 +53,8 @@ export default function AssignCallsPage() {
             );
         } else if (value === EUSS) {
             response = await govNotifyGateway.getTemplatePreview(EUSS_PRE_CALL_MESSAGE_TEMPLATE);
+        } else if (value === LINK_WORK) {
+            response = await govNotifyGateway.getTemplatePreview(LINK_WORK_BULK_MESSAGE_TEMPLATE);
         } else {
             response = await govNotifyGateway.getTemplatePreview(PRE_CALL_MESSAGE_TEMPLATE);
         }
@@ -85,6 +89,8 @@ export default function AssignCallsPage() {
                     ? SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE
                     : helpType === EUSS
                     ? EUSS_PRE_CALL_MESSAGE_TEMPLATE
+                    : helpType === LINK_WORK
+                    ? LINK_WORK_BULK_MESSAGE_TEMPLATE
                     : PRE_CALL_MESSAGE_TEMPLATE;
             await govNotifyGateway.sendBulkText(
                 JSON.stringify({

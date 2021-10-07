@@ -4,7 +4,9 @@ import {
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     PRE_CALL_MESSAGE_TEMPLATE,
     SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE,
-    TEMPLATE_ID_ALIASES
+    TEMPLATE_ID_ALIASES,
+    EUSS_PRE_CALL_MESSAGE_TEMPLATE,
+    LINK_WORK_BULK_MESSAGE_TEMPLATE
 } from '../../../helpers/constants';
 
 const templateAliasToIdDecoder = (tAlias) => {
@@ -42,6 +44,8 @@ export class SendMessageUseCase {
                     templateId = process.env.PRE_CALL_MESSAGE_TEMPLATE;
                 } else if (queryParams.templateType == SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE) {
                     templateId = process.env.SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE;
+                } else if (queryParams.templateType == LINK_WORK_BULK_MESSAGE_TEMPLATE) {
+                    templateId = process.env.LINK_WORK_BULK_MESSAGE_TEMPLATE;
                 } else {
                     // the plan is to slowly refactor this into a single switch case
                     templateId = templateAliasToIdDecoder(queryParams.templateType);
@@ -57,6 +61,7 @@ export class SendMessageUseCase {
                     templateId,
                     templateParams
                 );
+
                 return response;
             } catch (error) {
                 console.log(`Get template usecase error: ${error}`);

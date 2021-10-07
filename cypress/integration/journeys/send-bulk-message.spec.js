@@ -22,7 +22,7 @@ context('When sending bulk messages', () => {
         cy.login(EUSS_User);
         cy.get('[data-testid=admin_button]').click({ force: true });
         cy.get('[data-testid=send-bulk-message_button]').click({ force: true });
-        cy.get('[data-testid=select-dropdown]').find('option').should('have.length', 4);
+        cy.get('[data-testid=select-dropdown]').find('option').should('have.length', 5);
         cy.get('[data-testid=select-dropdown]').find('option').last().should('have.value', EUSS);
         cy.get('[data-testid=select-dropdown]').select(EUSS);
         cy.get('[data-testid=assigned-send-bulk-checkbox]').click({ force: true });
@@ -33,7 +33,7 @@ context('When sending bulk messages', () => {
     it('it hides the EUSS option when not logged in as an EUSS user', () => {
         cy.get('[data-testid=admin_button]').click({ force: true });
         cy.get('[data-testid=send-bulk-message_button]').click({ force: true });
-        cy.get('[data-testid=select-dropdown]').find('option').should('have.length', 3);
+        cy.get('[data-testid=select-dropdown]').find('option').should('have.length', 4);
         cy.get('[data-testid=select-dropdown]')
             .find('option')
             .last()

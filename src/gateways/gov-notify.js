@@ -13,7 +13,6 @@ export class GovNotifyGateway extends DefaultGateway {
             `gov-notify/${templateAlias}?email=${email}`,
             templateParams
         );
-
         return response;
     }
 
