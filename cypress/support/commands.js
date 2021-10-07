@@ -119,7 +119,7 @@ Cypress.Commands.add('setIntercepts', () => {
     });
 
     cy.intercept(
-        'GET',
+        'POST',
         `/api/proxy/gov-notify/previewTemplate?templateType=${TEST_AND_TRACE_FOLLOWUP_EMAIL}`,
         {
             fixture: 'getEmailPreviewSuccessResponse'
@@ -127,7 +127,7 @@ Cypress.Commands.add('setIntercepts', () => {
     );
 
     cy.intercept(
-        'GET',
+        'POST',
         `/api/proxy/gov-notify/previewTemplate?templateType=${TEST_AND_TRACE_FOLLOWUP_TEXT}`,
         {
             fixture: 'getTextPreviewSuccessResponse'
@@ -135,7 +135,7 @@ Cypress.Commands.add('setIntercepts', () => {
     );
 
     cy.intercept(
-        'GET',
+        'POST',
         `/api/proxy/gov-notify/previewTemplate?templateType=${PRE_CALL_MESSAGE_TEMPLATE}`,
         {
             fixture: 'getBulkTextPreviewSuccessResponse'
