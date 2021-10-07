@@ -256,17 +256,15 @@ export default function addSupportPage({ residentId, helpRequestId }) {
             if (emailSendCommand) {
                 let emailResponse = await govNotifyGateway
                     .sendEmail(
-                        smsTextSendCommand.email,
-                        smsTextSendCommand.templateName,
-                        smsTextSendCommand.templateParams
+                        emailSendCommand.email,
+                        emailSendCommand.templateName,
+                        emailSendCommand.templateParams
                     )
                     .catch((err) => {
                         errorHasHappened = true;
                         const emailFailure = 'Error happened while sending an email.';
 
-                        console.error(
-                            `${emailFailure}\nEmail: ${smsTextSendCommand.email}\n${err}`
-                        );
+                        console.error(`${emailFailure}\nEmail: ${emailSendCommand.email}\n${err}`);
                         alert(emailFailure); // warning user about potential loss of data
                     });
 
@@ -274,14 +272,14 @@ export default function addSupportPage({ residentId, helpRequestId }) {
 
                 if (emailResponse.id) {
                     sendEmailResponseCaseNoteObject = {
-                        caseNote: `Email sent to ${smsTextSendCommand.email}. Email id: ${emailResponse.id}. Email content: ${emailResponse.content.body}`,
+                        caseNote: `Email sent to ${emailSendCommand.email}. Email id: ${emailResponse.id}. Email content: ${emailResponse.content.body}`,
                         author: user.name,
                         noteDate: new Date().toGMTString(),
                         helpNeeded: helpRequest.helpNeeded
                     };
                 } else {
                     sendEmailResponseCaseNoteObject = {
-                        caseNote: `Failed email to ${smsTextSendCommand.email}`,
+                        caseNote: `Failed email to ${emailSendCommand.email}`,
                         author: user.name,
                         noteDate: new Date().toGMTString(),
                         helpNeeded: helpRequest.helpNeeded
