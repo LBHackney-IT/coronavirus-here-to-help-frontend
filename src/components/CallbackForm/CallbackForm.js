@@ -165,10 +165,9 @@ export default function CallbackForm({
         const isEmail = contactType === CONTACT_TYPE.EMAIL;
         switch (helpType) {
             case HELP_TYPE.EUSS:
-                // EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE - is this triggered upon a call attempt?
                 return isEmail
                     ? TEMPLATE_ID_ALIASES.EUSS_EMAIL_PRE_CALL_TEMPLATE // pre call email
-                    : TEMPLATE_ID_ALIASES.EUSS_PRE_CALL_MESSAGE_TEMPLATE; // pre call sms
+                    : TEMPLATE_ID_ALIASES.EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE; // no answer sms - makes no UX sense, but I;ve confirmed with the client & it seems they want it this way due to get faster delivery
             default:
                 return isEmail ? TEST_AND_TRACE_FOLLOWUP_EMAIL : TEST_AND_TRACE_FOLLOWUP_TEXT;
         }
@@ -177,12 +176,10 @@ export default function CallbackForm({
     const templateParamsBuilder = (templateName) => {
         let templateParams = {};
         switch (templateName) {
-            case TEMPLATE_ID_ALIASES.EUSS_PRE_CALL_MESSAGE_TEMPLATE:
-                // according to the spec document it has to be first name
-                // however due to historic reasons, it will be left as name
-                templateParams.name = resident.firstName;
-                break;
             case TEMPLATE_ID_ALIASES.EUSS_EMAIL_PRE_CALL_TEMPLATE:
+                templateParams.firstName = resident.firstName;
+                break;
+            case TEMPLATE_ID_ALIASES.EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE:
                 templateParams.firstName = resident.firstName;
                 break;
             default:
