@@ -1,0 +1,22 @@
+[
+    {
+        "Id": 1,
+        "Name": "Person A",
+        "Email": ""
+    },
+    {
+        "Id": 2,
+        "Name": "Person B",
+        "Email": ""
+    },
+    {
+        "Id": 3,
+        "Name": "Person C",
+        "Email": ""
+    },
+    {
+        "Id": 4,
+        "Name": "Person D",
+        "Email": ""
+    }
+]
