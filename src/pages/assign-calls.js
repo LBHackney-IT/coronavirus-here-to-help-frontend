@@ -24,7 +24,7 @@ export default function AssignCallsPage() {
         const gateway = new CallHandlerGateway();
         const callHandlersList = await gateway.getCallHandler();
 
-        setCallHandlers(callHandlersList);
+        setCallHandlers(callHandlersList.map((c) => c.name));
     };
 
     useEffect(getCallHandlers, []);
