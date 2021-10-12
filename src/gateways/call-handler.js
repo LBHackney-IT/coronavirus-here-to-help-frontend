@@ -4,7 +4,7 @@ const ToDomain = (ch) => {
     return {
         id: ch.Id,
         name: ch.Name,
-        email: ch.email
+        email: ch.Email
     };
 };
 
