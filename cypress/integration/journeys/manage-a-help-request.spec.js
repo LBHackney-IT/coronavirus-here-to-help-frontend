@@ -1,5 +1,8 @@
+import { HELP_TYPE } from '../../../src/helpers/constants';
+import { EUSS_User } from '../../support/commands';
+
 beforeEach(() => {
-    cy.login();
+    cy.login(EUSS_User);
     cy.setIntercepts();
     cy.visit(`http://localhost:3000/dashboard`);
     cy.get('[data-testid=view-callback-list_button]').click();
@@ -41,6 +44,7 @@ context('When you view a helpcase profile', () => {
         cy.get('[data-testid=case-note-entry]').first().should('contain', 'CREATED');
     });
 
+    // not EUSS
     it('displays the email preview', () => {
         cy.get('[data-testid=support-requested-table-view_link-0]')
             .contains('View')
@@ -55,6 +59,38 @@ context('When you view a helpcase profile', () => {
             .click({ force: true });
         cy.get('[data-testid=send-text-checkbox]').click({ force: true });
         cy.get('[data-testid=send-text-preview]').should('contain', 'text preview');
+    });
+
+    // EUSS
+    it('displays the EUSS email preview', () => {
+        cy.get('a:contains("Back")');
+        cy.get('[data-testid=help-type-dropdown]').select(HELP_TYPE.EUSS);
+        cy.get('[data-testid*=callbacks-list-view_link-]').click({ force: true });
+
+        cy.get('[data-testid=support-requested-table]')
+            .find(`tr:has(td:contains("${HELP_TYPE.EUSS}"))`)
+            .find('a:contains("View")')
+            .click({ force: true });
+
+        cy.get('[data-testid=send-email-checkbox]').click({ force: true });
+        cy.get('[data-testid=send-email-preview]').should('contain', 'EUSS Email Pre Call');
+    });
+
+    it('displays the EUSS text preview', () => {
+        cy.get('a:contains("Back")');
+        cy.get('[data-testid=help-type-dropdown]').select(HELP_TYPE.EUSS);
+        cy.get('[data-testid*=callbacks-list-view_link-]').click({ force: true });
+
+        cy.get('[data-testid=support-requested-table]')
+            .find(`tr:has(td:contains("${HELP_TYPE.EUSS}"))`)
+            .find('a:contains("View")')
+            .click({ force: true });
+
+        cy.get('[data-testid=send-text-checkbox]').click({ force: true });
+        cy.get('[data-testid=send-text-preview]').should(
+            'contain',
+            'EUSS Text Pharaoh GX no answer'
+        );
     });
 });
 

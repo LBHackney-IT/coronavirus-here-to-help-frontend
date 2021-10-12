@@ -121,8 +121,7 @@ export default function addSupportPage({ residentId, helpRequestId }) {
         helpRequestObject,
         callMade,
         caseNote,
-        phoneNumber,
-        email
+        notifyRequestOptions = {}
     ) {
         const callRequestObject = {
             callType: helpNeeded,
@@ -133,6 +132,8 @@ export default function addSupportPage({ residentId, helpRequestId }) {
         };
 
         const errorHasHappened = false;
+        const smsTextSendCommand = notifyRequestOptions.smsText;
+        const emailSendCommand = notifyRequestOptions.email;
 
         try {
             const helpRequestGateway = new HelpRequestGateway();
@@ -201,28 +202,34 @@ export default function addSupportPage({ residentId, helpRequestId }) {
                     });
             }
 
-            if (phoneNumber) {
+            if (smsTextSendCommand) {
                 let textResponse = await govNotifyGateway
-                    .sendText(phoneNumber, TEST_AND_TRACE_FOLLOWUP_TEXT)
+                    .sendText(
+                        smsTextSendCommand.phoneNumber,
+                        smsTextSendCommand.templateName,
+                        smsTextSendCommand.templateParams
+                    )
                     .catch((err) => {
                         errorHasHappened = true;
                         const smsFailure = 'Error happened while sending a text message.';
 
-                        console.error(`${smsFailure}\nPhoneNumber: ${phoneNumber}\n${err}`);
+                        console.error(
+                            `${smsFailure}\nPhoneNumber: ${smsTextSendCommand.phoneNumber}\n${err}`
+                        );
                         alert(smsFailure); // warning user about potential loss of data
                     });
 
                 let sendTextResponseCaseNoteObject;
                 if (textResponse.id) {
                     sendTextResponseCaseNoteObject = {
-                        caseNote: `Text sent to ${phoneNumber}. \n Text id: ${textResponse.id}.\n Text content: ${textResponse.content.body}`,
+                        caseNote: `Text sent to ${smsTextSendCommand.phoneNumber}. \n Text id: ${textResponse.id}.\n Text content: ${textResponse.content.body}`,
                         author: user.name,
                         noteDate: new Date().toGMTString(),
                         helpNeeded: helpRequest.helpNeeded
                     };
                 } else {
                     sendTextResponseCaseNoteObject = {
-                        caseNote: `Failed text to ${phoneNumber}`,
+                        caseNote: `Failed text to ${smsTextSendCommand.phoneNumber}`,
                         author: user.name,
                         noteDate: new Date().toGMTString(),
                         helpNeeded: helpRequest.helpNeeded
@@ -246,14 +253,18 @@ export default function addSupportPage({ residentId, helpRequestId }) {
                     });
             }
 
-            if (email) {
+            if (emailSendCommand) {
                 let emailResponse = await govNotifyGateway
-                    .sendEmail(email, TEST_AND_TRACE_FOLLOWUP_EMAIL)
+                    .sendEmail(
+                        emailSendCommand.email,
+                        emailSendCommand.templateName,
+                        emailSendCommand.templateParams
+                    )
                     .catch((err) => {
                         errorHasHappened = true;
                         const emailFailure = 'Error happened while sending an email.';
 
-                        console.error(`${emailFailure}\nEmail: ${email}\n${err}`);
+                        console.error(`${emailFailure}\nEmail: ${emailSendCommand.email}\n${err}`);
                         alert(emailFailure); // warning user about potential loss of data
                     });
 
@@ -261,14 +272,14 @@ export default function addSupportPage({ residentId, helpRequestId }) {
 
                 if (emailResponse.id) {
                     sendEmailResponseCaseNoteObject = {
-                        caseNote: `Email sent to ${email}. Email id: ${emailResponse.id}. Email content: ${emailResponse.content.body}`,
+                        caseNote: `Email sent to ${emailSendCommand.email}. Email id: ${emailResponse.id}. Email content: ${emailResponse.content.body}`,
                         author: user.name,
                         noteDate: new Date().toGMTString(),
                         helpNeeded: helpRequest.helpNeeded
                     };
                 } else {
                     sendEmailResponseCaseNoteObject = {
-                        caseNote: `Failed email to ${email}`,
+                        caseNote: `Failed email to ${emailSendCommand.email}`,
                         author: user.name,
                         noteDate: new Date().toGMTString(),
                         helpNeeded: helpRequest.helpNeeded

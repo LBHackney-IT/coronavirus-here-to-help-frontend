@@ -1,19 +1,25 @@
 import { DefaultGateway } from '../gateways/default-gateway';
 
 export class GovNotifyGateway extends DefaultGateway {
-    async sendText(phoneNumber, message) {
-        const response = await this.postToUrl(`gov-notify/${message}?phoneNumber=${phoneNumber}`);
+    async sendText(phoneNumber, templateAlias, templateParams) {
+        const response = await this.postToUrl(
+            `gov-notify/${templateAlias}?phoneNumber=${phoneNumber}`,
+            templateParams
+        );
         return response;
     }
-    async sendEmail(email, message) {
-        const response = await this.postToUrl(`gov-notify/${message}?email=${email}`);
-
+    async sendEmail(email, templateAlias, templateParams) {
+        const response = await this.postToUrl(
+            `gov-notify/${templateAlias}?email=${email}`,
+            templateParams
+        );
         return response;
     }
 
-    async getTemplatePreview(template) {
-        const response = await this.getFromUrl(
-            `gov-notify/previewTemplate?templateType=${template}`
+    async getTemplatePreview(templateAlias, templateParams) {
+        const response = await this.postToUrl(
+            `gov-notify/previewTemplate?templateType=${templateAlias}`,
+            templateParams
         );
         return response;
     }

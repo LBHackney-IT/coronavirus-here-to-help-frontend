@@ -8,14 +8,18 @@ import {
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     TEST_AND_TRACE_FOLLOWUP_EMAIL,
     EUSS,
-    LINK_WORK,
-    WELFARE_CALL
+    WELFARE_CALL,
+    HELP_TYPE,
+    CONTACT_TYPE,
+    TEMPLATE_ID_ALIASES,
+    LINK_WORK
 } from '../../helpers/constants';
 import { formatSubText } from '../../helpers/formatter';
 import { useRouter } from 'next/router';
 import { GovNotifyGateway } from '../../gateways/gov-notify';
 import styles from '../CallbackForm/CallbackForm.module.scss';
 import { AuthorisedCallTypesGateway } from '../../gateways/authorised-call-types';
+import cbCSS from './CallbackForm.module.css';
 import Dropdown from '../../components/Form/Dropdown/Dropdown';
 
 export default function CallbackForm({
@@ -56,7 +60,7 @@ export default function CallbackForm({
         CallHandler: null
     });
 
-    useEffect(() => {
+    useEffect(async () => {
         setHelpNeeded(helpRequest ? helpRequest.helpNeeded : '');
         setCEVHelpNeeds({
             foodAccessVoluntarySector: helpRequest ? helpRequest.helpWithAccessingFood : null,
@@ -68,6 +72,16 @@ export default function CallbackForm({
             otherNeeds: helpRequest ? helpRequest.helpWithAccessingOtherEssentials : null,
             noNeedsIdentified: helpRequest ? helpRequest.helpWithNoNeedsIdentified : null
         });
+
+        const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
+
+        try {
+            let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
+            setAuthCallTypes(authCallTypes);
+            setCallTypes(authCallTypes.map((callType) => callType.name));
+        } catch (err) {
+            console.log(`Error fetching auth calltypes: ${err}`);
+        }
     }, [helpRequest]);
 
     const onCEVHelpNeedsCheckboxChange = (cevHelpItem) => {
@@ -78,6 +92,37 @@ export default function CallbackForm({
                 setCEVHelpNeeds(cevHelpNeedsCopy);
             }
         });
+    };
+
+    const fetchTemplates = async () => {
+        // a workaround for template fetch firing off before the help requests's help type
+        // state being fetched and set. The problem was that incorrect template alias would
+        // be used as a result of 'undefined' help type. The solution is to tirgger template
+        // fetch on checkbox tick, which is way past the page load mark, giving enough time
+        // for any state to get set.
+        const govNotifyGateway = new GovNotifyGateway();
+
+        const smsTemplateName = helpTypeToTemplateNameMap(helpNeeded, CONTACT_TYPE.SMS_TEXT);
+        const emailTemplateName = helpTypeToTemplateNameMap(helpNeeded, CONTACT_TYPE.EMAIL);
+        try {
+            let textTemplate = await govNotifyGateway.getTemplatePreview(
+                smsTemplateName,
+                templateParamsBuilder(smsTemplateName)
+            );
+            if (textTemplate) {
+                setTextTemplatePreview(textTemplate.body);
+            }
+            let emailTemplate = await govNotifyGateway.getTemplatePreview(
+                emailTemplateName,
+                templateParamsBuilder(emailTemplateName)
+            );
+            if (emailTemplate) {
+                console.log('emailTemplate', emailTemplate);
+                setEmailTemplatePreview(emailTemplate.body);
+            }
+        } catch (err) {
+            console.log(`Error fetching themplates: ${err}`);
+        }
     };
 
     const metadata =
@@ -123,33 +168,58 @@ export default function CallbackForm({
     const followupRequired = ['Yes', 'No'];
     const whoMadeInitialContact = ['I called the resident', 'The resident called me'];
 
-    useEffect(async () => {
-        const govNotifyGateway = new GovNotifyGateway();
-        const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
-
-        try {
-            let textTemplate = await govNotifyGateway.getTemplatePreview(
-                TEST_AND_TRACE_FOLLOWUP_TEXT
-            );
-            if (textTemplate) {
-                setTextTemplatePreview(textTemplate.body);
-            }
-            let emailTemplate = await govNotifyGateway.getTemplatePreview(
-                TEST_AND_TRACE_FOLLOWUP_EMAIL
-            );
-            if (emailTemplate) {
-                console.log('emailTemplate', emailTemplate);
-                setEmailTemplatePreview(emailTemplate.body);
-            }
-
-            let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
-            setAuthCallTypes(authCallTypes);
-            setCallTypes(authCallTypes.map((callType) => callType.name));
-        } catch (err) {
-            console.log(`Error fetching themplates: ${err}`);
+    const helpTypeToTemplateNameMap = (helpType, contactType) => {
+        const isEmail = contactType === CONTACT_TYPE.EMAIL;
+        switch (helpType) {
+            case HELP_TYPE.EUSS:
+                return isEmail
+                    ? TEMPLATE_ID_ALIASES.EUSS_EMAIL_PRE_CALL_TEMPLATE // pre call email
+                    : TEMPLATE_ID_ALIASES.EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE; // no answer sms - makes no UX sense, but I;ve confirmed with the client & it seems they want it this way due to get faster delivery
+            default:
+                return isEmail ? TEST_AND_TRACE_FOLLOWUP_EMAIL : TEST_AND_TRACE_FOLLOWUP_TEXT;
         }
-    }, []);
+    };
 
+
+  const templateParamsBuilder = (templateName) => {
+        let templateParams = {};
+        switch (templateName) {
+            case TEMPLATE_ID_ALIASES.EUSS_EMAIL_PRE_CALL_TEMPLATE:
+                templateParams.firstName = resident.firstName;
+                break;
+            case TEMPLATE_ID_ALIASES.EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE:
+                templateParams.firstName = resident.firstName;
+                break;
+            default:
+                break;
+        }
+        return templateParams;
+    };
+
+    // create a command, which instructs the save function to send one, or the other, or both
+    const notifyRequestOptionsConstructor = (helpNeeded, phoneNumber, email) => {
+        const smsTemplateName = helpTypeToTemplateNameMap(helpNeeded, CONTACT_TYPE.SMS_TEXT);
+        const emailTemplateName = helpTypeToTemplateNameMap(helpNeeded, CONTACT_TYPE.EMAIL);
+
+        return {
+            smsText: phoneNumber
+                ? {
+                      phoneNumber,
+                      templateName: smsTemplateName,
+                      templateParams: templateParamsBuilder(smsTemplateName)
+                  }
+                : undefined,
+            email: email
+                ? {
+                      email,
+                      templateName: emailTemplateName,
+                      templateParams: templateParamsBuilder(emailTemplateName)
+                  }
+                : undefined
+        };
+    };
+
+    // Wtf is this? Why do we have presentation logic mixed up with validation?
     const setShowContactDetails = (value) => {
         if (value == TEST_AND_TRACE_FOLLOWUP_EMAIL) {
             if (showEmail) {
@@ -342,8 +412,7 @@ export default function CallbackForm({
                 helpRequestObject,
                 callMade,
                 caseNote,
-                phoneNumber,
-                email
+                notifyRequestOptionsConstructor(helpNeeded, phoneNumber, email)
             );
         } else {
             setErrorsExist(true); // generic error, user won't be told what's wrong.
@@ -757,7 +826,7 @@ export default function CallbackForm({
                 )}
                 <br></br>
 
-                {helpNeeded !== EUSS && helpNeeded !== LINK_WORK && helpNeeded && (
+                {helpNeeded && helpNeeded !== LINK_WORK && (
                     <fieldset className="govuk-fieldset">
                         <h3 className="govuk-heading-m">
                             Would you like to message the resident following this call?
@@ -771,7 +840,10 @@ export default function CallbackForm({
                             value={TEST_AND_TRACE_FOLLOWUP_EMAIL}
                             label="Send Email"
                             aria-describedby="SendEmail"
-                            onCheckboxChange={setShowContactDetails}></Checkbox>
+                            onCheckboxChange={(val) => {
+                                fetchTemplates();
+                                setShowContactDetails(val);
+                            }}></Checkbox>
                         {showEmail && (
                             <div
                                 className="govuk-radios__conditional govuk-radios__conditional--hidden"
@@ -799,12 +871,12 @@ export default function CallbackForm({
                                         <div id="contact-hint" className="govuk-hint">
                                             Email preview
                                         </div>
-                                        <div
+                                        <p
                                             id="email-template-preview"
-                                            className="govuk-inset-text"
+                                            className={`govuk-inset-text ${cbCSS['template-text']}`}
                                             data-testid="send-email-preview">
                                             {emailTemplatePreview}
-                                        </div>
+                                        </p>
                                     </div>
                                 )}
                                 {!emailTemplatePreview && (
@@ -834,7 +906,10 @@ export default function CallbackForm({
                             value={TEST_AND_TRACE_FOLLOWUP_TEXT}
                             label="Send Text"
                             aria-describedby="SendEmail"
-                            onCheckboxChange={setShowContactDetails}></Checkbox>
+                            onCheckboxChange={(val) => {
+                                fetchTemplates();
+                                setShowContactDetails(val);
+                            }}></Checkbox>
                         {showText && (
                             <div
                                 className="govuk-radios__conditional govuk-radios__conditional--hidden"
@@ -863,11 +938,11 @@ export default function CallbackForm({
                                         <div id="contact-hint" className="govuk-hint">
                                             Text preview
                                         </div>
-                                        <div
-                                            className="govuk-inset-text"
+                                        <p
+                                            className={`govuk-inset-text ${cbCSS['template-text']}`}
                                             data-testid="send-text-preview">
                                             {textTemplatePreview}
-                                        </div>
+                                        </p>
                                     </div>
                                 )}
                                 <br />

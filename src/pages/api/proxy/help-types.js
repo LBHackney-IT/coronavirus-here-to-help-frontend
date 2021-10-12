@@ -1,5 +1,5 @@
 import { authoriseUser } from '../../../helpers/auth';
-import { EUSS_GROUP } from '../../../helpers/constants';
+import { EUSS_GROUP, HELP_TYPE } from '../../../helpers/constants';
 
 const endpoint = async (req, res) => {
     const user = authoriseUser(req);
@@ -7,7 +7,7 @@ const endpoint = async (req, res) => {
 
     try {
         let response = [];
-        if (user?.groups.includes(EUSS_GROUP)) response.push({ name: 'EUSS' });
+        if (user?.groups.includes(EUSS_GROUP)) response.push({ name: HELP_TYPE.EUSS });
 
         return res.json(response);
     } catch (err) {

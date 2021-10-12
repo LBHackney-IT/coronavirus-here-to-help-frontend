@@ -8,8 +8,7 @@ const endpoint = async (req, res) => {
 
     try {
         const { path, ...queryParams } = req.query;
-        const response = await sendMessageUseCase.sendMessage(path, queryParams);
-
+        const response = await sendMessageUseCase.sendMessage(path, queryParams, req.body);
         res.json(response.data);
     } catch (error) {
         console.log('Error:' + error);

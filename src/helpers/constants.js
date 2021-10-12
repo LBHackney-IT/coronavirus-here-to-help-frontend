@@ -36,9 +36,39 @@ export const cevHelpTypes = {
     noNeedsIdentified: 'No needs identified'
 };
 
-export const TEST_AND_TRACE_FOLLOWUP_TEXT = 'test-and-trace-followup-text';
-export const TEST_AND_TRACE_FOLLOWUP_EMAIL = 'test-and-trace-followup-email';
+// some of these are included within the grouping object, but their usage is not changed to point to object within code.
+export const TEST_AND_TRACE_FOLLOWUP_TEXT = 'test-and-trace-followup-text'; // included into object
+export const TEST_AND_TRACE_FOLLOWUP_EMAIL = 'test-and-trace-followup-email'; // included into object
 export const PRE_CALL_MESSAGE_TEMPLATE = 'pre-call-message-template';
 export const SELF_ISOLATION_PRE_CALL_MESSAGE_TEMPLATE = 'self-isolation-pre-call-message-template';
-export const EUSS_PRE_CALL_MESSAGE_TEMPLATE = 'euss-pre-call-message-template';
+export const EUSS_PRE_CALL_MESSAGE_TEMPLATE = 'euss-pre-call-message-template'; // included into object
 export const LINK_WORK_BULK_MESSAGE_TEMPLATE = 'link-work-bulk-message-template';
+
+// currently contains duplicate, but ideally, after refactoring the other ones get
+// removed. The code becomes much clearer, when the constants are grouped.
+export const TEMPLATE_ID_ALIASES = {
+    EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE: 'euss-sms-follow-up-no-answer',
+    EUSS_PRE_CALL_MESSAGE_TEMPLATE: 'euss-pre-call-message-template', // sms
+    EUSS_EMAIL_PRE_CALL_TEMPLATE: 'euss-pre-call-email', // email
+    TEST_AND_TRACE_FOLLOWUP_EMAIL: 'test-and-trace-followup-email',
+    TEST_AND_TRACE_FOLLOWUP_TEXT: 'test-and-trace-followup-text'
+};
+
+// Creating duplicate constants for now:
+// I'm hoping to have them refactored in the future.
+export const HELP_TYPE = {
+    CEV: 'CEV',
+    SHIELDING: 'Shielding',
+    CONTACT_TRACING: 'Contact Tracing',
+    HELP_REQUEST: 'Help Request',
+    WELFARE_CALL: 'Welfare Call',
+    LINK_WORK: 'Link Work',
+    EUSS: 'EUSS',
+    REPAIRS: 'Repairs'
+};
+
+export const CONTACT_TYPE = {
+    EMAIL: 'EMAIL',
+    SMS_TEXT: 'SMS_TEXT'
+};
+

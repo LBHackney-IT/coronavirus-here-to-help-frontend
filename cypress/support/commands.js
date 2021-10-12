@@ -3,7 +3,8 @@ import {
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     TEST_AND_TRACE_FOLLOWUP_EMAIL,
     PRE_CALL_MESSAGE_TEMPLATE,
-    EUSS_GROUP
+    EUSS_GROUP,
+    TEMPLATE_ID_ALIASES
 } from '../../src/helpers/constants';
 
 Cypress.Commands.add('getBySel', (selector, ...args) => {
@@ -45,6 +46,11 @@ Cypress.Commands.add('setIntercepts', () => {
     cy.intercept('GET', '/api/proxy/v4/residents/3/help-requests/211/case-notes', {
         fixture: 'residents/3/helpRequestCaseNotes'
     });
+
+    cy.intercept('GET', '/api/proxy/v4/residents/3/help-requests/161/case-notes', {
+        fixture: 'residents/3/helpRequestCaseNotes'
+    });
+
     cy.intercept('GET', 'api/proxy/v4/residents/3/help-requests/211', {
         fixture: 'residents/3/helpRequests/helpRequestCevFields'
     });
@@ -68,6 +74,10 @@ Cypress.Commands.add('setIntercepts', () => {
 
     cy.intercept('GET', '/api/proxy/v3/help-requests/callbacks', {
         fixture: 'callbacks'
+    });
+
+    cy.intercept('GET', '/api/proxy/v4/residents/3/help-requests/161', {
+        fixture: 'residents/3/helpRequests/161'
     });
 
     cy.intercept('GET', `/api/proxy/v4/residents/3/help-requests/12`, {
@@ -127,7 +137,7 @@ Cypress.Commands.add('setIntercepts', () => {
     });
 
     cy.intercept(
-        'GET',
+        'POST',
         `/api/proxy/gov-notify/previewTemplate?templateType=${TEST_AND_TRACE_FOLLOWUP_EMAIL}`,
         {
             fixture: 'getEmailPreviewSuccessResponse'
@@ -135,7 +145,7 @@ Cypress.Commands.add('setIntercepts', () => {
     );
 
     cy.intercept(
-        'GET',
+        'POST',
         `/api/proxy/gov-notify/previewTemplate?templateType=${TEST_AND_TRACE_FOLLOWUP_TEXT}`,
         {
             fixture: 'getTextPreviewSuccessResponse'
@@ -143,10 +153,26 @@ Cypress.Commands.add('setIntercepts', () => {
     );
 
     cy.intercept(
-        'GET',
+        'POST',
         `/api/proxy/gov-notify/previewTemplate?templateType=${PRE_CALL_MESSAGE_TEMPLATE}`,
         {
             fixture: 'getBulkTextPreviewSuccessResponse'
+        }
+    );
+
+    cy.intercept(
+        'POST',
+        `/api/proxy/gov-notify/previewTemplate?templateType=${TEMPLATE_ID_ALIASES.EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE}`,
+        {
+            fixture: 'getSMSTextEUSSNoAnswer'
+        }
+    );
+
+    cy.intercept(
+        'POST',
+        `/api/proxy/gov-notify/previewTemplate?templateType=${TEMPLATE_ID_ALIASES.EUSS_EMAIL_PRE_CALL_TEMPLATE}`,
+        {
+            fixture: 'getEmailEUSSPreCall'
         }
     );
 
