@@ -16,7 +16,9 @@ export default function ReassignCalls() {
 
     const getCallHandlers = async () => {
         const gateway = new CallHandlerGateway();
-        const callHandlerList = await gateway.getCallHandler();
+        let callHandlerList = await gateway.getCallHandler();
+
+        callHandlerList = callHandlerList.map((c) => c.name);
         callHandlerList.sort();
         callHandlerList.unshift(NOT_ASSIGNED);
         setCallHandlers(callHandlerList);

@@ -53,6 +53,8 @@ function CallbacksListPage() {
         const gateway = new CallHandlerGateway();
         let callHandlersList = await gateway.getCallHandler();
 
+        callHandlersList = callHandlersList.map((c) => c.name);
+
         callHandlersList.sort();
 
         callHandlersList.unshift('Assigned to all');

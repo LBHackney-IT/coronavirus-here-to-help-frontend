@@ -24,7 +24,7 @@ export default function AssignCallsPage() {
         const gateway = new CallHandlerGateway();
         const callHandlersList = await gateway.getCallHandler();
 
-        setCallHandlers(callHandlersList);
+        setCallHandlers(callHandlersList.map((c) => c.name));
     };
 
     useEffect(getCallHandlers, []);
@@ -93,9 +93,9 @@ export default function AssignCallsPage() {
                 }
             });
 
-            if (selectedAssignment == 'unassigned' && unassignedCallbacks.length > 0) {
+            if (selectedAssignment == 'unassigned') {
                 assignCases(unassignedCallbacks, assignmentCount);
-            } else if (selectedAssignment == 'assigned' && assignedCallbacks.length > 0) {
+            } else if (selectedAssignment == 'assigned') {
                 let toBeReassigned = [];
                 const averageCaseCount = assignedCallbacks.length / selectedCallHandlers.length;
                 assignedCallbacks.forEach((callback) => {

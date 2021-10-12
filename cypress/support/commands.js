@@ -180,4 +180,8 @@ Cypress.Commands.add('setIntercepts', () => {
         statusCode: 200,
         body: {}
     });
+
+    cy.intercept('GET', '/api/proxy/v4/call-handlers', {
+        fixture: 'callHandlers'
+    });
 });
