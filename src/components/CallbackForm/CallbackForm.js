@@ -193,7 +193,7 @@ export default function CallbackForm({
             default:
                 break;
         }
-        return templateParams;
+        return JSON.parse(JSON.stringify(templateParams));
     };
 
     // create a command, which instructs the save function to send one, or the other, or both
