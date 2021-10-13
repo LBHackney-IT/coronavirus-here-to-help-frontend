@@ -31,7 +31,11 @@ const templateAliasToIdDecoder = (tAlias) => {
 export class SendMessageUseCase {
     async sendMessage(pathSegments, queryParams, reqBody) {
         const govNotifyGateway = new GovNotifyGateway();
-        const requestBody = JSON.parse(reqBody); // makes no sense as to why
+        
+        console.log("gov-notify UC ********************************************************")
+        console.log(Buffer.isBuffer(reqBody))
+        console.log(Object.getPrototypeOf(reqBody))
+        console.log(reqBody)
 
         if (pathSegments[0] == 'previewTemplate') {
             try {

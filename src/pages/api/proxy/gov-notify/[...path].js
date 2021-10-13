@@ -15,6 +15,11 @@ const endpoint = async (req, res) => {
     const requestBody = req.body.toString();
     console.log("Parsed!!!!!!!!");
     console.log(Buffer.isBuffer(requestBody));
+    console.log(typeof requestBody);
+
+    const parsedJSON = JSON.parse(requestBody);
+    console.log(parsedJSON);
+    console.log(typeof parsedJSON);
     console.log(requestBody);
 
     try {
