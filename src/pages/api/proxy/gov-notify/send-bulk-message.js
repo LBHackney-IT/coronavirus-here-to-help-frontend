@@ -9,11 +9,10 @@ const endpoint = async (req, res) => {
     if (!user) return res.status(401).json({ error: 'Unauthorised' });
 
     try {
-        console.log("gov-notify root GW -------------------------------------------------------------------------")
-        console.log("Req query: ", req.query)
+        console.log("bulk root GW -------------------------------------------------------------------------")
+        // console.log("Req query: ", req.query)
         console.log(Buffer.isBuffer(req.body))
-        console.log(Object.getPrototypeOf(req.body))
-        console.log(req.body)
+        console.log("obj", req.body)
     
         // parse from buffer to string
         const fromBuffer = req.body.toString();
@@ -21,10 +20,17 @@ const endpoint = async (req, res) => {
         console.log(Buffer.isBuffer(fromBuffer));
         console.log(typeof fromBuffer);
     
-        console.log("FROM JSON!!!!!!!!")
-        const parsedJSON = JSON.parse(fromBuffer);
-        console.log(typeof parsedJSON);
-        console.log(parsedJSON);
+        let parsedJSON;
+
+        try {
+            console.log("FROM JSON!!!!!!!!")
+            parsedJSON = JSON.parse(fromBuffer);
+            console.log(typeof parsedJSON);
+            console.log("parsed", parsedJSON);
+        } catch (e) {
+            parsedJSON = {}
+        }
+        
 
 
         await sendBulkMessagesUseCase.sendMessages(
