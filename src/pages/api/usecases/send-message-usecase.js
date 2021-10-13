@@ -66,6 +66,7 @@ export class SendMessageUseCase {
                 return response;
             } catch (error) {
                 console.log(`Get template usecase error: ${error}`);
+                console.log(reqBody, queryParams);
                 return error;
             }
         } else {
