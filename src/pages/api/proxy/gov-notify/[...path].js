@@ -8,6 +8,7 @@ const endpoint = async (req, res) => {
 
     try {
         const { path, ...queryParams } = req.query;
+        req.body = obj.toString();
         console.log("We Hit the endpoint!!!! 999999999999999999999999999999999999999999")
         console.log(Buffer.isBuffer(req.body));
         console.log(typeof req.body);
