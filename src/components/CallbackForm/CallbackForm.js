@@ -185,10 +185,10 @@ export default function CallbackForm({
         let templateParams = {};
         switch (templateName) {
             case TEMPLATE_ID_ALIASES.EUSS_EMAIL_PRE_CALL_TEMPLATE:
-                templateParams.firstName = resident.firstName;
+                templateParams.firstName = 'First name';
                 break;
             case TEMPLATE_ID_ALIASES.EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE:
-                templateParams.firstName = resident.firstName;
+                templateParams.firstName = 'First name';
                 break;
             default:
                 break;
