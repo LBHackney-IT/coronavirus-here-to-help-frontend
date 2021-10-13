@@ -28,10 +28,10 @@ export class GovNotifyGateway {
         }
     }
 
-    async getTemplatePreview(previewTemplateId, personalisation = {}) {
+    async getTemplatePreview(previewTemplateId, personalisation = null) {
         try {
-            const params = JSON.parse(personalisation);
-            console.log(JSON.stringify(params));
+            console.log(personalisation);
+            const params = personalisation ? JSON.parse(personalisation) : {};
             const response = await notifyClient.previewTemplateById(previewTemplateId, params);
             return response;
         } catch (error) {
