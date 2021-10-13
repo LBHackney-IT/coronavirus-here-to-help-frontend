@@ -25,6 +25,7 @@ const templateAliasToIdDecoder = (tAlias) => {
             // would want this to be 'undefined' instead, but will keep empty
             // string for now, as it's unclear whether in the previous code it
             // was important or not.
+            console.log('Could not find template: ' + tAlias);
             return '';
     }
 };
