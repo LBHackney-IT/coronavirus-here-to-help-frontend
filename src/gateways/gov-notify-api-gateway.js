@@ -37,6 +37,7 @@ export class GovNotifyGateway {
             return response;
         } catch (error) {
             console.log(`Get template error: ${error}`);
+            console.log('PreviewTemplateId: ' + previewTemplateId);
             return error;
         }
     }
