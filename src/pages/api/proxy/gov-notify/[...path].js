@@ -8,6 +8,9 @@ const endpoint = async (req, res) => {
 
     try {
         const { path, ...queryParams } = req.query;
+        console.log("We Hit the endpoint!!!! 999999999999999999999999999999999999999999")
+        console.log(Buffer.isBuffer(req.body));
+        console.log(typeof req.body);
         const response = await sendMessageUseCase.sendMessage(path, queryParams, req.body);
         res.json(response.data);
     } catch (error) {
