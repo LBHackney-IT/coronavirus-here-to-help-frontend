@@ -185,15 +185,15 @@ export default function CallbackForm({
         let templateParams = {};
         switch (templateName) {
             case TEMPLATE_ID_ALIASES.EUSS_EMAIL_PRE_CALL_TEMPLATE:
-                templateParams.firstName = 'First name';
+                templateParams.firstName = resident.firstName;
                 break;
             case TEMPLATE_ID_ALIASES.EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE:
-                templateParams.firstName = 'First name';
+                templateParams.firstName = resident.firstName;
                 break;
             default:
                 break;
         }
-        return JSON.parse(JSON.stringify(templateParams));
+        return templateParams;
     };
 
     // create a command, which instructs the save function to send one, or the other, or both
