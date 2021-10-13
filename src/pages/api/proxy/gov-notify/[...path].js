@@ -27,7 +27,7 @@ const endpoint = async (req, res) => {
 
 
         const { path, ...queryParams } = req.query;
-        const response = await sendMessageUseCase.sendMessage(path, queryParams, fromBuffer);
+        const response = await sendMessageUseCase.sendMessage(path, queryParams, parsedJSON);
         res.json(response.data);
     } catch (error) {
         console.log('Error:' + error);
