@@ -5,24 +5,27 @@ const sendMessageUseCase = new SendMessageUseCase();
 const endpoint = async (req, res) => {
     const user = authoriseUser(req);
     if (!user) return res.status(401).json({ error: 'Unauthorised' });
-    console.log("gov-notify root GW -------------------------------------------------------------------------")
-    console.log("Req query: ", req.query)
-    console.log(Buffer.isBuffer(req.body))
-    console.log(Object.getPrototypeOf(req.body))
-    console.log(req.body)
-
-    // parse from buffer to string
-    const requestBody = req.body.toString();
-    console.log("Parsed!!!!!!!!");
-    console.log(Buffer.isBuffer(requestBody));
-    console.log(typeof requestBody);
-
-    const parsedJSON = JSON.parse(requestBody);
-    console.log(parsedJSON);
-    console.log(typeof parsedJSON);
-    console.log(requestBody);
 
     try {
+        console.log("gov-notify root GW -------------------------------------------------------------------------")
+        console.log("Req query: ", req.query)
+        console.log(Buffer.isBuffer(req.body))
+        console.log(Object.getPrototypeOf(req.body))
+        console.log(req.body)
+    
+        // parse from buffer to string
+        const fromBuffer = req.body.toString();
+        console.log("Parsed!!!!!!!!");
+        console.log(Buffer.isBuffer(fromBuffer));
+        console.log(typeof fromBuffer);
+    
+        console.log("FROM JSON!!!!!!!!")
+        const parsedJSON = JSON.parse(fromBuffer);
+        console.log(typeof parsedJSON);
+        console.log(parsedJSON);
+
+
+
         const { path, ...queryParams } = req.query;
         const response = await sendMessageUseCase.sendMessage(path, queryParams, requestBody);
         res.json(response.data);

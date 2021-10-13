@@ -34,7 +34,7 @@ export class SendMessageUseCase {
         
         console.log("gov-notify UC ********************************************************")
         console.log(Buffer.isBuffer(reqBody))
-        console.log(Object.getPrototypeOf(reqBody))
+        console.log(typeof reqBody)
         console.log(reqBody)
 
         if (pathSegments[0] == 'previewTemplate') {
