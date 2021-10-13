@@ -28,11 +28,14 @@ export class GovNotifyGateway {
         }
     }
 
-    async getTemplatePreview(previewTemplateId, personalisation = null) {
+    async getTemplatePreview(previewTemplateId, personalisation = {}) {
         try {
-            console.log(personalisation);
-            const params = personalisation ? JSON.parse(personalisation) : {};
-            const response = await notifyClient.previewTemplateById(previewTemplateId, params);
+            const templateData = JSON.parse(JSON.stringify(personalisation));
+
+            const response = await notifyClient.previewTemplateById(
+                previewTemplateId,
+                templateData
+            );
             return response;
         } catch (error) {
             console.log(`Get template error: ${error}`);
