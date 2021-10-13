@@ -19,10 +19,15 @@ const endpoint = async (req, res) => {
         console.log(Buffer.isBuffer(fromBuffer));
         console.log(typeof fromBuffer);
     
-        console.log("FROM JSON!!!!!!!!")
-        const parsedJSON = JSON.parse(fromBuffer);
-        console.log(typeof parsedJSON);
-        console.log(parsedJSON);
+        let parsedJSON;
+        try {
+            console.log("FROM JSON!!!!!!!!")
+            parsedJSON = JSON.parse(fromBuffer);
+            console.log(typeof parsedJSON);
+            console.log("parsed", parsedJSON);
+        } catch (e) {
+            parsedJSON = null;
+        }
 
 
 
