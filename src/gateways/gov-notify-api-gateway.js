@@ -30,11 +30,8 @@ export class GovNotifyGateway {
 
     async getTemplatePreview(previewTemplateId, personalisation = {}) {
         try {
-            console.log('Personalisation 1: ' + JSON.stringify(personalisation));
-            const response = await notifyClient.previewTemplateById(
-                previewTemplateId,
-                personalisation
-            );
+            const params = { ...personalisation };
+            const response = await notifyClient.previewTemplateById(previewTemplateId, params);
             return response;
         } catch (error) {
             console.log(`Get template error: ${error}`);
