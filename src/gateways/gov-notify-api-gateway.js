@@ -28,9 +28,9 @@ export class GovNotifyGateway {
         }
     }
 
-    async getTemplatePreview(previewTemplateId, personalisation = {}) {
+    async getTemplatePreview(previewTemplateId, personalisation = null) {
         try {
-            const templateData = JSON.parse(JSON.stringify(personalisation));
+            const templateData = personalisation ? JSON.parse(personalisation) : {};
 
             const response = await notifyClient.previewTemplateById(
                 previewTemplateId,

@@ -186,14 +186,13 @@ export default function CallbackForm({
         switch (templateName) {
             case TEMPLATE_ID_ALIASES.EUSS_EMAIL_PRE_CALL_TEMPLATE:
                 templateParams.firstName = resident.firstName;
-                break;
+                return templateParams;
             case TEMPLATE_ID_ALIASES.EUSS_SMS_FOLLOW_UP_NO_ANSWER_TEMPLATE:
                 templateParams.firstName = resident.firstName;
-                break;
+                return templateParams;
             default:
-                break;
+                return null;
         }
-        return templateParams;
     };
 
     // create a command, which instructs the save function to send one, or the other, or both
