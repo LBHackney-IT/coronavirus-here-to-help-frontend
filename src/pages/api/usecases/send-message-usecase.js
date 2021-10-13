@@ -56,9 +56,8 @@ export class SendMessageUseCase {
                 const templateParams =
                     reqBody && Object.keys(reqBody).length !== 0
                         ? reqBody
-                        : { name: '(first name)' };
+                        : '{ name: "(first name)" }';
 
-                console.log('Staging logging: ' + JSON.stringify(templateParams));
                 const response = await govNotifyGateway.getTemplatePreview(
                     templateId,
                     templateParams
