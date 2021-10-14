@@ -29,9 +29,8 @@ const templateAliasToIdDecoder = (tAlias) => {
     }
 };
 export class SendMessageUseCase {
-    async sendMessage(pathSegments, queryParams, reqBody) {
+    async sendMessage(pathSegments, queryParams, requestBody) {
         const govNotifyGateway = new GovNotifyGateway();
-        const requestBody = JSON.parse(reqBody); // makes no sense as to why
 
         if (pathSegments[0] == 'previewTemplate') {
             try {
@@ -53,8 +52,8 @@ export class SendMessageUseCase {
 
                 // if template params are provided, then use them, else fallback onto legacy dummy request param.
                 const templateParams =
-                    reqBody && Object.keys(reqBody).length !== 0
-                        ? reqBody
+                    requestBody && Object.keys(requestBody).length !== 0
+                        ? requestBody
                         : { name: '(first name)' };
 
                 const response = await govNotifyGateway.getTemplatePreview(
