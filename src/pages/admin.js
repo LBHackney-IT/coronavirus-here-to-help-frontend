@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../components/layout';
-import GovLinkBox from "../components/GovLinkBox/GovLinkBox";
+import GovLinkBox from '../components/GovLinkBox/GovLinkBox';
 
 export default function AssignCallsPage() {
     return (
@@ -18,8 +18,23 @@ export default function AssignCallsPage() {
                 </h1>
 
                 <div className="govuk-grid-row" id="btn-bottom-panel">
-                    <GovLinkBox link="/assign-calls" text="Assign calls" name="assign-calls_button" />
-                    <GovLinkBox link="/send-bulk-message" text="Send group text or email" name="send-bulk-message_button" />
+                    <GovLinkBox
+                        link="/assign-calls"
+                        text="Assign calls"
+                        name="assign-calls_button"
+                    />
+                    <GovLinkBox
+                        link="/send-bulk-message"
+                        text="Send group text or email"
+                        name="send-bulk-message_button"
+                    />
+                </div>
+                <div className="govuk-grid-row" id="btn-bottom-panel">
+                    <GovLinkBox
+                        link="/manage-callhandlers"
+                        text="Manage callhandler(s)"
+                        name="manage-callhandlers_button"
+                    />
                 </div>
             </div>
         </Layout>
