@@ -51,7 +51,7 @@ function CallbacksListPage() {
 
     const getCallHandlers = async () => {
         const gateway = new CallHandlerGateway();
-        let callHandlersList = await gateway.getCallHandler();
+        let callHandlersList = await gateway.getCallHandlers();
 
         callHandlersList = callHandlersList.map((c) => c.name);
 

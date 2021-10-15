@@ -22,7 +22,7 @@ export default function AssignCallsPage() {
 
     const getCallHandlers = async () => {
         const gateway = new CallHandlerGateway();
-        const callHandlersList = await gateway.getCallHandler();
+        const callHandlersList = await gateway.getCallHandlers();
 
         setCallHandlers(callHandlersList.map((c) => c.name));
     };
