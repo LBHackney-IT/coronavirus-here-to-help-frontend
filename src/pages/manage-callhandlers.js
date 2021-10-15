@@ -48,7 +48,7 @@ export default function managecallhandlers() {
                                     className="govuk-table__row"
                                     key={`callbacks-list_row-${index}`}
                                     data-testid="callbacks-table_row">
-                                    <td className="govuk-table__cell">{`${callHandler.firstName} ${callHandler.lastName}`}</td>
+                                    <td className="govuk-table__cell">{`${callHandler.name}`}</td>
 
                                     <td className="govuk-table__cell">
                                         <Link
@@ -56,7 +56,7 @@ export default function managecallhandlers() {
                                             as={`/manage-callhandlers/${callHandler.id}`}>
                                             <a
                                                 href="#"
-                                                data-testid={`callbacks-list-view_link-${index}`}>
+                                                data-testid={`callhandler-edit_link-${index}`}>
                                                 edit/remove
                                             </a>
                                         </Link>

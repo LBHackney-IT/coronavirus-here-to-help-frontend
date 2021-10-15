@@ -1,15 +1,18 @@
 import React from 'react';
+import { splitName } from '../../helpers/formatter';
 
-export default function CallHandlerForm({ callHandler }) {
+export default function CallHandlerForm({ callHandler, onChange, validation, onInvalidField }) {
+    const { firstName, lastName } = splitName(callHandler.name);
+
     return (
         <>
-            {callHandler.firstName && callHandler.lastName && (
+            {callHandler.id && (
                 <div>
                     <h2 className="govuk-heading-l">Edit details</h2>
                     <h2 className="govuk-heading-m">Callhandlers detail</h2>
                 </div>
             )}
-            {!callHandler.firstName && !callHandler.lastName && (
+            {!callHandler.id && (
                 <div>
                     <h2 className="govuk-heading-l">Add a new callhandler</h2>
                     <h2 className="govuk-heading-m">New callhandlers detail</h2>
@@ -18,9 +21,20 @@ export default function CallHandlerForm({ callHandler }) {
 
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-one-half">
-                    <h3 className="lbh-heading-h3">First name</h3>
-                    <br />
-                    <div className="govuk-form-group lbh-form-group">
+                    <div
+                        className={`govuk-form-group lbh-form-group ${
+                            validation.firstName ? 'govuk-form-group--error' : ''
+                        }`}>
+                        <label className="govuk-label" for="firstName">
+                            First name
+                        </label>
+                        <span id="first-name-error" className="govuk-error-message">
+                            <span
+                                hidden={validation.firstName ? false : true}
+                                data-testid="first-name-error">
+                                Error: Enter the first name
+                            </span>
+                        </span>
                         <input
                             className="govuk-input  lbh-input"
                             id="firstName"
@@ -29,17 +43,32 @@ export default function CallHandlerForm({ callHandler }) {
                             style={{
                                 marginBottom: '20px'
                             }}
-                            defaultValue={callHandler.firstName}
-                            // onChange={(e) => onChange(e.target.id, e.target.value)}
+                            defaultValue={firstName}
+                            onChange={(e) => onChange(e.target.id, e.target.value)}
+                            onSubmit={(e) => onChange(e.target.id, e.target.value)}
+                            data-testid="callhandler-first-name-input"
+                            required
+                            onInvalid={(e) => onInvalidField(e.target.id)}
                         />
                     </div>
                 </div>
             </div>
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-one-half">
-                    <h3 className="lbh-heading-h3">Last name</h3>
-                    <br />
-                    <div className="govuk-form-group lbh-form-group">
+                    <div
+                        className={`govuk-form-group lbh-form-group ${
+                            validation.lastName ? 'govuk-form-group--error' : ''
+                        }`}>
+                        <label class="govuk-label" for="lastName">
+                            Last name
+                        </label>
+                        <span id="last-name-error" className="govuk-error-message">
+                            <span
+                                hidden={validation.lastName ? false : true}
+                                data-testid="last-name-error">
+                                Error: Enter the last name
+                            </span>
+                        </span>
                         <input
                             className="govuk-input  lbh-input"
                             id="lastName"
@@ -48,17 +77,23 @@ export default function CallHandlerForm({ callHandler }) {
                             style={{
                                 marginBottom: '20px'
                             }}
-                            defaultValue={callHandler.lastName}
-                            // onChange={(e) => onChange(e.target.id, e.target.value)}
+                            defaultValue={lastName}
+                            onChange={(e) => onChange(e.target.id, e.target.value)}
+                            onSubmit={(e) => onChange(e.target.id, e.target.value)}
+                            data-testid="callhandler-last-name-input"
+                            required
+                            onInvalid={(e) => onInvalidField(e.target.id)}
                         />
                     </div>
                 </div>
             </div>
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-one-half">
-                    <h3 className="lbh-heading-h3">Email address</h3>
-                    <br />
                     <div className="govuk-form-group lbh-form-group">
+                        <label class="govuk-label" for="lastName">
+                            Email address
+                        </label>
+
                         <input
                             className="govuk-input  lbh-input"
                             id="emailAddress"
@@ -68,7 +103,8 @@ export default function CallHandlerForm({ callHandler }) {
                                 marginBottom: '20px'
                             }}
                             defaultValue={callHandler.emailAddress}
-                            // onChange={(e) => onChange(e.target.id, e.target.value)}
+                            onChange={(e) => onChange(e.target.id, e.target.value)}
+                            data-testid="callhandler-email-input"
                         />
                     </div>
                 </div>

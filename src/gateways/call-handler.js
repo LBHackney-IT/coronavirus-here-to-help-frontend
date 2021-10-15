@@ -8,9 +8,21 @@ const ToDomain = (ch) => {
     };
 };
 
+const ToCallHandlerObject = (response) => {
+    let object = {
+        Id: response.Id,
+        Name: `${response.firstName} ${response.lastName}`,
+        Email: response.emailAddress
+    };
+
+    Object.keys(object).forEach((key) => object[key] == null && delete object[key]);
+
+    return JSON.stringify(object);
+};
+
 export class CallHandlerGateway extends DefaultGateway {
     async getCallHandler(callHandlerId) {
-        return { id: 1, firstName: 'Person', lastName: 'A', email: 'test@test.com' };
+        return { id: 1, name: 'Person Middle Name A', email: 'test@test.com' };
 
         //REAL one
         // const response = await this.getFromUrl(`v4/call-handlers/${callHandlerId}`);
@@ -18,21 +30,21 @@ export class CallHandlerGateway extends DefaultGateway {
     }
 
     async getCallHandlers() {
-        // if (process.env.NEXT_PUBLIC_APP_STAGE == 'dev')
-        return [
-            { id: 1, firstName: 'Person', lastName: 'A', email: 'test@test.com' },
-            { id: 2, firstName: 'Person', lastName: 'B' },
-            { id: 3, firstName: 'Person', lastName: 'C' },
-            { id: 4, firstName: 'Person', lastName: 'D' }
-        ];
-        // return process.env.NEXT_PUBLIC_CALL_HANDLERS
-        //     ? process.env.NEXT_PUBLIC_CALL_HANDLERS.split(',')
-        //     : [];
-        // const response = await this.getFromUrl(`v4/call-handlers`);
-        // return response.map(ToDomain);
+        const response = await this.getFromUrl(`v4/call-handlers`);
+        return response.map(ToDomain);
+    }
 
-        //REAL One
-        // const response = await this.getFromUrl(`v4/call-handlers`);
-        // return response.map(ToDomain);
+    async postCallHandler(requestBody) {
+        console.log('request formatted', ToCallHandlerObject(requestBody));
+        return await this.postToUrl(`v4/call-handlers/`, ToCallHandlerObject(requestBody));
+    }
+
+    async updateCallHandler(callHandlerId, requestBody) {
+        console.log('request body', requestBody);
+        console.log('request body format', ToCallHandlerObject(requestBody));
+        return await this.patchToUrl(
+            `v4/call-handlers/${callHandlerId}`,
+            ToCallHandlerObject(requestBody)
+        );
     }
 }
