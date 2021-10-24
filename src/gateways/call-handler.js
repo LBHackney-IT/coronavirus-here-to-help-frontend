@@ -10,9 +10,9 @@ const ToDomain = (ch) => {
 
 const ToCallHandlerObject = (response) => {
     let object = {
-        Id: response.Id,
-        Name: `${response.firstName} ${response.lastName}`,
-        Email: response.emailAddress
+        Id: response.id,
+        Name: response.name,
+        Email: response.email
     };
 
     Object.keys(object).forEach((key) => object[key] == null && delete object[key]);
@@ -22,11 +22,8 @@ const ToCallHandlerObject = (response) => {
 
 export class CallHandlerGateway extends DefaultGateway {
     async getCallHandler(callHandlerId) {
-        return { id: 1, name: 'Person Middle Name A', email: 'test@test.com' };
-
-        //REAL one
-        // const response = await this.getFromUrl(`v4/call-handlers/${callHandlerId}`);
-        // return response.map(ToDomain);
+        const response = await this.getFromUrl(`v4/call-handlers/${callHandlerId}`);
+        return ToDomain(response);
     }
 
     async getCallHandlers() {
@@ -39,12 +36,12 @@ export class CallHandlerGateway extends DefaultGateway {
         return await this.postToUrl(`v4/call-handlers/`, ToCallHandlerObject(requestBody));
     }
 
-    async updateCallHandler(callHandlerId, requestBody) {
-        console.log('request body', requestBody);
-        console.log('request body format', ToCallHandlerObject(requestBody));
-        return await this.patchToUrl(
-            `v4/call-handlers/${callHandlerId}`,
-            ToCallHandlerObject(requestBody)
-        );
+    async updateCallHandler(requestBody) {
+        let updatedCallHandler = ToCallHandlerObject(requestBody);
+        return await this.putToUrl(`v4/call-handlers/`, updatedCallHandler);
+    }
+
+    async deleteCallHandler(id) {
+        return await this.deleteToUrl(`v4/call-handlers/${id}`);
     }
 }

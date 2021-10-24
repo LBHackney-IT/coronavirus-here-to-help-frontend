@@ -9,7 +9,6 @@ import Link from 'next/link';
 export default function callHandlerView({ callhandlerId }) {
     const router = useRouter();
     const [callHandler, setCallHandler] = useState({});
-    const [updatedCallHandler, setUpdatedCallHandler] = useState({});
     const [errorsExist, setErrorsExist] = useState(false);
     const [validation, setValidation] = useState({});
 
@@ -25,8 +24,14 @@ export default function callHandlerView({ callhandlerId }) {
         if (Object.values(newValidation).every((k) => k == false)) {
             setErrorsExist(false);
         }
-        setUpdatedCallHandler({ ...updatedCallHandler, [id]: value });
-        console.log('callHandler:', updatedCallHandler);
+
+        setCallHandler({ ...callHandler, [id]: value });
+    };
+
+    const deleteCallHandler = async () => {
+        const gateway = new CallHandlerGateway();
+        await gateway.deleteCallHandler(callHandler.id);
+        router.back();
     };
 
     const saveCallHandler = (event) => {
@@ -34,7 +39,7 @@ export default function callHandlerView({ callhandlerId }) {
         event.preventDefault();
         const gateway = new CallHandlerGateway();
         gateway
-            .updateCallHandler(callhandlerId, updatedCallHandler)
+            .updateCallHandler(callHandler)
             .then((newCallHandler) => {
                 console.log('callhandler response', newCallHandler);
                 router.back();
@@ -99,7 +104,8 @@ export default function callHandlerView({ callhandlerId }) {
                     <div>
                         <Button
                             text="Remove this person"
-                            type="remove"
+                            type="button"
+                            onClick={async () => await deleteCallHandler()}
                             addClass="govuk-secondary lbh-button govuk-button lbh-button--secondary"
                             data-testid="remove-callhandler-button"
                         />

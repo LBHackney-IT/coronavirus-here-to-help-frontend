@@ -13,7 +13,9 @@ export default function managecallhandlers() {
         try {
             const callHandlersList = await gateway.getCallHandlers();
 
-            setCallHandlers(callHandlersList);
+            setCallHandlers(
+                callHandlersList.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
+            );
         } catch (err) {
             console.log(`Error fetching callhandlers: ${err}`);
         }
@@ -30,15 +32,15 @@ export default function managecallhandlers() {
                 </a>
 
                 <h1 className="govuk-heading-xl" style={{ marginBottom: '20px' }}>
-                    Manage callhandlers(s)
+                    Manage call handlers
                 </h1>
 
-                <h2 className="govuk-heading-l">Add a new callhandler</h2>
+                <h2 className="govuk-heading-l">Add a new call handler</h2>
                 <Link href="/manage-callhandlers/add-callhandler">
                     <Button data-testid="add-call-handler" text="Add" />
                 </Link>
 
-                <h2 className="govuk-heading-l">Active callhandler(s)</h2>
+                <h2 className="govuk-heading-l">Active call handlers</h2>
 
                 <table className="govuk-table" data-testid="callbacks-table">
                     <tbody className="govuk-table__body">
