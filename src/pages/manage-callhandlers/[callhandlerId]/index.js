@@ -91,7 +91,10 @@ export default function callHandlerView({ callhandlerId }) {
                         </div>
                     </div>
                 )}
-                <a href="#" onClick={() => router.back()} className="govuk-back-link">
+                <a
+                    href="#"
+                    onClick={() => router.back()}
+                    className="govuk-back-link">
                     Back
                 </a>
                 <form onSubmit={saveCallHandler}>

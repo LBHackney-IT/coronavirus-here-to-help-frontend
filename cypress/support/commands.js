@@ -181,6 +181,10 @@ Cypress.Commands.add('setIntercepts', () => {
         body: {}
     });
 
+    cy.intercept('GET', '/api/proxy/v4/call-handlers/1', {
+        fixture: 'callHandler'
+    });
+
     cy.intercept('GET', '/api/proxy/v4/call-handlers', {
         fixture: 'callHandlers'
     });

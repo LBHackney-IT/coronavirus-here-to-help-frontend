@@ -26,8 +26,8 @@ export default function managecallhandlers() {
             <div>
                 <a
                     href="/admin"
-                    className="govuk-back-link  lbh-back-link"
-                    data-testid="assign-call-back_button">
+                    className="govuk-back-link lbh-back-link"
+                    data-testid="manage-callhandlers-back-btn">
                     Back
                 </a>
 
@@ -49,7 +49,7 @@ export default function managecallhandlers() {
                                 <tr
                                     className="govuk-table__row"
                                     key={`callbacks-list_row-${index}`}
-                                    data-testid="callbacks-table_row">
+                                    data-testid="callhandlers-table_row">
                                     <td className="govuk-table__cell">{`${callHandler.name}`}</td>
 
                                     <td className="govuk-table__cell">

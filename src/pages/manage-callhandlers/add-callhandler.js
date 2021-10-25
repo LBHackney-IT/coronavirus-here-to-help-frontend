@@ -83,7 +83,7 @@ export default function addCallHandler() {
                         text="Save Changes"
                         type="submit"
                         addClass="govuk-!-margin-right-1"
-                        data-testid="edit-resident-form-update-button"
+                        data-testid="add-callhandler-form-update-button"
                     />
                     <Link href="#">
                         <Button
