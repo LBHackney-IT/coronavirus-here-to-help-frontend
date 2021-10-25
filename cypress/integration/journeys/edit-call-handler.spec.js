@@ -38,4 +38,26 @@ describe('As a manager I can edit a call handler', () => {
             cy.url().should('match', /\/manage-callhandlers$/);
         });
     });
+
+    context('Deleting a call handler', () => {
+        it('Shows confirmation if delete clicked', () => {
+            cy.get('[data-testid=delete-confirm-banner]').should('not.exist');
+            cy.get('[data-testid=remove-callhandler-button]').click({ force: true });
+            cy.get('[data-testid=delete-confirm-banner]').should('exist');
+        });
+
+        it('Hides the banner if no clicked on confirm message', () => {
+            cy.get('[data-testid=delete-confirm-banner]').should('not.exist');
+            cy.get('[data-testid=remove-callhandler-button]').click({ force: true });
+            cy.get('[data-testid=delete-confirm-banner]').should('exist');
+            cy.get('[data-testid=delete-callhandler-dont-confirm-button]').click({ force: true });
+            cy.get('[data-testid=delete-confirm-banner]').should('not.exist');
+        });
+
+        it('Returns to call handler list once confirm delete clicked', () => {
+            cy.get('[data-testid=remove-callhandler-button]').click({ force: true });
+            cy.get('[data-testid=delete-callhandler-confirm-button]').click({ force: true });
+            cy.url().should('match', /\/manage-callhandlers$/);
+        });
+    });
 });

@@ -188,4 +188,8 @@ Cypress.Commands.add('setIntercepts', () => {
     cy.intercept('GET', '/api/proxy/v4/call-handlers', {
         fixture: 'callHandlers'
     });
+
+    cy.intercept('DELETE', '/api/proxy/v4/call-handlers/*', { statusCode: 200, body: {} });
+
+    cy.intercept('PUT', '/api/proxy/v4/call-handlers', { statusCode: 200, body: {} });
 });

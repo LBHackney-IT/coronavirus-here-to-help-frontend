@@ -11,6 +11,7 @@ export default function callHandlerView({ callhandlerId }) {
     const [callHandler, setCallHandler] = useState({});
     const [errorsExist, setErrorsExist] = useState(false);
     const [validation, setValidation] = useState({});
+    const [showConfirm, setShowConfirm] = useState(false);
 
     const handleEditCallHandler = async (id, value) => {
         let newValidation;
@@ -30,8 +31,9 @@ export default function callHandlerView({ callhandlerId }) {
 
     const deleteCallHandler = async () => {
         const gateway = new CallHandlerGateway();
-        await gateway.deleteCallHandler(callHandler.id);
-        router.back();
+        await gateway.deleteCallHandler(callHandler.id).then(() => {
+            window.location.href = '/manage-callhandlers';
+        });
     };
 
     const saveCallHandler = (event) => {
@@ -42,11 +44,10 @@ export default function callHandlerView({ callhandlerId }) {
             .updateCallHandler(callHandler)
             .then((newCallHandler) => {
                 console.log('callhandler response', newCallHandler);
-                router.back();
+                window.location.href = '/manage-callhandlers';
             })
             .catch((e) => {
                 console.log(`Patch failed! ${e}`);
-                alert('Callhandler could not be updated.');
             });
     };
 
@@ -91,10 +92,7 @@ export default function callHandlerView({ callhandlerId }) {
                         </div>
                     </div>
                 )}
-                <a
-                    href="#"
-                    onClick={() => router.back()}
-                    className="govuk-back-link">
+                <a href="#" onClick={() => router.back()} className="govuk-back-link">
                     Back
                 </a>
                 <form onSubmit={saveCallHandler}>
@@ -104,28 +102,72 @@ export default function callHandlerView({ callhandlerId }) {
                         validation={validation}
                         onInvalidField={onInvalidField}
                     />
-                    <div>
-                        <Button
-                            text="Remove this person"
-                            type="button"
-                            onClick={async () => await deleteCallHandler()}
-                            addClass="govuk-secondary lbh-button govuk-button lbh-button--secondary"
-                            data-testid="remove-callhandler-button"
-                        />
+                    {showConfirm ? (
+                        <div className="govuk-grid-row">
+                            <div
+                                data-testid="delete-confirm-banner"
+                                className="govuk-notification-banner govuk-grid-column-one-half"
+                                role="region"
+                                aria-labelledby="govuk-notification-banner-title"
+                                data-module="govuk-notification-banner">
+                                <div className="govuk-notification-banner__header">
+                                    <h2
+                                        className="govuk-notification-banner__title"
+                                        id="govuk-notification-banner-title">
+                                        Please confirm
+                                    </h2>
+                                </div>
+                                <div className="govuk-notification-banner__content">
+                                    <p>
+                                        This will remove {callHandler.name} and any calls assigned
+                                        to them will be unassigned. Do you wish to continue?
+                                    </p>
+                                    <div className="govuk-!-margin-top-3">
+                                        <Button
+                                            text="Yes"
+                                            onClick={async () => await deleteCallHandler()}
+                                            type="submit"
+                                            addClass="govuk-!-margin-right-1"
+                                            data-testid="delete-callhandler-confirm-button"
+                                        />
+                                        <Button
+                                            text="No"
+                                            data-testid="delete-callhandler-dont-confirm-button"
+                                            addClass="govuk-button--secondary"
+                                            onClick={() => setShowConfirm(false)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <div>
+                            <Button
+                                text="Remove this person"
+                                type="button"
+                                onClick={() => setShowConfirm(true)}
+                                addClass="govuk-secondary lbh-button govuk-button lbh-button--secondary"
+                                data-testid="remove-callhandler-button"
+                            />
+                        </div>
+                    )}
+                    <div className="govuk-grid-row">
+                        <div className="govuk-grid-column">
+                            <Button
+                                text="Save Changes"
+                                type="submit"
+                                addClass="govuk-!-margin-right-1"
+                                data-testid="edit-callhandler-form-update-button"
+                            />
+                            <Link href="/manage-callhandlers">
+                                <Button
+                                    text="Cancel"
+                                    addClass="govuk-button--secondary"
+                                    onClick={() => router.back()}
+                                />
+                            </Link>
+                        </div>
                     </div>
-                    <Button
-                        text="Save Changes"
-                        type="submit"
-                        addClass="govuk-!-margin-right-1"
-                        data-testid="edit-callhandler-form-update-button"
-                    />
-                    <Link href="/manage-callhandlers">
-                        <Button
-                            text="Cancel"
-                            addClass="govuk-button--secondary"
-                            onClick={() => router.back()}
-                        />
-                    </Link>
                 </form>
             </Layout>
         </div>
