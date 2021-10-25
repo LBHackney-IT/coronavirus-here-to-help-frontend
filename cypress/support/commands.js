@@ -181,6 +181,11 @@ Cypress.Commands.add('setIntercepts', () => {
         body: {}
     });
 
+    cy.intercept('POST', `/api/proxy/v4/call-handlers`, {
+        statusCode: 200,
+        body: {}
+    });
+
     cy.intercept('GET', '/api/proxy/v4/call-handlers/1', {
         fixture: 'callHandler'
     });
