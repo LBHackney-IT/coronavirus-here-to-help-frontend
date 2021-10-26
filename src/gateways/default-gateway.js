@@ -18,6 +18,15 @@ export class DefaultGateway {
         return res.data;
     }
 
+    async deleteToUrl(url, body) {
+        const res = await axios.delete(this.createFullUrl(url), body, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        return res.data;
+    }
+
     async putToUrl(url, body) {
         const res = await axios.put(this.createFullUrl(url), body, {
             headers: {
