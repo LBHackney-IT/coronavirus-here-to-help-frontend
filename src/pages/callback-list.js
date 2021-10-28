@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Layout from '../components/layout';
 import CallbacksList from '../components/CallbacksList/CallbacksList';
 import { Dropdown, TextInput } from '../components/Form';
@@ -13,10 +13,8 @@ function CallbacksListPage() {
     const [subsetCallbacks, setSubsetCallbacks] = useState([]);
     const [callHandlers, setCallHandlers] = useState([]);
     const [callTypes, setCallTypes] = useState([]);
-    const [dropdowns, setDropdowns] = useState({
-        callType: 'All',
-        assignedTo: 'Assigned to all'
-    });
+    const [selectedCallType, setSelectedCallType] = useState('All');
+    const [selectedCallHandler, setSelectedCallHandler] = useState('Assigned to all');
 
     const [ctasInput, setCtasInput] = useState('');
 
@@ -26,16 +24,44 @@ function CallbacksListPage() {
         setCallTypes([ALL].concat(authCallTypes.map((callType) => callType.name).sort()));
     }, []);
 
+    const setCallTypeFromPersisted = () => {
+        var persisted = sessionStorage.getItem('selectedCallType');
+        if (persisted) {
+            setSelectedCallType(persisted);
+        }
+    };
+
+    const setCallHandlerFromPersisted = () => {
+        var persisted = sessionStorage.getItem('selectedCallHandler');
+        if (persisted) {
+            setSelectedCallHandler(persisted);
+        }
+    };
+
+    const persistCallType = (callType) => {
+        if (callType.length > 0) {
+            sessionStorage.setItem('selectedCallType', callType);
+        }
+    };
+
+    const persistCallHandler = (callHandler) => {
+        if (callHandler.length > 0) {
+            sessionStorage.setItem('selectedCallHandler', callHandler);
+        }
+    };
+
     const getCallBacks = async () => {
         const gateway = new CallbackGateway();
         const callbackList = await gateway.getCallback({});
 
         setCallbacks(callbackList);
-        setSubsetCallbacks(callbackList);
+        setCallTypeFromPersisted();
+        setCallHandlerFromPersisted();
     };
 
     const handleCallHandlerChange = (event) => {
-        setDropdowns({ ...dropdowns, assignedTo: event });
+        setSelectedCallHandler(event);
+        persistCallHandler(event);
     };
 
     const handleCTASFilterChange = (newValue) => {
@@ -43,10 +69,8 @@ function CallbacksListPage() {
     };
 
     const handleCallTypeChange = (event) => {
-        setDropdowns({
-            ...dropdowns,
-            callType: event == 'Self Isolation' ? WELFARE_CALL : event
-        });
+        setSelectedCallType(event);
+        persistCallType(event);
     };
 
     const getCallHandlers = async () => {
@@ -64,19 +88,17 @@ function CallbacksListPage() {
 
     const filterCallbacks = () => {
         let collection = callbacks;
-        const queryParams = { ...dropdowns, nhsCtasId: ctasInput?.trim() };
+        const ctasId = ctasInput?.trim();
         const predicatesList = [];
 
-        if (queryParams.callType !== 'All')
-            predicatesList.push((callback) => callback.callType === queryParams.callType);
+        if (selectedCallType !== 'All')
+            predicatesList.push((callback) => callback.callType === selectedCallType);
 
-        if (queryParams.assignedTo !== 'Assigned to all')
-            predicatesList.push((callback) => callback.assignedTo === queryParams.assignedTo);
+        if (selectedCallHandler !== 'Assigned to all')
+            predicatesList.push((callback) => callback.assignedTo === selectedCallHandler);
 
-        if (!queryParams.nhsCtasId.match(/^\s*$/))
-            predicatesList.push((callback) =>
-                callback.nhsCtasId?.startsWith(queryParams.nhsCtasId)
-            );
+        if (!ctasId.match(/^\s*$/))
+            predicatesList.push((callback) => callback.nhsCtasId?.startsWith(ctasId));
 
         for (let predicate of predicatesList)
             collection = collection.filter((item) => predicate(item));
@@ -86,7 +108,7 @@ function CallbacksListPage() {
 
     useEffect(getCallBacks, []);
     useEffect(getCallHandlers, []);
-    useEffect(filterCallbacks, [dropdowns, ctasInput]);
+    useEffect(filterCallbacks, [ctasInput, selectedCallType, selectedCallHandler, callbacks]);
 
     return (
         <Layout>
@@ -106,6 +128,7 @@ function CallbacksListPage() {
                             <Dropdown
                                 label={'Help Type'}
                                 dropdownItems={callTypes}
+                                defaultValue={selectedCallType}
                                 onChange={handleCallTypeChange}
                                 data-testid="help-type-dropdown"
                             />
@@ -114,6 +137,7 @@ function CallbacksListPage() {
                             <Dropdown
                                 label={'Assignee'}
                                 dropdownItems={callHandlers}
+                                defaultValue={selectedCallHandler}
                                 onChange={handleCallHandlerChange}
                                 data-testid="call-handlers-dropdown"
                             />
