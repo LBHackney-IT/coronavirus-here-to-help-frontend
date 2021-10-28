@@ -10,6 +10,8 @@ beforeEach(() => {
 describe('Callbacks list page displays and maps data correctly', () => {
     it('Callbacks are retrieved and mapped to table rows', () => {
         cy.visit('/callback-list');
+        cy.get('[data-testid=help-type-dropdown]').select('All');
+        cy.get('[data-testid=call-handlers-dropdown]').select('Assigned to all');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', 8);
     });
     it('Shows subtypes correctly', () => {
@@ -22,6 +24,8 @@ describe('Callbacks list page displays and maps data correctly', () => {
 
     it('Help types are mapped to help case type dropdown options', () => {
         cy.visit('/callback-list');
+        cy.get('[data-testid=help-type-dropdown]').select('All');
+        cy.get('[data-testid=call-handlers-dropdown]').select('Assigned to all');
         cy.get('[data-testid=help-type-dropdown]').find('option').should('have.length', 6);
     });
 
@@ -52,6 +56,8 @@ describe('Callbacks list page displays and maps data correctly', () => {
 describe('Callbacks list page filters callbacks correctly', () => {
     it('Upon selecting Help Case Type dropdown value, callbacks get filtered by that value', () => {
         cy.visit('/callback-list');
+        cy.get('[data-testid=help-type-dropdown]').select('All');
+        cy.get('[data-testid=call-handlers-dropdown]').select('Assigned to all');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '8');
         cy.get('[data-testid=help-type-dropdown]').select('Self Isolation');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
@@ -69,6 +75,8 @@ describe('Callbacks list page filters callbacks correctly', () => {
 
     it('Upon selecting Call Handlers dropdown value, callbacks get filtered by that value', () => {
         cy.visit('/callback-list');
+        cy.get('[data-testid=help-type-dropdown]').select('All');
+        cy.get('[data-testid=call-handlers-dropdown]').select('Assigned to all');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '8');
         cy.get('[data-testid=call-handlers-dropdown]').select('Person A');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '2');
@@ -78,6 +86,9 @@ describe('Callbacks list page filters callbacks correctly', () => {
 
     it('Upon typing into CTAS filter text input, callbacks get filtered by that value', () => {
         cy.visit('/callback-list');
+        cy.get('[data-testid=help-type-dropdown]').select('All');
+        cy.get('[data-testid=call-handlers-dropdown]').select('Assigned to all');
+
         // test of filtering correctness
         cy.get('[data-testid=ctasid-filter]').type('ex');
         cy.get('[data-testid=callbacks-table_row]').should('have.length', '2');
@@ -95,5 +106,34 @@ describe('Navigating Away from Callbacks list page', () => {
         cy.visit('/callback-list');
         cy.get('[data-testid=callbacks-list-view_link-0]').click({ force: true });
         cy.url().should('match', /\/helpcase-profile\/\d+$/);
+    });
+
+    it('persists selected dropdowns', () => {
+        cy.visit('/callback-list');
+
+        // Select default dropdown options
+        cy.get('[data-testid=help-type-dropdown]').select('All');
+        cy.get('[data-testid=call-handlers-dropdown]').select('Assigned to all');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '8');
+
+        // Change call handler
+        cy.get('[data-testid=call-handlers-dropdown]').select('Person A');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '2');
+
+        // Change call type
+        cy.get('[data-testid=help-type-dropdown]').select('Contact Tracing');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
+
+        // Navigate away
+        cy.get('[data-testid=callbacks-list-view_link-0]').click({ force: true });
+        cy.url().should('match', /\/helpcase-profile\/\d+$/);
+
+        // Navigate back
+        cy.visit('/callback-list');
+
+        // Check values persisted
+        cy.get('[data-testid=call-handlers-dropdown]').should('have.value', 'Person A');
+        cy.get('[data-testid=help-type-dropdown]').should('have.value', 'Contact Tracing');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
     });
 });
