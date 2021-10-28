@@ -107,4 +107,33 @@ describe('Navigating Away from Callbacks list page', () => {
         cy.get('[data-testid=callbacks-list-view_link-0]').click({ force: true });
         cy.url().should('match', /\/helpcase-profile\/\d+$/);
     });
+
+    it('persists selected dropdowns', () => {
+        cy.visit('/callback-list');
+
+        // Select default dropdown options
+        cy.get('[data-testid=help-type-dropdown]').select('All');
+        cy.get('[data-testid=call-handlers-dropdown]').select('Assigned to all');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '8');
+
+        // Change call handler
+        cy.get('[data-testid=call-handlers-dropdown]').select('Person A');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '2');
+
+        // Change call type
+        cy.get('[data-testid=help-type-dropdown]').select('Contact Tracing');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
+
+        // Navigate away
+        cy.get('[data-testid=callbacks-list-view_link-0]').click({ force: true });
+        cy.url().should('match', /\/helpcase-profile\/\d+$/);
+
+        // Navigate back
+        cy.visit('/callback-list');
+
+        // Check values persisted
+        cy.get('[data-testid=call-handlers-dropdown]').should('have.value', 'Person A');
+        cy.get('[data-testid=help-type-dropdown]').should('have.value', 'Contact Tracing');
+        cy.get('[data-testid=callbacks-table_row]').should('have.length', '1');
+    });
 });
