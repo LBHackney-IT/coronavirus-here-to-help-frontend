@@ -107,8 +107,8 @@ custom:
         staging: here-to-help-staging.hackney.gov.uk
         production: here-to-help.hackney.gov.uk
     certificate-arn:
-        staging: arn:aws:acm:us-east-1:715003523189:certificate/8f7fa30c-a4e5-4775-b827-ade824a33c9a
-        production: arn:aws:acm:us-east-1:153306643385:certificate/71728a39-cd3e-4570-a440-e87f84ef9a0d
+        staging: arn:aws:acm:us-east-1:715003523189:certificate/627b1742-fdb1-4185-ad29-bab020a9c21f
+        production: arn:aws:acm:us-east-1:153306643385:certificate/d4b09728-05ec-487b-a380-0c8d7366abef
     securityGroups:
         staging:
             - sg-0166cbf56b7e77af0
