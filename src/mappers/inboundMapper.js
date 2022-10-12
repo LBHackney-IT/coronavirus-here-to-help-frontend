@@ -1,6 +1,6 @@
 import { getNonJsonCasenotesArray,getAuthor,getNote,getDate,isJSON, formatDate, getPowerBICaseNotesArray } from "../helpers/case_notes_helper";
 class InboundMapper {
-    static ToCaseNotes = (caseNotes) => {
+    static ToCaseNotes(caseNotes) {
         return caseNotes?.map((note) => {
             return {
                 id: note.Id,
@@ -11,7 +11,7 @@ class InboundMapper {
         });
     };
 
-    static ToResident = (response) => {
+    static ToResident(response) {
         return {
             id: response.Id,
             firstName: response.FirstName,
@@ -49,7 +49,7 @@ const ToStandardisiedCaseNotesArray = (caseNotes) => {
         }
     }
     else if(!isJSON(caseNotes)){
-        if(/^\[\d{4}\-\d{2}\-\d{2}\]/.test(caseNotes)){
+        if(/^\[\d{4}-\d{2}-\d{2}\]/.test(caseNotes)){
             const powerBICaseNotesArray = getPowerBICaseNotesArray(caseNotes);
             if (powerBICaseNotesArray) {
                 powerBICaseNotesArray.forEach(caseNote => {

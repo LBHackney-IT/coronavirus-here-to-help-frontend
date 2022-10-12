@@ -32,7 +32,6 @@ const ToHelpRequestDomain = (hr) => {
         helpWithAccessingInternet: hr.HelpWithAccessingInternet,
         helpWithAccessingMedicine: hr.HelpWithAccessingMedicine,
         hedicineDeliveryHelpNeeded: hr.MedicineDeliveryHelpNeeded,
-        helpWithAccessingOtherEssentials: hr.HelpWithAccessingOtherEssentials,
         helpWithChildrenAndSchools: hr.HelpWithChildrenAndSchools,
         helpWithDebtAndMoney: hr.HelpWithDebtAndMoney,
         helpWithDisabilities: hr.HelpWithDisabilities,

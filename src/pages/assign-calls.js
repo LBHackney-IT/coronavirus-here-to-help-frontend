@@ -203,7 +203,7 @@ export default function AssignCallsPage() {
                         {filteredCallTypes.map((type, index) => {
                             return (
                                 <Checkbox
-                                    key="call-type-checkbox"
+                                    key={"call-type-checkbox-" + index}
                                     label={type}
                                     value={type}
                                     onCheckboxChange={selectedCallTypeChanged}

@@ -20,9 +20,9 @@ export default function ResidentList({ residents }) {
                     </tr>
                 </thead>
                 <tbody className="govuk-table__body">
-                    {residents.map((resident) => {
+                    {residents.map((resident, index) => {
                         return (
-                            <tr className="govuk-table__row">
+                            <tr key={"reslistrow-" + index} className="govuk-table__row">
                                 <td className="govuk-table__cell">
                                     {[resident.firstName, resident.lastName].join(' ')}
                                 </td>

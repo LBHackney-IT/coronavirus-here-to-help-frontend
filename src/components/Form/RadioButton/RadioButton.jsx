@@ -19,8 +19,7 @@ export default function SingleRadioButton({ radioButtonItem, onSelectOption, ...
             />
             <label
                 className="govuk-label govuk-radios__label"
-                htmlFor={radioButtonItem}
-                for={elementId}
+                htmlFor={elementId}
                 style={{ marginBottom: '15px' }}>
                 {radioButtonItem}
             </label>

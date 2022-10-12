@@ -14,7 +14,7 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                         className={`govuk-form-group lbh-form-group ${
                             validation.firstName ? 'govuk-form-group--error' : ''
                         }`}>
-                        <label class="govuk-label" for="firstName">
+                        <label className="govuk-label" htmlFor="firstName">
                             First name
                         </label>
                         <span id="first-name-error" className="govuk-error-message">
@@ -45,7 +45,7 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                         className={`govuk-form-group lbh-form-group ${
                             validation.lastName ? 'govuk-form-group--error' : ''
                         }`}>
-                        <label class="govuk-label" for="lastName">
+                        <label className="govuk-label" htmlFor="lastName">
                             Last name
                         </label>
                         <span id="last-name-error" className="govuk-error-message">
@@ -78,7 +78,7 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                         className={`govuk-form-group lbh-form-group ${
                             validation.contactTelephoneNumber ? 'govuk-form-group--error' : ''
                         }`}>
-                        <label class="govuk-label" for="contactTelephoneNumber">
+                        <label className="govuk-label" htmlFor="contactTelephoneNumber">
                             Contact telephone
                         </label>
                         <span id="contact-number-error" className="govuk-error-message">

@@ -131,7 +131,7 @@ export default function addSupportPage({ residentId, helpRequestId }) {
             callHandler: user.name
         };
 
-        const errorHasHappened = false;
+        let errorHasHappened = false;
         const smsTextSendCommand = notifyRequestOptions.smsText;
         const emailSendCommand = notifyRequestOptions.email;
 
