@@ -1,15 +1,17 @@
-module.exports = {
-    distDir: 'build/_next',
-    target: 'server',
-    webpack: (config, { webpack, isServer }) => {
-        config.plugins.push(new webpack.IgnorePlugin(/.*\.test\.[jt]s$/));
-        // Fixes npm packages that depend on `fs` module
-        if (!isServer) {
-            config.node = {
-                fs: 'empty'
-            };
-        }
+// module.exports = {
+//     distDir: 'build/_next',
+//     target: 'server',
+//     webpack: (config, { webpack, isServer }) => {
+//         config.plugins.push(new webpack.IgnorePlugin(/.*\.test\.[jt]s$/));
+//         // Fixes npm packages that depend on `fs` module
+//         if (!isServer) {
+//             config.node = {
+//                 fs: 'empty'
+//             };
+//         }
 
-        return config;
-    }
-};
+//         return config;
+//     }
+// };
+
+module.exports = { reactStrictMode: true, };
