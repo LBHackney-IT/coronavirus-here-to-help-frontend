@@ -31,7 +31,7 @@ const ToCallbackList = (callbacks) => {
 };
 
 export class CallbackGateway extends DefaultGateway {
-    async getCallback(queryParams) {
+    async getCallback() {
         const response = await this.getFromUrl(`v3/help-requests/callbacks`);
         const callbacksList = ToCallbackList(response);
         return callbacksList;

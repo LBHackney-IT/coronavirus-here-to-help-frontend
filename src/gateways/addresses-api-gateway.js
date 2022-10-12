@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export class AddressesGateway {
-    async request(pathSegments, method, body, queryParams) {
+    async request(pathSegments, method) {
 
         try {
             const { status, data } = await axios.request({

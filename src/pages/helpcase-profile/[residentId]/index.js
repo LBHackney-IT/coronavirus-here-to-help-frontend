@@ -143,7 +143,7 @@ export default function HelpcaseProfile({ residentId }) {
     );
 }
 
-HelpcaseProfile.getInitialProps = async ({ query: { residentId }, req, res }) => {
+HelpcaseProfile.getInitialProps = async ({ query: { residentId }}) => {
     return {
         residentId
     };

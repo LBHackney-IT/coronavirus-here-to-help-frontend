@@ -1,17 +1,14 @@
 import "../styles/globals.css";
 import "./stylesheets/all.scss";
-import App, { AppContext, AppProps } from 'next/app';
+import App from 'next/app';
 import React from 'react';
 import {
   authoriseUser,
   pathIsWhitelisted,
   serverSideRedirect,
-  unsafeExtractUser,
-  User,
-  userIsInValidGroup,
+  unsafeExtractUser
 } from '../helpers/auth';
 import { UserContext } from '../contexts/UserContext';
-import { NextPage } from 'next';
 import { AccessDeniedPage } from '../components/AccessDeniedPage';
 
 const CustomApp = ({

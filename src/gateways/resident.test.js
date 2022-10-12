@@ -47,7 +47,7 @@ describe('Resident gateway', () => {
 
         // act
         await resGateway.getResident(10);
-        const request = moxios.requests.mostRecent();
+        //const request = moxios.requests.mostRecent();
 
         // assert
         expect(toResidentSpy).toHaveBeenCalledTimes(1);

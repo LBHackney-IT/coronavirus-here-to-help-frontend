@@ -1,4 +1,4 @@
-import { ReactNode, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { createLoginUrl } from '../helpers/auth';
 import Layout from '../components/layout';

@@ -1,5 +1,4 @@
 import moxios from 'moxios';
-import InboundMapper from '../mappers/inboundMapper';
 import { HelpRequestGateway } from './help-request';
 
 describe('Help request gateway', () => {

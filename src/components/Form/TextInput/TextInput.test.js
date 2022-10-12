@@ -43,7 +43,7 @@ describe('TextInput', () => {
 
     it('does not show error message if validation is required and input has a value', () => {
         const inputLabel = 'My Input';
-        const { container, getByLabelText } = render(
+        const { container } = render(
             <TextInput
                 name="my-text-input"
                 label={inputLabel}

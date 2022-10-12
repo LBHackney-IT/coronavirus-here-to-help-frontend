@@ -245,7 +245,7 @@ export default function addSupportPage({ residentId }) {
     );
 }
 
-addSupportPage.getInitialProps = async ({ query: { residentId }, req, res }) => {
+addSupportPage.getInitialProps = async ({ query: { residentId } }) => {
     try {
         return {
             residentId

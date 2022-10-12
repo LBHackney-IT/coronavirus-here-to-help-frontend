@@ -68,7 +68,7 @@ export default function AssignCallsPage() {
         );
     };
 
-    const handleAssign = async (event) => {
+    const handleAssign = async () => {
         if (!formIsValid()) {
             setErrorsExist(true);
         } else {
@@ -264,8 +264,8 @@ export default function AssignCallsPage() {
                         <Button
                             text="Assign"
                             addClass="govuk-!-margin-right-1"
-                            onClick={(event) => {
-                                handleAssign(event);
+                            onClick={() => {
+                                handleAssign();
                             }}
                             data-testid="assign-call-assign_button"
                         />
