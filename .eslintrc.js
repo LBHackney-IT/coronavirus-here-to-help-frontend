@@ -1,3 +1,6 @@
+const a11yOff = Object.keys(require('eslint-plugin-jsx-a11y').rules)
+    .reduce((acc, rule) => { acc[`jsx-a11y/${rule}`] = 'off'; return acc }, {})
+
 module.exports = {
     root: true, // Make sure eslint picks up the config at the root of the directory
     parserOptions: {
@@ -26,15 +29,18 @@ module.exports = {
     ],
     plugins: ['jest'],
     rules: {
-        'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Use our .prettierrc file as source
+        "react/prop-types": "off",
+        // 'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Use our .prettierrc file as source
+        'prettier/prettier': 0,
         'react/react-in-jsx-scope': 'off',
-        'jsx-a11y/anchor-is-valid': [
-            'error',
-            {
-                components: ['Link'],
-                specialLink: ['hrefLeft', 'hrefRight'],
-                aspects: ['invalidHref', 'preferButton']
-            }
-        ]
+        ...a11yOff
+        // 'jsx-a11y/anchor-is-valid': [
+        //     'error',
+        //     {
+        //         components: ['Link'],
+        //         specialLink: ['hrefLeft', 'hrefRight'],
+        //         aspects: ['invalidHref', 'preferButton']
+        //     }
+        // ]
     }
 };
