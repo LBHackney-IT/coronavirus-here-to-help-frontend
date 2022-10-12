@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Banner = ({ text }) => (
     <div className="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
@@ -12,5 +13,9 @@ const Banner = ({ text }) => (
         </div>
     </div>
 );
+
+Banner.propTypes = {
+    text: PropTypes.string.isRequired
+};
 
 export default Banner;
