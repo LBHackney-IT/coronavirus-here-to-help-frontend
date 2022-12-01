@@ -8,7 +8,7 @@ import { Button } from '../components/Form';
 export default function managecallhandlers() {
     const [callHandlers, setCallHandlers] = useState([]);
 
-    useEffect(async () => {
+    const getSortSetCallHandlers = async () => {
         const gateway = new CallHandlerGateway();
         try {
             const callHandlersList = await gateway.getCallHandlers();
@@ -19,7 +19,9 @@ export default function managecallhandlers() {
         } catch (err) {
             console.log(`Error fetching callhandlers: ${err}`);
         }
-    }, []);
+    };
+
+    useEffect(() => { getSortSetCallHandlers(); }, []);
 
     return (
         <Layout>

@@ -61,13 +61,7 @@ export default function AssignCallsPage() {
         setTemplatePreview(response.body);
     };
 
-    useEffect(() => {
-        getPreview();
-    }, []);
-    useEffect(() => {
-        getCallbacks();
-    }, []);
-    useEffect(async () => {
+    const getAuthorisedCallTypes = async () => {
         const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
         let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
 
@@ -78,7 +72,11 @@ export default function AssignCallsPage() {
                     .filter((x) => bulkMessageCallTypes.includes(x))
             )
         );
-    }, []);
+    };
+
+    useEffect(() => { getPreview(); }, []);
+    useEffect(() => { getCallbacks(); }, []);
+    useEffect(() => { getAuthorisedCallTypes(); }, []);
 
     const handleSend = async (event) => {
         if ((assigned.value || unassigned.value) && helpType) {

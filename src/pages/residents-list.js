@@ -19,9 +19,7 @@ export default function ResidentsList({ firstName, lastName, postcode }) {
         setResidents(residents);
     };
 
-    useEffect(() => {
-        loadResidents();
-    }, []);
+    useEffect(() => { loadResidents(); }, []);
 
     return (
         <Layout>

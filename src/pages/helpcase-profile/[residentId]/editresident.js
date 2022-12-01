@@ -65,7 +65,7 @@ export default function EditResident({ residentId }) {
         setValidation({ ...validation, ...{ [id]: true } });
     };
 
-    useEffect(getResident, []);
+    useEffect(() => { getResident(); }, []);
 
     return (
         <Layout>

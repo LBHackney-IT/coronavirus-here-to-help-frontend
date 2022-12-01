@@ -32,9 +32,7 @@ export default function addSupportPage({ residentId }) {
         setUser(user);
     };
 
-    useEffect(async () => {
-        await retreiveResidentAndUser();
-    }, []);
+    useEffect(() => { retreiveResidentAndUser(); }, []); // used to have await
 
     const saveFunction = async function (
         helpNeeded,

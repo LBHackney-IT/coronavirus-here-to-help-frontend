@@ -18,11 +18,13 @@ function CallbacksListPage() {
 
     const [ctasInput, setCtasInput] = useState('');
 
-    useEffect(async () => {
+    const getAndSetAuthorisedCallTypes = async () => {
         const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
         const authCallTypes = await authorisedCallTypesGateway.getCallTypes();
         setCallTypes([ALL].concat(authCallTypes.map((callType) => callType.name).sort()));
-    }, []);
+    };
+
+    useEffect(() => { getAndSetAuthorisedCallTypes(); }, []);
 
     const setCallTypeFromPersisted = () => {
         var persisted = sessionStorage.getItem('selectedCallType');
@@ -106,8 +108,8 @@ function CallbacksListPage() {
         setSubsetCallbacks(collection);
     };
 
-    useEffect(getCallBacks, []);
-    useEffect(getCallHandlers, []);
+    useEffect(() => { getCallBacks(); }, []);
+    useEffect(() => { getCallHandlers(); }, []);
     useEffect(filterCallbacks, [ctasInput, selectedCallType, selectedCallHandler, callbacks]);
 
     return (

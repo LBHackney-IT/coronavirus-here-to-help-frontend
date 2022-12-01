@@ -102,13 +102,9 @@ export default function addSupportPage({ residentId, helpRequestId }) {
         }
     };
 
-    useEffect(async () => {
-        await retreiveResidentAndUser();
-    }, []);
+    useEffect(() => { retreiveResidentAndUser(); }, []); // had await, if any bugs this might be why
 
-    useEffect(async () => {
-        await retreiveHelpRequest();
-    }, []);
+    useEffect(() => { retreiveHelpRequest(); }, []); // same here
 
     const saveFunction = async function (
         helpNeeded,

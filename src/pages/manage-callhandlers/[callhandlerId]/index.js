@@ -69,7 +69,7 @@ export default function callHandlerView({ callhandlerId }) {
         }
     };
 
-    useEffect(getCallHandler, []);
+    useEffect(() => { getCallHandler(); }, []);
 
     return (
         <div>

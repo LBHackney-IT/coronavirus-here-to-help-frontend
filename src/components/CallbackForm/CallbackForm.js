@@ -58,7 +58,7 @@ export default function CallbackForm({
         CallHandler: null
     });
 
-    useEffect(async () => {
+    const preSetFormStateWithData = async () => {
         setHelpNeeded(helpRequest ? helpRequest.helpNeeded : '');
         setCEVHelpNeeds({
             foodAccessVoluntarySector: helpRequest ? helpRequest.helpWithAccessingFood : null,
@@ -80,7 +80,9 @@ export default function CallbackForm({
         } catch (err) {
             console.log(`Error fetching auth calltypes: ${err}`);
         }
-    }, [helpRequest]);
+    };
+
+    useEffect(() => { preSetFormStateWithData(); }, [helpRequest]);
 
     const onCEVHelpNeedsCheckboxChange = (cevHelpItem) => {
         Object.entries(cevHelpTypes).map(([key, cevTextVal]) => {

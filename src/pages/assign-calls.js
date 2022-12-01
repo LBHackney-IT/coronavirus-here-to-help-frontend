@@ -27,12 +27,15 @@ export default function AssignCallsPage() {
         setCallHandlers(callHandlersList.map((c) => c.name));
     };
 
-    useEffect(getCallHandlers, []);
-
-    useEffect(async () => {
+    const getAuthorisedCallTypes = async () => {
         const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
         let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
         setFilteredCallTypes(authCallTypes.map((callType) => callType.name));
+    };
+
+    useEffect(() => { 
+        getCallHandlers();
+        getAuthorisedCallTypes();
     }, []);
 
     const updateSelectedCallHandlers = (value) => {

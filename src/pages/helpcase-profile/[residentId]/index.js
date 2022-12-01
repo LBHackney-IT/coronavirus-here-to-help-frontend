@@ -79,13 +79,12 @@ export default function HelpcaseProfile({ residentId }) {
             console.log(`Error getting resident props with help request ID ${residentId}: ${err}`);
         }
     };
+
     function useEffectAsync(effect, inputs) {
-        useEffect(() => {
-            effect();
-        }, inputs);
+        useEffect(() => {  effect(); }, inputs);
     }
 
-    useEffectAsync(getResidentAndHelpRequests, []);
+    useEffectAsync(getResidentAndHelpRequests, []); //nice one
 
     let calls = [].concat
         .apply(
