@@ -14,7 +14,7 @@ import {
     TEST_AND_TRACE_FOLLOWUP_EMAIL,
     TEST_AND_TRACE_FOLLOWUP_TEXT
 } from '../../../helpers/constants';
-import getTimeZoneCorrectedLocalDate from '../../../../tools/etcUtility';
+import { getTimeZoneCorrectedLocalDate } from '../../../../tools/etcUtility';
 
 export default function addSupportPage({ residentId }) {
     const backHref = `/helpcase-profile/${residentId}`;

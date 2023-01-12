@@ -1,13 +1,13 @@
 import fetch from 'node-fetch';
+import { objToQueryStr } from '../../tools/etcUtility';
 
 export class HereToHelpApiGateway {
     async request(pathSegments, method, body, queryParams) {
         try {
             const constructedUrl = 
-                process.env.HERE_TO_HELP_API_BASE_URL +
+                process.env.HERE_TO_HELP_API_BASE_URL + // TODO: Write a helper that takes into account these potential missing slashes at the end: apiv4
                 pathSegments.join('/') +
-                '?' + // TODO: make this a conditional based on the URL Serch Params object contents
-                new URLSearchParams(queryParams);
+                objToQueryStr(queryParams);
 
             const request = {
                 method: method,

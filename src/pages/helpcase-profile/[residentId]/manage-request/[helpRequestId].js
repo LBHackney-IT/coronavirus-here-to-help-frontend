@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import CallHistory from '../../../../components/CallHistory/CallHistory';
 import CaseNotes from '../../../../components/CaseNotes/CaseNotes';
 import { GovNotifyGateway } from '../../../../gateways/gov-notify';
-import getTimeZoneCorrectedLocalDate from '../../../../../tools/etcUtility';
+import { getTimeZoneCorrectedLocalDate } from '../../../../../tools/etcUtility';
 import { AuthorisedCallTypesGateway } from '../../../../gateways/authorised-call-types';
 
 export default function addSupportPage({ residentId, helpRequestId }) {
