@@ -74,14 +74,15 @@ export default function ReassignCalls() {
                         <div className="govuk-grid-column-one-half">
                             <Button
                                 text="Assign"
+                                type="submit"
                                 addClass="govuk-button govuk-!-margin-right-1"
                                 data-testid="reassign-call-assign_button"
                             />
-                            <Button
-                                text="Cancel"
-                                addClass="govuk-button--secondary"
-                                data-testid="reassign-call-cancel_button"
-                            />
+                            <Link href="/callback-list">
+                                <a className="govuk-button govuk-button--secondary" data-testid="reassign-call-cancel_button">
+                                    Cancel
+                                </a>
+                            </Link>
                         </div>
                     </div>
                 </form>
