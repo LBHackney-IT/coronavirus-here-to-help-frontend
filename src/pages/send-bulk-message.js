@@ -184,7 +184,7 @@ export default function AssignCallsPage() {
                     dropdownItems={dropdownItems}
                     onChange={updateHelpType}
                     selected="help type"
-                    date-testid="bulk-message-dropdown"></Dropdown>
+                    data-testid="bulk-message-dropdown"></Dropdown>
                 <br />
                 {helpType && (
                     <div className="govuk-!-margin-bottom-5">
