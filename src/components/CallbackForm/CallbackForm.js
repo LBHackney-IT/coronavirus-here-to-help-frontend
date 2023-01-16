@@ -138,7 +138,7 @@ export default function CallbackForm({
               })
             : '';
 
-    const nhsCtasId = helpRequest ? (
+    const nhsCtasId = helpRequest ? ( // TODO: make visible on when request type is CTAS
         <span className="govuk-caption-l" data-testid="ctas-id">
             <strong>CTAS ID:</strong> {helpRequest.nhsCtasId || 'Not found'}
         </span>
@@ -993,9 +993,10 @@ export default function CallbackForm({
                     <div className="govuk-grid-column">
                         <Button
                             text="Update"
+                            type="submit"
                             addClass="govuk-!-margin-right-1"
                             onClick={(event) => {
-                                handleUpdate(event);
+                                handleUpdate(event); // change this to the "onSubmit like with the resident"
                             }}
                             disabled={!submitEnabled}
                             data-testid="callback-form-update_button"
@@ -1003,6 +1004,7 @@ export default function CallbackForm({
                         <Link href={backHref}>
                             <Button
                                 text="Cancel"
+                                type="button"
                                 addClass="govuk-button--secondary"
                                 data-testid="callback-form-cancel_button"
                             />

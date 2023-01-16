@@ -62,11 +62,11 @@ Cypress.Commands.add('setIntercepts', () => {
 
     cy.intercept('GET', '/api/proxy/v4/residents/3/case-notes', {
         fixture: 'residents/3/residentCaseNotes'
-    });
+    }).as('resident3caseNotes');
 
     cy.intercept('GET', '/api/proxy/v4/residents/3/help-requests/12/case-notes', {
         fixture: 'residents/3/helpRequestCaseNotes'
-    });
+    }).as('helpRequest12caseNotes');
 
     cy.intercept('GET', '/api/proxy/v4/residents/3/help-requests/160/case-notes', {
         fixture: 'residents/3/helpRequest160CaseNotes'
@@ -74,7 +74,7 @@ Cypress.Commands.add('setIntercepts', () => {
 
     cy.intercept('GET', '/api/proxy/v3/help-requests/callbacks', {
         fixture: 'callbacks'
-    });
+    }).as('callbacksList');
 
     cy.intercept('GET', '/api/proxy/v4/residents/3/help-requests/161', {
         fixture: 'residents/3/helpRequests/161'
@@ -82,7 +82,7 @@ Cypress.Commands.add('setIntercepts', () => {
 
     cy.intercept('GET', `/api/proxy/v4/residents/3/help-requests/12`, {
         fixture: 'residents/3/helpRequests/12'
-    });
+    }).as('helpRequest12');
 
     cy.intercept('GET', `/api/proxy/v4/residents/3/help-requests/160`, {
         fixture: 'residents/3/helpRequests/160'
@@ -90,7 +90,7 @@ Cypress.Commands.add('setIntercepts', () => {
 
     cy.intercept('GET', `/api/proxy/v4/residents/3/help-requests`, {
         fixture: 'residents/3/helpRequests'
-    });
+    }).as('resident3helpRequests');
 
     cy.intercept('PATCH', `/api/proxy/v3/help-requests/*`, {
         statusCode: 201
@@ -118,7 +118,7 @@ Cypress.Commands.add('setIntercepts', () => {
 
     cy.intercept('GET', `/api/proxy/v4/residents/3`, {
         fixture: 'residents/3/resident'
-    });
+    }).as('resident3');;
 
     cy.intercept('PATCH', `/api/proxy/v4/residents/3`, {
         statusCode: 201
@@ -192,7 +192,7 @@ Cypress.Commands.add('setIntercepts', () => {
 
     cy.intercept('GET', '/api/proxy/v4/call-handlers', {
         fixture: 'callHandlers'
-    });
+    }).as('callHandlers');
 
     cy.intercept('DELETE', '/api/proxy/v4/call-handlers/*', { statusCode: 200, body: {} });
 

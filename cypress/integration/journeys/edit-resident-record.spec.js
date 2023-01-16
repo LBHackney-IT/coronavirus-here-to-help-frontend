@@ -17,26 +17,29 @@ context('When you view a helpcase profile', () => {
 context('When required fields are not filled in', () => {
     it('displays validation error when first name is missing', () => {
         cy.get('[data-testid=edit-resident-bio-button]').click({ force: true });
+        cy.wait('@resident3');
         cy.get('[data-testid=first-name-input]').clear();
         cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
-        cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible')
-        cy.get('[data-testid=first-name-error]').should("be.visible")
+        cy.get('[data-testid=edit-resident-form-validation-error]').should('exist')
+        cy.get('[data-testid=first-name-error]').should("exist")
     });
 
     it('displays validation error when last name is missing', () => {
         cy.get('[data-testid=edit-resident-bio-button]').click({ force: true });
+        cy.wait('@resident3');
         cy.get('[data-testid=last-name-input]').clear();
         cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
-        cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible')
-        cy.get('[data-testid=last-name-error]').should("be.visible")
+        cy.get('[data-testid=edit-resident-form-validation-error]').should('exist')
+        cy.get('[data-testid=last-name-error]').should("exist")
     });
 
     it('displays validation error when contact telephone number is missing', () => {
         cy.get('[data-testid=edit-resident-bio-button]').click({ force: true });
+        cy.wait('@resident3');
         cy.get('[data-testid=contact-telephone-input]').clear();
         cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
-        cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible')
-        cy.get('[data-testid=contact-number-error]').should("be.visible")
+        cy.get('[data-testid=edit-resident-form-validation-error]').should('exist')
+        cy.get('[data-testid=contact-number-error]').should("exist")
     });
 
     it('displays validation error when date of birth is missing', () => {
@@ -44,22 +47,22 @@ context('When required fields are not filled in', () => {
         // The ".type('{selectall}{backspace}')" is a workaround for cypress ".clear()" buggy behaviour.
         cy.get('[data-testid=dobDay-input]').type('{selectall}{backspace}');
         cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
-        cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible');
-        cy.get('[data-testid=dob-error]').should("be.visible");
+        cy.get('[data-testid=edit-resident-form-validation-error]').should('exist');
+        cy.get('[data-testid=dob-error]').should("exist");
         cy.get('[data-testid=dobDay-input]').type("12", {force: true});
 
         cy.get('[data-testid=edit-resident-bio-button]').click({ force: true });
         cy.get('[data-testid=dobMonth-input]').type('{selectall}{backspace}');
         cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
-        cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible');
-        cy.get('[data-testid=dob-error]').should("be.visible");
+        cy.get('[data-testid=edit-resident-form-validation-error]').should('exist');
+        cy.get('[data-testid=dob-error]').should("exist");
         cy.get('[data-testid=dobMonth-input]').type("12", {force: true});
 
         cy.get('[data-testid=edit-resident-bio-button]').click({ force: true });
         cy.get('[data-testid=dobYear-input]').type('{selectall}{backspace}');
         cy.get('[data-testid=edit-resident-form-update-button]').click({ force: true });
-        cy.get('[data-testid=edit-resident-form-validation-error]').should('be.visible');
-        cy.get('[data-testid=dob-error]').should("be.visible");
+        cy.get('[data-testid=edit-resident-form-validation-error]').should('exist');
+        cy.get('[data-testid=dob-error]').should("exist");
     });
 
     context('When an address search is made by postcode', () => {

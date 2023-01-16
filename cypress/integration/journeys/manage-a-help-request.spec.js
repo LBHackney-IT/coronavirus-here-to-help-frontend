@@ -8,7 +8,7 @@ beforeEach(() => {
     cy.get('[data-testid=view-callback-list_button]').click();
     cy.get('[data-testid=callbacks-list-view_link-0]').click({ force: true });
 });
-describe;
+
 context('When you view a helpcase profile', () => {
     it('it allows you to naviagte to the manage request page', () => {
         cy.url().should('match', /\/helpcase-profile\/\d+$/);
@@ -63,9 +63,12 @@ context('When you view a helpcase profile', () => {
 
     // EUSS
     it('displays the EUSS email preview', () => {
-        cy.get('a:contains("Back")');
+        cy.get('[data-testid=back-to-callbacks-list]').click({ force: true });
+        cy.wait('@callbacksList');
         cy.get('[data-testid=help-type-dropdown]').select(HELP_TYPE.EUSS);
-        cy.get('[data-testid*=callbacks-list-view_link-]').click({ force: true });
+        cy.get('[data-testid=callbacks-list-view_link-0]').click({ force: true });
+
+        cy.wait(['@resident3', '@resident3caseNotes', '@resident3helpRequests', '@callHandlers']);
 
         cy.get('[data-testid=support-requested-table]')
             .find(`tr:has(td:contains("${HELP_TYPE.EUSS}"))`)
@@ -77,9 +80,12 @@ context('When you view a helpcase profile', () => {
     });
 
     it('displays the EUSS text preview', () => {
-        cy.get('a:contains("Back")');
+        cy.get('[data-testid=back-to-callbacks-list]').click({ force: true });
+        cy.wait('@callbacksList');
         cy.get('[data-testid=help-type-dropdown]').select(HELP_TYPE.EUSS);
-        cy.get('[data-testid*=callbacks-list-view_link-]').click({ force: true });
+        cy.get('[data-testid=callbacks-list-view_link-0]').click({ force: true });
+
+        cy.wait(['@resident3', '@resident3caseNotes', '@resident3helpRequests', '@callHandlers']);
 
         cy.get('[data-testid=support-requested-table]')
             .find(`tr:has(td:contains("${HELP_TYPE.EUSS}"))`)
@@ -138,8 +144,8 @@ context('When required fields are not filled in', () => {
         cy.get('[data-testid=support-requested-table-view_link-0]')
             .contains('View')
             .click({ force: true });
-        cy.get('[data-testid=callback-form-update_button]').click({ force: true });
-        cy.get('[data-testid=callback-form-validation-error]').should('be.visible');
+
+        cy.wait(['@resident3', '@helpRequest12', '@helpRequest12caseNotes']);
 
         cy.get('[data-testid=callback-form-update_button]').click({ force: true });
         cy.get('[data-testid=callback-form-validation-error]').should('be.visible');
@@ -151,16 +157,17 @@ context('When required fields are not filled in', () => {
 });
 
 context('When required fields are filled in', () => {
-    beforeEach(() => {
+    it('it redirects to the resident page', () => {
         cy.get('[data-testid=support-requested-table-view_link-0]')
             .contains('View')
             .click({ force: true });
+
+        cy.wait(['@resident3', '@helpRequest12', '@helpRequest12caseNotes']);
+
         cy.get('[data-testid=call-type-no-radio-button]').click({ force: true });
         cy.get('[data-testid=followup-required-radio-button]').first().click({ force: true });
         cy.get('[data-testid=callback-form-update_button]').click({ force: true });
-    });
-
-    it('it redirects to the resident page', () => {
+    
         cy.get('[data-testid=callback-form-validation-error]').should('not.exist');
         cy.url().should('match', /\/helpcase-profile/);
     });
@@ -171,6 +178,9 @@ context('When add support gets cancelled', () => {
         cy.get('[data-testid=support-requested-table-view_link-0]')
             .contains('View')
             .click({ force: true });
+
+        cy.wait(['@resident3', '@helpRequest12', '@helpRequest12caseNotes']);
+
         cy.get('[data-testid=callback-form-cancel_button]').click({ force: true });
         cy.get('[data-testid=callback-form-validation-error]').should('not.exist');
         cy.url().should('match', /\/helpcase-profile/);
@@ -231,14 +241,18 @@ context('When opening a non-cev help request', () => {
             .find(`td:has(a:contains(View))`)
             .find('a')
             .click({ force: true });
-        cy.get('[data-testid=cev-help-needs]').should('not.exist');
 
+        cy.get('[data-testid=cev-help-needs]').should('not.exist');
+    });
+
+    it('it does not display cev help needs checkbox form', () => {
         cy.get('[data-testid=support-requested-table]')
             .find(`tbody > tr:contains("Help Request")`)
             .eq(0)
             .find(`td:has(a:contains(View))`)
             .find('a')
             .click({ force: true });
+
         cy.get('[data-testid=cev-help-needs]').should('not.exist');
     });
 });
@@ -264,5 +278,3 @@ context('When opening a Link Work (Repairs) request', () => {
         cy.get('[data-testid=case-note-entry]').first().should('contain', 'CREATED');
     });
 });
-
-export {};
