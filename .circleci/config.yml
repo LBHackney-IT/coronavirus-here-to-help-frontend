@@ -7,7 +7,7 @@ orbs:
 executors:
   node:
     docker:
-      - image: circleci/node:14
+      - image: cimg/node:18.12-browsers
     working_directory: ~/project
   python:
     docker:
