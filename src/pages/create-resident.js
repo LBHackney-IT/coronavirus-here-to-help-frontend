@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Address } from '../components/Form';
 import Link from 'next/link';
 import Layout from '../components/layout';
