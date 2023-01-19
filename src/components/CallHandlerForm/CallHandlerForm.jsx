@@ -26,11 +26,12 @@ export default function CallHandlerForm({ callHandler, onChange, validation, onI
                             Name
                         </label>
                         <span id="first-name-error" className="govuk-error-message">
-                            <span
-                                hidden={validation.name ? false : true}
-                                data-testid="name-error">
-                                Error: Enter the name
-                            </span>
+                            { validation.name &&
+                                <span
+                                    data-testid="name-error">
+                                    Error: Enter the name
+                                </span>
+                            }
                         </span>
 
                         <input
