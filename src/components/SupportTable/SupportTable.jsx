@@ -48,6 +48,7 @@ export default function SupportTable({ helpRequests }) {
                                 if (hr.callbackRequired == true) {
                                     return (
                                         <tr
+                                            key={`support-requested-row-${index}`}
                                             className="govuk-table__row"
                                             data-testid="support-requested-table_row">
                                             <td
@@ -105,10 +106,11 @@ export default function SupportTable({ helpRequests }) {
                             </tr>
                         </thead>
                         <tbody className="govuk-table__body">
-                            {helpRequests.map((hr) => {
+                            {helpRequests.map((hr, index) => {
                                 if (hr.callbackRequired == false) {
                                     return (
                                         <tr
+                                            key={`support-received-row-${index}`}
                                             className="govuk-table__row"
                                             data-testid="support-received-table_row">
                                             <td

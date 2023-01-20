@@ -247,10 +247,10 @@ export default function AssignCallsPage() {
                             display: 'flex',
                             flexWrap: 'Wrap'
                         }}>
-                        {callHandlers.sort().map((callHandler) => {
+                        {callHandlers.sort().map((callHandler, index) => {
                             return (
                                 <Checkbox
-                                    key={callHandler}
+                                    key={`call-handler-${index}`}
                                     label={callHandler}
                                     value={callHandler}
                                     containerStyle={{ flexBasis: '28%' }}
