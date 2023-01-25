@@ -4,6 +4,7 @@ import App, { AppContext, AppProps } from 'next/app';
 import React from 'react';
 import {
   authoriseUser,
+  userIsInValidGroup,
   pathIsWhitelisted,
   serverSideRedirect,
   unsafeExtractUser,
@@ -55,11 +56,11 @@ CustomApp.getInitialProps = async (appContext) => {
 
     return { accessDenied: true };
   }
-  //
-  // if (!userIsInValidGroup(user)) {
-  //   console.warn('The user is not in the correct google group');
-  //   return { accessDenied: true };
-  // }
+  
+  if (!userIsInValidGroup(user)) {
+    console.warn('The user is not in the correct google group');
+    return { accessDenied: true };
+  }
 
   return props;
 };
