@@ -10,7 +10,12 @@ const getTimeZoneCorrectedLocalDate = () => {
 // Constructs a full query string from a provided object containing (key-val) query parameters.
 const objToQueryStr = (queryParams) => (Object.keys(queryParams) > 0 ? `?${new URLSearchParams(queryParams)}` : '');
 
+// When deployed, for some reason, the next proxy, or the step prior
+// sets an empty body to an empty buffer, which causes some issues when forwarding requests.
+const isBodyEmptyBuffer = (body) => Buffer.isBuffer(body) && body.length === 0; 
+
 module.exports = {
     getTimeZoneCorrectedLocalDate,
-    objToQueryStr
+    objToQueryStr,
+    isBodyEmptyBuffer
 };
