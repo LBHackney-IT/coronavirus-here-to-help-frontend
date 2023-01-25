@@ -6,6 +6,7 @@ beforeEach(() => {
     cy.get('[data-testid=manage-callhandlers_button]').click();
     cy.wait('@callHandlers');
     cy.get('[data-testid=add-call-handler]').click();
+    cy.wait('@callHandlers');
 });
 
 describe('As a manager I can add a call handler', () => {
