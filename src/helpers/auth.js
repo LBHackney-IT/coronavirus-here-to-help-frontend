@@ -4,7 +4,7 @@ import jsonwebtoken from 'jsonwebtoken';
 const secret = process.env.HACKNEY_JWT_SECRET;
 const cookieName = process.env.NEXT_PUBLIC_HACKNEY_COOKIE_NAME;
 const baseUrl = process.env.APP_URL;
-const authGroup = process.env.NEXT_PUBLIC_HACKNEY_GOOGLE_GROUP;
+const authGroup = process.env.HACKNEY_ACCESS_GOOGLE_GROUP;
 const AUTH_WHITELIST = ['/login', '/access-denied'];
 
 export const createLoginUrl = (redirect) =>

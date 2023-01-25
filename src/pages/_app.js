@@ -4,11 +4,11 @@ import App, { AppContext, AppProps } from 'next/app';
 import React from 'react';
 import {
   authoriseUser,
+  userIsInValidGroup,
   pathIsWhitelisted,
   serverSideRedirect,
   unsafeExtractUser,
-  User,
-  userIsInValidGroup,
+  User
 } from '../helpers/auth';
 import { UserContext } from '../contexts/UserContext';
 import { NextPage } from 'next';
@@ -55,11 +55,11 @@ CustomApp.getInitialProps = async (appContext) => {
 
     return { accessDenied: true };
   }
-  //
-  // if (!userIsInValidGroup(user)) {
-  //   console.warn('The user is not in the correct google group');
-  //   return { accessDenied: true };
-  // }
+  
+  if (!userIsInValidGroup(user)) {
+    console.warn('The user is not in the correct google group');
+    return { accessDenied: true };
+  }
 
   return props;
 };
