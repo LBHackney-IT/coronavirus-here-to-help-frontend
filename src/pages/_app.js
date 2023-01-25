@@ -8,8 +8,7 @@ import {
   pathIsWhitelisted,
   serverSideRedirect,
   unsafeExtractUser,
-  User,
-  userIsInValidGroup,
+  User
 } from '../helpers/auth';
 import { UserContext } from '../contexts/UserContext';
 import { NextPage } from 'next';
