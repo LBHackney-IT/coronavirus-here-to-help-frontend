@@ -14,13 +14,13 @@ Cypress.Commands.add('getBySel', (selector, ...args) => {
 export const defaultUser = {
     email: 'test@hackney.gov.uk',
     name: 'Test User',
-    groups: ['development-team-staging']
+    groups: ['inh-users-dev']
 };
 
 export const EUSS_User = {
     email: 'test@hackney.gov.uk',
     name: 'EUSS Test User',
-    groups: ['development-team-staging', EUSS_GROUP]
+    groups: ['inh-users-dev', EUSS_GROUP]
 };
 
 Cypress.Commands.add('login', (userData) => {
