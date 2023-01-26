@@ -5,7 +5,7 @@ beforeEach(() => {
     cy.login(EUSS_User);
     cy.setIntercepts();
     cy.visit(`http://localhost:3000/dashboard`);
-    cy.get('[data-testid=view-callback-list_button]').click();
+    cy.get('[data-testid=view-callback-list_button]').click({ force: true });
     cy.get('[data-testid=callbacks-list-view_link-0]').click({ force: true });
     cy.get('[data-testid=add-support-button]').click({ force: true });
 });
