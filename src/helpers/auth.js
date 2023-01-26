@@ -4,7 +4,6 @@ import jsonwebtoken from 'jsonwebtoken';
 const secret = process.env.HACKNEY_JWT_SECRET;
 const cookieName = process.env.NEXT_PUBLIC_HACKNEY_COOKIE_NAME;
 const baseUrl = process.env.APP_URL;
-const authGroup = process.env.HACKNEY_ACCESS_GOOGLE_GROUP;
 const AUTH_WHITELIST = ['/login', '/access-denied'];
 
 export const createLoginUrl = (redirect) =>
@@ -13,6 +12,8 @@ export const createLoginUrl = (redirect) =>
 export const pathIsWhitelisted = (path) => AUTH_WHITELIST.includes(path);
 
 export const userIsInValidGroup = (user) => {
+    const authGroup = process.env.HACKNEY_ACCESS_GOOGLE_GROUP;
+
     if (process.env.NODE_ENV !== 'production') return true;
 
     const userInGroup = user.groups.includes(authGroup);
