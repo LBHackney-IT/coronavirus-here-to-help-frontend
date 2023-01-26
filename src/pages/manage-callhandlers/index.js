@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import Layout from '../components/layout';
-import { CallHandlerGateway } from '../gateways/call-handler';
+import Layout from '../../components/layout';
+import { CallHandlerGateway } from '../../gateways/call-handler';
 import Link from 'next/link';
-import { Button } from '../components/Form';
+import { Button } from '../../components/Form';
 
 export default function managecallhandlers() {
     const [callHandlers, setCallHandlers] = useState([]);
