@@ -245,10 +245,12 @@ export default function addSupportPage({ residentId }) {
     );
 }
 
-addSupportPage.getInitialProps = async ({ query: { residentId }, req, res }) => {
+export async function getServerSideProps({ query: { residentId }, req, res }) {
     try {
         return {
-            residentId
+            props: {
+                residentId
+            }
         };
     } catch (err) {
         console.log(`Error getting resident props with help request ID ${residentId}: ${err}`);

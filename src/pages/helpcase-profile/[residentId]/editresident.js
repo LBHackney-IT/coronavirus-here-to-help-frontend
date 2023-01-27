@@ -121,6 +121,10 @@ export default function EditResident({ residentId }) {
     );
 }
 
-EditResident.getInitialProps = async ({ query: { residentId } }) => {
-    return { residentId };
+export async function getServerSideProps({ query: { residentId } }) {
+    return {
+        props: {
+            residentId
+        }
+    };
 };
