@@ -174,8 +174,10 @@ export default function callHandlerView({ callhandlerId }) {
     );
 }
 
-callHandlerView.getInitialProps = async ({ query: { callhandlerId } }) => {
+export async function getServerSideProps({ query: { callhandlerId } }) {
     return {
-        callhandlerId
+        props: {
+            callhandlerId
+        }
     };
 };

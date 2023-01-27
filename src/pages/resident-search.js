@@ -86,3 +86,9 @@ export default function ResidentSearchPage() {
         </Layout>
     );
 }
+
+export async function getServerSideProps(context) {
+    return {
+      props: {},
+    }
+}
