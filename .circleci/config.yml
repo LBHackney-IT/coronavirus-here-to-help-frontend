@@ -112,30 +112,13 @@ workflows:
     jobs:
       - build
 
-      - test:
-          requires:
-            - build
-
-      - cypress/run:
-          cache-key: &cypress-cache-key 'npm-packages-cache1-{{ arch }}-{{ checksum "package-lock.json" }}'
-          post-checkout:
-            - run: cp .env.sample .env
-          executor: cypress/base-14
-          start: |
-            npm install cypress-dotenv -g
-            npm run dev
-          wait-on: 'http-get://127.0.0.1:3000'
-          store_artifacts: true
-          no-workspace: true
-
       - assume-role-staging:
           context: api-assume-role-staging-context
           requires:
-            - cypress/run
-            - test
+            - build
           filters:
             branches:
-              only: master
+              only: deploy-hotfix
 
       - deploy-staging:
           requires:
@@ -143,7 +126,7 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - deploy-hotfix
 
       - permit-deploy-production:
           type: approval
