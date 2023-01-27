@@ -102,3 +102,9 @@ export default function CreateResident({}) {
         </div>
     );
 }
+
+export async function getServerSideProps(context) {
+    return {
+      props: {},
+    }
+}
