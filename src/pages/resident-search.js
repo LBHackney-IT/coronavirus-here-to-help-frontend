@@ -10,7 +10,7 @@ export default function ResidentSearchPage() {
     return (
         <Layout>
             <div>
-                <Link href="/">
+                <Link href="/dashboard">
                     <a className="govuk-back-link  lbh-back-link">
                         Back
                     </a>
