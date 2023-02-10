@@ -41,7 +41,7 @@ export default function ReassignCalls() {
 
         await gateway.patchHelpRequest(requestId, updateObj);
 
-        router.back();
+        router.push('/callback-list');
     };
 
     useEffect(() => {
