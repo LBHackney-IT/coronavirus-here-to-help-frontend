@@ -98,7 +98,7 @@ export default function addCallHandler() {
     );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
     return {
       props: {},
     }
