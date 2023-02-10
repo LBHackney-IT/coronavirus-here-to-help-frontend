@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 
 module.exports = {
-    reactStrictMode: true,
+    reactStrictMode: false,
     distDir: 'build/_next',
     webpack: (config, { isServer }) => {
         config.plugins.push(new webpack.IgnorePlugin({resourceRegExp: /.*\.test\.[jt]s$/}));
