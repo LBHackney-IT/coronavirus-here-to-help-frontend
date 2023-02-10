@@ -8,7 +8,7 @@ const getTimeZoneCorrectedLocalDate = () => {
 }
 
 // Constructs a full query string from a provided object containing (key-val) query parameters.
-const objToQueryStr = (queryParams) => (Object.keys(queryParams) > 0 ? `?${new URLSearchParams(queryParams)}` : '');
+const objToQueryStr = (queryParams) => Object.keys(queryParams).length > 0 ? `?${new URLSearchParams(queryParams)}` : '';
 
 const removeBlanksFromQueryObj = (queryObj) => Object.fromEntries(Object.entries(queryObj).filter(([_, v]) => v));
 
