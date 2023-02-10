@@ -243,7 +243,7 @@ export default function addSupportPage({ residentId }) {
     );
 }
 
-export async function getServerSideProps({ query: { residentId }, req, res }) {
+export async function getServerSideProps({ query: { residentId }}) {
     try {
         return {
             props: {

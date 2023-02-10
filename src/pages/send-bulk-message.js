@@ -254,7 +254,7 @@ export default function AssignCallsPage() {
     );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
     return {
       props: {},
     }
