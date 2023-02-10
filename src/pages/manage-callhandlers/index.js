@@ -74,3 +74,9 @@ export default function managecallhandlers() {
         </Layout>
     );
 }
+
+export async function getServerSideProps(context) {
+    return {
+      props: {},
+    }
+}

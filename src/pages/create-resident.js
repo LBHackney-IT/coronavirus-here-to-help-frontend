@@ -104,3 +104,9 @@ const CreateResident = () => {
 }
 
 export default CreateResident;
+
+export async function getServerSideProps(context) {
+    return {
+      props: {},
+    }
+}

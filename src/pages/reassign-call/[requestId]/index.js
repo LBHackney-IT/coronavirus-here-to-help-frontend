@@ -90,3 +90,9 @@ export default function ReassignCalls() {
         </Layout>
     );
 }
+
+export async function getServerSideProps(context) {
+    return {
+      props: {},
+    }
+}

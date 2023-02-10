@@ -146,8 +146,10 @@ export default function HelpcaseProfile({ residentId }) {
     );
 }
 
-HelpcaseProfile.getInitialProps = async ({ query: { residentId }}) => {
+export async function getServerSideProps({ query: { residentId }, req, res }) {
     return {
-        residentId
+        props: {
+            residentId
+        }
     };
 };
