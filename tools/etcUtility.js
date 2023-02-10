@@ -12,13 +12,18 @@ const objToQueryStr = (queryParams) => Object.keys(queryParams).length > 0 ? `?$
 
 const removeBlanksFromQueryObj = (queryObj) => Object.fromEntries(Object.entries(queryObj).filter(([_, v]) => v));
 
+const firstCharToUpper = (inputStr) => inputStr.charAt(0).toUpperCase() + inputStr.slice(1);
+const objKeysToUpperCase = (inputObj) => Object.fromEntries(Object.entries(inputObj).map(([k, v]) => [firstCharToUpper(k), v]));
+
 // When deployed, for some reason, the next proxy, or the step prior
 // sets an empty body to an empty buffer, which causes some issues when forwarding requests.
-const isBodyEmptyBuffer = (body) => Buffer.isBuffer(body) && body.length === 0; 
+const isBodyEmptyBuffer = (body) => Buffer.isBuffer(body) && body.length === 0;
 
 module.exports = {
     getTimeZoneCorrectedLocalDate,
     objToQueryStr,
     removeBlanksFromQueryObj,
+    firstCharToUpper,
+    objKeysToUpperCase,
     isBodyEmptyBuffer
 };

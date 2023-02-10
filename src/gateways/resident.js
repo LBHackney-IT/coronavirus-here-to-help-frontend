@@ -1,5 +1,10 @@
 import { DefaultGateway } from '../gateways/default-gateway';
 import InboundMapper from '../mappers/inboundMapper';
+import {
+    objToQueryStr,
+    objKeysToUpperCase,
+    removeBlanksFromQueryObj
+} from '../../tools/etcUtility';
 
 const ToPatchResidentObject = (response) => {
     let object = {
@@ -27,22 +32,28 @@ const ToPatchResidentObject = (response) => {
 
 export class ResidentGateway extends DefaultGateway {
     async getResidentsBySearchParams(postcode, firstName, lastName) {
-        const response = await this.getFromUrl(
-            `v4/residents?Postcode=${postcode}&FirstName=${firstName}&LastName=${lastName}`
-        );
+        const queryParamsObj = { postcode, firstName, lastName };
+        const queryObjInDotnetCasing = objKeysToUpperCase(queryParamsObj);
+        const cleanedQuery = removeBlanksFromQueryObj(queryObjInDotnetCasing);
+        const queryStr = objToQueryStr(cleanedQuery).replace('+', '%20');
+
+        const response = await this.getFromUrl('v4/residents' + queryStr);
+
         return response.map(InboundMapper.ToResident);
     }
+
     async getResident(residentId) {
         const response = await this.getFromUrl(`v4/residents/${residentId}`);
 
         return InboundMapper.ToResident(response);
     }
+
     async setResident(residentId, requestBody) {
         console.log("request body", ToPatchResidentObject(requestBody));
         return await this.patchToUrl(`v4/residents/${residentId}`, ToPatchResidentObject(requestBody));
     }
+
     async postResident(requestBody) {
         return await this.postToUrl(`v4/residents/`, ToPatchResidentObject(requestBody));
     }
-
 }

@@ -12,7 +12,7 @@ export default function ResidentsList({ firstName, lastName, postcode }) {
     const loadResidents = async () => {
         const gateway = new ResidentGateway();
         const residents = await gateway.getResidentsBySearchParams(
-            postcode.replace(/ /g, ''),
+            postcode?.replace(/ /g, ''),
             firstName,
             lastName
         );
@@ -61,10 +61,6 @@ export default function ResidentsList({ firstName, lastName, postcode }) {
 
 export const getServerSideProps = async ({ query }) => {
     return {
-        props: {
-            firstName: query.firstName || '',
-            lastName: query.lastName || '',
-            postcode: query.postcode || ''
-        }
+        props: query
     };
 };
