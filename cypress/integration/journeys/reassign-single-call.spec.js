@@ -1,8 +1,9 @@
 beforeEach(() => {
     cy.login();
     cy.setIntercepts();
-    cy.visit('/');
+    cy.visit('/dashboard');
     cy.get('[data-testid=view-callback-list_button]').click();
+    cy.wait(['@callbacksList', '@callHandlers']);
 });
 describe('As a call handler I can reassign calls', () => {
     context('Reassign single call page navigation', () => {

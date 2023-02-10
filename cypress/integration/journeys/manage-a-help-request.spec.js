@@ -6,7 +6,9 @@ beforeEach(() => {
     cy.setIntercepts();
     cy.visit(`http://localhost:3000/dashboard`);
     cy.get('[data-testid=view-callback-list_button]').click();
+    cy.wait(['@callbacksList', '@callHandlers']);
     cy.get('[data-testid=callbacks-list-view_link-0]').click({ force: true });
+    cy.wait(['@resident3', '@resident3helpRequests', '@resident3caseNotes']);
 });
 
 context('When you view a helpcase profile', () => {
@@ -145,7 +147,7 @@ context('When required fields are not filled in', () => {
             .contains('View')
             .click({ force: true });
 
-        cy.wait(['@resident3', '@helpRequest12', '@helpRequest12caseNotes']);
+        cy.wait(['@resident3', '@helpRequest12caseNotes', '@helpRequest12']);
 
         cy.get('[data-testid=callback-form-update_button]').click({ force: true });
         cy.get('[data-testid=callback-form-validation-error]').should('be.visible');
@@ -162,7 +164,7 @@ context('When required fields are filled in', () => {
             .contains('View')
             .click({ force: true });
 
-        cy.wait(['@resident3', '@helpRequest12', '@helpRequest12caseNotes']);
+        cy.wait(['@resident3', '@helpRequest12caseNotes', '@helpRequest12']);
 
         cy.get('[data-testid=call-type-no-radio-button]').click({ force: true });
         cy.get('[data-testid=followup-required-radio-button]').first().click({ force: true });
@@ -179,7 +181,7 @@ context('When add support gets cancelled', () => {
             .contains('View')
             .click({ force: true });
 
-        cy.wait(['@resident3', '@helpRequest12', '@helpRequest12caseNotes']);
+        cy.wait(['@resident3', '@helpRequest12caseNotes', '@helpRequest12']);
 
         cy.get('[data-testid=callback-form-cancel_button]').click({ force: true });
         cy.get('[data-testid=callback-form-validation-error]').should('not.exist');

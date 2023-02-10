@@ -105,6 +105,7 @@ describe('Navigating Away from Callbacks list page', () => {
     it('can link to a helpcase-profile', () => {
         cy.visit('/callback-list');
         cy.get('[data-testid=callbacks-list-view_link-0]').click({ force: true });
+        cy.wait(['@resident3', '@resident3helpRequests', '@resident3caseNotes']);
         cy.url().should('match', /\/helpcase-profile\/\d+$/);
     });
 
