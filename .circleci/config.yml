@@ -135,7 +135,7 @@ workflows:
             - test
           filters:
             branches:
-              only: master
+              only: am-stest
 
       - deploy-staging:
           requires:
@@ -143,18 +143,4 @@ workflows:
           filters:
             branches:
               only:
-                - master
-
-      - permit-deploy-production:
-          type: approval
-          requires:
-            - deploy-staging
-
-      - assume-role-production:
-          context: api-assume-role-production-context
-          requires:
-            - permit-deploy-production
-
-      - deploy-production:
-          requires:
-            - assume-role-production
+                - am-stest
