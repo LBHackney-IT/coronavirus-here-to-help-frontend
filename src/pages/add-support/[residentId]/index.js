@@ -10,10 +10,6 @@ import { HelpRequestCallGateway } from '../../../gateways/help-request-call';
 import { CaseNotesGateway } from '../../../gateways/case-notes';
 import { useRouter } from 'next/router';
 import { GovNotifyGateway } from '../../../gateways/gov-notify';
-import {
-    TEST_AND_TRACE_FOLLOWUP_EMAIL,
-    TEST_AND_TRACE_FOLLOWUP_TEXT
-} from '../../../helpers/constants';
 import { getTimeZoneCorrectedLocalDate } from '../../../../tools/etcUtility';
 
 export default function addSupportPage({ residentId }) {
@@ -41,8 +37,7 @@ export default function addSupportPage({ residentId }) {
         helpRequestObject,
         callMade,
         caseNote,
-        phoneNumber,
-        email
+        notifyRequestOptions = {}
     ) {
         let callRequestObject = {
             callType: helpNeeded,
@@ -51,7 +46,10 @@ export default function addSupportPage({ residentId }) {
             callDateTime: getTimeZoneCorrectedLocalDate(),
             callHandler: user.name
         };
+
         let errorHasHappened = false;
+        const smsTextSendCommand = notifyRequestOptions.smsText;
+        const emailSendCommand = notifyRequestOptions.email;
 
         try {
             let helpRequestGateway = new HelpRequestGateway();
@@ -115,14 +113,19 @@ export default function addSupportPage({ residentId }) {
                     });
             }
 
-            if (phoneNumber) {
+            if (smsTextSendCommand) {
+                console.log(phoneNumber);
                 let textResponse = await govNotifyGateway
-                    .sendText(phoneNumber, TEST_AND_TRACE_FOLLOWUP_TEXT)
+                    .sendText(
+                        smsTextSendCommand.phoneNumber,
+                        smsTextSendCommand.templateName,
+                        smsTextSendCommand.templateParams
+                    )
                     .catch((err) => {
                         errorHasHappened = true;
                         const smsFailure = 'Error happened while sending a text message.';
 
-                        console.error(`${smsFailure}\nPhoneNumber: ${phoneNumber}\n${err}`);
+                        console.error(`${smsFailure}\nPhoneNumber: ${smsTextSendCommand.phoneNumber}\n${err}`);
                         alert(smsFailure); // warning user about potential loss of data
                     });
 
@@ -160,14 +163,18 @@ export default function addSupportPage({ residentId }) {
                     });
             }
 
-            if (email) {
+            if (emailSendCommand) {
                 let emailResponse = await govNotifyGateway
-                    .sendEmail(email, TEST_AND_TRACE_FOLLOWUP_EMAIL)
+                    .sendEmail(
+                        emailSendCommand.email,
+                        emailSendCommand.templateName,
+                        emailSendCommand.templateParams
+                    )
                     .catch((err) => {
                         errorHasHappened = true;
                         const emailFailure = 'Error happened while sending an email.';
 
-                        console.error(`${emailFailure}\nEmail: ${email}\n${err}`);
+                        console.error(`${emailFailure}\nEmail: ${emailSendCommand.email}\n${err}`);
                         alert(emailFailure); // warning user about potential loss of data
                     });
 
