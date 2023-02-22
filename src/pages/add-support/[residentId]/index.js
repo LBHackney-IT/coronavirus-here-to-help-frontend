@@ -114,7 +114,7 @@ export default function addSupportPage({ residentId }) {
             }
 
             if (smsTextSendCommand) {
-                console.log(phoneNumber);
+                console.log(smsTextSendCommand.phoneNumber);
                 let textResponse = await govNotifyGateway
                     .sendText(
                         smsTextSendCommand.phoneNumber,
@@ -132,14 +132,14 @@ export default function addSupportPage({ residentId }) {
                 let sendTextResponseCaseNoteObject;
                 if (textResponse.id) {
                     sendTextResponseCaseNoteObject = {
-                        caseNote: `Text sent to ${phoneNumber}. \n Text id: ${textResponse.id}.\n Text content: ${textResponse.content.body}`,
+                        caseNote: `Text sent to ${smsTextSendCommand.phoneNumber}. \n Text id: ${textResponse.id}.\n Text content: ${textResponse.content.body}`,
                         author: user.name,
                         noteDate: new Date().toGMTString(),
                         helpNeeded: helpRequestObject.helpNeeded
                     };
                 } else {
                     sendTextResponseCaseNoteObject = {
-                        caseNote: `Failed text to ${phoneNumber}`,
+                        caseNote: `Failed text to ${smsTextSendCommand.phoneNumber}`,
                         author: user.name,
                         noteDate: new Date().toGMTString(),
                         helpNeeded: helpRequestObject.helpNeeded
@@ -182,14 +182,14 @@ export default function addSupportPage({ residentId }) {
 
                 if (emailResponse.id) {
                     sendEmailResponseCaseNoteObject = {
-                        caseNote: `Email sent to ${email}. Email id: ${emailResponse.id}. Email content: ${emailResponse.content.body}`,
+                        caseNote: `Email sent to ${emailSendCommand.email}. Email id: ${emailResponse.id}. Email content: ${emailResponse.content.body}`,
                         author: user.name,
                         noteDate: new Date().toGMTString(),
                         helpNeeded: helpRequestObject.helpNeeded
                     };
                 } else {
                     sendEmailResponseCaseNoteObject = {
-                        caseNote: `Failed email to ${email}`,
+                        caseNote: `Failed email to ${emailSendCommand.email}`,
                         author: user.name,
                         noteDate: new Date().toGMTString(),
                         helpNeeded: helpRequestObject.helpNeeded
