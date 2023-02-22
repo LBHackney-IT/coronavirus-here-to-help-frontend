@@ -4,6 +4,7 @@ beforeEach(() => {
     cy.visit('/');
     cy.get('[data-testid=admin_button]').click();
     cy.get('[data-testid=manage-callhandlers_button]').click();
+    cy.wait('@callHandlers');
     cy.get('[data-testid=add-call-handler]').click();
 });
 

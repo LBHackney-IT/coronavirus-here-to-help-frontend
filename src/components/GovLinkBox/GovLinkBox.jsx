@@ -5,9 +5,9 @@ export default function GovLinkBox({ link, text, name }) {
 
     return (
         <Link href={link}>
-            <div className={styles['gov-link-box']} data-testid={name}>
+            <a className={styles['gov-link-box']} data-testid={name}>
                 { text }
-            </div>
+            </a>
         </Link>
     );
 }

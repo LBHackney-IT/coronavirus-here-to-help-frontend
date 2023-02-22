@@ -79,13 +79,12 @@ export default function HelpcaseProfile({ residentId }) {
             console.log(`Error getting resident props with help request ID ${residentId}: ${err}`);
         }
     };
+
     function useEffectAsync(effect, inputs) {
-        useEffect(() => {
-            effect();
-        }, inputs);
+        useEffect(() => {  effect(); }, inputs);
     }
 
-    useEffectAsync(getResidentAndHelpRequests, []);
+    useEffectAsync(getResidentAndHelpRequests, []); //nice one
 
     let calls = [].concat
         .apply(
@@ -103,16 +102,20 @@ export default function HelpcaseProfile({ residentId }) {
         resident && (
             <Layout>
                 <div>
-                    <a
-                        href="/callback-list"
-                        className="govuk-back-link"
-                        style={{
-                            marginTop: '-40px',
-                            display: 'block',
-                            borderBottom: 'none'
-                        }}>
-                        Back
-                    </a>
+                    <Link href="/callback-list">
+                        <a
+                            href="#"
+                            className="govuk-back-link"
+                            style={{
+                                marginTop: '-40px',
+                                display: 'block',
+                                borderBottom: 'none'
+                            }}
+                            data-testid="back-to-callbacks-list"
+                        >
+                            Back
+                        </a>
+                    </Link>
                     <div className="govuk-grid-row">
                         <div className="govuk-grid-column-one-quarter-from-desktop">
                             {resident.id && <KeyInformation resident={resident} />}
@@ -143,7 +146,7 @@ export default function HelpcaseProfile({ residentId }) {
     );
 }
 
-export async function getServerSideProps({ query: { residentId }}) {
+export async function getServerSideProps({ params: { residentId }}) {
     return {
         props: {
             residentId

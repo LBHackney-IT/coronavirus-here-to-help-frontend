@@ -1,6 +1,5 @@
 import moxios from 'moxios';
 import { CaseNotesGateway } from './case-notes.js';
-import { getMultipleCaseNotesV4_Speculative } from '../../tools/mockResponses';
 import { postSingleCaseNoteV4Body_Speculative } from '../../tools/mockRequestBodies';
 import InboundMapper from '../mappers/inboundMapper';
 

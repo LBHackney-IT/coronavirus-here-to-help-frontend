@@ -7,7 +7,6 @@ import {
     selfIsolationCallTypes,
     TEST_AND_TRACE_FOLLOWUP_TEXT,
     TEST_AND_TRACE_FOLLOWUP_EMAIL,
-    EUSS,
     WELFARE_CALL,
     HELP_TYPE,
     CONTACT_TYPE,
@@ -15,7 +14,6 @@ import {
     LINK_WORK
 } from '../../helpers/constants';
 import { formatSubText } from '../../helpers/formatter';
-import { useRouter } from 'next/router';
 import { GovNotifyGateway } from '../../gateways/gov-notify';
 import styles from '../CallbackForm/CallbackForm.module.scss';
 import { AuthorisedCallTypesGateway } from '../../gateways/authorised-call-types';
@@ -60,7 +58,7 @@ export default function CallbackForm({
         CallHandler: null
     });
 
-    useEffect(async () => {
+    const preSetFormStateWithData = async () => {
         setHelpNeeded(helpRequest ? helpRequest.helpNeeded : '');
         setCEVHelpNeeds({
             foodAccessVoluntarySector: helpRequest ? helpRequest.helpWithAccessingFood : null,
@@ -82,7 +80,9 @@ export default function CallbackForm({
         } catch (err) {
             console.log(`Error fetching auth calltypes: ${err}`);
         }
-    }, [helpRequest]);
+    };
+
+    useEffect(() => { preSetFormStateWithData(); }, [helpRequest]);
 
     const onCEVHelpNeedsCheckboxChange = (cevHelpItem) => {
         Object.entries(cevHelpTypes).map(([key, cevTextVal]) => {
@@ -127,19 +127,19 @@ export default function CallbackForm({
 
     const metadata =
         helpRequest && helpRequest.metadata
-            ? Object.entries(helpRequest.metadata).map(([key, value]) => {
+            ? Object.entries(helpRequest.metadata).map(([key, value], index) => {
                   key = key.replace(/_/g, ' ');
                   const upcaseKey = key.charAt(0).toUpperCase() + key.slice(1);
                   return (
-                      <span data-testid="metadata" class="govuk-caption-l">
+                      <span key={"metadata-" + index} data-testid="metadata" className="govuk-caption-l">
                           <strong>{upcaseKey}:</strong> {value}
                       </span>
                   );
               })
             : '';
 
-    const nhsCtasId = helpRequest ? (
-        <span class="govuk-caption-l" data-testid="ctas-id">
+    const nhsCtasId = helpRequest ? ( // TODO: make visible on when request type is CTAS
+        <span className="govuk-caption-l" data-testid="ctas-id">
             <strong>CTAS ID:</strong> {helpRequest.nhsCtasId || 'Not found'}
         </span>
     ) : (
@@ -460,7 +460,7 @@ export default function CallbackForm({
                 )}
                 <br></br>
                 {helpRequest && (
-                    <span class="govuk-caption-l">
+                    <span className="govuk-caption-l">
                         <strong>Date requested: </strong>{' '}
                         {helpRequest?.dateTimeRecorded?.split('T')[0]}
                     </span>
@@ -468,18 +468,18 @@ export default function CallbackForm({
                 {nhsCtasId}
                 {metadata}
                 <div className="govuk-!-margin-top-5">
-                    <a href={process.env.NEXT_PUBLIC_SNAPSHOT_URL} target="_blank">
+                    <a href={process.env.NEXT_PUBLIC_SNAPSHOT_URL} target="_blank" rel="noopener noreferrer">
                         <Button text="Open Better Conversations" />
                         <svg width="24px" height="24px" viewBox="0 0 24 24">
                             <g
                                 id="external_link"
                                 className="icon_svg-stroke"
                                 stroke="#666"
-                                stroke-width="1.5"
+                                strokeWidth="1.5"
                                 fill="none"
-                                fill-rule="evenodd"
-                                stroke-linecap="round"
-                                stroke-linejoin="round">
+                                fillRule="evenodd"
+                                strokeLinecap="round"
+                                strokeLinejoin="round">
                                 <polyline points="17 13.5 17 19.5 5 19.5 5 7.5 11 7.5"></polyline>
                                 <path d="M14,4.5 L20,4.5 L20,10.5 M20,4.5 L11,13.5"></path>
                             </g>
@@ -487,7 +487,7 @@ export default function CallbackForm({
                     </a>
                     <p className={`${styles['button-hint']}`}>
                         Opens in new tab. Please note that information from Better Conversations
-                        will not currently be saved to the resident's profile.
+                        will not currently be saved to the resident&apos;s profile.
                     </p>
                 </div>
             </h1>
@@ -640,10 +640,11 @@ export default function CallbackForm({
                                                                             </span>
                                                                             {spokeToResidentCallOutcomes.map(
                                                                                 (
-                                                                                    spokeToResidentCallOutcome
+                                                                                    spokeToResidentCallOutcome, index
                                                                                 ) => {
                                                                                     return (
                                                                                         <Checkbox
+                                                                                            key={"spokeToResidentCallOutcome-" + index}
                                                                                             id={
                                                                                                 spokeToResidentCallOutcome.name
                                                                                             }
@@ -704,10 +705,11 @@ export default function CallbackForm({
                                                                         </span>
                                                                         {noAnswerCallOutcomes.map(
                                                                             (
-                                                                                noAnswerCallOutcome
+                                                                                noAnswerCallOutcome, index
                                                                             ) => {
                                                                                 return (
                                                                                     <Checkbox
+                                                                                        key={"noAnswerCallOutcome-" + index}
                                                                                         id={
                                                                                             noAnswerCallOutcome.name
                                                                                         }
@@ -745,9 +747,10 @@ export default function CallbackForm({
                                                                 support?{' '}
                                                             </legend>
                                                             {selfIsolationNeeds.map(
-                                                                (selfIsolationNeed) => {
+                                                                (selfIsolationNeed, index) => {
                                                                     return (
                                                                         <Checkbox
+                                                                            key={"selfIsolationNeeds-" + index}
                                                                             id={
                                                                                 selfIsolationNeed.name
                                                                             }
@@ -854,7 +857,7 @@ export default function CallbackForm({
                                         <div>
                                             <label
                                                 className="govuk-label mandatoryQuestion"
-                                                for="contact-by-email">
+                                                htmlFor="contact-by-email">
                                                 Email address
                                             </label>
                                             <input
@@ -920,7 +923,7 @@ export default function CallbackForm({
                                         <div>
                                             <label
                                                 className="govuk-label mandatoryQuestion"
-                                                for="contact-by-text">
+                                                htmlFor="contact-by-text">
                                                 Mobile phone number
                                             </label>
                                             <input
@@ -990,9 +993,10 @@ export default function CallbackForm({
                     <div className="govuk-grid-column">
                         <Button
                             text="Update"
+                            type="submit"
                             addClass="govuk-!-margin-right-1"
                             onClick={(event) => {
-                                handleUpdate(event);
+                                handleUpdate(event); // change this to the "onSubmit like with the resident"
                             }}
                             disabled={!submitEnabled}
                             data-testid="callback-form-update_button"
@@ -1000,6 +1004,7 @@ export default function CallbackForm({
                         <Link href={backHref}>
                             <Button
                                 text="Cancel"
+                                type="button"
                                 addClass="govuk-button--secondary"
                                 data-testid="callback-form-cancel_button"
                             />

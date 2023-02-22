@@ -3,7 +3,9 @@ beforeEach(() => {
     cy.setIntercepts();
     cy.visit(`http://localhost:3000/dashboard`);
     cy.get('[data-testid=view-callback-list_button]').click();
+    cy.wait(['@callbacksList', '@callHandlers']);
     cy.get('[data-testid=callbacks-list-view_link-0]').click({ force: true });
+    cy.wait(['@resident3', '@resident3helpRequests', '@resident3caseNotes']);
 });
 describe;
 context('When you view a helpcase profile', () => {

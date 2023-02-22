@@ -1,7 +1,7 @@
 import Header from "./Header";
 import styles from "../styles/Home.module.css";
 import {useRouter} from "next/router";
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 export default function Layout({ children }) {
   const router = useRouter(); 
@@ -11,7 +11,7 @@ export default function Layout({ children }) {
     } else {
       document.body.className = 'js-enabled'
     }
-    const GOVUKFrontend = require("../../public/js/govuk")
+
     window.GOVUKFrontend.initAll()
 
   }

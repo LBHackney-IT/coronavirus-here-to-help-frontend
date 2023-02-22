@@ -1,15 +1,14 @@
+var webpack = require('webpack');
+
 module.exports = {
+    reactStrictMode: false,
     distDir: 'build/_next',
-    target: 'server',
-    webpack: (config, { webpack, isServer }) => {
-        config.plugins.push(new webpack.IgnorePlugin(/.*\.test\.[jt]s$/));
+    webpack: (config, { isServer }) => {
+        config.plugins.push(new webpack.IgnorePlugin({resourceRegExp: /.*\.test\.[jt]s$/}));
         // Fixes npm packages that depend on `fs` module
         if (!isServer) {
-            config.node = {
-                fs: 'empty'
-            };
+          config.resolve.fallback.fs = false;
         }
-
         return config;
-    }
+      }
 };

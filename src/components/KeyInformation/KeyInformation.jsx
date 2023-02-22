@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './KeyInformation.module.scss';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function KeyInformation({ resident }) {
@@ -24,12 +25,16 @@ export default function KeyInformation({ resident }) {
                     </a>
                     <h3 className="govuk-heading-s">
                         Contact details
-                        <a
-                            data-testid="edit-resident-bio-button"
-                            href={`/helpcase-profile/${resident.id}/editresident`}
-                            className={styles['edit-link-icon']}>
+                        <Link
+                            href="/helpcase-profile/[residentId]/editresident"
+                            as={`/helpcase-profile/${resident.id}/editresident`}>
+                            <a
+                                data-testid="edit-resident-bio-button"
+                                className={styles['edit-link-icon']}
+                            >
                             ✎
-                        </a>
+                            </a>
+                        </Link>
                     </h3>
                 </div>
                 <div hidden={hidden}>

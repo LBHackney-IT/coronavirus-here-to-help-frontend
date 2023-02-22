@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../components/layout';
 import CallbacksList from '../components/CallbacksList/CallbacksList';
 import { Dropdown, TextInput } from '../components/Form';
 import { CallbackGateway } from '../gateways/callback';
 import { CallHandlerGateway } from '../gateways/call-handler';
 import { AuthorisedCallTypesGateway } from '../gateways/authorised-call-types';
-import { ALL, WELFARE_CALL } from '../helpers/constants';
+import { ALL } from '../helpers/constants';
 
 function CallbacksListPage() {
     const [callbacks, setCallbacks] = useState([]);
@@ -18,11 +18,13 @@ function CallbacksListPage() {
 
     const [ctasInput, setCtasInput] = useState('');
 
-    useEffect(async () => {
+    const getAndSetAuthorisedCallTypes = async () => {
         const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
         const authCallTypes = await authorisedCallTypesGateway.getCallTypes();
         setCallTypes([ALL].concat(authCallTypes.map((callType) => callType.name).sort()));
-    }, []);
+    };
+
+    useEffect(() => { getAndSetAuthorisedCallTypes(); }, []);
 
     const setCallTypeFromPersisted = () => {
         var persisted = sessionStorage.getItem('selectedCallType');
@@ -106,8 +108,8 @@ function CallbacksListPage() {
         setSubsetCallbacks(collection);
     };
 
-    useEffect(getCallBacks, []);
-    useEffect(getCallHandlers, []);
+    useEffect(() => { getCallBacks(); }, []);
+    useEffect(() => { getCallHandlers(); }, []);
     useEffect(filterCallbacks, [ctasInput, selectedCallType, selectedCallHandler, callbacks]);
 
     return (

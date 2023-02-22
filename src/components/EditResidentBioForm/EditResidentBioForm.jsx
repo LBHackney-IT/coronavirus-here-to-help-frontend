@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function EditResidentBioForm({ resident, onChange, validation, onInvalidField }) {
+const EditResidentBioForm = ({ resident, onChange, validation, onInvalidField }) => {
     return (
         <>
             <h2 className="govuk-heading-l">
@@ -14,15 +14,16 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                         className={`govuk-form-group lbh-form-group ${
                             validation.firstName ? 'govuk-form-group--error' : ''
                         }`}>
-                        <label class="govuk-label" for="firstName">
+                        <label className="govuk-label" htmlFor="firstName">
                             First name
                         </label>
                         <span id="first-name-error" className="govuk-error-message">
-                            <span
-                                hidden={validation.firstName ? false : true}
-                                data-testid="first-name-error">
-                                Error: Enter the first name
-                            </span>
+                            {validation.firstName &&
+                                <span
+                                    data-testid="first-name-error">
+                                    Error: Enter the first name
+                                </span>
+                            }
                         </span>
                         <input
                             className="govuk-input  lbh-input"
@@ -36,7 +37,9 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                             onChange={(e) => onChange(e.target.id, e.target.value)}
                             data-testid="first-name-input"
                             required
-                            onInvalid={(e) => onInvalidField(e.target.id)}
+                            onInvalid={(e) => {
+                                onInvalidField(e.target.id);
+                            }}
                         />
                     </div>
                 </div>
@@ -45,15 +48,16 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                         className={`govuk-form-group lbh-form-group ${
                             validation.lastName ? 'govuk-form-group--error' : ''
                         }`}>
-                        <label class="govuk-label" for="lastName">
+                        <label className="govuk-label" htmlFor="lastName">
                             Last name
                         </label>
                         <span id="last-name-error" className="govuk-error-message">
-                            <span
-                                hidden={validation.lastName ? false : true}
-                                data-testid="last-name-error">
-                                Error: Enter the last name
-                            </span>
+                            {validation.lastName &&
+                                <span
+                                    data-testid="last-name-error">
+                                    Error: Enter the last name
+                                </span>
+                            }
                         </span>
                         <input
                             className="govuk-input  lbh-input"
@@ -78,15 +82,16 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                         className={`govuk-form-group lbh-form-group ${
                             validation.contactTelephoneNumber ? 'govuk-form-group--error' : ''
                         }`}>
-                        <label class="govuk-label" for="contactTelephoneNumber">
+                        <label className="govuk-label" htmlFor="contactTelephoneNumber">
                             Contact telephone
                         </label>
                         <span id="contact-number-error" className="govuk-error-message">
-                            <span
-                                hidden={validation.contactTelephoneNumber ? false : true}
-                                data-testid="contact-number-error">
-                                Error: Enter a valid contact telephone number
-                            </span>
+                            {validation.contactTelephoneNumber &&
+                                <span
+                                    data-testid="contact-number-error">
+                                    Error: Enter a valid contact telephone number
+                                </span>
+                            }
                         </span>
                         <input
                             className="govuk-input  lbh-input"
@@ -151,15 +156,12 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
                 }`}>
                 <h3 className="lbh-heading-h3">Date of birth</h3>
                 <span id="dob-error" className="govuk-error-message">
-                    <span
-                        hidden={
-                            validation.dobDay || validation.dobMonth || validation.dobYear
-                                ? false
-                                : true
-                        }
-                        data-testid="dob-error">
-                        Error: Enter a valid date of birth
-                    </span>
+                    {(validation.dobDay || validation.dobMonth || validation.dobYear) &&
+                        <span
+                            data-testid="dob-error">
+                            Error: Enter a valid date of birth
+                        </span>
+                    }
                 </span>
                 <div className="govuk-date-input  lbh-date-input">
                     <div className="govuk-date-input__item">
@@ -223,4 +225,6 @@ export default function EditResidentBioForm({ resident, onChange, validation, on
             </div>
         </>
     );
-}
+};
+
+export default EditResidentBioForm;

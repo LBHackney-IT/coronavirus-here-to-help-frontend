@@ -1,8 +1,9 @@
 beforeEach(() => {
     cy.login();
     cy.setIntercepts();
-    cy.visit('/');
+    cy.visit('/dashboard');
     cy.get('[data-testid=view-callback-list_button]').click();
+    cy.wait(['@callbacksList', '@callHandlers']);
 });
 describe('As a call handler I can reassign calls', () => {
     context('Reassign single call page navigation', () => {
@@ -20,7 +21,7 @@ describe('As a call handler I can reassign calls', () => {
         });
 
         it('Assign button should route back to Callbacks list page', () => {
-            cy.get('[data-testid=call-handlers-dropdown]').select('Person D');
+            cy.get('[data-testid=reassign-call-handlers-dropdown]').select('Person D');
             cy.get('[data-testid=reassign-call-assign_button]').click();
             cy.wait(500);
             cy.url().should('match', /\/callback-list$/);

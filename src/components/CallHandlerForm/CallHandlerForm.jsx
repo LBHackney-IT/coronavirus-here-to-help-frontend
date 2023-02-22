@@ -22,15 +22,16 @@ export default function CallHandlerForm({ callHandler, onChange, validation, onI
                         className={`govuk-form-group lbh-form-group ${
                             validation.name ? 'govuk-form-group--error' : ''
                         }`}>
-                        <label className="govuk-label" for="name">
+                        <label className="govuk-label" htmlFor="name">
                             Name
                         </label>
                         <span id="first-name-error" className="govuk-error-message">
-                            <span
-                                hidden={validation.name ? false : true}
-                                data-testid="name-error">
-                                Error: Enter the name
-                            </span>
+                            { validation.name &&
+                                <span
+                                    data-testid="name-error">
+                                    Error: Enter the name
+                                </span>
+                            }
                         </span>
 
                         <input
@@ -54,7 +55,7 @@ export default function CallHandlerForm({ callHandler, onChange, validation, onI
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-one-half">
                     <div className="govuk-form-group lbh-form-group">
-                        <label class="govuk-label" for="email">
+                        <label className="govuk-label" htmlFor="email">
                             Email address
                         </label>
 

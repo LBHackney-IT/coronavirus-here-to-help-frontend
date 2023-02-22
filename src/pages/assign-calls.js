@@ -27,12 +27,15 @@ export default function AssignCallsPage() {
         setCallHandlers(callHandlersList.map((c) => c.name));
     };
 
-    useEffect(getCallHandlers, []);
-
-    useEffect(async () => {
+    const getAuthorisedCallTypes = async () => {
         const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
         let authCallTypes = await authorisedCallTypesGateway.getCallTypes();
         setFilteredCallTypes(authCallTypes.map((callType) => callType.name));
+    };
+
+    useEffect(() => { 
+        getCallHandlers();
+        getAuthorisedCallTypes();
     }, []);
 
     const updateSelectedCallHandlers = (value) => {
@@ -68,7 +71,7 @@ export default function AssignCallsPage() {
         );
     };
 
-    const handleAssign = async (event) => {
+    const handleAssign = async () => {
         if (!formIsValid()) {
             setErrorsExist(true);
         } else {
@@ -203,7 +206,7 @@ export default function AssignCallsPage() {
                         {filteredCallTypes.map((type, index) => {
                             return (
                                 <Checkbox
-                                    key="call-type-checkbox"
+                                    key={"call-type-checkbox-" + index}
                                     label={type}
                                     value={type}
                                     onCheckboxChange={selectedCallTypeChanged}
@@ -244,10 +247,10 @@ export default function AssignCallsPage() {
                             display: 'flex',
                             flexWrap: 'Wrap'
                         }}>
-                        {callHandlers.sort().map((callHandler) => {
+                        {callHandlers.sort().map((callHandler, index) => {
                             return (
                                 <Checkbox
-                                    key={callHandler}
+                                    key={`call-handler-${index}`}
                                     label={callHandler}
                                     value={callHandler}
                                     containerStyle={{ flexBasis: '28%' }}
@@ -264,8 +267,8 @@ export default function AssignCallsPage() {
                         <Button
                             text="Assign"
                             addClass="govuk-!-margin-right-1"
-                            onClick={(event) => {
-                                handleAssign(event);
+                            onClick={() => {
+                                handleAssign();
                             }}
                             data-testid="assign-call-assign_button"
                         />

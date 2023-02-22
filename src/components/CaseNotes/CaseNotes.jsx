@@ -12,7 +12,7 @@ export default function CaseNotes({ caseNotes }) {
     const [callTypes, setCallTypes] = useState([]);
     const router = useRouter();
 
-    useEffect(async () => {
+    const fetchAndFilterCalltypes = async () => {
         const authorisedCallTypesGateway = new AuthorisedCallTypesGateway();
         const authCallTypes = await authorisedCallTypesGateway.getCallTypes();
         setCallTypes([ALL].concat(authCallTypes.map((callType) => callType.name).sort()));
@@ -26,7 +26,9 @@ export default function CaseNotes({ caseNotes }) {
         } else {
             setFilterBy(ALL);
         }
-    }, [caseNotes]);
+    };
+
+    useEffect(() => { fetchAndFilterCalltypes(); }, [caseNotes]);
 
     const hanleOnChange = (selectedCaseNoteType) => {
         setFilterBy(selectedCaseNoteType == 'Self Isolation' ? WELFARE_CALL : selectedCaseNoteType);
@@ -51,12 +53,12 @@ export default function CaseNotes({ caseNotes }) {
             )}
 
             {caseNotes &&
-                caseNotes[filterBy]?.map((caseNote, i) => {
+                caseNotes[filterBy]?.map((caseNote, index) => {
                     return (
                         <>
                             <div
-                                key={i}
-                                id={`case-note-${i}`}
+                                key={`case-note-${index}`}
+                                id={`case-note-${index}`}
                                 className={`filter ${styles['case-notes-box']}`}
                                 data-testid="case-note-entry">
                                 <h4 className="govuk-heading-s">
@@ -72,7 +74,10 @@ export default function CaseNotes({ caseNotes }) {
                                     : {caseNote.note}
                                 </p>
                             </div>
-                            <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+                            <hr 
+                                key={`case-note-section-break-${index}`}
+                                className="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+                            />
                         </>
                     );
                 })}

@@ -2,15 +2,19 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '../components/Form';
 import Layout from '../components/layout';
+import { removeBlanksFromQueryObj } from '../../tools/etcUtility';
 
 export default function ResidentSearchPage() {
     const [postcode, setPostcode] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+
+    const cleanQuery = removeBlanksFromQueryObj({ postcode: postcode, firstName: firstName, lastName: lastName });
+
     return (
         <Layout>
             <div>
-                <Link href="/">
+                <Link href="/dashboard">
                     <a className="govuk-back-link  lbh-back-link">
                         Back
                     </a>
@@ -77,7 +81,7 @@ export default function ResidentSearchPage() {
                     <Link
                         href={{
                             pathname: '/residents-list',
-                            query: { postcode: postcode, firstName: firstName, lastName: lastName }
+                            query: cleanQuery
                         }}>
                         <Button text="Search" />
                     </Link>

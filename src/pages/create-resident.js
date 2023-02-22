@@ -6,7 +6,7 @@ import EditResidentBioForm from '../components/EditResidentBioForm/EditResidentB
 import { useRouter } from 'next/router';
 import { ResidentGateway } from '../gateways/resident';
 
-export default function CreateResident({}) {
+const CreateResident = () => {
     const router = useRouter();
     const [resident, setResident] = useState({});
     const [errorsExist, setErrorsExist] = useState(false);
@@ -102,6 +102,8 @@ export default function CreateResident({}) {
         </div>
     );
 }
+
+export default CreateResident;
 
 export async function getServerSideProps() {
     return {

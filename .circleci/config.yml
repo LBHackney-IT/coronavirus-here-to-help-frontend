@@ -1,13 +1,13 @@
 version: 2.1
 
 orbs:
-  cypress: cypress-io/cypress@1
+  cypress: cypress-io/cypress@2
   aws_assume_role: lbh-hackit/aws_assume_role@0.1.0
 
 executors:
   node:
     docker:
-      - image: circleci/node:14
+      - image: cimg/node:18.13
     working_directory: ~/project
   python:
     docker:
@@ -120,7 +120,7 @@ workflows:
           cache-key: &cypress-cache-key 'npm-packages-cache1-{{ arch }}-{{ checksum "package-lock.json" }}'
           post-checkout:
             - run: cp .env.sample .env
-          executor: cypress/base-14
+          executor: cypress/base-16-14-2-slim
           start: |
             npm install cypress-dotenv -g
             npm run dev

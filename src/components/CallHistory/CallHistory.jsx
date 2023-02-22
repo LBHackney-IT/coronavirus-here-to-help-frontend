@@ -30,10 +30,11 @@ export default function CaseNotes({ calls }) {
                 return (
                     <>
                         <div
-                            key={index}
+                            key={`call-history-item-${index}`}
                             className={styles['call-history-box']}
                             id={`call-note-${call.id}`}
-                            data-testid="call-history-entry">
+                            data-testid="call-history-entry"
+                        >
                             <h4 className="govuk-heading-s">
                                 {moment(call.callDateTime).format('YYYY-MM-DD HH:mm')} by{' '}
                                 {call.callHandler}
@@ -46,7 +47,10 @@ export default function CaseNotes({ calls }) {
                                 : {FormatCallOutcome(call.callOutcome)}
                             </p>
                         </div>
-                        <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+                        <hr 
+                            key={`call-history-section-break-${index}`}
+                            className="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+                        />
                     </>
                 );
             })}
